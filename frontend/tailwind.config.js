@@ -11,7 +11,12 @@ export default {
   darkMode: "class",
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        "rabbit-red": "#ea2e0e",
+        ft: "#05472a",
+      },
+    },
   },
   plugins: [],
 };

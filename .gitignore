@@ -1,10 +1,115 @@
-# Node
+# # Node
+# node_modules/
+# frontend/node_modules/
+
+# # Build
+# dist/
+# build/
+
+# # Env
+# .env
+# #Logs
+# logs
+# *.logs
+
+# #Node Modules
+# frontend/node_modules
+# backend/node_modules
+
+# #Environment variables
+# frontend/.env
+# backend/.env
+
+# .DS_Store
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Node modules
 node_modules/
 frontend/node_modules/
+backend/node_modules/
 
-# Build
-dist/
-build/
+# Build output
+/dist
+/.next
+/build
+/out
+/.vite
+/.nuxt
+/.output
+/.vercel
+/.netlify
 
-# Env
+# Environment variables
 .env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+frontend/.env*
+backend/.env*
+
+# OS & Editor files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+~$*
+
+# IDE / Editor directories
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Package manager lock files (nếu bạn không muốn commit)
+# yarn.lock
+# pnpm-lock.yaml
+# package-lock.json   ← bỏ comment 3 dòng này nếu bạn KHÔNG muốn commit lock file
+
+# Cache folders
+.cache/
+.eslintcache
+.stylelintcache
+*.tsbuildinfo
+
+# Uploads folder (nếu bạn có thư mục up ảnh tạm)
+uploads/
+public/uploads/
+media/
+
+# Database local
+*.db
+*.sqlite
+*.sqlite3
+
+# Temporary folders
+tmp/
+temp/
+
+# Vercel / Netlify / Railway / Render
+.vercel
+.netlify
+.render
+
+# Nếu dùng Docker
+Dockerfile*
+.dockerignore
+.docker/
+
+# Nếu dùng Prisma
+prisma/dev.db
+prisma/*.db.journal
