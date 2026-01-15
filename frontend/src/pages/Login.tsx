@@ -1,36 +1,48 @@
-import { Link } from "react-router-dom";
+import { SignIn } from "@clerk/clerk-react";
+import loginImg from "../assets/login.webp";
+import { useLocation } from "react-router-dom";
 
-function Login() {
+const Login = () => {
+  const location = useLocation();
+  const redirect =
+    new URLSearchParams(location.search).get("redirect") || "/dashboard";
+
   return (
-    <div className="max-w-sm mx-auto space-y-4">
-      <h1 className="text-2xl font-bold text-center">Login</h1>
+    <div className="flex min-h-screen bg-gray-50 dark:bg-gray-800">
+      {/* CỘT TRÁI: Chứa Form Clerk */}
+      <div className="w-full md:w-1/2 flex flex-col justify-center items-center p-6">
+        {/* Logo thương hiệu đặt phía trên Card */}
+        <div className="mb-8 text-center">
+          <h2 className="text-3xl font-bold tracking-tighter text-black dark:text-white">
+            ARTISANO
+          </h2>
+        </div>
 
-      <input
-        type="text"
-        placeholder="Username"
-        className="w-full px-3 py-2 border rounded bg-white text-black
-                   dark:bg-gray-800 dark:text-white dark:border-gray-600"
-      />
-
-      <input
-        type="password"
-        placeholder="Password"
-        className="w-full px-3 py-2 border rounded bg-white text-black
-                   dark:bg-gray-800 dark:text-white dark:border-gray-600"
-      />
-
-      <button className="w-full py-2 bg-rabbit-red text-white rounded hover:opacity-90">
-        Login
-      </button>
-
-      <p className="text-center text-sm text-gray-600 dark:text-gray-400">
-        Quay về{" "}
-        <Link to="/" className="text-rabbit-red hover:underline">
-          Home
-        </Link>
-      </p>
+        <SignIn
+          routing="path"
+          path="/login"
+          signUpUrl="/register"
+          fallbackRedirectUrl={redirect}
+          appearance={{
+            elements: {
+              headerTitle: "hidden",
+              formButtonPrimary:
+                "bg-black hover:bg-gray-800 text-sm normal-case",
+              rootBox: "max-w-full",
+            },
+          }}
+        />
+      </div>
+      {/* CỘT PHẢI: Chứa ảnh (Ẩn trên mobile) */}
+      <div className="hidden md:block md:w-1/2">
+        <img
+          src={loginImg}
+          alt="Login to Account"
+          className="h-screen w-full object-cover shadow-2xl"
+        />
+      </div>
     </div>
   );
-}
+};
 
 export default Login;

@@ -1,4 +1,3 @@
-import { useTheme } from "../../context/ThemeContext";
 import Topbar from "../layouts/Topbar";
 
 import Navbar from "../layouts/Navbar";
