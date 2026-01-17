@@ -1,17 +1,30 @@
-import { SignIn } from "@clerk/clerk-react";
+import { SignIn, useUser } from "@clerk/clerk-react";
 import loginImg from "../assets/login.webp";
-import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const Login = () => {
-  const location = useLocation();
-  const redirect =
-    new URLSearchParams(location.search).get("redirect") || "/dashboard";
+  // const location = useLocation();
+  // const redirect =
+  //   new URLSearchParams(location.search).get("redirect") || "/dashboard";
+  const { isSignedIn, user } = useUser();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isSignedIn && user) {
+      const role = user.publicMetadata.role;
+      if (role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
+    }
+  }, [isSignedIn, user, navigate]);
 
   return (
     <div className="flex min-h-screen bg-gray-50 dark:bg-gray-800">
       {/* CỘT TRÁI: Chứa Form Clerk */}
       <div className="w-full md:w-1/2 flex flex-col justify-center items-center p-6">
-        {/* Logo thương hiệu đặt phía trên Card */}
         <div className="mb-8 text-center">
           <h2 className="text-3xl font-bold tracking-tighter text-black dark:text-white">
             ARTISANO
@@ -19,10 +32,10 @@ const Login = () => {
         </div>
 
         <SignIn
-          routing="path"
-          path="/login"
+          routing="hash"
+          // routing="path"
+          // path="/login"
           signUpUrl="/register"
-          fallbackRedirectUrl={redirect}
           appearance={{
             elements: {
               headerTitle: "hidden",
