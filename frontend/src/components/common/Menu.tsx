@@ -1,7 +1,7 @@
 // import React from "react";
 import { Link } from "react-router-dom";
-import { LayoutGrid, ChevronDown } from "lucide-react";
-
+import {  ChevronDown } from "lucide-react";
+import MegaMenu from "../layouts/MegaMenu";
 
 interface NavItem {
     label: string;
@@ -23,19 +23,20 @@ function Menu() {
             <div className="container mx-auto flex flex-wrap items-center justify-center px-4">
 
                 {/* Danh mục sản phẩm */}
-                <div className="flex items-center space-x-2 bg-[#09412e] px-6 py-4 cursor-pointer hover:bg-green-800 transition-all group relative">
+                <MegaMenu></MegaMenu>
+                {/* <div className="flex items-center space-x-2 bg-[#09412e] px-6 py-4 cursor-pointer hover:bg-green-800 transition-all group relative">
                     <LayoutGrid size={12} className="text-white" />
                     <span className="font-bold tracking-wide text-lg">Danh mục sản phẩm</span>
                     <ChevronDown size={20} className="opacity-100 group-hover:rotate-180 transition-transform mt-1"/>
 
                     {/* Dropdown */}
-                    <div className="absolute top-full -left-2 w-72 bg-white text-gray-800 shadow-xl opacity-0 invisible 
+                    {/* <div className="absolute top-full -left-2 w-72 bg-white text-gray-800 shadow-xl opacity-0 invisible 
                     group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border-t-2">
                         <ul className="py-2">
                             <li className="px-4 py-2 hover:bg-gray-100 hover:text-green-800 cursor-pointer border-b border-gray-50">Nệm</li>
                         </ul>
                     </div>
-                </div>
+                </div> */} 
 
                 {/* Danh sách menu chính*/}
                 <div className="flex flex-wrap items-center justify-center ml-8">
