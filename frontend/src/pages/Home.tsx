@@ -1,8 +1,12 @@
 import { UserButton } from "@clerk/clerk-react";
 import { Link } from "react-router-dom";
+import Banner from "../components/common/Banner";
 
 function Home() {
   return (
+    <>
+    <Banner></Banner>
+    
     <div className="space-y-4">
       <h1 className="text-2xl font-bold">Home Page</h1>
 
@@ -22,6 +26,8 @@ function Home() {
       </Link>
       <UserButton showName afterSignOutUrl="/login" />
     </div>
+    </>
+    
   );
 }
 
