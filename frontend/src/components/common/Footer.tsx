@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Footer = () => {
   return (
     <div>
@@ -80,24 +82,33 @@ const Footer = () => {
               </h4>
               <ul className="space-y-2 text-sm md:text-base">
                 <li>
-                  <a href="#" className="hover:text-[#c2e6ba] transition">
+                  <Link to="/about" className="hover:text-[#c2e6ba] transition">
                     Giới thiệu
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-[#c2e6ba] transition">
+                  <Link
+                    to="/contact"
+                    className="hover:text-[#c2e6ba] transition"
+                  >
                     Liên hệ
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-[#c2e6ba] transition">
-                    Hệ thống cửa hàng
-                  </a>
+                  <Link
+                    to="/brandstory"
+                    className="hover:text-[#c2e6ba] transition"
+                  >
+                    Câu chuyện thương hiệu
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-[#c2e6ba] transition">
-                    Tin khuyến mãi
-                  </a>
+                  <Link
+                    to="/awards"
+                    className="hover:text-[#c2e6ba] transition"
+                  >
+                    Chứng nhận và giải thưởng
+                  </Link>
                 </li>
               </ul>
             </div>

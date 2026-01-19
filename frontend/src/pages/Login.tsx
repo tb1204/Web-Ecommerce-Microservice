@@ -4,22 +4,25 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 const Login = () => {
-  // const location = useLocation();
-  // const redirect =
-  //   new URLSearchParams(location.search).get("redirect") || "/dashboard";
-  const { isSignedIn, user } = useUser();
+  const { isSignedIn, user, isLoaded } = useUser();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isSignedIn && user) {
-      const role = user.publicMetadata.role;
-      if (role === "admin") {
-        navigate("/admin");
-      } else {
-        navigate("/");
+    if (isLoaded) {
+      console.log("signin", isSignedIn);
+
+      if (isSignedIn && user) {
+        console.log("Full Public Metadata:", user.publicMetadata);
+        const role = user.publicMetadata.role;
+        console.log(role);
+        if (role === "admin") {
+          navigate("/admin");
+        } else {
+          navigate("/");
+        }
       }
     }
-  }, [isSignedIn, user, navigate]);
+  }, [isLoaded, isSignedIn, user, navigate]);
 
   return (
     <div className="flex min-h-screen bg-gray-50 dark:bg-gray-800">
@@ -33,8 +36,6 @@ const Login = () => {
 
         <SignIn
           routing="hash"
-          // routing="path"
-          // path="/login"
           signUpUrl="/register"
           appearance={{
             elements: {

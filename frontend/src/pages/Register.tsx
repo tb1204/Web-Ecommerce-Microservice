@@ -103,7 +103,7 @@ const Register = () => {
               formButtonPrimary:
                 "bg-black hover:bg-gray-800 text-sm normal-case",
               rootBox: "w-full flex justify-center",
-              card: "shadow-md border border-gray-100 mx-auto w-full max-w-[400px] dark:bg-gray-700",
+              card: "shadow-md border border-gray-100 mx-auto w-full max-w-[400px] ",
             },
           }}
         />
