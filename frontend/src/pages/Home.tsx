@@ -1,4 +1,4 @@
-import { UserButton } from "@clerk/clerk-react";
+// import { UserButton } from "@clerk/clerk-react";
 import { Link } from "react-router-dom";
 import Banner from "../components/common/Banner";
 
@@ -24,7 +24,6 @@ function Home() {
         >
           Đi đến Login
         </Link>
-        <UserButton showName afterSignOutUrl="/login" />
       </div>
     </>
   );
