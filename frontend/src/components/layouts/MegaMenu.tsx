@@ -1,32 +1,19 @@
-<<<<<<< HEAD
+
 import { LayoutGrid, ChevronDown, ChevronRight } from "lucide-react";
 import nemIcon from "../../assets/icon-mega-menu/nệm.webp";
 import changaIcon from "../../assets/icon-mega-menu/chăn ga.svg";
-import phukienIcon from "../../assets/icon-mega-menu/phụ kiện.webp";
+import phukienIcon from "../../assets/icon-mega-menu/phụ kiện 1.webp";
 import noithatIcon from "../../assets/icon-mega-menu/nội thất.svg";
 import goiIcon from "../../assets/icon-mega-menu/gối.svg";
 import khuyenmaiIcon from "../../assets/icon-mega-menu/khuyến mãi.svg";
-=======
-import React from 'react';
-import { 
-  LayoutGrid, 
-  ChevronDown, 
-  ChevronRight 
-} from 'lucide-react';
-import nemIcon from '../../assets/icon-mega-menu/nệm.webp';
-import changaIcon from '../../assets/icon-mega-menu/chăn ga.svg';
-import phukienIcon from '../../assets/icon-mega-menu/phụ kiện 1.webp';
-import noithatIcon from '../../assets/icon-mega-menu/nội thất.svg';
-import goiIcon from '../../assets/icon-mega-menu/gối.svg';
-import khuyenmaiIcon from '../../assets/icon-mega-menu/khuyến mãi.svg';
->>>>>>> 90b9e3f0d575011e5f28ee7d9041f121daf4cfc2
+
 
 function MegaMenu() {
   // 1. Cập nhật icon thành đường dẫn hình ảnh (URL)
   const categories = [
     {
       name: "Nệm",
-      icon: nemIcon, // Truyền link ảnh vào đây
+      icon: nemIcon, 
       hasSub: true,
       subCategories: [
         {
@@ -176,13 +163,13 @@ function MegaMenu() {
               className="group/item flex items-center justify-between px-4 py-4 hover:bg-gray-200 hover:text-[#004225] transition-colors border-b border-gray-50 last:border-0"
             >
               <div className="flex items-center space-x-3">
-                {/* Thay đổi từ Component sang thẻ img */}
+                
                 <div className="w-6 h-6 flex items-center justify-center">
                   <img
                     src={category.icon}
                     alt={category.name}
                     className="w-full h-full object-contain grayscale group-hover/item:grayscale-0 transition-all"
-                    // Mẹo: grayscale giúp icon đồng màu xám, khi hover sẽ hiện màu gốc của ảnh
+                    
                   />
                 </div>
                 <span className="font-medium">{category.name}</span>
