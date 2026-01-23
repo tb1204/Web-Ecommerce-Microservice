@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 
->>>>>>> 49dadbabcd4018fe02c5e524895f68ae774784f8
 import { LayoutGrid, ChevronDown, ChevronRight } from "lucide-react";
 import nemIcon from "../../assets/icon-mega-menu/nệm.webp";
 import changaIcon from "../../assets/icon-mega-menu/chăn ga.svg";
@@ -9,10 +6,6 @@ import phukienIcon from "../../assets/icon-mega-menu/phụ kiện 1.webp";
 import noithatIcon from "../../assets/icon-mega-menu/nội thất.svg";
 import goiIcon from "../../assets/icon-mega-menu/gối.svg";
 import khuyenmaiIcon from "../../assets/icon-mega-menu/khuyến mãi.svg";
-<<<<<<< HEAD
-=======
-
->>>>>>> 49dadbabcd4018fe02c5e524895f68ae774784f8
 
 function MegaMenu() {
   // 1. Cập nhật icon thành đường dẫn hình ảnh (URL)

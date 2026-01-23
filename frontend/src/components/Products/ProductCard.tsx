@@ -3,27 +3,7 @@ import { Link } from "react-router-dom";
 import { ShoppingCart, Star, StarHalf, Heart, CirclePlus } from "lucide-react";
 import image_nem from "../../assets/about.webp";
 
-interface ProductImage {
-  url: string;
-  is_primary: boolean;
-}
-
-export interface Product {
-  _id: string;
-  name: string;
-  sku?: string;
-  product_code?: string;
-  brand?: string;
-  origin?: string;
-  price: number;
-  stock_quantity: number;
-  originalPrice?: number;
-  images: ProductImage[];
-  status: "selling" | "stopselling";
-  rating?: number;
-  reviewCount?: number;
-  category?: { name: string; code: string };
-}
+import type {Product} from "../Products/InterfaceItem";
 
 interface ProductCardProps {
   products?: Product[];
@@ -68,6 +48,7 @@ const DEFAULT_FAKE_PRODUCTS: Product[] = [
     reviewCount: 66,
     stock_quantity: 0,
   },
+
 ];
 
 const ProductCard: React.FC<ProductCardProps> = ({
@@ -234,3 +215,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
 };
 
 export default ProductCard;
+
+
+
+
+

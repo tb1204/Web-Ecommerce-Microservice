@@ -18,17 +18,11 @@ interface NavItem {
 function Menu() {
   const menuItems: NavItem[] = [
     { label: "Trang chủ", href: "/" },
-<<<<<<< HEAD
-    { label: "Flash sale", href: "/flashsale" },
-    { label: "Sản phẩm", href: "/collections/all", hasDropdown: true },
-    { label: "Giới thiệu", href: "/about" },
-    { label: "Liên hệ", href: "contact" },
-=======
-    { label: "Flash Sale", href: "/", hasFlash: true }, 
+    { label: "Flash Sale", href: "/flashsale", hasFlash: true }, 
     { label: "Sản phẩm", href: "/collections/all", hasDropdown: true },
     { label: "Giới thiệu", href: "/about" },
     { label: "Liên hệ", href: "/contact" },
->>>>>>> 49dadbabcd4018fe02c5e524895f68ae774784f8
+
   ];
 
 // data mau

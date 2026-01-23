@@ -2,12 +2,15 @@
 import { Link } from "react-router-dom";
 import Banner from "../components/common/Banner";
 import ProductGrid from "../components/Products/ProductGrid";
-
+import ItemProductGrid from "../components/layouts/ItemProductGrid"
+//import ProductBundle from "../components/Products/ProductBundle"
 function Home() {
   return (
     <>
       <Banner></Banner>
       <ProductGrid></ProductGrid>
+      <ItemProductGrid></ItemProductGrid>
+      {/* <ProductBundle></ProductBundle> */}
       <div className="space-y-4">
         <h1 className="text-2xl font-bold">Home Page</h1>
 
