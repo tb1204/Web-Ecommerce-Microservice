@@ -6,7 +6,7 @@ import { ThemeProvider } from "./context/ThemeContext.tsx";
 import { ClerkProvider } from "@clerk/clerk-react";
 
 const clerk_key = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
-// console.log("ton tai", clerk_key);
+
 if (clerk_key) {
   console.log("lay duoc key");
 } else {
@@ -20,5 +20,5 @@ createRoot(document.getElementById("root")!).render(
         <App />
       </ThemeProvider>
     </ClerkProvider>
-  </StrictMode>
+  </StrictMode>,
 );

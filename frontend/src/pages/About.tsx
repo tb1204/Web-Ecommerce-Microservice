@@ -2,6 +2,7 @@ import { useState } from "react";
 import about from "../assets/about.webp";
 import flashsale from "../assets/flash-sale-3.webp";
 import ProductGrid from "../components/Products/ProductGrid";
+import { Link } from "react-router-dom";
 interface TabItem {
   title: string;
   content: string;
@@ -31,13 +32,15 @@ const About = () => {
     },
   };
   return (
-    <div className="flex flex-col mx-auto w-full md:w-4/5 justify-center items-center">
-      <nav className="w-full text-sm text-gray-500 mb-6 uppercase tracking-wider text-left self-start ">
-        <span className="hover:text-green-800 cursor-pointer">Trang chủ</span>
+    <div className="flex flex-col  mx-auto w-full md:w-4/5 justify-center items-center">
+      <nav className=" mt-1 w-full text-sm text-gray-500 mb-6 uppercase tracking-wider text-left self-start ">
+        <Link to="/" className="hover:text-green-800 cursor-pointer">
+          Trang chủ
+        </Link>
         <span className="mx-2">/</span>
         <span className="text-gray-400">Giới thiệu</span>
       </nav>
-      <div className="w-full">
+      <div className="w-full ">
         <div>
           <h1 className="text-center text-2xl font-bold mb-4">Giới Thiệu</h1>
           <img src={about} alt="about" className="rounded-lg object-cover" />

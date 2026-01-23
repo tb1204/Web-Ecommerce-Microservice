@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
 import awardImage from "../assets/awards/awards.jpg";
 
-import certificate1 from "../assets/chung-nhan-va-giai-thuong/flash-sale-3.webp";
-import certificate2 from "../assets/chung-nhan-va-giai-thuong/flash-sale-3.webp";
 import customerReviewImage from "../assets/chung-nhan-va-giai-thuong/flash-sale-3.webp";
 
 const AwardsAndCertifications = () => {
@@ -59,61 +57,6 @@ const AwardsAndCertifications = () => {
             />
           </div>
         </div>
-
-        {/* Phần Các Chứng nhận chất lượng */}
-        {/* <div className="mb-16">
-          <h2 className="text-center text-3xl font-bold text-[#033d21] mb-8">
-            Các Chứng Nhận Chất Lượng
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4 md:px-0">
-            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-              <img
-                src={certificate1}
-                alt="Chứng nhận ISO 9001"
-                className="w-full h-auto object-cover rounded mb-4"
-              />
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                ISO 9001:2015
-              </h3>
-              <p className="text-gray-600 text-sm">
-                Chứng nhận hệ thống quản lý chất lượng đạt tiêu chuẩn quốc tế,
-                đảm bảo mọi quy trình sản xuất và dịch vụ của ARTISANO luôn nhất
-                quán và hiệu quả.
-              </p>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-              <img
-                src={certificate2}
-                alt="Chứng nhận OEKO-TEX Standard 100"
-                className="w-full h-auto object-cover rounded mb-4"
-              />
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                OEKO-TEX Standard 100
-              </h3>
-              <p className="text-gray-600 text-sm">
-                Xác nhận các sản phẩm của chúng tôi không chứa chất độc hại, an
-                toàn tuyệt đối cho sức khỏe người dùng, kể cả trẻ em và người có
-                làn da nhạy cảm.
-              </p>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-              <img
-                src={awardImage}
-                alt="Chứng nhận thân thiện môi trường"
-                className="w-full h-auto object-cover rounded mb-4"
-              />
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                Chứng nhận Xanh
-              </h3>
-              <p className="text-gray-600 text-sm">
-                Cam kết sử dụng nguyên liệu bền vững và quy trình sản xuất thân
-                thiện với môi trường.
-              </p>
-            </div>
-          </div>
-        </div> */}
 
         {/* Phần Đánh giá từ Khách hàng */}
         <div className="bg-gray-50 p-8 md:p-12 rounded-2xl shadow-inner mb-16">

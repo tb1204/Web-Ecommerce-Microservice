@@ -2,7 +2,7 @@ import { MapPin, Phone, Mail } from "lucide-react";
 
 const ContactPage = () => {
   return (
-    <div className="max-w-7xl mx-auto px-4 py-10 font-sans text-gray-800">
+    <div className="max-w-7xl mx-auto px-4 pb-10 mt-4 text-gray-800">
       {/* Breadcrumb đơn giản */}
       <nav className="text-sm text-gray-500 mb-6 uppercase tracking-wider">
         <span className="hover:text-green-800 cursor-pointer">Trang chủ</span>

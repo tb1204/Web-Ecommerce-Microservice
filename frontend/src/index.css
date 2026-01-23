@@ -5,6 +5,10 @@ body {
   font-family: "Roboto", system-ui, sans-serif;
 }
 
+html,
+body {
+  overflow-x: visible;
+}
 @keyframes fadeInUp {
   from {
     opacity: 0;

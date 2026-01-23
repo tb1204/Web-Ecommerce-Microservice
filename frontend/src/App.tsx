@@ -12,6 +12,10 @@ import ContactPage from "./pages/ContactPage";
 import ScrollToTop from "./components/common/ScrollToTop";
 import AwardsAndCertifications from "./pages/AwardsAndCertifications";
 import BrandStory from "./pages/BrandStory";
+import ProductCard from "./components/Products/ProductCard";
+import ProductDetails from "./components/Products/ProductDetails";
+import NotFound from "./pages/NotFound";
+import FlashSalePage from "./pages/FlashSalePage";
 
 function App() {
   return (
@@ -26,11 +30,13 @@ function App() {
           <Route path="contact" element={<ContactPage />} />
           <Route path="awards" element={<AwardsAndCertifications />} />
           <Route path="brandstory" element={<BrandStory />} />
+          <Route path="flashsale" element={<FlashSalePage />} />
+          <Route path="products" element={<ProductCard />} />
+          <Route path="productdetails" element={<ProductDetails />} />
+          <Route path="product/:id" element={<ProductDetails />} />
+          <Route path="collections/:collection" element={<CollectionPage />} />
 
-          <Route
-            path="collections/:collection"
-            element={<CollectionPage />}
-          ></Route>
+          <Route path="*" element={<NotFound />} />
         </Route>
         <Route
           path="/admin"
