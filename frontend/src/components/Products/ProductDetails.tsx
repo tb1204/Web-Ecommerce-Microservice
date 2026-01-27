@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+
 import { useParams, Link } from "react-router-dom";
 import {
   ShoppingCart,
@@ -10,7 +11,6 @@ import {
   Truck,
   ShieldCheck,
   Heart,
-  Share2,
   Eye,
 } from "lucide-react";
 import { toast } from "sonner";

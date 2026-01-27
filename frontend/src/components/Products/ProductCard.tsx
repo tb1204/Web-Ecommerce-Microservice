@@ -3,34 +3,16 @@ import { Link } from "react-router-dom";
 import { ShoppingCart, Star, StarHalf, Heart, CirclePlus } from "lucide-react";
 import image_nem from "../../assets/about.webp";
 
-interface ProductImage {
-  url: string;
-  is_primary: boolean;
-}
-
-export interface Product {
-  _id: string;
-  name: string;
-  sku?: string;
-  product_code?: string;
-  brand?: string;
-  origin?: string;
-  price: number;
-  stock_quantity: number;
-  originalPrice?: number;
-  images: ProductImage[];
-  status: "selling" | "stopselling";
-  rating?: number;
-  reviewCount?: number;
-  category?: { name: string; code: string };
-}
+import type { Product } from "../Products/InterfaceItem";
 
 interface ProductCardProps {
   products?: Product[];
   loading?: boolean;
+  onSelect?: (product: Product) => void;
+  selectedProductId?: string;
+  isBundleMode?: boolean;
 }
 
-// DỮ LIỆU GÁN CỨNG (Mock data để test các trạng thái khác nhau)
 const DEFAULT_FAKE_PRODUCTS: Product[] = [
   {
     _id: "p1",
@@ -73,69 +55,61 @@ const DEFAULT_FAKE_PRODUCTS: Product[] = [
 const ProductCard: React.FC<ProductCardProps> = ({
   products = DEFAULT_FAKE_PRODUCTS,
   loading = false,
+  onSelect,
+  selectedProductId,
+  isBundleMode = false,
 }) => {
   const renderStars = (rating: number) => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
       if (i <= Math.floor(rating)) {
-        stars.push(
-          <Star
-            key={i}
-            size={12}
-            className="fill-orange-400 text-orange-400"
-          />,
-        );
+        stars.push(<Star key={i} size={14} className="fill-orange-400 text-orange-400" />);
       } else if (i === Math.ceil(rating) && rating % 1 !== 0) {
-        stars.push(
-          <StarHalf
-            key={i}
-            size={12}
-            className="fill-orange-400 text-orange-400"
-          />,
-        );
+        stars.push(<StarHalf key={i} size={14} className="fill-orange-400 text-orange-400" />);
       } else {
-        stars.push(<Star key={i} size={12} className="text-gray-300" />);
+        stars.push(<Star key={i} size={14} className="text-gray-300" />);
       }
     }
     return stars;
   };
 
-  if (loading)
-    return <div className="text-center py-10 font-medium">Đang tải...</div>;
+  if (loading) {
+    return <div className="text-center py-10 font-medium text-gray-500">Đang tải sản phẩm...</div>;
+  }
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4">
+    <div 
+      className={`grid gap-4 md:gap-6 ${
+        isBundleMode 
+          ? "grid-cols-3 md:grid-cols-3 lg:grid-cols-4" // Cố định 3 cột khi tạo Bundle
+          : "grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5" // Giữ 4-5 cột ở trang thường
+      }`}
+    >
       {products.map((product) => {
-        const hasDiscount =
-          product.originalPrice && product.originalPrice > product.price;
+        const hasDiscount = product.originalPrice && product.originalPrice > product.price;
         const displayDiscount = hasDiscount
-          ? Math.round(
-              ((product.originalPrice! - product.price) /
-                product.originalPrice!) *
-                100,
-            )
+          ? Math.round(((product.originalPrice! - product.price) / product.originalPrice!) * 100)
           : 0;
 
-        // BIẾN KIỂM TRA TRẠNG THÁI MUA HÀNG
         const isStopSelling = product.status === "stopselling";
-        const isOutOfStock =
-          product.status === "selling" && product.stock_quantity <= 0;
-        const canBuy =
-          product.status === "selling" && product.stock_quantity > 0;
+        const isOutOfStock = product.status === "selling" && product.stock_quantity <= 0;
+        const canBuy = product.status === "selling" && product.stock_quantity > 0;
+        const isSelected = selectedProductId === product._id;
 
         return (
           <div
             key={product._id}
-            className="group bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col h-full"
+            className={`group bg-white rounded-xl border transition-all duration-300 flex flex-col h-full overflow-hidden ${
+              isBundleMode && isSelected
+                ? "border-green-600 ring-2 ring-green-100 scale-[1.01]"
+                : "border-gray-200 hover:shadow-lg"
+            }`}
           >
-            {/* 1. PHẦN ẢNH VÀ BADGE TRẠNG THÁI */}
-            <div className="relative aspect-[4/5] overflow-hidden bg-gray-50 rounded-t-xl">
-              <Link to={`/product/${product._id}`}>
+            {/* PHẦN ẢNH */}
+            <div className="relative aspect-square overflow-hidden bg-gray-50">
+              <Link to={`/product/${product._id}`} className="block h-full">
                 <img
-                  src={
-                    product.images.find((img) => img.is_primary)?.url ||
-                    product.images[0]?.url
-                  }
+                  src={product.images.find((img) => img.is_primary)?.url || product.images[0]?.url}
                   alt={product.name}
                   className={`w-full h-full object-cover transition-transform duration-700 ${
                     canBuy ? "group-hover:scale-110" : ""
@@ -143,85 +117,96 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 />
               </Link>
 
-              {/* Nút yêu thích và thêm nhanh (Chỉ hiện khi có thể mua) */}
-              {canBuy && (
-                <div className="absolute top-2 -right-10 group-hover:right-2 transition-all duration-300 flex flex-col gap-2">
-                  <button className="p-1.5 bg-white rounded-full shadow-md text-gray-600 hover:bg-[#1a4d32] hover:text-white">
-                    <Heart size={16} />
-                  </button>
-                  <button className="p-1.5 bg-white rounded-full shadow-md text-gray-600 hover:bg-[#1a4d32] hover:text-white">
-                    <CirclePlus size={16} />
-                  </button>
-                </div>
-              )}
-
-              {/* Nhãn giảm giá */}
+              {/* Badge giảm giá trong ảnh */}
               {hasDiscount && canBuy && (
-                <div className="absolute top-2 left-2 bg-[#ff6b35] text-white text-[10px] font-bold px-1.5 py-0.5 rounded shadow-sm">
+                <div className="absolute top-2 left-2 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-sm">
                   -{displayDiscount}%
                 </div>
               )}
 
-              {/* LOGIC HIỂN THỊ BADGE TRÊN ẢNH */}
-              {isStopSelling ? (
-                <div className="absolute inset-0 bg-gray-500/60 flex items-center justify-center text-white font-bold text-xs uppercase tracking-wider text-center px-2">
-                  Ngừng kinh doanh
+              {/* Overlay trạng thái */}
+              {(isStopSelling || isOutOfStock) && (
+                <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px] flex items-center justify-center text-white font-bold text-[10px] uppercase text-center px-2">
+                  {isStopSelling ? "Ngừng kinh doanh" : "Hết hàng"}
                 </div>
-              ) : isOutOfStock ? (
-                <div className="absolute inset-0 bg-black/40 flex items-center justify-center text-white font-bold text-xs uppercase tracking-wider">
-                  Hết hàng
+              )}
+
+              {/* Icon yêu thích (Mode thường) */}
+              {!isBundleMode && canBuy && (
+                <div className="absolute top-2 -right-10 group-hover:right-2 transition-all duration-300 flex flex-col gap-2">
+                  <button className="p-1.5 bg-white rounded-full shadow-md text-gray-600 hover:bg-green-800 hover:text-white transition-colors">
+                    <Heart size={14} />
+                  </button>
+                  <button className="p-1.5 bg-white rounded-full shadow-md text-gray-600 hover:bg-green-800 hover:text-white transition-colors">
+                    <CirclePlus size={14} />
+                  </button>
                 </div>
-              ) : null}
+              )}
             </div>
 
-            {/* 2. PHẦN THÔNG TIN CHI TIẾT */}
-            <div className="p-2 md:p-3 flex flex-col flex-grow">
-              <p className="text-[10px] text-gray-400 uppercase font-bold mb-1">
-                {product.brand}
-              </p>
-              <Link to={`/product/${product._id}`}>
-                <h3 className="text-[12px] md:text-[14px] font-semibold text-gray-800 line-clamp-2 min-h-[32px] md:min-h-[40px] hover:text-[#1a4d32] leading-tight">
-                  {product.name}
-                </h3>
-              </Link>
+            {/* PHẦN THÔNG TIN */}
+            <div className="p-3 flex flex-col flex-grow">
+              <div className="flex-grow">
+                <p className="text-[10px] text-gray-400 uppercase font-bold tracking-widest mb-1">
+                  {product.brand}
+                </p>
+                <Link to={`/product/${product._id}`}>
+                  {/* Cố định h-10 để chống lệch khi tên sản phẩm ngắn/dài */}
+                  <h3 className="text-sm font-bold text-gray-800 line-clamp-2 h-10 hover:text-green-700 leading-tight mb-2 transition-colors">
+                    {product.name}
+                  </h3>
+                </Link>
 
-              <div className="mt-1 flex items-center gap-1">
-                <div className="flex">{renderStars(product.rating || 0)}</div>
-                <span className="text-gray-400 text-[9px]">
-                  ({product.reviewCount})
-                </span>
-              </div>
-
-              {/* 3. PHẦN GIÁ VÀ NÚT BẤM */}
-              <div className="mt-auto pt-3">
-                <div className="flex justify-start items-end min-h-[24px]">
-                  <span
-                    className={`font-bold text-sm md:text-base whitespace-nowrap ${canBuy ? "text-[#d71920]" : "text-gray-400"}`}
-                  >
-                    {product.price.toLocaleString("vi-VN")}₫
-                  </span>
-                  {hasDiscount && canBuy && (
-                    <span className="text-gray-400 ml-1 line-through text-[11px] md:text-sm font-light">
-                      {product.originalPrice?.toLocaleString("vi-VN")}₫
-                    </span>
-                  )}
+                {/* Rating cố định chiều cao */}
+                <div className="flex items-center gap-1 h-4 mb-3">
+                  <div className="flex">{renderStars(product.rating ?? 0)}</div>
+                  <span className="text-gray-400 text-[10px]">({product.reviewCount ?? 0})</span>
                 </div>
 
-                {/* LOGIC NÚT BẤM DƯỚI CARD */}
-                {canBuy ? (
-                  <button className="w-full mt-2 py-2 border border-[#1a4d32] text-[#1a4d32] rounded-lg font-bold text-[10px] md:text-xs flex items-center justify-center gap-1.5 hover:bg-[#1a4d32] hover:text-white transition-all group/btn">
-                    <ShoppingCart
-                      size={14}
-                      className="group-hover/btn:animate-bounce"
-                    />
-                    Thêm vào giỏ
+                {/* Vùng Giá: min-h-[42px] để card không nhảy khi có/không có giá gốc */}
+                <div className="min-h-[42px] flex flex-col justify-end">
+                  {hasDiscount && canBuy ? (
+                    <div className="flex items-center gap-2 mb-0.5">
+                      <span className="text-gray-400 line-through text-[11px]">
+                        {product.originalPrice?.toLocaleString("vi-VN")}₫
+                      </span>
+                      <span className="text-green-600 text-[10px] font-bold">-{displayDiscount}%</span>
+                    </div>
+                  ) : <div className="h-4" />}
+                  
+                  <p className={`font-black text-base leading-none ${canBuy ? "text-red-600" : "text-gray-400"}`}>
+                    {product.price.toLocaleString("vi-VN")}₫
+                  </p>
+                </div>
+              </div>
+
+              {/* PHẦN NÚT BẤM (Luôn đẩy xuống đáy) */}
+              <div className="mt-4">
+                {isBundleMode ? (
+                  <button
+                    onClick={() => onSelect?.(product)}
+                    disabled={!canBuy}
+                    className={`w-full py-2.5 rounded-lg font-bold text-[11px] uppercase tracking-wider transition-all border-2 ${
+                      isSelected
+                        ? "bg-green-600 text-white border-green-600"
+                        : "bg-white text-green-700 border-green-600 hover:bg-green-600 hover:text-white"
+                    } disabled:bg-gray-100 disabled:border-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed`}
+                  >
+                    {isSelected ? "ĐÃ CHỌN" : "CHỌN SẢN PHẨM"}
                   </button>
                 ) : (
                   <button
-                    disabled
-                    className="w-full mt-2 py-2 border border-gray-200 text-gray-400 bg-gray-50 rounded-lg font-bold text-[10px] md:text-xs flex items-center justify-center cursor-not-allowed"
+                    disabled={!canBuy}
+                    className="w-full py-2.5 bg-green-900 text-white rounded-lg font-bold text-[11px] uppercase tracking-wider hover:bg-green-800 flex items-center justify-center gap-2 transition-all disabled:bg-gray-200 disabled:cursor-not-allowed"
                   >
-                    {isStopSelling ? "NGỪNG KINH DOANH" : "HẾT HÀNG"}
+                    {canBuy ? (
+                      <>
+                        <ShoppingCart size={14} />
+                        THÊM VÀO GIỎ
+                      </>
+                    ) : (
+                      isStopSelling ? "NGỪNG BÁN" : "HẾT HÀNG"
+                    )}
                   </button>
                 )}
               </div>

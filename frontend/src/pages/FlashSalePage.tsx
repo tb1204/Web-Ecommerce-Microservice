@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ProductCard from "../components/Products/ProductCard";
-import type { Product } from "../components/Products/ProductCard";
+import type { Product } from "../components/Products/InterfaceItem";
 import image_nem from "../assets/about.webp";
 import banner_flashsale from "../assets/flash-sale/banner-sale.webp";
 import changa from "../assets/chan-ga/bo-chan-ga.webp";
