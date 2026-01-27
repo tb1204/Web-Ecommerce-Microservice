@@ -91,6 +91,7 @@ const FlashSalePage = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
+        console.log(entries);
         entries.forEach((entry) => {
           if (entry.isIntersecting) setActiveCategory(entry.target.id);
         });
@@ -109,7 +110,7 @@ const FlashSalePage = () => {
     const element = sectionRefs.current[code];
     if (element) {
       window.scrollTo({
-        top: element.getBoundingClientRect().top + window.pageYOffset - 80,
+        top: element.getBoundingClientRect().top + window.scrollY - 80,
         behavior: "smooth",
       });
     }
@@ -163,7 +164,6 @@ const FlashSalePage = () => {
               </h2>
               <div className="flex-1 h-[2px] bg-gray-200"></div>
             </div>
-
             {/* --- THÊM THẺ IMG BANNER DANH MỤC Ở ĐÂY --- */}
             <div className="w-full mb-8">
               <img
@@ -172,7 +172,6 @@ const FlashSalePage = () => {
                 className="w-full h-auto object-cover rounded-2xl shadow-sm hover:opacity-90 transition-opacity cursor-pointer"
               />
             </div>
-
             {/* Danh sách sản phẩm */}
             {FAKE_DATA_BY_CAT[cat.code]?.length > 0 ? (
               <ProductCard products={FAKE_DATA_BY_CAT[cat.code]} />
@@ -181,7 +180,6 @@ const FlashSalePage = () => {
                 Sản phẩm đang cập nhật...
               </div>
             )}
-
             <div className="mt-10 flex justify-center">
               <Link
                 to={`/collections/all?category=${cat.code}`}

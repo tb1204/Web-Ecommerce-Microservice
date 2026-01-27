@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> 49dadbabcd4018fe02c5e524895f68ae774784f8
 import { LayoutGrid, ChevronDown, ChevronRight } from "lucide-react";
 import nemIcon from "../../assets/icon-mega-menu/nệm.webp";
 import changaIcon from "../../assets/icon-mega-menu/chăn ga.svg";
@@ -9,17 +5,13 @@ import phukienIcon from "../../assets/icon-mega-menu/phụ kiện 1.webp";
 import noithatIcon from "../../assets/icon-mega-menu/nội thất.svg";
 import goiIcon from "../../assets/icon-mega-menu/gối.svg";
 import khuyenmaiIcon from "../../assets/icon-mega-menu/khuyến mãi.svg";
-<<<<<<< HEAD
-=======
-
->>>>>>> 49dadbabcd4018fe02c5e524895f68ae774784f8
 
 function MegaMenu() {
   // 1. Cập nhật icon thành đường dẫn hình ảnh (URL)
   const categories = [
     {
       name: "Nệm",
-      icon: nemIcon, 
+      icon: nemIcon,
       hasSub: true,
       subCategories: [
         {
@@ -169,13 +161,11 @@ function MegaMenu() {
               className="group/item flex items-center justify-between px-4 py-4 hover:bg-gray-200 hover:text-[#004225] transition-colors border-b border-gray-50 last:border-0"
             >
               <div className="flex items-center space-x-3">
-                
                 <div className="w-6 h-6 flex items-center justify-center">
                   <img
                     src={category.icon}
                     alt={category.name}
                     className="w-full h-full object-contain grayscale group-hover/item:grayscale-0 transition-all"
-                    
                   />
                 </div>
                 <span className="font-medium">{category.name}</span>

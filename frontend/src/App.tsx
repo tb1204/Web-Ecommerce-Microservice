@@ -16,6 +16,8 @@ import ProductCard from "./components/Products/ProductCard";
 import ProductDetails from "./components/Products/ProductDetails";
 import NotFound from "./pages/NotFound";
 import FlashSalePage from "./pages/FlashSalePage";
+import AdminUserPage from "./components/Admin/AdminUserPage";
+import TestUserListPage from "./pages/TestUserListPage";
 
 function App() {
   return (
@@ -35,6 +37,9 @@ function App() {
           <Route path="productdetails" element={<ProductDetails />} />
           <Route path="product/:id" element={<ProductDetails />} />
           <Route path="collections/:collection" element={<CollectionPage />} />
+          {/* test  */}
+          <Route path="user" element={<AdminUserPage />} />
+          <Route path="test" element={<TestUserListPage />} />
 
           <Route path="*" element={<NotFound />} />
         </Route>

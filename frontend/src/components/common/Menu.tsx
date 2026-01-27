@@ -18,34 +18,42 @@ interface NavItem {
 function Menu() {
   const menuItems: NavItem[] = [
     { label: "Trang chủ", href: "/" },
-<<<<<<< HEAD
     { label: "Flash sale", href: "/flashsale" },
     { label: "Sản phẩm", href: "/collections/all", hasDropdown: true },
     { label: "Giới thiệu", href: "/about" },
     { label: "Liên hệ", href: "contact" },
-=======
-    { label: "Flash Sale", href: "/", hasFlash: true }, 
-    { label: "Sản phẩm", href: "/collections/all", hasDropdown: true },
-    { label: "Giới thiệu", href: "/about" },
-    { label: "Liên hệ", href: "/contact" },
->>>>>>> 49dadbabcd4018fe02c5e524895f68ae774784f8
   ];
 
-// data mau
+  // data mau
   const categories = [
     {
       name: "Nệm",
-      icon: nemIcon, 
-      hasSub: true, 
-      // Them href vao 
+      icon: nemIcon,
+      hasSub: true,
+      // Them href vao
       subCategories: [
         {
           title: "Kích thước",
-          items: ["100 x 200cm","120 x 200cm","140 x 200cm","160 x 200cm","180 x 200cm","200 x 200cm","220 x 200cm",],
+          items: [
+            "100 x 200cm",
+            "120 x 200cm",
+            "140 x 200cm",
+            "160 x 200cm",
+            "180 x 200cm",
+            "200 x 200cm",
+            "220 x 200cm",
+          ],
         },
         {
           title: "Giá tiền",
-          items: ["Dưới 5 triệu","5 triệu - 10 triệu","10 triệu - 15 triệu","15 triệu - 30 triệu","30 triệu - 50 triệu","Trên 50 triệu",],
+          items: [
+            "Dưới 5 triệu",
+            "5 triệu - 10 triệu",
+            "10 triệu - 15 triệu",
+            "15 triệu - 30 triệu",
+            "30 triệu - 50 triệu",
+            "Trên 50 triệu",
+          ],
         },
         {
           title: "Loại sản phẩm",
@@ -53,11 +61,26 @@ function Menu() {
         },
         {
           title: "Thương hiệu",
-          items: ["Amando","Aeroflow","Dunlopillo","Goodnight","Gummi","Kim Cương","Liên Á","Comfy",],
+          items: [
+            "Amando",
+            "Aeroflow",
+            "Dunlopillo",
+            "Goodnight",
+            "Gummi",
+            "Kim Cương",
+            "Liên Á",
+            "Comfy",
+          ],
         },
         {
           title: "Nhu cầu",
-          items: ["Nệm gấp gọn","Nệm hỗ trợ đau lưng","Nệm làm mát","Nệm khách sạn","Nệm cao cấp","Nệm cưới",
+          items: [
+            "Nệm gấp gọn",
+            "Nệm hỗ trợ đau lưng",
+            "Nệm làm mát",
+            "Nệm khách sạn",
+            "Nệm cao cấp",
+            "Nệm cưới",
           ],
         },
       ],
@@ -69,7 +92,16 @@ function Menu() {
       subCategories: [
         {
           title: "Loại sản phẩm",
-          items: ["Bộ ga chun","Bộ chăn ga chun","Bộ ga chun chần","Chăn lẻ","Ga lẻ","Vỏ gối lẻ","Vỏ chăn lẻ","Bộ ga phủ"],
+          items: [
+            "Bộ ga chun",
+            "Bộ chăn ga chun",
+            "Bộ ga chun chần",
+            "Chăn lẻ",
+            "Ga lẻ",
+            "Vỏ gối lẻ",
+            "Vỏ chăn lẻ",
+            "Bộ ga phủ",
+          ],
         },
         {
           title: "Kích thước",
@@ -77,7 +109,12 @@ function Menu() {
         },
         {
           title: "Giá tiền",
-          items: ["Dưới 1 triệu","Từ 1 - 2 triệu","Từ 2 - 4 triệu","Trên 4 triệu",],
+          items: [
+            "Dưới 1 triệu",
+            "Từ 1 - 2 triệu",
+            "Từ 2 - 4 triệu",
+            "Trên 4 triệu",
+          ],
         },
         { title: "Thương hiệu", items: ["Goodnight", "Amando"] },
         {
@@ -117,7 +154,7 @@ function Menu() {
       subCategories: [],
     },
   ];
-//data mau
+  //data mau
 
   return (
     <nav className="bg-[#05472a] text-white w-full font-sans shadow-lg">
@@ -135,13 +172,13 @@ function Menu() {
                   className="flex items-center space-x-1.5 hover:text-green-300 transition-colors"
                 >
                   {item.hasFlash && (
-                    <Zap 
-                      size={18} 
-                      fill="currentColor" 
-                      className="text-orange-400 animate-pulse" 
+                    <Zap
+                      size={18}
+                      fill="currentColor"
+                      className="text-orange-400 animate-pulse"
                     />
                   )}
-                  
+
                   <span className="font-bold text-lg whitespace-nowrap">
                     {item.label}
                   </span>
@@ -156,40 +193,41 @@ function Menu() {
                 {/* Dropdown cua san pham */}
                 {item.label === "Sản phẩm" && (
                   <div className="absolute top-full left-1/2 -translate-x-1/2 w-[950px] bg-white text-gray-800 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[100] border border-gray-100 rounded-b-md">
-                    <div 
-                      className="p-6 max-h-[60vh] overflow-y-auto overflow-x-hidden"
-                      // style={{ 
-                      //   scrollbarWidth: 'none', 
-                      //   msOverflowStyle: 'none' 
-                      // }}
-                    >
-                      {/* CSS ẩn thanh cuộn cho Chrome/Safari
-                      <style dangerouslySetInnerHTML={{ __html: `
-                        div::-webkit-scrollbar { display: none; }
-                      `}} /> */}
-                      
+                    <div className="p-6 max-h-[60vh] overflow-y-auto overflow-x-hidden">
                       {categories.map((cat, catIdx) => (
-                        <div key={catIdx} className={`mb-4 last:mb-0 ${catIdx !== 0 ? "pt-6 border-t border-gray-100" : ""}`}>
-                          <Link 
-                            to={"#"} 
+                        <div
+                          key={catIdx}
+                          className={`mb-4 last:mb-0 ${catIdx !== 0 ? "pt-6 border-t border-gray-100" : ""}`}
+                        >
+                          <Link
+                            to={"#"}
                             className="flex items-center space-x-2 mb-4 group w-fit "
                           >
                             {cat.icon && (
-                              <img src={cat.icon} alt={cat.name} className="w-6 h-6 object-contain" />
+                              <img
+                                src={cat.icon}
+                                alt={cat.name}
+                                className="w-6 h-6 object-contain"
+                              />
                             )}
                             <h3 className="text-[16px] font-bold text-black hover:text-green-700 uppercase leading-none transition-colors">
                               {cat.name}
                             </h3>
                           </Link>
-                          
+
                           <div className="grid grid-cols-5 gap-4">
                             {cat.subCategories.map((sub, subIdx) => (
                               <div key={subIdx}>
-                                <h4 className="font-bold text-[16px] mb-2 text-black border-b border-gray-50 pb-1">{sub.title}</h4>
+                                <h4 className="font-bold text-[16px] mb-2 text-black border-b border-gray-50 pb-1">
+                                  {sub.title}
+                                </h4>
                                 <ul className="space-y-1">
                                   {sub.items.map((subItem, iIdx) => (
                                     <li key={iIdx}>
-                                      <Link to="#" className="text-[16px] block text-gray-500 hover:text-green-700 transition-colors">
+                                      <Link
+                                        to="#"
+                                        className="text-[16px] block text-gray-500 hover:text-green-700 transition-colors"
+                                      >
                                         {subItem}
                                       </Link>
                                     </li>
