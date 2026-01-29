@@ -1,70 +1,74 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ChevronRight, ChevronLeft } from "lucide-react";
-import ProductCard from "../Products/ProductGrid";
+import ProductCard from "../Products/ProductCard";
 import type { Product } from "../Products/InterfaceItem";
 
-// Giả sử đây là banner Gummi Signature trong ảnh
+// Assets
 import collection_banner_1 from "../../assets/banner/collection_banner_1.webp";
 import image_nem from "../../assets/about.webp";
 
 const HeaderCollectionPage: React.FC = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  // Mock data khớp với ảnh của bạn
+  // Logic hỗ trợ kéo chuột (Drag-to-scroll)
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+
   const comboProducts: Product[] = [
     {
       _id: "p1",
       name: "Topper memory foam nâng đỡ êm ái Comfy Noah",
-      brand: "Comfy",
+      brand: "WolfBed",
       price: 2160000,
       originalPrice: 2400000,
       images: [{ url: image_nem, is_primary: true }],
       status: "selling",
-      rating: 0,
-      reviewCount: 0,
+      rating: 5,
+      reviewCount: 120,
       stock_quantity: 10,
     },
     {
       _id: "p2",
       name: "Chiếu điều hòa cao su Doona Aqua làm mát",
-      brand: "Doona",
+      brand: "WolfBed",
       price: 729000,
       originalPrice: 890000,
       images: [{ url: image_nem, is_primary: true }],
       status: "selling",
-      rating: 0,
-      reviewCount: 0,
+      rating: 4.8,
+      reviewCount: 92,
       stock_quantity: 10,
     },
     {
       _id: "p3",
       name: "Bảo vệ nệm Doona Bamboo chống bụi bẩn, thoáng khí",
-      brand: "Doona",
+      brand: "WolfBed",
       price: 800000,
       originalPrice: 900000,
       images: [{ url: image_nem, is_primary: true }],
       status: "selling",
-      rating: 0,
-      reviewCount: 0,
+      rating: 4.7,
+      reviewCount: 66,
       stock_quantity: 10,
     },
     {
       _id: "p4",
       name: "Ga chống thấm Goodnight Sumi mềm mại, kháng...",
-      brand: "Goodnight",
+      brand: "WolfBed",
       price: 239000,
       originalPrice: 390000,
       images: [{ url: image_nem, is_primary: true }],
       status: "selling",
-      rating: 0,
-      reviewCount: 0,
+      rating: 4.9,
+      reviewCount: 45,
       stock_quantity: 10,
     },
     {
       _id: "p5",
       name: "Chăn đông lông thỏ mềm mịn Amando Warm",
-      brand: "Amando",
+      brand: "WolfBed",
       price: 1200000,
       originalPrice: 1500000,
       images: [{ url: image_nem, is_primary: true }],
@@ -74,129 +78,131 @@ const HeaderCollectionPage: React.FC = () => {
       stock_quantity: 10,
     },
     {
-      _id: "p5",
-      name: "Chăn đông lông thỏ mềm mịn Amando Warm",
-      brand: "Amando",
-      price: 1200000,
-      originalPrice: 1500000,
+      _id: "p6",
+      name: "Nệm Foam Nhật Bản cao cấp",
+      brand: "WolfBed",
+      price: 7500000,
+      originalPrice: 10000000,
       images: [{ url: image_nem, is_primary: true }],
       status: "selling",
-      rating: 5,
-      reviewCount: 1,
+      rating: 4.8,
+      reviewCount: 92,
       stock_quantity: 10,
     },
     {
-      _id: "p5",
-      name: "Chăn đông lông thỏ mềm mịn Amando Warm",
-      brand: "Amando",
+      _id: "p7",
+      name: "Gối cao su thiên nhiên",
+      brand: "WolfBed",
       price: 1200000,
-      originalPrice: 1500000,
+      originalPrice: 1800000,
       images: [{ url: image_nem, is_primary: true }],
       status: "selling",
-      rating: 5,
-      reviewCount: 1,
+      rating: 4.7,
+      reviewCount: 66,
       stock_quantity: 10,
     },
   ];
 
+  // Xử lý kéo chuột trái
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!scrollRef.current) return;
+    setIsDragging(true);
+    setStartX(e.pageX - scrollRef.current.offsetLeft);
+    setScrollLeft(scrollRef.current.scrollLeft);
+  };
+
+  const handleMouseLeaveOrUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !scrollRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startX) * 2; // Tốc độ kéo
+    scrollRef.current.scrollLeft = scrollLeft - walk;
+  };
+
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
-      const { scrollLeft, clientWidth } = scrollRef.current;
-      const scrollAmount = clientWidth * 0.8;
-      scrollRef.current.scrollTo({
-        left:
-          direction === "left"
-            ? scrollLeft - scrollAmount
-            : scrollLeft + scrollAmount,
-        behavior: "smooth",
-      });
+      const container = scrollRef.current;
+      const firstItem = container.firstElementChild as HTMLElement;
+      if (firstItem) {
+        const gap = window.innerWidth < 768 ? 12 : 20;
+        const itemWidth = firstItem.offsetWidth + gap;
+        container.scrollBy({
+          left: direction === "left" ? -itemWidth : itemWidth,
+          behavior: "smooth",
+        });
+      }
     }
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-6 font-sans">
-      {/* 1. Tiêu đề trang */}
-      <h1 className="text-xl font-bold text-gray-900 mb-4">Tất cả sản phẩm</h1>
+    <div className="max-w-7xl mx-auto px-4 py-4 md:py-6 font-sans">
+      <h1 className="text-lg md:text-xl font-bold text-gray-900 mb-4 uppercase tracking-tight">
+        Tất cả sản phẩm
+      </h1>
 
-      {/* 2. Banner chính */}
-      <div className="w-full rounded-2xl overflow-hidden mb-6 shadow-sm">
+      <div className="w-full rounded-xl md:rounded-2xl overflow-hidden mb-6 md:mb-8 shadow-sm">
         <img
           src={collection_banner_1}
-          alt="Gummi Signature"
-          className="w-full h-auto object-cover"
+          alt="Banner"
+          className="w-full h-[160px] md:h-auto object-cover md:object-contain"
         />
       </div>
 
-      {/* 3. SECTION COMBO GIÁ SỐC (Màu xanh lá đặc trưng) */}
-      <div className="bg-[#56a77e] rounded-xl p-4 md:p-6 mb-10 relative group">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-white text-3xl md:text-5xl font-serif font-medium">
+      <div className="bg-[#56a77e] rounded-xl md:rounded-2xl p-4 md:p-6 lg:p-8 mb-10 relative group/section overflow-hidden">
+        <div className="flex justify-between items-center mb-6 md:mb-8 px-1">
+          <h2 className="text-white text-xl md:text-5xl font-serif font-medium italic leading-tight">
             Combo Giá Sốc
           </h2>
           <Link
             to="#"
-            className="flex items-center gap-1 text-white text-sm hover:opacity-80 transition-all"
+            className="flex-shrink-0 flex items-center gap-1 text-white text-[10px] md:text-sm font-semibold hover:opacity-80 transition-all border-b border-white/30 pb-0.5"
           >
             Xem tất cả{" "}
             <ChevronRight
-              size={18}
-              className="bg-white/20 rounded-full p-0.5"
+              size={14}
+              className="bg-white/20 rounded-full p-0.5 md:p-1"
             />
           </Link>
         </div>
 
-        {/* Nút điều hướng tinh tế hơn */}
         <button
           onClick={() => scroll("left")}
-          className="absolute -left-4 top-1/2 -translate-y-1/2 z-20 bg-white p-2 rounded-full shadow-xl text-green-700 opacity-0 group-hover:opacity-100 transition-all hover:bg-green-50 hidden lg:block"
+          className="absolute left-1 top-[55%] -translate-y-1/2 z-20 bg-white p-3 rounded-full shadow-xl text-green-700 opacity-0 group-hover/section:opacity-100 transition-all hover:bg-green-50 hidden lg:flex items-center justify-center border border-gray-100"
         >
-          <ChevronLeft size={28} />
+          <ChevronLeft size={24} strokeWidth={2.5} />
         </button>
         <button
           onClick={() => scroll("right")}
-          className="absolute -right-4 top-1/2 -translate-y-1/2 z-20 bg-white p-2 rounded-full shadow-xl text-green-700 opacity-0 group-hover:opacity-100 transition-all hover:bg-green-50 hidden lg:block"
+          className="absolute right-1 top-[55%] -translate-y-1/2 z-20 bg-white p-3 rounded-full shadow-xl text-green-700 opacity-0 group-hover/section:opacity-100 transition-all hover:bg-green-50 hidden lg:flex items-center justify-center border border-gray-100"
         >
-          <ChevronRight size={28} />
+          <ChevronRight size={24} strokeWidth={2.5} />
         </button>
 
-        {/* Khung cuộn sản phẩm - Layout Card trong combo */}
         <div
           ref={scrollRef}
-          className="flex overflow-x-auto gap-1 md:gap-1 scrollbar-hide snap-x snap-mandatory"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          onMouseDown={handleMouseDown}
+          onMouseLeave={handleMouseLeaveOrUp}
+          onMouseUp={handleMouseLeaveOrUp}
+          onMouseMove={handleMouseMove}
+          className={`flex overflow-x-auto gap-3 md:gap-5 scrollbar-hide snap-x snap-mandatory pb-4 scroll-smooth touch-pan-x select-none ${isDragging ? "cursor-grabbing" : "cursor-grab"}`}
+          style={{
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+            WebkitOverflowScrolling: "touch",
+          }}
         >
           {comboProducts.map((product) => (
             <div
               key={product._id}
-              // Trong ảnh là 5 cột, mỗi card chiếm khoảng 20%
-              className="flex-none w-[280px] md:w-[240px] lg:w-[calc(20%-13px)] snap-start"
+              className={`flex-none w-[calc(50%-6px)] md:w-[calc(33.333%-14px)] lg:w-[calc(25%-15px)] snap-start ${isDragging ? "pointer-events-none" : ""}`}
             >
               <ProductCard products={[product]} isBundleMode={false} />
             </div>
           ))}
-        </div>
-      </div>
-
-      {/* 4. Section lọc & danh sách bên dưới */}
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        {/* ... Phần Filter của bạn giữ nguyên ... */}
-
-        <div className="lg:col-span-3">
-          {/* Toolbar hiển thị số lượng */}
-          <div className="flex justify-between items-center bg-gray-50 p-3 rounded-lg mb-6">
-            <span className="text-sm font-medium">
-              Hiển thị {comboProducts.length} sản phẩm
-            </span>
-            <select className="bg-transparent text-sm border-none focus:ring-0 cursor-pointer font-semibold">
-              <option>Mới nhất</option>
-              <option>Giá thấp đến cao</option>
-            </select>
-          </div>
-
-          {/* Danh sách sản phẩm chính */}
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {/* Map products ở đây */}
-          </div>
         </div>
       </div>
     </div>
