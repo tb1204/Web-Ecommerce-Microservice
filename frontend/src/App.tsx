@@ -12,17 +12,19 @@ import ContactPage from "./pages/ContactPage";
 import ScrollToTop from "./components/common/ScrollToTop";
 import AwardsAndCertifications from "./pages/AwardsAndCertifications";
 import BrandStory from "./pages/BrandStory";
-import ProductCard from "./components/Products/ProductCard";
+import ProductCard from "./components/Products/ProductGrid";
 import ProductDetails from "./components/Products/ProductDetails";
 import NotFound from "./pages/NotFound";
 import FlashSalePage from "./pages/FlashSalePage";
 import AdminUserPage from "./components/Admin/AdminUserPage";
 import TestUserListPage from "./pages/TestUserListPage";
+import { Toaster } from "sonner";
 
 function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      <Toaster position="top-right" />
       <Routes>
         <Route path="/" element={<UserLayout />}>
           <Route index element={<Home />} />

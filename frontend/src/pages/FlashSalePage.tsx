@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import ProductCard from "../components/Products/ProductCard";
+import ProductGrid from "../components/Products/ProductGrid";
 import type { Product } from "../components/Products/InterfaceItem";
 import image_nem from "../assets/about.webp";
 import banner_flashsale from "../assets/flash-sale/banner-sale.webp";
@@ -174,7 +174,7 @@ const FlashSalePage = () => {
             </div>
             {/* Danh sách sản phẩm */}
             {FAKE_DATA_BY_CAT[cat.code]?.length > 0 ? (
-              <ProductCard products={FAKE_DATA_BY_CAT[cat.code]} />
+              <ProductGrid products={FAKE_DATA_BY_CAT[cat.code]} />
             ) : (
               <div className="py-20 text-center border-2 border-dashed border-gray-200 rounded-3xl bg-white text-gray-400">
                 Sản phẩm đang cập nhật...

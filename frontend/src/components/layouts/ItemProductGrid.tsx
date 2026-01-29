@@ -1,7 +1,7 @@
-import React from 'react';
-import ProductCard from "../Products/ProductCard"; // Đổi tên cho đúng file mới bạn gửi
-import type { Product } from "../Products/InterfaceItem"; 
-import { Link } from 'react-router-dom';
+import React from "react";
+import ProductCard from "../Products/ProductGrid"; // Đổi tên cho đúng file mới bạn gửi
+import type { Product } from "../Products/InterfaceItem";
+import { Link } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
 
 // Import hình ảnh
@@ -83,7 +83,7 @@ const products: Product[] = [
     rating: 4.5,
     reviewCount: 45,
     stock_quantity: 5,
-  }
+  },
 ];
 
 const ProductGrid = () => {
@@ -92,16 +92,16 @@ const ProductGrid = () => {
       {/* 2 Banner phía trên */}
       <div className="flex flex-col md:flex-row gap-4 mb-10">
         <div className="flex-1 overflow-hidden rounded-xl h-[200px] md:h-[280px]">
-          <img 
+          <img
             src={banner_phu_1}
-            alt="Khuyến mãi nệm" 
+            alt="Khuyến mãi nệm"
             className="w-full h-full object-cover transition-transform duration-700 cursor-pointer hover:scale-105"
           />
         </div>
         <div className="flex-1 overflow-hidden rounded-xl h-[200px] md:h-[280px]">
-          <img 
-            src={banner_phu_2} 
-            alt="Gối cao su thiên nhiên" 
+          <img
+            src={banner_phu_2}
+            alt="Gối cao su thiên nhiên"
             className="w-full h-full object-cover transition-transform duration-700 cursor-pointer hover:scale-105"
           />
         </div>
@@ -116,9 +116,24 @@ const ProductGrid = () => {
         </Link>
 
         <div className="flex items-center gap-4 md:gap-8 text-sm md:text-base font-medium text-gray-600">
-          <Link to="/nem-bong-ep" className="hover:text-[#1a4d32] hover:underline underline-offset-8 transition-all">Nệm bông ép</Link>
-          <Link to="/nem-cao-su" className="hover:text-[#1a4d32] hover:underline underline-offset-8 transition-all">Nệm cao su</Link>
-          <Link to="/nem-lo-xo" className="hover:text-[#1a4d32] hover:underline underline-offset-8 transition-all">Nệm lò xo</Link>
+          <Link
+            to="/nem-bong-ep"
+            className="hover:text-[#1a4d32] hover:underline underline-offset-8 transition-all"
+          >
+            Nệm bông ép
+          </Link>
+          <Link
+            to="/nem-cao-su"
+            className="hover:text-[#1a4d32] hover:underline underline-offset-8 transition-all"
+          >
+            Nệm cao su
+          </Link>
+          <Link
+            to="/nem-lo-xo"
+            className="hover:text-[#1a4d32] hover:underline underline-offset-8 transition-all"
+          >
+            Nệm lò xo
+          </Link>
         </div>
       </div>
 
@@ -128,11 +143,11 @@ const ProductGrid = () => {
 
       {/* Nút xem thêm */}
       <div className="mt-10 flex justify-center">
-        <Link 
-          to="/collections/all" 
+        <Link
+          to="/collections/all"
           className="flex items-center gap-2 text-gray-700 hover:text-[#1a4d32] font-medium transition-all group"
         >
-          Xem thêm sản phẩm 
+          Xem thêm sản phẩm
           <div className="w-6 h-6 rounded-full border border-gray-400 flex items-center justify-center group-hover:border-[#1a4d32] group-hover:bg-[#1a4d32] group-hover:text-white transition-all">
             <ChevronRight size={14} />
           </div>

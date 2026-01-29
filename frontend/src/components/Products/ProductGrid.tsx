@@ -1,245 +1,255 @@
-import { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-//changa
+import { ShoppingCart, Star, StarHalf, Heart, CirclePlus } from "lucide-react";
+import image_nem from "../../assets/about.webp";
 
-import bochanga from "../../assets/chan-ga/bo-chan-ga.webp";
-import chanvavochan from "../../assets/chan-ga/chan-va-vo-chan-.webp";
-import gale from "../../assets/chan-ga/ga-le.webp";
-import vogoile from "../../assets/chan-ga/vo-goi-le.webp";
-import changagoitreem from "../../assets/chan-ga/chan-ga-goi-tre-em.webp";
-import bogachun from "../../assets/chan-ga/bo-ga-chun.webp";
-import bogaphu from "../../assets/chan-ga/bo-ga-phu.webp";
-import vochanle from "../../assets/chan-ga/vo-chan-le.webp";
-import chanle from "../../assets/chan-ga/chan-le.webp";
-import bogachunchan from "../../assets/chan-ga/bo-ga-chun-chan.webp";
+import type { Product } from "./InterfaceItem";
 
-//goi
-import goibong from "../../assets/goi/goi-bong.webp";
-import goifoam from "../../assets/goi/goi-foam.webp";
-import goicaosu from "../../assets/goi/goi-cao-su.webp";
-import goilongvu from "../../assets/goi/goi-long-vu.webp";
-import goilammat from "../../assets/goi/goi-lam-mat.webp";
-import goigiamdauvaigay from "../../assets/goi/goi-giam-dau-vai-gay.webp";
-
-//nem
-import nembongep from "../../assets/nem/nem-bong-ep.webp";
-import nemcaosu from "../../assets/nem/nem-cao-su.webp";
-import nemloxo from "../../assets/nem/nem-lo-xo.webp";
-import nemfoam from "../../assets/nem/nem-foam.webp";
-
-//phukien
-import toppernem from "../../assets/phukien/toper-nem.webp";
-import tambaovenem from "../../assets/phukien/tam-bao-ve-nem.webp";
-import baovegoi from "../../assets/phukien/bao-ve-goi.webp";
-
-interface Product {
-  id: number;
-  name: string;
-  image: string;
-  path: string;
+interface ProductCardProps {
+  products?: Product[];
+  loading?: boolean;
+  onSelect?: (product: Product) => void;
+  selectedProductId?: string;
+  isBundleMode?: boolean;
 }
 
-interface CategoryData {
-  [key: string]: Product[];
-}
+const DEFAULT_FAKE_PRODUCTS: Product[] = [
+  {
+    _id: "p1",
+    name: "Nệm Cao Su Thiên Nhiên Luxury X1",
+    brand: "WolfBed",
+    price: 15000000,
+    originalPrice: 20000000,
+    images: [{ url: image_nem, is_primary: true }],
+    status: "selling",
+    rating: 5,
+    reviewCount: 120,
+    stock_quantity: 10,
+  },
+  {
+    _id: "p3",
+    name: "Nệm Foam Nhật Bản Goodnight",
+    brand: "WolfBed",
+    price: 7500000,
+    originalPrice: 10000000,
+    images: [{ url: image_nem, is_primary: true }],
+    status: "selling",
+    rating: 4.8,
+    reviewCount: 92,
+    stock_quantity: 0,
+  },
+  {
+    _id: "p5",
+    name: "Topper Nệm Làm Mềm Mặt Đệm",
+    brand: "WolfBed",
+    price: 1200000,
+    originalPrice: 1800000,
+    images: [{ url: image_nem, is_primary: true }],
+    status: "stopselling",
+    rating: 4.7,
+    reviewCount: 66,
+    stock_quantity: 0,
+  },
+];
 
-const ProductGrid = () => {
-  const categoryData: CategoryData = {
-    "Chăn ga": [
-      {
-        id: 1,
-        name: "Bộ chăn ga",
-        image: bochanga,
-        path: "/collections/bo-chan-ga",
-      },
-      {
-        id: 2,
-        name: "Chăn và vỏ chăn",
-        image: chanvavochan,
-        path: "/collections/chan-va-vo-goi",
-      },
-      {
-        id: 3,
-        name: "Ga lẻ",
-        image: gale,
-        path: "/collections/ga-le",
-      },
-      {
-        id: 4,
-        name: "Vỏ gối lẻ",
-        image: vogoile,
-        path: "/collections/vo-goi-le",
-      },
-      {
-        id: 5,
-        name: "Chăn ga gối trẻ em",
-        image: changagoitreem,
-        path: "/collections/chan-ga-goi-tre-em",
-      },
-      {
-        id: 6,
-        name: "Bộ ga chun",
-        image: bogachun,
-        path: "/collections/bo-ga-chun",
-      },
-      {
-        id: 7,
-        name: "Bộ ga phủ",
-        image: bogaphu,
-        path: "/collections/bo-ga-phu",
-      },
-      {
-        id: 8,
-        name: "Vỏ chăn lẻ",
-        image: vochanle,
-        path: "/collections/vo-chan-le",
-      },
-      {
-        id: 9,
-        name: "Chăn lẻ",
-        image: chanle,
-        path: "/collections/chan-le",
-      },
-      {
-        id: 10,
-        name: "Bộ ga chun chần",
-        image: bogachunchan,
-        path: "/collections/bo-ga-chun-chan",
-      },
-    ],
-    Gối: [
-      {
-        id: 11,
-        name: "Gối bông",
-        image: goibong,
-        path: "/collections/goi-bong",
-      },
-      {
-        id: 12,
-        name: "Gối foam",
-        image: goifoam,
-        path: "/collections/goi-foam",
-      },
-      {
-        id: 13,
-        name: "Gối cao su",
-        image: goicaosu,
-        path: "/collections/goi-cao-su",
-      },
-      {
-        id: 14,
-        name: "Gối lông vũ",
-        image: goilongvu,
-        path: "/collections/goi-long-vu",
-      },
-      {
-        id: 15,
-        name: "Gối làm mát",
-        image: goilammat,
-        path: "/collections/goi-lam-mat",
-      },
-      {
-        id: 16,
-        name: "Gối giảm đau vai gáy",
-        image: goigiamdauvaigay,
-        path: "/collections/goi-giam-dau-vai-gay",
-      },
-    ],
-    Nệm: [
-      {
-        id: 17,
-        name: "Nệm bông ép",
-        image: nembongep,
-        path: "/collections/nem-bong-ep",
-      },
-      {
-        id: 18,
-        name: "Nệm cao su",
-        image: nemcaosu,
-        path: "/collections/nem-cao-su",
-      },
-      {
-        id: 19,
-        name: "Nệm lò xo",
-        image: nemloxo,
-        path: "/collections/nem-lo-xo",
-      },
-      {
-        id: 20,
-        name: "Nệm foam",
-        image: nemfoam,
-        path: "/collections/nem-foam",
-      },
-    ],
-    "Phụ kiện": [
-      {
-        id: 21,
-        name: "Topper nệm",
-        image: toppernem,
-        path: "/collections/topper-nem",
-      },
-      {
-        id: 22,
-        name: "Tấm bảo vệ nệm",
-        image: tambaovenem,
-        path: "/collections/tam-bao-ve-nem",
-      },
-      {
-        id: 23,
-        name: "Bảo vệ gối",
-        image: baovegoi,
-        path: "/collections/bao-ve-goi",
-      },
-    ],
+const ProductGrid: React.FC<ProductCardProps> = ({
+  products = DEFAULT_FAKE_PRODUCTS,
+  loading = false,
+  onSelect,
+  selectedProductId,
+  isBundleMode = false,
+}) => {
+  const renderStars = (rating: number) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      if (i <= Math.floor(rating)) {
+        stars.push(
+          <Star
+            key={i}
+            size={14}
+            className="fill-orange-400 text-orange-400"
+          />,
+        );
+      } else if (i === Math.ceil(rating) && rating % 1 !== 0) {
+        stars.push(
+          <StarHalf
+            key={i}
+            size={14}
+            className="fill-orange-400 text-orange-400"
+          />,
+        );
+      } else {
+        stars.push(<Star key={i} size={14} className="text-gray-300" />);
+      }
+    }
+    return stars;
   };
 
-  const tabs = Object.keys(categoryData);
-  const [activeTab, setActiveTab] = useState<string>(tabs[0]);
+  if (loading) {
+    return (
+      <div className="text-center py-10 font-medium text-gray-500">
+        Đang tải sản phẩm...
+      </div>
+    );
+  }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12 font-sans selection:bg-green-100">
-      <h2 className="text-3xl md:text-5xl font-serif font-bold text-gray-900 mb-10 max-w-lg leading-tight">
-        Trọn bộ sản phẩm cho giâc ngủ của bạn
-      </h2>
+    <div
+      className={`grid gap-4 md:gap-6 ${
+        isBundleMode
+          ? "grid-cols-3 md:grid-cols-3 lg:grid-cols-4" // Cố định 3 cột khi tạo Bundle
+          : "grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5" // Giữ 4-5 cột ở trang thường
+      }`}
+    >
+      {products.map((product) => {
+        const hasDiscount =
+          product.originalPrice && product.originalPrice > product.price;
+        const displayDiscount = hasDiscount
+          ? Math.round(
+              ((product.originalPrice! - product.price) /
+                product.originalPrice!) *
+                100,
+            )
+          : 0;
 
-      {/* Tabs */}
-      <div className="flex flex-wrap gap-3 mb-10">
-        {tabs.map((tab) => (
-          <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
-            className={`px-8 py-2 rounded-full border text-sm font-medium transition-all duration-300 ${
-              activeTab === tab
-                ? "bg-[#004225] text-white border-[#004225] shadow-lg shadow-green-900/20"
-                : "bg-white text-gray-800 border-gray-200 hover:bg-[#004225] hover:text-white hover:border-[#004225]"
+        const isStopSelling = product.status === "stopselling";
+        const isOutOfStock =
+          product.status === "selling" && product.stock_quantity <= 0;
+        const canBuy =
+          product.status === "selling" && product.stock_quantity > 0;
+        const isSelected = selectedProductId === product._id;
+
+        return (
+          <div
+            key={product._id}
+            className={`group bg-white rounded-xl border transition-all duration-300 flex flex-col h-full overflow-hidden ${
+              isBundleMode && isSelected
+                ? "border-green-600 ring-2 ring-green-100 scale-[1.01]"
+                : "border-gray-200 hover:shadow-lg"
             }`}
           >
-            {tab}
-          </button>
-        ))}
-      </div>
+            {/* PHẦN ẢNH */}
+            <div className="relative aspect-square overflow-hidden bg-gray-50">
+              <Link to={`/product/${product._id}`} className="block h-full">
+                <img
+                  src={
+                    product.images.find((img) => img.is_primary)?.url ||
+                    product.images[0]?.url
+                  }
+                  alt={product.name}
+                  className={`w-full h-full object-cover transition-transform duration-700 ${
+                    canBuy ? "group-hover:scale-110" : ""
+                  }`}
+                />
+              </Link>
 
-      {/* Product Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 ">
-        {categoryData[activeTab].map((product) => (
-          <Link
-            to={product.path}
-            key={product.id}
-            className="group relative block overflow-hidden rounded-xl bg-gray-100 aspect-[4/5] cursor-pointer"
-          >
-            <img
-              src={product.image}
-              alt={product.name}
-              className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
-            />
-            <div className="absolute bottom-5 left-4 right-4 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-              <h3 className="text-white font-semibold text-sm md:text-base tracking-wide">
-                {product.name}
-              </h3>
+              {/* Badge giảm giá trong ảnh */}
+              {hasDiscount && canBuy && (
+                <div className="absolute top-2 left-2 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-sm">
+                  -{displayDiscount}%
+                </div>
+              )}
+
+              {/* Overlay trạng thái */}
+              {(isStopSelling || isOutOfStock) && (
+                <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px] flex items-center justify-center text-white font-bold text-[10px] uppercase text-center px-2">
+                  {isStopSelling ? "Ngừng kinh doanh" : "Hết hàng"}
+                </div>
+              )}
+
+              {/* Icon yêu thích (Mode thường) */}
+              {!isBundleMode && canBuy && (
+                <div className="absolute top-2 -right-10 group-hover:right-2 transition-all duration-300 flex flex-col gap-2">
+                  <button className="p-1.5 bg-white rounded-full shadow-md text-gray-600 hover:bg-green-800 hover:text-white transition-colors">
+                    <Heart size={14} />
+                  </button>
+                  <button className="p-1.5 bg-white rounded-full shadow-md text-gray-600 hover:bg-green-800 hover:text-white transition-colors">
+                    <CirclePlus size={14} />
+                  </button>
+                </div>
+              )}
             </div>
-          </Link>
-        ))}
-      </div>
+
+            {/* PHẦN THÔNG TIN */}
+            <div className="p-3 flex flex-col flex-grow">
+              <div className="flex-grow">
+                <p className="text-[10px] text-gray-400 uppercase font-bold tracking-widest mb-1">
+                  {product.brand}
+                </p>
+                <Link to={`/product/${product._id}`}>
+                  {/* Cố định h-10 để chống lệch khi tên sản phẩm ngắn/dài */}
+                  <h3 className="text-sm font-bold text-gray-800 line-clamp-2 h-10 hover:text-green-700 leading-tight mb-2 transition-colors">
+                    {product.name}
+                  </h3>
+                </Link>
+
+                {/* Rating cố định chiều cao */}
+                <div className="flex items-center gap-1 h-4 mb-3">
+                  <div className="flex">{renderStars(product.rating ?? 0)}</div>
+                  <span className="text-gray-400 text-[10px]">
+                    ({product.reviewCount ?? 0})
+                  </span>
+                </div>
+
+                {/* Vùng Giá: min-h-[42px] để card không nhảy khi có/không có giá gốc */}
+                <div className="min-h-[42px] flex flex-col justify-end">
+                  {hasDiscount && canBuy ? (
+                    <div className="flex items-center gap-2 mb-0.5">
+                      <span className="text-gray-400 line-through text-[11px]">
+                        {product.originalPrice?.toLocaleString("vi-VN")}₫
+                      </span>
+                      <span className="text-green-600 text-[10px] font-bold">
+                        -{displayDiscount}%
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="h-4" />
+                  )}
+
+                  <p
+                    className={`font-black text-base leading-none ${canBuy ? "text-red-600" : "text-gray-400"}`}
+                  >
+                    {product.price.toLocaleString("vi-VN")}₫
+                  </p>
+                </div>
+              </div>
+
+              {/* PHẦN NÚT BẤM (Luôn đẩy xuống đáy) */}
+              <div className="mt-4">
+                {isBundleMode ? (
+                  <button
+                    onClick={() => onSelect?.(product)}
+                    disabled={!canBuy}
+                    className={`w-full py-2.5 rounded-lg font-bold text-[11px] uppercase tracking-wider transition-all border-2 ${
+                      isSelected
+                        ? "bg-green-600 text-white border-green-600"
+                        : "bg-white text-green-700 border-green-600 hover:bg-green-600 hover:text-white"
+                    } disabled:bg-gray-100 disabled:border-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed`}
+                  >
+                    {isSelected ? "ĐÃ CHỌN" : "CHỌN SẢN PHẨM"}
+                  </button>
+                ) : (
+                  <button
+                    disabled={!canBuy}
+                    className="w-full py-2.5 bg-green-900 text-white rounded-lg font-bold text-[11px] uppercase tracking-wider hover:bg-green-800 flex items-center justify-center gap-2 transition-all disabled:bg-gray-200 disabled:cursor-not-allowed"
+                  >
+                    {canBuy ? (
+                      <>
+                        <ShoppingCart size={14} />
+                        THÊM VÀO GIỎ
+                      </>
+                    ) : isStopSelling ? (
+                      "NGỪNG BÁN"
+                    ) : (
+                      "HẾT HÀNG"
+                    )}
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 };
