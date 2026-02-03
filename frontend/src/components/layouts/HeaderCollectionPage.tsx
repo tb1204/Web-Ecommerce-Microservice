@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ChevronRight, ChevronLeft } from "lucide-react";
-import ProductCard from "../Products/ProductCard";
+import ProductGrid from "../Products/ProductGrid";
 import type { Product } from "../Products/InterfaceItem";
 
 // Assets
@@ -15,12 +15,16 @@ const HeaderCollectionPage: React.FC = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
+  
+  // NEW: Biến để phân biệt Click và Drag
+  const [dragDistance, setDragDistance] = useState(0);
 
   const comboProducts: Product[] = [
     {
       _id: "p1",
       name: "Topper memory foam nâng đỡ êm ái Comfy Noah",
       brand: "WolfBed",
+      category: { name: "Topper", code: "topper" }, 
       price: 2160000,
       originalPrice: 2400000,
       images: [{ url: image_nem, is_primary: true }],
@@ -33,6 +37,7 @@ const HeaderCollectionPage: React.FC = () => {
       _id: "p2",
       name: "Chiếu điều hòa cao su Doona Aqua làm mát",
       brand: "WolfBed",
+      category: { name: "Chiếu điều hòa", code: "chieu" },
       price: 729000,
       originalPrice: 890000,
       images: [{ url: image_nem, is_primary: true }],
@@ -45,6 +50,7 @@ const HeaderCollectionPage: React.FC = () => {
       _id: "p3",
       name: "Bảo vệ nệm Doona Bamboo chống bụi bẩn, thoáng khí",
       brand: "WolfBed",
+      category: { name: "Bảo vệ nệm", code: "nem" },
       price: 800000,
       originalPrice: 900000,
       images: [{ url: image_nem, is_primary: true }],
@@ -57,6 +63,7 @@ const HeaderCollectionPage: React.FC = () => {
       _id: "p4",
       name: "Ga chống thấm Goodnight Sumi mềm mại, kháng...",
       brand: "WolfBed",
+      category: { name: "Chăn ga gối", code: "changa" },
       price: 239000,
       originalPrice: 390000,
       images: [{ url: image_nem, is_primary: true }],
@@ -69,6 +76,7 @@ const HeaderCollectionPage: React.FC = () => {
       _id: "p5",
       name: "Chăn đông lông thỏ mềm mịn Amando Warm",
       brand: "WolfBed",
+      category: { name: "Chăn ga gối", code: "changa" },
       price: 1200000,
       originalPrice: 1500000,
       images: [{ url: image_nem, is_primary: true }],
@@ -81,6 +89,7 @@ const HeaderCollectionPage: React.FC = () => {
       _id: "p6",
       name: "Nệm Foam Nhật Bản cao cấp",
       brand: "WolfBed",
+      category: { name: "Nệm", code: "nem" },
       price: 7500000,
       originalPrice: 10000000,
       images: [{ url: image_nem, is_primary: true }],
@@ -89,24 +98,12 @@ const HeaderCollectionPage: React.FC = () => {
       reviewCount: 92,
       stock_quantity: 10,
     },
-    {
-      _id: "p7",
-      name: "Gối cao su thiên nhiên",
-      brand: "WolfBed",
-      price: 1200000,
-      originalPrice: 1800000,
-      images: [{ url: image_nem, is_primary: true }],
-      status: "selling",
-      rating: 4.7,
-      reviewCount: 66,
-      stock_quantity: 10,
-    },
   ];
 
-  // Xử lý kéo chuột trái
   const handleMouseDown = (e: React.MouseEvent) => {
     if (!scrollRef.current) return;
     setIsDragging(true);
+    setDragDistance(0); // Reset quãng đường khi bắt đầu nhấn
     setStartX(e.pageX - scrollRef.current.offsetLeft);
     setScrollLeft(scrollRef.current.scrollLeft);
   };
@@ -119,7 +116,11 @@ const HeaderCollectionPage: React.FC = () => {
     if (!isDragging || !scrollRef.current) return;
     e.preventDefault();
     const x = e.pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX) * 2; // Tốc độ kéo
+    const walk = (x - startX) * 2; 
+    
+    // Tính toán quãng đường đã di chuyển để phân biệt click/drag
+    setDragDistance(Math.abs(x - startX));
+    
     scrollRef.current.scrollLeft = scrollLeft - walk;
   };
 
@@ -158,14 +159,10 @@ const HeaderCollectionPage: React.FC = () => {
             Combo Giá Sốc
           </h2>
           <Link
-            to="#"
+            to="/collections/all"
             className="flex-shrink-0 flex items-center gap-1 text-white text-[10px] md:text-sm font-semibold hover:opacity-80 transition-all border-b border-white/30 pb-0.5"
           >
-            Xem tất cả{" "}
-            <ChevronRight
-              size={14}
-              className="bg-white/20 rounded-full p-0.5 md:p-1"
-            />
+            Xem tất cả <ChevronRight size={14} className="bg-white/20 rounded-full p-0.5 md:p-1" />
           </Link>
         </div>
 
@@ -189,18 +186,21 @@ const HeaderCollectionPage: React.FC = () => {
           onMouseUp={handleMouseLeaveOrUp}
           onMouseMove={handleMouseMove}
           className={`flex overflow-x-auto gap-3 md:gap-5 scrollbar-hide snap-x snap-mandatory pb-4 scroll-smooth touch-pan-x select-none ${isDragging ? "cursor-grabbing" : "cursor-grab"}`}
-          style={{
-            scrollbarWidth: "none",
-            msOverflowStyle: "none",
-            WebkitOverflowScrolling: "touch",
-          }}
+          style={{ WebkitOverflowScrolling: "touch" }}
         >
           {comboProducts.map((product) => (
             <div
               key={product._id}
-              className={`flex-none w-[calc(50%-6px)] md:w-[calc(33.333%-14px)] lg:w-[calc(25%-15px)] snap-start ${isDragging ? "pointer-events-none" : ""}`}
+              className={`flex-none w-[calc(50%-6px)] md:w-[calc(33.333%-14px)] lg:w-[calc(25%-15px)] snap-start`}
+              // Sửa lỗi Click: Nếu di chuyển chuột > 5px thì chặn sự kiện click vào chi tiết sản phẩm
+              onClickCapture={(e) => {
+                if (dragDistance > 5) {
+                  e.preventDefault();
+                  e.stopPropagation();
+                }
+              }}
             >
-              <ProductCard products={[product]} isBundleMode={false} />
+              <ProductGrid products={[product]} isBundleMode={false} isSliderMode={true} />
             </div>
           ))}
         </div>
