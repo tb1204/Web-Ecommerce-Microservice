@@ -1,8 +1,8 @@
 import React from "react";
-import ProductCard from "../Products/ProductGrid"; // Đổi tên cho đúng file mới bạn gửi
 import type { Product } from "../Products/InterfaceItem";
 import { Link } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
+import ProductGrid from "../Products/ProductGrid";
 
 // Import hình ảnh
 import image_nem from "../../assets/about.webp";
@@ -86,7 +86,7 @@ const products: Product[] = [
   },
 ];
 
-const ProductGrid = () => {
+const ItemProductGrid = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 bg-white">
       {/* 2 Banner phía trên */}
@@ -138,8 +138,8 @@ const ProductGrid = () => {
       </div>
 
       {/* Grid hiển thị danh sách sản phẩm */}
-      {/* Sử dụng Component ProductCard bạn mới gửi để render danh sách */}
-      <ProductCard products={products} loading={false} />
+      
+      <ProductGrid products={products} loading={false} />
 
       {/* Nút xem thêm */}
       <div className="mt-10 flex justify-center">
@@ -157,4 +157,4 @@ const ProductGrid = () => {
   );
 };
 
-export default ProductGrid;
+export default ItemProductGrid;

@@ -1,29 +1,32 @@
 import React, { useState, useMemo, useRef } from "react";
 import { Filter, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, X } from "lucide-react";
-import ProductCard from "../Products/ProductCard";
+import ProductGrid from "../Products/ProductGrid";
 import type { Product } from "../Products/InterfaceItem";
 
 import image_nem from "../../assets/about.webp";
 
 const MainCollectionPage: React.FC = () => {
+  const [selectedFilters, setSelectedFilters] = useState<{
+    categories: string[];
+    brands: string[];
+  }>({ categories: [], brands: [] });
+
   const [openFilters, setOpenFilters] = useState({ 
-    category: true, 
-    brand: true, 
-    price: true,
-    origin: true 
+    category: true, brand: true, price: true, origin: true 
   });
   
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 24;
+  const itemsPerPage = 16; // Chỉnh lại 16 (chia hết cho 4 và 2) để grid đều hơn
   const mainContentRef = useRef<HTMLDivElement>(null);
 
+  // Dữ liệu gốc
   const allProducts: Product[] = useMemo(() => {
-    const baseProducts = [
-      { _id: "p1", name: "Topper memory foam nâng đỡ êm ái Comfy Noah", brand: "WolfBed", price: 2160000, originalPrice: 2400000, images: [{ url: image_nem, is_primary: true }], status: "selling", rating: 5, reviewCount: 120, stock_quantity: 10 },
-      { _id: "p2", name: "Chiếu điều hòa cao su Doona Aqua làm mát", brand: "WolfBed", price: 729000, originalPrice: 890000, images: [{ url: image_nem, is_primary: true }], status: "selling", rating: 4.8, reviewCount: 92, stock_quantity: 10 },
-      { _id: "p3", name: "Bảo vệ nệm Doona Bamboo chống bụi bẩn, thoáng khí", brand: "WolfBed", price: 800000, originalPrice: 900000, images: [{ url: image_nem, is_primary: true }], status: "selling", rating: 4.7, reviewCount: 66, stock_quantity: 10 },
-      { _id: "p4", name: "Ga chống thấm Goodnight Sumi mềm mại, kháng...", brand: "WolfBed", price: 239000, originalPrice: 390000, images: [{ url: image_nem, is_primary: true }], status: "selling", rating: 4.9, reviewCount: 45, stock_quantity: 10 },
+    const baseProducts: Product[] = [
+      { _id: "p1", name: "Topper memory foam Comfy Noah", brand: "Comfy", category: { name: "Topper", code: "topper" }, price: 2160000, originalPrice: 2400000, images: [{ url: image_nem, is_primary: true }], status: "selling", rating: 5, reviewCount: 120, stock_quantity: 10 },
+      { _id: "p2", name: "Chiếu điều hòa Doona Aqua", brand: "Doona", category: { name: "Chiếu điều hòa", code: "topper" }, price: 729000, originalPrice: 890000, images: [{ url: image_nem, is_primary: true }], status: "selling", rating: 4.8, reviewCount: 92, stock_quantity: 10 },
+      { _id: "p3", name: "Bảo vệ nệm Doona Bamboo", brand: "Doona", category: { name: "Bảo vệ nệm", code: "bao-ve-nem" }, price: 800000, originalPrice: 900000, images: [{ url: image_nem, is_primary: true }], status: "selling", rating: 4.7, reviewCount: 66, stock_quantity: 10 },
+      { _id: "p4", name: "Ga chống thấm Goodnight Sumi", brand: "Goodnight", category: { name: "Chăn ga gối", code: "chan-ga-goi" }, price: 239000, originalPrice: 390000, images: [{ url: image_nem, is_primary: true }], status: "selling", rating: 4.9, reviewCount: 45, stock_quantity: 10 },
     ];
     return Array.from({ length: 60 }, (_, i) => ({
       ...baseProducts[i % baseProducts.length],
@@ -32,163 +35,162 @@ const MainCollectionPage: React.FC = () => {
     }));
   }, []);
 
-  const categories = ["Topper", "Chiếu điều hòa", "Bảo vệ nệm", "Chăn lẻ", "Vỏ gối", "Gối", "Bộ chăn ga", "Nệm", "Đệm Foam", "Đệm lò xo", "Đệm cao su"];
-  const brands = ["Liên Á", "Gummi", "Doona", "Aeroflow", "Comfy", "Amando", "Goodnight", "Kim Cương", "Dunlopillo"];
-  const priceRanges = ["Giá dưới 200.000₫", "200.000₫ - 500.000₫", "500.000₫ - 700.000₫", "700.000₫ - 1.000.000₫", "1.000.000₫ - 3.000.000₫"];
-  const origins = ["Việt Nam", "Mỹ", "Anh", "Nhật Bản"];
+  // 2. LOGIC LỌC SẢN PHẨM (Đã sửa để lọc theo category.name)
+  const filteredProducts = useMemo(() => {
+    return allProducts.filter((p) => {
+      const catMatch = selectedFilters.categories.length === 0 || 
+                       (p.category && selectedFilters.categories.includes(p.category.name));
+      const brandMatch = selectedFilters.brands.length === 0 || selectedFilters.brands.includes(p.brand || "");
+      return catMatch && brandMatch;
+    });
+  }, [allProducts, selectedFilters]);
 
-  const totalPages = Math.ceil(allProducts.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentProducts = allProducts.slice(startIndex, startIndex + itemsPerPage);
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+  const currentProducts = filteredProducts.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+  const handleFilterToggle = (type: 'categories' | 'brands', value: string) => {
+    setSelectedFilters(prev => {
+      const current = prev[type];
+      const next = current.includes(value) ? current.filter(v => v !== value) : [...current, value];
+      return { ...prev, [type]: next };
+    });
+    setCurrentPage(1);
+  };
 
   const goToPage = (page: number) => {
     setCurrentPage(page);
-    setIsMobileFilterOpen(false);
     if (mainContentRef.current) {
-      const yOffset = -100;
-      const y = mainContentRef.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
+      window.scrollTo({ top: mainContentRef.current.offsetTop - 80, behavior: 'smooth' });
     }
   };
 
-  // Component Sidebar - Thêm h-full và overflow-y-auto để cuộn được trên mobile
-  const SidebarContent = () => (
-    <div className="flex flex-col gap-6 h-full overflow-y-auto pb-20 scrollbar-hide lg:pb-0">
-      <div className="flex items-center justify-between pb-4 border-b sticky top-0 bg-white z-10 lg:static">
-        <div className="flex items-center gap-2">
-          <Filter size={18} className="text-gray-600" />
-          <h2 className="font-bold text-gray-800 uppercase text-sm tracking-wide">Bộ lọc tìm kiếm</h2>
+  const categories = ["Topper", "Chiếu điều hòa", "Bảo vệ nệm", "Chăn ga gối", "Nệm"];
+  const brands = ["Doona", "Comfy", "Goodnight", "Liên Á", "Gummi"];
+
+  const renderSidebarContent = () => (
+    <div className="flex flex-col gap-8 h-full">
+      <div className="flex items-center justify-between pb-5 border-b sticky top-0 bg-white z-10 lg:static">
+        <div className="flex items-center gap-2.5">
+          <Filter size={20} className="text-green-800" />
+          <h2 className="font-extrabold text-gray-900 uppercase text-sm tracking-widest">Bộ lọc sản phẩm</h2>
         </div>
-        <button onClick={() => setIsMobileFilterOpen(false)} className="lg:hidden p-1 text-gray-500 hover:text-red-500">
-          <X size={20} />
-        </button>
+        <button onClick={() => setIsMobileFilterOpen(false)} className="lg:hidden p-2 text-gray-400 hover:text-red-500 transition-colors"><X size={24} /></button>
       </div>
 
-      <div className="border-b pb-4">
-        <button onClick={() => setOpenFilters({ ...openFilters, category: !openFilters.category })} className="flex justify-between items-center w-full py-2 font-bold text-[13px] uppercase text-gray-700 hover:text-green-700 transition-colors">
-          Loại sản phẩm {openFilters.category ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-        </button>
-        {openFilters.category && (
-          <div className="mt-3 space-y-2.5 pr-2">
-            {categories.map((cat) => (
-              <label key={cat} className="flex items-center gap-3 cursor-pointer group">
-                <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-green-600 focus:ring-green-500 cursor-pointer" />
-                <span className="text-sm text-gray-600 group-hover:text-green-700 transition-colors">{cat}</span>
-              </label>
-            ))}
-          </div>
-        )}
-      </div>
+      <div className="space-y-8 overflow-y-auto pr-2 scrollbar-hide">
+        {/* Lọc theo Loại */}
+        <div className="border-b border-gray-100 pb-6">
+          <button onClick={() => setOpenFilters({...openFilters, category: !openFilters.category})} className="flex justify-between items-center w-full mb-4 font-black text-xs uppercase tracking-tighter text-gray-800 hover:text-green-700 transition-colors">
+            Loại sản phẩm {openFilters.category ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+          </button>
+          {openFilters.category && (
+            <div className="grid grid-cols-1 gap-3">
+              {categories.map((cat) => (
+                <label key={cat} className="flex items-center gap-3 cursor-pointer group w-fit">
+                  <div className="relative flex items-center">
+                    <input 
+                      type="checkbox" 
+                      checked={selectedFilters.categories.includes(cat)}
+                      onChange={() => handleFilterToggle('categories', cat)}
+                      className="peer w-5 h-5 rounded border-gray-300 text-green-700 focus:ring-green-500 transition-all cursor-pointer" 
+                    />
+                  </div>
+                  <span className={`text-[13px] font-medium transition-colors ${selectedFilters.categories.includes(cat) ? "text-green-800 font-bold" : "text-gray-500 group-hover:text-gray-900"}`}>{cat}</span>
+                </label>
+              ))}
+            </div>
+          )}
+        </div>
 
-      <div className="border-b pb-4">
-        <button onClick={() => setOpenFilters({ ...openFilters, brand: !openFilters.brand })} className="flex justify-between items-center w-full py-2 font-bold text-[13px] uppercase text-gray-700 hover:text-green-700 transition-colors">
-          Thương hiệu {openFilters.brand ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-        </button>
-        {openFilters.brand && (
-          <div className="mt-3 space-y-2.5 pr-2">
-            {brands.map((brand) => (
-              <label key={brand} className="flex items-center gap-3 cursor-pointer group">
-                <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-green-600 focus:ring-green-500 cursor-pointer" />
-                <span className="text-sm text-gray-600 group-hover:text-green-700 transition-colors">{brand}</span>
-              </label>
-            ))}
-          </div>
-        )}
-      </div>
-
-      <div className="border-b pb-4">
-        <button onClick={() => setOpenFilters({ ...openFilters, origin: !openFilters.origin })} className="flex justify-between items-center w-full py-2 font-bold text-[13px] uppercase text-gray-700 hover:text-green-700 transition-colors">
-          Xuất xứ {openFilters.origin ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-        </button>
-        {openFilters.origin && (
-          <div className="mt-3 space-y-2.5">
-            {origins.map((origin) => (
-              <label key={origin} className="flex items-center gap-3 cursor-pointer group">
-                <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-green-600 focus:ring-green-500 cursor-pointer" />
-                <span className="text-sm text-gray-600 group-hover:text-green-700 transition-colors">{origin}</span>
-              </label>
-            ))}
-          </div>
-        )}
-      </div>
-
-      <div className="border-b pb-4">
-        <button onClick={() => setOpenFilters({ ...openFilters, price: !openFilters.price })} className="flex justify-between items-center w-full py-2 font-bold text-[13px] uppercase text-gray-700 hover:text-green-700 transition-colors">
-          Mức giá {openFilters.price ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-        </button>
-        {openFilters.price && (
-          <div className="mt-3 space-y-2.5">
-            {priceRanges.map((range) => (
-              <label key={range} className="flex items-center gap-3 cursor-pointer group">
-                <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-green-600 focus:ring-green-500 cursor-pointer" />
-                <span className="text-sm text-gray-600 group-hover:text-green-700 transition-colors">{range}</span>
-              </label>
-            ))}
-          </div>
-        )}
+        {/* Lọc theo Thương hiệu */}
+        <div className="border-b border-gray-100 pb-6">
+          <button onClick={() => setOpenFilters({...openFilters, brand: !openFilters.brand})} className="flex justify-between items-center w-full mb-4 font-black text-xs uppercase tracking-tighter text-gray-800 hover:text-green-700 transition-colors">
+            Thương hiệu {openFilters.brand ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+          </button>
+          {openFilters.brand && (
+            <div className="grid grid-cols-1 gap-3">
+              {brands.map((brand) => (
+                <label key={brand} className="flex items-center gap-3 cursor-pointer group w-fit">
+                  <input 
+                    type="checkbox" 
+                    checked={selectedFilters.brands.includes(brand)}
+                    onChange={() => handleFilterToggle('brands', brand)}
+                    className="w-5 h-5 rounded border-gray-300 text-green-700 focus:ring-green-500 transition-all cursor-pointer" 
+                  />
+                  <span className={`text-[13px] font-medium transition-colors ${selectedFilters.brands.includes(brand) ? "text-green-800 font-bold" : "text-gray-500 group-hover:text-gray-900"}`}>{brand}</span>
+                </label>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-6 font-sans">
-      <div className="flex flex-col lg:flex-row gap-8 mt-0 mb-4">
+    <div className="max-w-[1440px] mx-auto px-4 md:px-8 py-10 font-sans">
+      <div className="flex flex-col lg:flex-row gap-12">
         
         {/* SIDEBAR DESKTOP */}
-        <aside className="hidden lg:block lg:w-1/4 lg:sticky lg:top-24 h-fit">
-          <SidebarContent />
+        <aside className="hidden lg:block lg:w-[260px] lg:sticky lg:top-28 h-fit">
+          {renderSidebarContent()}
         </aside>
 
-        {/* MOBILE DRAWER FILTER - Đã sửa lỗi cuộn */}
-        <div className={`fixed inset-0 z-[100] lg:hidden transition-all duration-300 ${isMobileFilterOpen ? "visible" : "invisible"}`}>
-          <div 
-            className={`absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300 ${isMobileFilterOpen ? "opacity-100" : "opacity-0"}`}
-            onClick={() => setIsMobileFilterOpen(false)}
-          />
-          <div className={`absolute left-0 top-0 h-full w-[85%] max-w-[320px] bg-white p-6 shadow-2xl transition-transform duration-300 transform ${isMobileFilterOpen ? "translate-x-0" : "-translate-x-full"}`}>
-            <SidebarContent />
+        {/* MOBILE DRAWER */}
+        <div className={`fixed inset-0 z-[1000] lg:hidden transition-all duration-300 ${isMobileFilterOpen ? "visible" : "invisible"}`}>
+          <div className={`absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity ${isMobileFilterOpen ? "opacity-100" : "opacity-0"}`} onClick={() => setIsMobileFilterOpen(false)} />
+          <div className={`absolute left-0 top-0 h-full w-[80%] max-w-[300px] bg-white p-6 shadow-2xl transition-transform duration-500 ease-out ${isMobileFilterOpen ? "translate-x-0" : "-translate-x-full"}`}>
+            {renderSidebarContent()}
           </div>
         </div>
 
-        {/* DANH SÁCH SẢN PHẨM */}
-        <main ref={mainContentRef} className="w-full lg:w-3/4">
-          
-          {/* Toolbar tích hợp nút Lọc trên Mobile */}
-          <div className="flex justify-between items-center bg-gray-50 border border-gray-100 p-3 md:p-4 rounded-xl mb-8 shadow-sm">
-            <div className="flex items-center gap-3">
-               <button 
-                onClick={() => setIsMobileFilterOpen(true)}
-                className="lg:hidden flex items-center gap-1.5 px-3 py-1.5 bg-white border border-gray-200 rounded-lg text-xs font-bold text-gray-700 shadow-sm active:scale-95 transition-transform"
-               >
-                 <Filter size={14} className="text-green-700" /> Lọc
-               </button>
-               <p className="hidden md:block text-sm text-gray-500">
-                Hiển thị <span className="text-black font-bold">{startIndex + 1}-{Math.min(startIndex + itemsPerPage, allProducts.length)}</span> sản phẩm
-              </p>
-            </div>
-
-            <div className="flex items-center gap-3 md:gap-4 text-[10px] md:text-[11px] font-bold uppercase tracking-wider text-gray-400">
-               <span className="text-green-700 border-b-2 border-green-700 pb-0.5 whitespace-nowrap">Mới nhất</span>
-               <span className="cursor-pointer hover:text-green-700 transition-colors whitespace-nowrap">Giá tăng dần</span>
-               <span className="cursor-pointer hover:text-green-700 transition-colors whitespace-nowrap">Giá giảm dần</span>
+        <main ref={mainContentRef} className="flex-1">
+          {/* HEADER TOOLBAR */}
+          <div className="flex flex-wrap justify-between items-center gap-4 bg-white border border-gray-100 p-4 rounded-2xl mb-10 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07)]">
+            <button onClick={() => setIsMobileFilterOpen(true)} className="lg:hidden flex items-center gap-2 px-4 py-2 bg-green-50 text-green-800 rounded-xl text-[13px] font-bold transition-all active:scale-95"><Filter size={16} /> Bộ lọc</button>
+            <p className="hidden md:block text-[13px] font-medium text-gray-400">Đang hiển thị <span className="text-gray-900 font-bold">{currentProducts.length}</span> / {filteredProducts.length} kết quả</p>
+            
+            <div className="flex items-center gap-6 text-[10px] md:text-[11px] font-black uppercase tracking-widest text-gray-400">
+               <span className="text-green-700 border-b-2 border-green-700 pb-1 whitespace-nowrap cursor-default">Mới nhất</span>
+               <span className="cursor-pointer hover:text-green-700 transition-colors">Giá thấp - cao</span>
+               <span className="cursor-pointer hover:text-green-700 transition-colors">Giá cao - thấp</span>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 sm:gap-x-4 gap-y-8 sm:gap-y-10">
-            {currentProducts.map((p) => (
-              <div key={p._id}>
-                  <ProductCard products={[p]} />
+          {/* GRID SẢN PHẨM */}
+          <div className="min-h-[600px]">
+            {currentProducts.length > 0 ? (
+              <ProductGrid products={currentProducts} isSliderMode={false} />
+            ) : (
+              <div className="flex flex-col items-center justify-center py-32 bg-gray-50 rounded-3xl border-2 border-dashed border-gray-200">
+                <div className="p-5 bg-white rounded-full shadow-sm mb-4"><Filter size={32} className="text-gray-300" /></div>
+                <p className="text-gray-500 font-bold text-lg mb-2 text-center px-4">Rất tiếc, không tìm thấy sản phẩm!</p>
+                <p className="text-gray-400 text-sm mb-6 text-center px-4">Hãy thử thay đổi tiêu chí bộ lọc của bạn.</p>
+                <button onClick={() => setSelectedFilters({categories:[], brands:[]})} className="px-6 py-2.5 bg-green-800 text-white rounded-xl text-sm font-bold shadow-md hover:bg-green-900 transition-all">Thiết lập lại</button>
               </div>
-            ))}
+            )}
           </div>
 
-          <div className="mt-16 flex justify-center items-center gap-1 sm:gap-2">
-            <button onClick={() => goToPage(Math.max(1, currentPage - 1))} disabled={currentPage === 1} className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-full border border-gray-200 text-gray-400 hover:bg-gray-100 disabled:opacity-30 transition-all"><ChevronLeft size={18} /></button>
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-              <button key={page} onClick={() => goToPage(page)} className={`w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-full text-xs sm:text-sm font-bold transition-all ${currentPage === page ? "bg-green-700 text-white shadow-lg" : "text-gray-400 hover:bg-gray-50"}`}>{page}</button>
-            ))}
-            <button onClick={() => goToPage(Math.min(totalPages, currentPage + 1))} disabled={currentPage === totalPages} className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-full border border-gray-200 text-gray-400 hover:bg-gray-100 disabled:opacity-30 transition-all"><ChevronRight size={18} /></button>
-          </div>
+          {/* PHÂN TRANG */}
+          {totalPages > 1 && (
+            <div className="mt-20 flex justify-center items-center gap-3">
+              <button onClick={() => goToPage(currentPage - 1)} disabled={currentPage === 1} className="w-11 h-11 flex items-center justify-center rounded-2xl border border-gray-100 text-gray-400 hover:bg-green-50 hover:text-green-700 disabled:opacity-30 disabled:hover:bg-transparent transition-all shadow-sm"><ChevronLeft size={22} /></button>
+              
+              <div className="flex items-center gap-2">
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                  <button 
+                    key={page} 
+                    onClick={() => goToPage(page)} 
+                    className={`w-11 h-11 flex items-center justify-center rounded-2xl text-[13px] font-black transition-all shadow-sm ${currentPage === page ? "bg-green-800 text-white" : "bg-white text-gray-400 hover:bg-gray-50 hover:text-gray-900"}`}
+                  >
+                    {page}
+                  </button>
+                ))}
+              </div>
+
+              <button onClick={() => goToPage(currentPage + 1)} disabled={currentPage === totalPages} className="w-11 h-11 flex items-center justify-center rounded-2xl border border-gray-100 text-gray-400 hover:bg-green-50 hover:text-green-700 disabled:opacity-30 disabled:hover:bg-transparent transition-all shadow-sm"><ChevronRight size={22} /></button>
+            </div>
+          )}
         </main>
       </div>
     </div>

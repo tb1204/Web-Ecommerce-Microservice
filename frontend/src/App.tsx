@@ -20,43 +20,54 @@ import AdminUserPage from "./components/Admin/AdminUserPage";
 import TestUserListPage from "./pages/TestUserListPage";
 import { Toaster } from "sonner";
 
+// 1. IMPORT CONTEXT VÀ COMPONENT SO SÁNH
+import { CompareProvider } from "../src/components/common/Compare/CompareContext"; 
+import ComparisonBar from "../src/components/common/Compare/ComparisonBar"; 
+
 function App() {
   return (
-    <BrowserRouter>
-      <ScrollToTop />
-      <Toaster position="top-right" />
-      <Routes>
-        <Route path="/" element={<UserLayout />}>
-          <Route index element={<Home />} />
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
-          <Route path="about" element={<About />} />
-          <Route path="contact" element={<ContactPage />} />
-          <Route path="awards" element={<AwardsAndCertifications />} />
-          <Route path="brandstory" element={<BrandStory />} />
-          <Route path="flashsale" element={<FlashSalePage />} />
-          <Route path="products" element={<ProductCard />} />
-          <Route path="productdetails" element={<ProductDetails />} />
-          <Route path="product/:id" element={<ProductDetails />} />
-          <Route path="collections/:collection" element={<CollectionPage />} />
-          {/* test  */}
-          <Route path="user" element={<AdminUserPage />} />
-          <Route path="test" element={<TestUserListPage />} />
+    // 2. BỌC TOÀN BỘ APP TRONG COMPARE PROVIDER
+    <CompareProvider>
+      <BrowserRouter>
+        <ScrollToTop />
+        <Toaster position="top-right" />
+        <ComparisonBar />
 
-          <Route path="*" element={<NotFound />} />
-        </Route>
-        <Route
-          path="/admin"
-          element={
-            <ProtectedRoute role="admin">
-              <AdminLayout />
-            </ProtectedRoute>
-          }
-        >
-          <Route index element={<AdminHomePage />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+        <Routes>
+          <Route path="/" element={<UserLayout />}>
+            <Route index element={<Home />} />
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+            <Route path="about" element={<About />} />
+            <Route path="contact" element={<ContactPage />} />
+            <Route path="awards" element={<AwardsAndCertifications />} />
+            <Route path="brandstory" element={<BrandStory />} />
+            <Route path="flashsale" element={<FlashSalePage />} />
+            <Route path="products" element={<ProductCard />} />
+            <Route path="productdetails" element={<ProductDetails />} />
+            <Route path="product/:id" element={<ProductDetails />} />
+            <Route path="collections/:collection" element={<CollectionPage />} />
+            
+            {/* test  */}
+            <Route path="user" element={<AdminUserPage />} />
+            <Route path="test" element={<TestUserListPage />} />
+
+            <Route path="*" element={<NotFound />} />
+          </Route>
+
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute role="admin">
+                <AdminLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<AdminHomePage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </CompareProvider>
   );
 }
 
