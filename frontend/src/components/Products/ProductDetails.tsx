@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Star,
   ImageIcon,
@@ -8,15 +8,12 @@ import {
   Truck,
   ChevronRight,
   ChevronLeft,
-  Heart,
-  Share2,
 } from "lucide-react";
 import { toast } from "sonner";
 import ProductGrid from "./ProductGrid";
 import image from "../../assets/banner/Banner-phu-1.webp";
 import image1 from "../../assets/banner/banner-phu-3.webp";
 
-// --- 1. DỮ LIỆU GIẢ LẬP CHI TIẾT (FAKE DATA) ---
 const fakeSelectedProduct = {
   _id: "p1",
   name: "Nệm lò xo đa tầng Sleep Wave Hybrid (SleepWave) - WolfBed Edition",
@@ -528,7 +525,7 @@ const ProductDetails = () => {
               Sản phẩm tương tự
             </h2>
             <p className="text-gray-400 text-sm mt-2 font-medium underline">
-              WolfBed gợi ý cho không gian của bạn
+              Artisano gợi ý cho không gian của bạn
             </p>
           </div>
           <button className="text-green-900 font-black border-b-4 border-green-900 pb-1 text-sm uppercase tracking-widest">

@@ -17,8 +17,11 @@ import ProductDetails from "./components/Products/ProductDetails";
 import NotFound from "./pages/NotFound";
 import FlashSalePage from "./pages/FlashSalePage";
 import AdminUserPage from "./components/Admin/AdminUserPage";
-import TestUserListPage from "./pages/TestUserListPage";
 import { Toaster } from "sonner";
+import CartPage from "./pages/CartPage";
+import CheckoutPage from "./pages/CheckOutPage";
+import MyOrdersPage from "./pages/MyOrdersPage";
+import OrderDetailsPage from "./pages/OrderDetailsPage";
 
 function App() {
   return (
@@ -39,9 +42,12 @@ function App() {
           <Route path="productdetails" element={<ProductDetails />} />
           <Route path="product/:id" element={<ProductDetails />} />
           <Route path="collections/:collection" element={<CollectionPage />} />
+          <Route path="cart" element={<CartPage />} />
+          <Route path="checkout" element={<CheckoutPage />} />
+          <Route path="my-orders" element={<MyOrdersPage />} />
+          <Route path="order/:id" element={<OrderDetailsPage />}></Route>
           {/* test  */}
           <Route path="user" element={<AdminUserPage />} />
-          <Route path="test" element={<TestUserListPage />} />
 
           <Route path="*" element={<NotFound />} />
         </Route>

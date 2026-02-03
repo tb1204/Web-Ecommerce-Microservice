@@ -1,20 +1,13 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "sonner";
-import {
-  Edit,
-  Trash2,
-  PlusCircle,
-  Eye,
-  CheckCircle2,
-  XCircle,
-} from "lucide-react";
+import { Edit, Trash2, PlusCircle, Eye, XCircle } from "lucide-react";
+import { useAuth } from "@clerk/clerk-react";
 
 interface Membership {
-  tier_name: string;
-  discount_rate?: number;
+  tierName: string; //
+  discountRate?: number;
 }
-
 interface Address {
   address_name: string;
   fullAddress: string;
@@ -42,6 +35,23 @@ interface User {
 }
 
 const AdminUsersPage = () => {
+  const formatOnlyDate = (iso?: string) => {
+    if (!iso) return "—";
+    const date = new Date(iso);
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+
+  const { getToken } = useAuth(); // ← Hook của Clerk để lấy token
+
+  const getAuthHeader = async () => {
+    const token = await getToken(); // ← Lấy JWT từ Clerk (hỗ trợ async)
+    console.log(`lay duoc token${token}`);
+    return token ? { Authorization: `Bearer ${token}` } : {};
+  };
+  // console.log("token", getToken());
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -69,18 +79,14 @@ const AdminUsersPage = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const getAuthHeader = () => {
-    const token = localStorage.getItem("adminToken") || "";
-    return token ? { Authorization: `Bearer ${token}` } : {};
-  };
-
   useEffect(() => {
     const fetchUsers = async () => {
       setLoading(true);
       setError(null);
       try {
+        const headers = await getAuthHeader();
         const res = await axios.get("http://localhost:8080/api/admin/users", {
-          headers: getAuthHeader(),
+          headers,
         });
         const data = Array.isArray(res.data) ? res.data : [];
         setUsers(data);
@@ -100,8 +106,9 @@ const AdminUsersPage = () => {
 
   const refreshUsers = async () => {
     try {
+      const headers = await getAuthHeader();
       const res = await axios.get("http://localhost:8080/api/admin/users", {
-        headers: getAuthHeader(),
+        headers,
       });
       const data = Array.isArray(res.data) ? res.data : [];
       setUsers(data);
@@ -179,99 +186,10 @@ const AdminUsersPage = () => {
     const value = e.target.value;
     setFormData((prev) => ({
       ...prev,
-      membership: value ? { tier_name: value } : undefined,
+      membership: value ? { tierName: value } : undefined,
     }));
   };
 
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-
-  //   if (!formData.email || !formData.firstName || !formData.lastName) {
-  //     toast.error("Vui lòng điền đầy đủ thông tin bắt buộc");
-  //     return;
-  //   }
-
-  //   try {
-  //     if (modalMode === "edit" && editingUser) {
-  //       // Chỉ cập nhật thông tin, không gửi password
-  //       await axios.patch(
-  //         `http://localhost:8080/api/admin/users/${editingUser.clerkId}`,
-  //         formData,
-  //         { headers: getAuthHeader() },
-  //       );
-  //       toast.success("Cập nhật thành công");
-  //     } else {
-  //       // Tạo mới: Gửi lên Clerk trước
-  //       if (!password || !confirmPassword) {
-  //         toast.error("Vui lòng nhập mật khẩu và xác nhận");
-  //         return;
-  //       }
-  //       if (password !== confirmPassword) {
-  //         toast.error("Mật khẩu xác nhận không khớp");
-  //         return;
-  //       }
-
-  //       // Gọi Clerk API tạo user
-  //       const clerkRes = await axios.post(
-  //         "https://api.clerk.com/v1/users",
-  //         {
-  //           email_address: [formData.email],
-  //           password,
-  //           first_name: formData.firstName,
-  //           last_name: formData.lastName,
-  //           username: formData.username || undefined,
-  //           public_metadata: {
-  //             phone: formData.phone,
-  //             gender: formData.gender,
-  //             roles: formData.roles || ["USER"],
-  //             membership: formData.membership,
-  //           },
-  //         },
-  //         {
-  //           headers: {
-  //             Authorization: `Bearer ${import.meta.env.VITE_CLERK_SECRET_KEY}`,
-  //             "Content-Type": "application/json",
-  //           },
-  //         },
-  //       );
-
-  //       const newClerkId = clerkRes.data.id;
-
-  //       // Gửi về backend với clerkId
-  //       await axios.post(
-  //         "http://localhost:8080/api/admin/users",
-  //         {
-  //           ...formData,
-  //           clerkId: newClerkId,
-  //           isActive: true,
-  //         },
-  //         { headers: getAuthHeader() },
-  //       );
-
-  //       toast.success("Tạo người dùng thành công");
-  //     }
-
-  //     setIsModalOpen(false);
-  //     refreshUsers();
-  //   } catch (err: unknown) {
-  //     let msg = "Thao tác thất bại";
-  //     if (axios.isAxiosError(err)) {
-  //       const response = err.response;
-  //       if (response?.data?.errors) {
-  //         // Lỗi từ Clerk thường nằm ở errors array
-  //         msg =
-  //           response.data.errors[0]?.message ||
-  //           response.data.errors[0]?.longMessage ||
-  //           msg;
-  //       } else {
-  //         msg =
-  //           response?.data?.error?.message || response?.data?.message || msg;
-  //       }
-  //       console.error("Clerk/Backend error:", response?.data); // Log để debug
-  //     }
-  //     toast.error(msg);
-  //   }
-  // };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -281,12 +199,13 @@ const AdminUsersPage = () => {
     }
 
     try {
+      const headers = await getAuthHeader();
       if (modalMode === "edit" && editingUser) {
         // Chỉ cập nhật thông tin, không gửi password
         await axios.patch(
           `http://localhost:8080/api/admin/users/${editingUser.clerkId}`,
           formData,
-          { headers: getAuthHeader() },
+          { headers },
         );
         toast.success("Cập nhật thành công");
       } else {
@@ -314,7 +233,7 @@ const AdminUsersPage = () => {
             roles: formData.roles || ["USER"],
             membership: formData.membership,
           },
-          { headers: getAuthHeader() },
+          { headers },
         );
 
         // Lấy clerkId từ backend trả về
@@ -328,7 +247,7 @@ const AdminUsersPage = () => {
             clerkId: newClerkId,
             isActive: true,
           },
-          { headers: getAuthHeader() },
+          { headers },
         );
 
         toast.success("Tạo người dùng thành công");
@@ -359,14 +278,16 @@ const AdminUsersPage = () => {
   };
   const handleToggleActive = async (user: User, checked: boolean) => {
     try {
+      const headers = await getAuthHeader();
       await axios.patch(
         `http://localhost:8080/api/admin/users/${user.clerkId}`,
         { isActive: checked },
-        { headers: getAuthHeader() },
+        { headers },
       );
       toast.success("Cập nhật trạng thái thành công");
       refreshUsers();
     } catch (err: unknown) {
+      // console.error("Error full:", err);
       const msg = axios.isAxiosError(err)
         ? err.response?.data?.message || "Cập nhật thất bại"
         : "Lỗi hệ thống";
@@ -377,9 +298,11 @@ const AdminUsersPage = () => {
   const handleDelete = async (user: User) => {
     if (!window.confirm(`Xác nhận xóa ${user.email}?`)) return;
     try {
+      const headers = await getAuthHeader();
+      console.log(headers);
       await axios.delete(
         `http://localhost:8080/api/admin/users/${user.clerkId}`,
-        { headers: getAuthHeader() },
+        { headers },
       );
       toast.success("Xóa thành công");
       refreshUsers();
@@ -465,7 +388,7 @@ const AdminUsersPage = () => {
                     {user.email}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                    {user.membership?.tier_name || "Không có"}
+                    {user.membership?.tierName || "Không có"}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                     {user.username || "—"}
@@ -539,7 +462,7 @@ const AdminUsersPage = () => {
 
       {/* Modal tạo mới / chỉnh sửa */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-[999] p-4">
           <div className="bg-white rounded-xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
             <div className="p-6">
               <h2 className="text-2xl font-bold text-gray-800 mb-6">
@@ -677,8 +600,8 @@ const AdminUsersPage = () => {
                     Cấp bậc thành viên
                   </label>
                   <select
-                    name="membership.tier_name"
-                    value={formData.membership?.tier_name || ""}
+                    name="membership.tierName"
+                    value={formData.membership?.tierName || ""}
                     onChange={handleMembershipChange}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                   >
@@ -711,7 +634,7 @@ const AdminUsersPage = () => {
 
       {/* Modal xem chi tiết user */}
       {isDetailModalOpen && selectedUser && (
-        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-[999] p-4">
           <div className="bg-white rounded-xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
             <div className="p-6">
               <div className="flex justify-between items-center mb-6">
@@ -776,7 +699,7 @@ const AdminUsersPage = () => {
                     Hạng thành viên
                   </p>
                   <p className="text-gray-900">
-                    {selectedUser.membership?.tier_name || "Không có"}
+                    {selectedUser.membership?.tierName || "Không có"}
                   </p>
                 </div>
                 <div>
@@ -802,7 +725,7 @@ const AdminUsersPage = () => {
                 <div>
                   <p className="text-sm font-medium text-gray-600">Ngày tạo</p>
                   <p className="text-gray-900">
-                    {selectedUser.createdAt || "—"}
+                    {formatOnlyDate(selectedUser.createdAt) || "—"}
                   </p>
                 </div>
                 <div>
@@ -810,7 +733,7 @@ const AdminUsersPage = () => {
                     Ngày cập nhật
                   </p>
                   <p className="text-gray-900">
-                    {selectedUser.updatedAt || "—"}
+                    {formatOnlyDate(selectedUser.updatedAt) || "—"}
                   </p>
                 </div>
               </div>

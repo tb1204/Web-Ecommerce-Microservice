@@ -7,21 +7,9 @@ import {
   FaPlus, // ← THÊM ICON NÀY
 } from "react-icons/fa";
 // import { useDispatch } from "react-redux";
-import { Link, NavLink} from "react-router-dom";
-// import { clearCart } from "../../redux/slices/CartSlice";
-// import { logout } from "../../redux/slices/authSlice";
+import { Link, NavLink } from "react-router-dom";
 
 const AdminSIdebar = () => {
-  //   const navigate = useNavigate();
-  //   const dispatch = useDispatch();
-  //   const handleLogout = () => {
-  //     dispatch(logout());
-  //     dispatch(clearCart());
-  //     navigate("/");
-  //   };
-  //   const goToHome = () => {
-  //     navigate("/");
-  //   };
   return (
     <div className="p-6">
       <div className="mb-6">
