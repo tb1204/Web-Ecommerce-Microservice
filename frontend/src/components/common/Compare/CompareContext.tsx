@@ -1,25 +1,43 @@
 /* eslint-disable react-refresh/only-export-components */
-// Luu tru du lieu so sanh, kiem tra category
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import type { ReactNode } from "react";
 import type { Product } from "../../Products/InterfaceItem";
-import { toast } from "sonner"; // Sử dụng sonner để thông báo đẹp hơn alert
+import { toast } from "sonner";
 
 interface CompareContextType {
   compareItems: Product[];
   addToCompare: (product: Product) => void;
   removeFromCompare: (productId: string) => void;
   clearCompare: () => void;
+  maxItems: number; // Thêm biến này để các component khác biết giới hạn hiện tại
 }
 
 const CompareContext = createContext<CompareContextType | undefined>(undefined);
 
 export const CompareProvider = ({ children }: { children: ReactNode }) => {
   const [compareItems, setCompareItems] = useState<Product[]>([]);
+  const [maxItems, setMaxItems] = useState(4); // Mặc định là máy tính
+
+  // Logic xác định giới hạn sản phẩm dựa trên kích thước màn hình
+  useEffect(() => {
+    const updateLimit = () => {
+      const width = window.innerWidth;
+      if (width < 768) {
+        setMaxItems(2); // Điện thoại: tối đa 2
+      } else if (width < 1024) {
+        setMaxItems(3); // Máy tính bảng: tối đa 3
+      } else {
+        setMaxItems(4); // Máy tính: tối đa 4
+      }
+    };
+
+    updateLimit(); // Chạy lần đầu khi mount
+    window.addEventListener("resize", updateLimit);
+    return () => window.removeEventListener("resize", updateLimit);
+  }, []);
 
   const addToCompare = (product: Product) => {
-    // 1. KIỂM TRA CÙNG LOẠI SẢN PHẨM (Sử dụng thuộc tính .code)
-    // Dùng Optional Chaining (?.) để tránh lỗi nếu product bị thiếu category
+    // 1. Kiểm tra cùng loại
     if (
       compareItems.length > 0 && 
       compareItems[0].category?.code !== product.category?.code
@@ -30,13 +48,14 @@ export const CompareProvider = ({ children }: { children: ReactNode }) => {
 
     // 2. Kiểm tra trùng lặp
     if (compareItems.find((p) => p._id === product._id)) {
-      toast.warning("Sản phẩm này đã có trong danh sách so sánh!");
+      toast.warning("Sản phẩm này đã có trong danh sách!");
       return;
     }
 
-    // 3. Giới hạn 3 sản phẩm
-    if (compareItems.length >= 3) {
-      toast.info("Chỉ có thể so sánh tối đa 3 sản phẩm!");
+    // 3. KIỂM TRA GIỚI HẠN THEO THIẾT BỊ 
+    if (compareItems.length >= maxItems) {
+      //const deviceName = maxItems === 2 ? "điện thoại" : maxItems === 3 ? "máy tính bảng" : "máy tính";
+      toast.info(`Bạn chỉ có thể so sánh tối đa ${maxItems} sản phẩm!`);
       return;
     }
 
@@ -51,7 +70,7 @@ export const CompareProvider = ({ children }: { children: ReactNode }) => {
   const clearCompare = () => setCompareItems([]);
 
   return (
-    <CompareContext.Provider value={{ compareItems, addToCompare, removeFromCompare, clearCompare }}>
+    <CompareContext.Provider value={{ compareItems, addToCompare, removeFromCompare, clearCompare, maxItems }}>
       {children}
     </CompareContext.Provider>
   );

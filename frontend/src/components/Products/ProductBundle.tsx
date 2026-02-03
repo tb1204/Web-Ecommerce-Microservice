@@ -220,7 +220,7 @@ const ProductBundle: React.FC = () => {
     0,
   );
 
-  // Logic giữ nguyên
+  
   const handleSelectProduct = (product: Product) => {
     const stepKey = steps[currentStep - 1].key;
     setSelectedProducts((prev) => ({ ...prev, [stepKey]: product }));
@@ -258,8 +258,8 @@ const ProductBundle: React.FC = () => {
         </h1>
       </header>
 
-      {/* Progress Bar - Arrow Style (Clip-path) */}
-      <div className="flex items-center justify-start mb-12 w-full overflow-hidden">
+      {/* Progress Bar */}
+      {/* <div className="flex items-center justify-start mb-12 w-full overflow-hidden">
         {steps.map((step, index) => {
           const isActive = currentStep === step.id;
           const isDone = !!selectedProducts[step.key];
@@ -295,6 +295,44 @@ const ProductBundle: React.FC = () => {
             </button>
           );
         })}
+      </div> */}
+      <div className="flex items-center mb-10 w-full overflow-x-auto scrollbar-hide pb-2 -mx-1 px-1">
+        <div className="flex w-full min-w-[450px] md:min-w-0"> 
+          {steps.map((step, index) => {
+            const isActive = currentStep === step.id;
+            const isDone = !!selectedProducts[step.key];
+
+            return (
+              <button
+                key={step.id}
+                onClick={() => handleStepClick(step.id)}
+                className={`
+                  relative flex-1 py-3 md:py-4 flex items-center justify-center font-bold text-[11px] md:text-base transition-all
+                  ${isActive || isDone ? "bg-[#0b4a32] text-white" : "bg-[#f1f1f1] text-[#b5b5b5]"}
+                  ${index === 0 ? "rounded-l-lg" : ""}
+                  ${index === steps.length - 1 ? "rounded-r-lg" : ""}
+                `}
+                style={{
+                  clipPath:
+                    index === steps.length - 1
+                      ? "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%, 4% 50%)"
+                      : index === 0
+                        ? "polygon(0% 0%, 96% 0%, 100% 50%, 96% 100%, 0% 100%)"
+                        : "polygon(0% 0%, 96% 0%, 100% 50%, 96% 100%, 0% 100%, 4% 50%)",
+                  marginLeft: index === 0 ? "0" : "-10px",
+                }}
+              >
+                <span className={`
+                  flex-shrink-0 flex items-center justify-center w-5 h-5 md:w-6 md:h-6 rounded-full border text-[10px] md:text-xs mr-2
+                  ${isActive || isDone ? "border-white" : "border-[#b5b5b5]"}
+                `}>
+                  {isDone ? "✓" : step.id}
+                </span>
+                <span className="truncate">{step.title}</span>
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
