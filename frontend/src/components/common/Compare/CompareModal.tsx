@@ -1,3 +1,4 @@
+// Bang so sanh
 import React from "react";
 import { X, ShoppingCart } from "lucide-react";
 import { useCompare } from "./CompareContext";

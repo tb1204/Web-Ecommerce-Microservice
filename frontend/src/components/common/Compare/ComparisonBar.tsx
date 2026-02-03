@@ -1,3 +1,4 @@
+// Thanh so sanh phia duoi
 import  { useState } from "react";
 import { X, Trash2, Minus, Maximize2 } from "lucide-react";
 import { useCompare } from "./CompareContext";

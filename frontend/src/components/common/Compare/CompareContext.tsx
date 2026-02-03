@@ -1,4 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
+// Luu tru du lieu so sanh, kiem tra category
 import { createContext, useContext, useState } from "react";
 import type { ReactNode } from "react";
 import type { Product } from "../../Products/InterfaceItem";
