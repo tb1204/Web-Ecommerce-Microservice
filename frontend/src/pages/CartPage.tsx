@@ -217,15 +217,17 @@ const CartPage = () => {
                   </span>
                 </div>
 
-                <div className="bg-green-50 p-3 rounded-lg border border-green-100">
-                  <p className="text-xs text-green-700 leading-relaxed">
-                    🌟 Đơn hàng của bạn đã đủ điều kiện{" "}
-                    <strong>miễn phí vận chuyển</strong>!
-                  </p>
-                  <div className="mt-2 w-full bg-green-200 h-1.5 rounded-full">
-                    <div className="bg-green-600 h-full w-full rounded-full"></div>
+                {totalPrice > 5000000 && (
+                  <div className="bg-green-50 p-3 rounded-lg border border-green-100">
+                    <p className="text-xs text-green-700 leading-relaxed">
+                      🌟 Đơn hàng của bạn đã đủ điều kiện{" "}
+                      <strong>miễn phí vận chuyển</strong>!
+                    </p>
+                    <div className="mt-2 w-full bg-green-200 h-1.5 rounded-full">
+                      <div className="bg-green-600 h-full w-full rounded-full"></div>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
 
               <button

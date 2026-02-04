@@ -13,7 +13,10 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   server: {
-    host: true, // bind tất cả interface (optional nhưng tốt cho ngrok)
+    // host: "0.0.0.0", // QUAN TRỌNG
+    // port: 5173,
+    strictPort: true,
+    // host: true, // bind tất cả interface (optional nhưng tốt cho ngrok)
     allowedHosts: [
       ".ngrok-free.dev", // ← wildcard: cho phép mọi *.ngrok-free.dev (random subdomain)
       ".ngrok.io", // nếu ngrok dùng base khác

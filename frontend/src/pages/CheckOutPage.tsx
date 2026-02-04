@@ -1,25 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { ChevronLeft, Wallet, UserCircle } from "lucide-react";
-
-import locationDataRaw from "../data/dataLocation.json";
+import React, { useState, useRef, useEffect } from "react";
+import { Wallet, ChevronDown } from "lucide-react";
+import locationDataRaw from "../data/danhmucxaphuong.json";
 import goi from "../assets/goi/goi-bong.webp";
+import { Link } from "react-router-dom";
 
 interface Ward {
-  name: string;
-  code: number;
-}
-
-interface District {
-  name: string;
-  code: number;
-  wards: Ward[];
+  wardCode: number;
+  wardName: string;
 }
 
 interface Province {
-  name: string;
-  code: number;
-  districts: District[];
+  ministryProvinceCode: number;
+  statisticsProvinceCode: string;
+  provinceName: string;
+  wards: Ward[];
 }
 
 interface CartItem {
@@ -30,12 +24,8 @@ interface CartItem {
   image: string;
 }
 
-const CheckoutPage: React.FC = () => {
-  const navigate = useNavigate();
-  const [isLoggedIn] = useState(true);
-
-  // Ép kiểu dữ liệu JSON
-  const locationData = locationDataRaw as Province[];
+const CheckoutPage = () => {
+  const locationData = locationDataRaw as unknown as Province[];
 
   const [formData, setFormData] = useState({
     addressId: "default",
@@ -44,17 +34,57 @@ const CheckoutPage: React.FC = () => {
     phone: "",
     addressDetail: "",
     province: "",
-    district: "",
     ward: "",
     note: "",
-    paymentMethod: "bank",
+    paymentMethod: "", // "", "vnpay", "momo", "cod"
   });
 
-  // State hỗ trợ hiển thị danh sách dropdown
-  const [districts, setDistricts] = useState<District[]>([]);
-  const [wards, setWards] = useState<Ward[]>([]);
+  const [showProvDropdown, setShowProvDropdown] = useState(false);
+  const [showWardDropdown, setShowWardDropdown] = useState(false);
+  const [availableWards, setAvailableWards] = useState<Ward[]>([]);
 
-  // --- MOCK DATA ---
+  const provRef = useRef<HTMLDivElement>(null);
+  const wardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (provRef.current && !provRef.current.contains(event.target as Node))
+        setShowProvDropdown(false);
+      if (wardRef.current && !wardRef.current.contains(event.target as Node))
+        setShowWardDropdown(false);
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const filteredProvinces = locationData.filter((p) =>
+    p.provinceName.toLowerCase().includes(formData.province.toLowerCase()),
+  );
+
+  const filteredWards = availableWards.filter((w) =>
+    w.wardName.toLowerCase().includes(formData.ward.toLowerCase()),
+  );
+
+  const handleSelectProvince = (p: Province) => {
+    setFormData((prev) => ({ ...prev, province: p.provinceName, ward: "" }));
+    setAvailableWards(p.wards);
+    setShowProvDropdown(false);
+  };
+
+  const handleSelectWard = (w: Ward) => {
+    setFormData((prev) => ({ ...prev, ward: w.wardName }));
+    setShowWardDropdown(false);
+  };
+
   const mockCart: CartItem[] = [
     {
       id: "1",
@@ -72,55 +102,27 @@ const CheckoutPage: React.FC = () => {
     },
   ];
 
-  // --- HANDLERS ---
-  const handleInputChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  // Xử lý chọn Tỉnh
-  const handleProvinceChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const provinceName = e.target.value;
-    const selectedProv = locationData.find((p) => p.name === provinceName);
-
-    setFormData((prev) => ({
-      ...prev,
-      province: provinceName,
-      district: "",
-      ward: "",
-    }));
-
-    setDistricts(selectedProv ? selectedProv.districts : []);
-    setWards([]);
-  };
-
-  // Xử lý chọn Huyện
-  const handleDistrictChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const districtName = e.target.value;
-    const selectedDist = districts.find((d) => d.name === districtName);
-
-    setFormData((prev) => ({
-      ...prev,
-      district: districtName,
-      ward: "",
-    }));
-
-    setWards(selectedDist ? selectedDist.wards : []);
-  };
-
   const subtotal = mockCart.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0,
   );
 
+  // Giả lập phí vận chuyển và giảm giá
+  const shippingFee = 0; // 0đ nếu miễn phí
+  const shippingDiscount = 0; // giảm phí vận chuyển
+  const voucherDiscount = 0; // voucher giảm giá
+  const memberDiscount = 10000; // hội viên giảm % (hiện tại 0đ)
+
+  const totalPayment =
+    subtotal +
+    shippingFee -
+    shippingDiscount -
+    voucherDiscount -
+    memberDiscount;
+
   return (
     <div className="min-h-screen bg-[#f8f8f8] text-[#333] font-sans">
       <div className="max-w-[1200px] mx-auto px-4 py-6">
-        {/* Header Logo */}
         <div className="flex justify-center mb-8">
           <div className="bg-black text-white px-4 py-1 flex items-center font-bold text-4xl lg:text-5xl tracking-tighter italic">
             ARTISANO<span className="text-red-600">DELIVERY</span>
@@ -128,18 +130,18 @@ const CheckoutPage: React.FC = () => {
         </div>
 
         <div className="flex flex-col lg:flex-row gap-12">
-          {/* CỘT TRÁI: THÔNG TIN VÀ THANH TOÁN */}
           <div className="flex-[2] space-y-10">
             <section>
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-bold uppercase tracking-wide">
                   Thông tin nhận hàng
                 </h2>
-                {isLoggedIn && (
-                  <button className="text-blue-600 text-sm flex items-center gap-1 hover:underline">
-                    <UserCircle size={16} /> Đăng xuất
-                  </button>
-                )}
+                <Link
+                  to="/cart"
+                  className="inline-flex items-center gap-1 text-blue-600 font-medium    transition-all duration-300 ease-out hover:text-blue-800 hover:decoration-2 hover:decoration-blue-700"
+                >
+                  Quay lại giỏ hàng
+                </Link>
               </div>
 
               <div className="space-y-3">
@@ -149,31 +151,24 @@ const CheckoutPage: React.FC = () => {
                 >
                   <option value="default">Địa chỉ khác...</option>
                 </select>
-
                 <input
                   name="email"
                   value={formData.email}
-                  readOnly={isLoggedIn}
-                  placeholder="Email"
+                  readOnly
                   className="w-full p-2.5 border border-gray-300 rounded text-sm bg-[#e9e9e9] outline-none"
                 />
-
                 <input
                   name="fullName"
                   onChange={handleInputChange}
                   placeholder="Họ và tên"
                   className="w-full p-2.5 border border-gray-300 rounded text-sm outline-none focus:border-blue-500"
                 />
-
-                <div className="relative">
-                  <input
-                    name="phone"
-                    onChange={handleInputChange}
-                    placeholder="Số điện thoại"
-                    className="w-full p-2.5 border border-gray-300 rounded text-sm outline-none focus:border-blue-500"
-                  />
-                </div>
-
+                <input
+                  name="phone"
+                  onChange={handleInputChange}
+                  placeholder="Số điện thoại"
+                  className="w-full p-2.5 border border-gray-300 rounded text-sm outline-none focus:border-blue-500"
+                />
                 <input
                   name="addressDetail"
                   onChange={handleInputChange}
@@ -181,51 +176,92 @@ const CheckoutPage: React.FC = () => {
                   className="w-full p-2.5 border border-gray-300 rounded text-sm outline-none focus:border-blue-500"
                 />
 
-                {/* Dropdown 3 cấp */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                  <select
-                    name="province"
-                    value={formData.province}
-                    onChange={handleProvinceChange}
-                    className="p-2.5 border border-gray-300 rounded text-sm bg-white outline-none focus:border-blue-500"
-                  >
-                    <option value="">Tỉnh thành</option>
-                    {locationData.map((p) => (
-                      <option key={p.code} value={p.name}>
-                        {p.name}
-                      </option>
-                    ))}
-                  </select>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {/* Tỉnh thành */}
+                  <div className="relative" ref={provRef}>
+                    <div className="relative">
+                      <input
+                        className="w-full p-2.5 border border-gray-300 rounded text-sm bg-white outline-none focus:border-blue-500 pr-8"
+                        placeholder="Tỉnh thành"
+                        value={formData.province}
+                        onChange={(e) => {
+                          setFormData({
+                            ...formData,
+                            province: e.target.value,
+                            ward: "",
+                          });
+                          setShowProvDropdown(true);
+                        }}
+                        onFocus={() => setShowProvDropdown(true)}
+                      />
+                      <ChevronDown
+                        size={14}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
+                      />
+                    </div>
+                    {showProvDropdown && (
+                      <ul className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded shadow-xl max-h-60 overflow-y-auto">
+                        {filteredProvinces.length > 0 ? (
+                          filteredProvinces.map((p, i) => (
+                            <li
+                              key={i}
+                              className="p-2.5 hover:bg-blue-50 cursor-pointer text-sm border-b last:border-none"
+                              onClick={() => handleSelectProvince(p)}
+                            >
+                              {p.provinceName}
+                            </li>
+                          ))
+                        ) : (
+                          <li className="p-2.5 text-gray-400 italic text-sm">
+                            Không tìm thấy
+                          </li>
+                        )}
+                      </ul>
+                    )}
+                  </div>
 
-                  <select
-                    name="district"
-                    value={formData.district}
-                    onChange={handleDistrictChange}
-                    disabled={!formData.province}
-                    className="p-2.5 border border-gray-300 rounded text-sm bg-white outline-none focus:border-blue-500 disabled:bg-gray-50"
+                  {/* Phường xã */}
+                  <div
+                    className={`relative ${!formData.province ? "opacity-60" : ""}`}
+                    ref={wardRef}
                   >
-                    <option value="">Quận huyện</option>
-                    {districts.map((d) => (
-                      <option key={d.code} value={d.name}>
-                        {d.name}
-                      </option>
-                    ))}
-                  </select>
-
-                  <select
-                    name="ward"
-                    value={formData.ward}
-                    onChange={handleInputChange}
-                    disabled={!formData.district}
-                    className="p-2.5 border border-gray-300 rounded text-sm bg-white outline-none focus:border-blue-500 disabled:bg-gray-50"
-                  >
-                    <option value="">Phường xã</option>
-                    {wards.map((w) => (
-                      <option key={w.code} value={w.name}>
-                        {w.name}
-                      </option>
-                    ))}
-                  </select>
+                    <div className="relative">
+                      <input
+                        className="w-full p-2.5 border border-gray-300 rounded text-sm bg-white outline-none focus:border-blue-500 pr-8 disabled:bg-gray-50"
+                        placeholder="Phường xã"
+                        disabled={!formData.province}
+                        value={formData.ward}
+                        onChange={(e) => {
+                          setFormData({ ...formData, ward: e.target.value });
+                          setShowWardDropdown(true);
+                        }}
+                        onFocus={() => setShowWardDropdown(true)}
+                      />
+                      <ChevronDown
+                        size={14}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
+                      />
+                    </div>
+                    {showWardDropdown && (
+                      <ul className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded shadow-xl max-h-60 overflow-y-auto">
+                        {filteredWards.length > 0 ? (
+                          filteredWards.map((w, i) => (
+                            <li
+                              key={i}
+                              className="p-2.5 hover:bg-blue-50 cursor-pointer text-sm border-b last:border-none"
+                              onClick={() => handleSelectWard(w)}
+                            >
+                              {w.wardName}
+                            </li>
+                          ))
+                        ) : (
+                          <li className="p-2.5 text-gray-400 italic text-sm">
+                            Không tìm thấy
+                          </li>
+                        )}
+                      </ul>
+                    )}
+                  </div>
                 </div>
 
                 <textarea
@@ -237,41 +273,60 @@ const CheckoutPage: React.FC = () => {
               </div>
             </section>
 
-            <section>
-              <h2 className="text-lg font-bold mb-4 uppercase tracking-wide">
-                Vận chuyển
-              </h2>
-              <div className="bg-[#d9edf7] text-[#31708f] p-4 rounded border border-[#bce8f1] text-sm italic">
-                {formData.ward
-                  ? "Phí vận chuyển sẽ được tính dựa trên địa chỉ của bạn"
-                  : "Vui lòng nhập đầy đủ thông tin địa chỉ để thấy phí vận chuyển"}
-              </div>
-            </section>
-
+            {/* Phương thức thanh toán */}
             <section>
               <h2 className="text-lg font-bold mb-4 uppercase tracking-wide text-gray-800">
-                Thanh toán
+                Phương thức thanh toán
               </h2>
               <div className="border border-gray-300 rounded overflow-hidden shadow-sm">
                 <label
-                  className={`flex items-center justify-between p-4 border-b cursor-pointer transition-colors ${formData.paymentMethod === "bank" ? "bg-blue-50" : "hover:bg-gray-50"}`}
+                  className={`flex items-center justify-between p-4 border-b cursor-pointer transition-colors ${
+                    formData.paymentMethod === "vnpay"
+                      ? "bg-blue-50"
+                      : "hover:bg-gray-50"
+                  }`}
                 >
                   <div className="flex items-center gap-3">
                     <input
                       type="radio"
                       name="paymentMethod"
-                      value="bank"
-                      checked={formData.paymentMethod === "bank"}
+                      value="vnpay"
+                      checked={formData.paymentMethod === "vnpay"}
                       onChange={handleInputChange}
                     />
                     <span className="text-sm font-medium">
-                      Chuyển khoản qua ngân hàng
+                      VNPAY (Thẻ ngân hàng, QR Code)
                     </span>
                   </div>
                   <Wallet className="text-blue-600" size={18} />
                 </label>
+
                 <label
-                  className={`flex items-center justify-between p-4 cursor-pointer transition-colors ${formData.paymentMethod === "cod" ? "bg-blue-50" : "hover:bg-gray-50"}`}
+                  className={`flex items-center justify-between p-4 border-b cursor-pointer transition-colors ${
+                    formData.paymentMethod === "momo"
+                      ? "bg-blue-50"
+                      : "hover:bg-gray-50"
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      value="momo"
+                      checked={formData.paymentMethod === "momo"}
+                      onChange={handleInputChange}
+                    />
+                    <span className="text-sm font-medium">MoMo</span>
+                  </div>
+                  <Wallet className="text-pink-600" size={18} />
+                </label>
+
+                <label
+                  className={`flex items-center justify-between p-4 cursor-pointer transition-colors ${
+                    formData.paymentMethod === "cod"
+                      ? "bg-blue-50"
+                      : "hover:bg-gray-50"
+                  }`}
                 >
                   <div className="flex items-center gap-3">
                     <input
@@ -282,38 +337,26 @@ const CheckoutPage: React.FC = () => {
                       onChange={handleInputChange}
                     />
                     <span className="text-sm font-medium">
-                      Thanh toán khi giao hàng (COD)
+                      Thanh toán khi nhận hàng (COD)
                     </span>
                   </div>
-                  <Wallet className="text-blue-600" size={18} />
+                  <Wallet className="text-green-600" size={18} />
                 </label>
               </div>
             </section>
-
-            {/* Mobile Footer Button */}
-            <div className="lg:hidden pt-4 space-y-4">
-              <button className="w-full bg-[#1947af] text-white py-4 rounded font-bold uppercase tracking-wider active:scale-[0.98] transition-transform">
-                Đặt hàng ngay
-              </button>
-              <button
-                onClick={() => navigate("/cart")}
-                className="w-full text-blue-600 text-sm flex justify-center items-center gap-1 italic"
-              >
-                <ChevronLeft size={16} /> Quay về giỏ hàng
-              </button>
-            </div>
           </div>
 
-          {/* CỘT PHẢI: TÓM TẮT ĐƠN HÀNG */}
+          {/* Phần đơn hàng */}
           <div className="flex-1 lg:max-w-[420px]">
             <div className="bg-white p-6 border border-gray-200 rounded-lg sticky top-6 shadow-sm">
               <h2 className="text-xl font-bold mb-6 border-b pb-4">
                 Đơn hàng ({mockCart.length} sản phẩm)
               </h2>
 
-              <div className="space-y-4 mb-6 max-h-[400px] overflow-y-auto pr-2">
+              {/* Danh sách sản phẩm - fix khoảng cách */}
+              <div className="space-y-6 mb-6 max-h-[400px] overflow-y-auto pr-2 pt-2">
                 {mockCart.map((item) => (
-                  <div key={item.id} className="flex gap-4 items-center">
+                  <div key={item.id} className="flex gap-4 items-start">
                     <div className="relative shrink-0">
                       <img
                         src={item.image}
@@ -336,6 +379,7 @@ const CheckoutPage: React.FC = () => {
                 ))}
               </div>
 
+              {/* Mã giảm giá */}
               <div className="flex gap-2 mb-6 border-t pt-6">
                 <input
                   placeholder="Mã giảm giá"
@@ -346,37 +390,55 @@ const CheckoutPage: React.FC = () => {
                 </button>
               </div>
 
-              <div className="space-y-3 border-t pt-6 text-sm text-gray-600">
+              {/* Chi tiết thanh toán */}
+              <div className="space-y-2 border-t pt-6 text-sm text-gray-600">
+                <h3 className="font-bold text-gray-800 mb-2">
+                  Chi tiết thanh toán
+                </h3>
+
                 <div className="flex justify-between">
-                  <span>Tạm tính</span>
-                  <span className="font-semibold text-gray-800">
-                    {subtotal.toLocaleString("vi-VN")}₫
+                  <span>Tổng tiền hàng</span>
+                  <span>{subtotal.toLocaleString("vi-VN")}₫</span>
+                </div>
+
+                <div className="flex justify-between">
+                  <span>Tổng chi phí vận chuyển</span>
+                  <span>{shippingFee.toLocaleString("vi-VN")}₫</span>
+                </div>
+
+                <div className="flex justify-between ">
+                  <span>Giảm chi phí vận chuyển</span>
+                  <span className="text-red-600">
+                    -{shippingDiscount.toLocaleString("vi-VN")}₫
                   </span>
                 </div>
-                <div className="flex justify-between">
-                  <span>Phí vận chuyển</span>
-                  <span className="italic">Miễn phí</span>
+
+                <div className="flex justify-between ">
+                  <span>Tổng cộng voucher giảm giá</span>
+                  <span className="text-red-600">
+                    -{voucherDiscount.toLocaleString("vi-VN")}₫
+                  </span>
                 </div>
-                <div className="flex justify-between text-lg font-bold border-t pt-4 text-blue-800">
-                  <span>Tổng cộng</span>
+
+                <div className="flex justify-between ">
+                  <span>Hội viên giảm giá</span>
+                  <span className="text-red-600">
+                    -{memberDiscount.toLocaleString("vi-VN")}₫
+                  </span>
+                </div>
+
+                <div className="flex justify-between font-bold text-lg border-t pt-3 text-blue-800">
+                  <span>Tổng thanh toán</span>
                   <span className="text-2xl">
-                    {subtotal.toLocaleString("vi-VN")}₫
+                    {totalPayment.toLocaleString("vi-VN")}₫
                   </span>
                 </div>
               </div>
 
-              {/* Desktop Footer Button */}
-              <div className="hidden lg:block mt-8 space-y-4">
-                <button className="w-full bg-[#1947af] text-white py-4 rounded font-bold uppercase tracking-widest shadow-md hover:bg-blue-800 transition-all active:scale-[0.99]">
-                  HOÀN TẤT ĐẶT HÀNG
-                </button>
-                <button
-                  onClick={() => navigate("/cart")}
-                  className="w-full text-blue-600 text-sm flex justify-center items-center gap-1 hover:underline italic"
-                >
-                  <ChevronLeft size={16} /> Quay về giỏ hàng
-                </button>
-              </div>
+              {/* Nút hoàn tất */}
+              <button className="w-full mt-8 bg-[#1947af] text-white py-4 rounded font-bold uppercase tracking-widest shadow-md hover:bg-blue-800 transition-all active:scale-[0.99]">
+                HOÀN TẤT ĐẶT HÀNG
+              </button>
             </div>
           </div>
         </div>

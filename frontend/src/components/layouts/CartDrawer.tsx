@@ -24,6 +24,7 @@ interface CartDrawerProps {
 function CartDrawer({ drawerOpen, toggleCartDrawer }: CartDrawerProps) {
   const navigate = useNavigate();
 
+  // Mock data giỏ hàng (sẽ thay bằng state/context thực tế sau)
   const [cartProducts, setCartProducts] = useState<CartItem[]>([
     {
       productId: "p1",
@@ -47,6 +48,43 @@ function CartDrawer({ drawerOpen, toggleCartDrawer }: CartDrawerProps) {
     },
   ]);
 
+  // State theo dõi các sản phẩm được chọn (dùng productId làm key)
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+
+  // Tự động chọn tất cả khi giỏ hàng thay đổi (tùy chọn - có thể bỏ nếu không muốn)
+  // useEffect(() => {
+  //   if (cartProducts.length > 0 && selectedItems.length === 0) {
+  //     setSelectedItems(cartProducts.map((item) => item.productId));
+  //   }
+  // }, [cartProducts]);
+
+  // Toggle chọn/bỏ chọn 1 item
+  const toggleSelectItem = (productId: string) => {
+    setSelectedItems((prev) =>
+      prev.includes(productId)
+        ? prev.filter((id) => id !== productId)
+        : [...prev, productId],
+    );
+  };
+
+  // Chọn / bỏ chọn tất cả
+  const toggleSelectAll = () => {
+    if (selectedItems.length === cartProducts.length) {
+      setSelectedItems([]);
+    } else {
+      setSelectedItems(cartProducts.map((item) => item.productId));
+    }
+  };
+
+  // Tính tổng tiền chỉ các item được chọn
+  const totalAmount = useMemo(() => {
+    return cartProducts
+      .filter((item) => selectedItems.includes(item.productId))
+      .reduce((sum, item) => sum + item.price * item.quantity, 0);
+  }, [cartProducts, selectedItems]);
+
+  const selectedCount = selectedItems.length;
+
   // Logic cập nhật số lượng
   const handleUpdateQuantity = (
     productId: string,
@@ -60,30 +98,40 @@ function CartDrawer({ drawerOpen, toggleCartDrawer }: CartDrawerProps) {
       ),
     );
   };
+
+  // Xóa sản phẩm
+  const handleRemoveItem = (productId: string) => {
+    setCartProducts((prev) =>
+      prev.filter((item) => item.productId !== productId),
+    );
+    // Bỏ chọn nếu item đang được chọn
+    setSelectedItems((prev) => prev.filter((id) => id !== productId));
+  };
+
   const handleContinueShopping = () => {
     toggleCartDrawer();
     navigate("/collections/all");
   };
 
-  // Logic xóa sản phẩm
-  const handleRemoveItem = (productId: string) => {
-    setCartProducts((prev) =>
-      prev.filter((item) => item.productId !== productId),
-    );
-  };
-
-  // Tính tổng tiền tự động dựa trên cartProducts
-  const totalAmount = useMemo(() => {
-    return cartProducts.reduce(
-      (sum, item) => sum + item.price * item.quantity,
-      0,
-    );
-  }, [cartProducts]);
-
   const handleCheckout = () => {
+    if (selectedCount === 0) {
+      alert("Vui lòng chọn ít nhất 1 sản phẩm để thanh toán!");
+      return;
+    }
+
+    // Lọc chỉ các sản phẩm được chọn
+    const selectedProducts = cartProducts.filter((item) =>
+      selectedItems.includes(item.productId),
+    );
+
+    // Lưu tạm vào localStorage để dùng ở trang checkout
+    // (Sau này nên dùng context, zustand hoặc redux để tốt hơn)
+    localStorage.setItem("checkoutItems", JSON.stringify(selectedProducts));
+
     toggleCartDrawer();
     navigate("/checkout");
   };
+
   const handleDetailCart = () => {
     navigate("/cart");
     toggleCartDrawer();
@@ -91,6 +139,7 @@ function CartDrawer({ drawerOpen, toggleCartDrawer }: CartDrawerProps) {
 
   return (
     <>
+      {/* Overlay nền mờ */}
       <div
         className={`fixed inset-0 bg-black/50 z-[140] transition-opacity duration-300 ${
           drawerOpen ? "opacity-100 visible" : "opacity-0 invisible"
@@ -98,6 +147,7 @@ function CartDrawer({ drawerOpen, toggleCartDrawer }: CartDrawerProps) {
         onClick={toggleCartDrawer}
       />
 
+      {/* Drawer chính */}
       <aside
         className={`fixed top-0 right-0 w-full sm:w-1/2 md:w-[28rem] h-full 
         bg-white dark:bg-gray-900 shadow-2xl transform transition-transform duration-300 ease-in-out z-[150] flex flex-col
@@ -119,14 +169,39 @@ function CartDrawer({ drawerOpen, toggleCartDrawer }: CartDrawerProps) {
           </button>
         </div>
 
-        {/* Nội dung Giỏ hàng */}
+        {/* Nội dung giỏ hàng */}
         <div className="flex-grow overflow-y-auto p-4 custom-scrollbar">
           {cartProducts.length > 0 ? (
-            <CartContents
-              cart={{ products: cartProducts, totalPrice: totalAmount }}
-              onUpdateQuantity={handleUpdateQuantity}
-              onRemoveItem={handleRemoveItem}
-            />
+            <>
+              {/* Chọn tất cả */}
+              <div className="flex items-center gap-3 mb-4 pb-3 border-b dark:border-gray-700">
+                <input
+                  type="checkbox"
+                  id="select-all"
+                  checked={
+                    selectedItems.length === cartProducts.length &&
+                    cartProducts.length > 0
+                  }
+                  onChange={toggleSelectAll}
+                  className="w-5 h-5 accent-[#05472a] cursor-pointer"
+                />
+                <label
+                  htmlFor="select-all"
+                  className="text-sm font-medium cursor-pointer select-none"
+                >
+                  Chọn tất cả ({selectedCount}/{cartProducts.length} sản phẩm)
+                </label>
+              </div>
+
+              {/* Danh sách sản phẩm */}
+              <CartContents
+                cart={{ products: cartProducts, totalPrice: totalAmount }}
+                selectedItems={selectedItems}
+                onToggleSelect={toggleSelectItem}
+                onUpdateQuantity={handleUpdateQuantity}
+                onRemoveItem={handleRemoveItem}
+              />
+            </>
           ) : (
             <div className="flex flex-col items-center justify-center h-full text-center p-6">
               <p className="text-gray-500 mb-4">Giỏ hàng của bạn đang trống</p>
@@ -140,12 +215,12 @@ function CartDrawer({ drawerOpen, toggleCartDrawer }: CartDrawerProps) {
           )}
         </div>
 
-        {/* Footer */}
+        {/* Footer (tổng tiền + nút) */}
         {cartProducts.length > 0 && (
           <div className="p-5 bg-gray-50 dark:bg-gray-800 border-t">
             <div className="flex justify-between items-center mb-4">
               <span className="font-medium text-gray-600 dark:text-gray-400">
-                Tổng cộng:
+                Tổng cộng ({selectedCount} sản phẩm):
               </span>
               <span className="text-xl font-bold text-[#c91e2c]">
                 {totalAmount.toLocaleString("vi-VN")}đ
@@ -155,10 +230,16 @@ function CartDrawer({ drawerOpen, toggleCartDrawer }: CartDrawerProps) {
             <div className="space-y-3">
               <button
                 onClick={handleCheckout}
-                className="w-full bg-[#05472a] text-white py-4 rounded-xl font-bold hover:bg-[#0a2e1e] transition-all"
+                disabled={selectedCount === 0}
+                className={`w-full py-4 rounded-xl font-bold uppercase transition-all ${
+                  selectedCount > 0
+                    ? "bg-[#05472a] text-white hover:bg-[#0a2e1e]"
+                    : "bg-gray-400 text-gray-600 cursor-not-allowed"
+                }`}
               >
                 Tiến hành thanh toán
               </button>
+
               <button
                 onClick={handleDetailCart}
                 className="w-full bg-white border border-gray-300 text-gray-700 py-3 rounded-xl font-bold hover:bg-gray-50 transition-all"

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import about from "../assets/about.webp";
 import flashsale from "../assets/flash-sale-3.webp";
-import ProductGrid from "../components/Products/FeaturedCategories";
+import FeaturedCategories from "../components/Products/FeaturedCategories";
 import { Link } from "react-router-dom";
 interface TabItem {
   title: string;
@@ -151,7 +151,7 @@ const About = () => {
             </p>
           </div>
         </div>
-        <ProductGrid />
+        <FeaturedCategories />
       </div>
     </div>
   );

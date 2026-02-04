@@ -23,7 +23,6 @@ import CheckoutPage from "./pages/CheckOutPage";
 import MyOrdersPage from "./pages/MyOrdersPage";
 import OrderDetailsPage from "./pages/OrderDetailsPage";
 
-// 1. IMPORT CONTEXT VÀ COMPONENT SO SÁNH
 import { CompareProvider } from "../src/components/common/Compare/CompareContext";
 import ComparisonBar from "../src/components/common/Compare/ComparisonBar";
 
@@ -126,6 +125,10 @@ function App() {
             <Route path="my-orders" element={<MyOrdersPage />} />
             <Route path="order/:id" element={<OrderDetailsPage />} />
 
+            {/* test */}
+            <Route path="user" element={<AdminUserPage />} />
+            <Route path="admin" element={<AdminHomePage />} />
+
             <Route path="*" element={<NotFound />} />
           </Route>
 
@@ -137,7 +140,7 @@ function App() {
               </ProtectedRoute>
             }
           >
-            <Route index element={<AdminHomePage />} />
+            {/* <Route index element={<AdminHomePage />} /> */}
           </Route>
         </Routes>
       </CompareProvider>

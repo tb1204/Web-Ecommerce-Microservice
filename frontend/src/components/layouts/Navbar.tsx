@@ -1,7 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import logo1 from "../../assets/logo2.jpg";
 
-import { FaHeadset, FaRegHeart } from "react-icons/fa";
+import {
+  FaRegHeart,
+  FaRegBell,
+  FaCommentDots,
+  FaClipboardList,
+  FaBoxOpen,
+} from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
 import { FiUser, FiUserPlus, FiLogIn } from "react-icons/fi";
 import { IoIosSearch } from "react-icons/io";
@@ -10,7 +16,20 @@ import { useTheme } from "../../context/ThemeContext";
 import { useState, type FormEvent } from "react";
 import CartDrawer from "./CartDrawer";
 import { UserButton, useUser } from "@clerk/clerk-react";
-import { FaBoxOpen } from "react-icons/fa";
+
+// 1. Sau này bạn sẽ import các selectors từ Redux Slice
+// import { useSelector } from "react-redux";
+// import { selectCartCount } from "../../redux/cartSlice";
+// import { selectWishlistCount } from "../../redux/wishlistSlice";
+// import { selectNotifications } from "../../redux/notificationSlice";
+
+interface Notification {
+  id: number;
+  type: "comment" | "order";
+  content: string;
+  time: string;
+  unread: boolean;
+}
 
 const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -19,26 +38,42 @@ const Navbar = () => {
   const { isLoaded, isSignedIn, user } = useUser();
   const isDark = theme === "dark";
   const navigate = useNavigate();
-  const toggleCartDrawer = () => {
-    setDrawerOpen(!drawerOpen);
-  };
+
+  const [notifications] = useState<Notification[]>([
+    {
+      id: 1,
+      type: "comment",
+      content:
+        "Admin đã phản hồi bình luận của bạn trong sản phẩm 'Áo thun Polo'.",
+      time: "2 phút trước",
+      unread: true,
+    },
+    {
+      id: 2,
+      type: "order",
+      content: "Đơn hàng #SHP123 đã chuyển sang trạng thái 'Đang giao'.",
+      time: "1 giờ trước",
+      unread: false,
+    },
+  ]);
+
+  const unreadCount = notifications.filter((n) => n.unread).length;
+  const wishlistCount = 3; // Thay bằng useSelector(selectWishlistCount)
+  const cartCount = 5; // Thay bằng useSelector(selectCartCount)
+
+  // ==========================================================
+
+  const toggleCartDrawer = () => setDrawerOpen(!drawerOpen);
+  const handleWishlistClick = () => navigate("/wishlist");
   const displayName = user?.username || user?.fullName || user?.firstName || "";
-
-  const wishlistCount = 3;
-  const cartCount = 5;
-
-  const handleWishlistClick = () => {
-    navigate("/wishlist");
-  };
 
   const handleSearch = (e: FormEvent) => {
     e.preventDefault();
-
-    // 1. Kiểm tra xem người dùng có nhập gì không (tránh search rỗng)
     const query = searchTerm.trim();
     if (!query) return;
     navigate(`/collections/all?search=${encodeURIComponent(query)}`);
   };
+
   return (
     <header className="w-full bg-white dark:bg-gray-900 text-black dark:text-white shadow-md sticky top-0 z-[100]">
       <div className="px-4 py-3 md:px-6 max-w-7xl mx-auto">
@@ -54,7 +89,6 @@ const Navbar = () => {
           </div>
 
           {/* 2. Search Box */}
-
           <div className="order-3 lg:order-none col-span-2 lg:col-span-1">
             <form
               onSubmit={handleSearch}
@@ -86,28 +120,78 @@ const Navbar = () => {
               {isDark ? <MdDarkMode size={26} /> : <MdLightMode size={26} />}
             </button>
 
-            {/* Hotline - Hiện đầy đủ từ md, chỉ icon trên mobile */}
-            <div className="hidden md:flex items-center gap-2 group cursor-pointer hover:bg-[#3cb371]/10 rounded-full p-2">
-              <FaHeadset
-                size={26}
-                className="text-gray-700 dark:text-gray-300 "
-              />
-              <div className="flex flex-col leading-tight  lg:flex">
-                <span className="text-[10px] uppercase font-semibold opacity-60">
-                  Hỗ trợ 24/7
-                </span>
-                <span className="text-sm font-bold text-[#05472a] dark:text-[#3cb371]">
-                  1900 9011
-                </span>
+            {/* --- NOTIFICATION DROPDOWN (REDUX READY) --- */}
+            <div className="relative group">
+              <button className="relative p-2 hover:bg-[#3cb371]/10 dark:hover:bg-gray-800 rounded-full transition-colors focus:outline-none">
+                <FaRegBell size={26} />
+                {unreadCount > 0 && (
+                  <span className="absolute -top-0.5 left-5 p-2  bg-red-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center border-2 border-white dark:border-gray-900 shadow-sm">
+                    {unreadCount}
+                  </span>
+                )}
+              </button>
+
+              {/* Dropdown Menu */}
+              <div className="absolute right-0 mt-2 w-72 sm:w-80 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[110] overflow-hidden">
+                <div className="p-4 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center bg-gray-50/50 dark:bg-gray-800/50">
+                  <h3 className="font-bold text-sm">
+                    Thông báo ({unreadCount})
+                  </h3>
+                  <span className="text-[11px] text-[#3cb371] cursor-pointer hover:underline">
+                    Xem tất cả
+                  </span>
+                </div>
+
+                <div className="flex flex-col max-h-[350px] overflow-y-auto">
+                  {notifications.length > 0 ? (
+                    notifications.map((noti) => (
+                      <div
+                        key={noti.id}
+                        className={`flex gap-3 px-4 py-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition cursor-pointer border-b border-gray-50 dark:border-gray-700 last:border-0 ${
+                          noti.unread
+                            ? "bg-[#3cb371]/5 dark:bg-[#3cb371]/10"
+                            : ""
+                        }`}
+                      >
+                        <div className="mt-1 shrink-0">
+                          {noti.type === "comment" ? (
+                            <FaCommentDots
+                              className="text-blue-500"
+                              size={18}
+                            />
+                          ) : (
+                            <FaClipboardList
+                              className="text-[#3cb371]"
+                              size={18}
+                            />
+                          )}
+                        </div>
+                        <div className="flex flex-col gap-1 flex-1">
+                          <p className="text-sm leading-[1.4] text-gray-800 dark:text-gray-200 font-medium">
+                            {noti.content}
+                          </p>
+                          <span className="text-[11px] text-gray-400 font-normal">
+                            {noti.time}
+                          </span>
+                        </div>
+                        {noti.unread && (
+                          <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 shrink-0"></div>
+                        )}
+                      </div>
+                    ))
+                  ) : (
+                    <div className="p-8 text-center text-sm text-gray-500">
+                      Không có thông báo nào
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
 
-            {/* User - Tên user ở dưới icon trên mobile, bên cạnh trên desktop */}
+            {/* User Dropdown */}
             <div className="relative group cursor-pointer hover:rounded-lg hover:bg-[#3cb371]/10">
               <div className="flex flex-col items-center md:flex-row md:items-center md:gap-1.5 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition">
-                {/* Khi đã đăng nhập, icon FiUser sẽ được thay thế bởi UserButton hoặc hiển thị cạnh nhau */}
                 {isLoaded && isSignedIn ? (
-                  // <UserButton afterSignOutUrl="/" />
                   <UserButton>
                     <UserButton.MenuItems>
                       <UserButton.Action
@@ -125,13 +209,12 @@ const Navbar = () => {
                 )}
 
                 {isLoaded && isSignedIn && displayName && (
-                  <span className="text-xs md:text-sm font-medium text-center md:text-left">
+                  <span className="text-xs md:text-sm font-medium text-center md:text-left hidden sm:block">
                     {displayName}
                   </span>
                 )}
               </div>
 
-              {/* Dropdown - Chỉ hiện khi CHƯA đăng nhập */}
               {!isSignedIn && (
                 <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                   <div
@@ -152,35 +235,35 @@ const Navbar = () => {
               )}
             </div>
 
-            {/* Wishlist */}
+            {/* --- WISHLIST (REDUX READY) --- */}
             <button
               onClick={handleWishlistClick}
-              className="relative p-2 hover:bg-[#3cb371]/10 dark:hover:bg-gray-800 rounded-full cursor-pointer transition-colors  focus:outline-none "
+              className="relative p-2 hover:bg-[#3cb371]/10 dark:hover:bg-gray-800 rounded-full cursor-pointer transition-colors focus:outline-none"
             >
               <FaRegHeart size={26} />
-
               {wishlistCount > 0 && (
-                <span className="absolute -top-[5px] -right-[2px] bg-[#198754] text-white text-xs p2 font-bold w-5 h-5 rounded-full flex items-center justify-center  border-white dark:border-gray-900 shadow-sm">
+                <span className="absolute -top-[5px] -right-[2px] bg-[#198754] text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white dark:border-gray-900 shadow-sm">
                   {wishlistCount}
                 </span>
               )}
             </button>
 
-            {/* Cart */}
+            {/* --- CART (REDUX READY) --- */}
             <button
               type="button"
               onClick={toggleCartDrawer}
-              className="relative p-2  hover:bg-[#3cb371]/10 dark:hover:bg-gray-800 rounded-full cursor-pointer transition-colors focus:outline-none "
+              className="relative p-2 hover:bg-[#3cb371]/10 dark:hover:bg-gray-800 rounded-full cursor-pointer transition-colors focus:outline-none"
             >
               <FaCartShopping size={26} />
               {cartCount > 0 && (
-                <span className="absolute -top-[5px] -right-[2px] bg-[#ffc107] text-black  font-bold text-xs p2 w-5 h-5 rounded-full flex items-center justify-center  border-white shadow-sm dark:border-gray-900">
+                <span className="absolute -top-[5px] -right-[2px] bg-[#ffc107] text-black font-bold text-[10px] w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow-sm dark:border-gray-900">
                   {cartCount}
                 </span>
               )}
             </button>
           </div>
         </div>
+
         <CartDrawer
           drawerOpen={drawerOpen}
           toggleCartDrawer={toggleCartDrawer}
