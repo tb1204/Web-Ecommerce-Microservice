@@ -16,91 +16,24 @@ import ProductCard from "./components/Products/ProductGrid";
 import ProductDetails from "./components/Products/ProductDetails";
 import NotFound from "./pages/NotFound";
 import FlashSalePage from "./pages/FlashSalePage";
-import AdminUserPage from "./components/Admin/AdminUserPage";
+//import AdminUserPage from "./components/Admin/AdminUserPage";
 import { Toaster } from "sonner";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckOutPage";
 import MyOrdersPage from "./pages/MyOrdersPage";
 import OrderDetailsPage from "./pages/OrderDetailsPage";
 
-// 1. IMPORT CONTEXT VÀ COMPONENT SO SÁNH
 import { CompareProvider } from "../src/components/common/Compare/CompareContext";
 import ComparisonBar from "../src/components/common/Compare/ComparisonBar";
 
-// function App() {
-//   return (
+import { WishlistProvider } from "./components/common/WishlistContent";
+import WishlistPage from "./components/common/WishlistPage";
 
-//     <BrowserRouter>
-//       <ScrollToTop />
-//       <Toaster position="top-right" />
-//       <Routes>
-//         <Route path="/" element={<UserLayout />}>
-//           <Route index element={<Home />} />
-//           <Route path="login" element={<Login />} />
-//           <Route path="register" element={<Register />} />
-//           <Route path="about" element={<About />} />
-//           <Route path="contact" element={<ContactPage />} />
-//           <Route path="awards" element={<AwardsAndCertifications />} />
-//           <Route path="brandstory" element={<BrandStory />} />
-//           <Route path="flashsale" element={<FlashSalePage />} />
-//           <Route path="products" element={<ProductCard />} />
-//           <Route path="productdetails" element={<ProductDetails />} />
-//           <Route path="product/:id" element={<ProductDetails />} />
-//           <Route path="collections/:collection" element={<CollectionPage />} />
-//           <Route path="cart" element={<CartPage />} />
-//           <Route path="checkout" element={<CheckoutPage />} />
-//           <Route path="my-orders" element={<MyOrdersPage />} />
-//           <Route path="order/:id" element={<OrderDetailsPage />}></Route>
-//           {/* test  */}
-//           <Route path="user" element={<AdminUserPage />} />
-
-//     <CompareProvider>
-//       <BrowserRouter>
-//         <ScrollToTop />
-//         <Toaster position="top-right" />
-//         <ComparisonBar />
-
-//         <Routes>
-//           <Route path="/" element={<UserLayout />}>
-//             <Route index element={<Home />} />
-//             <Route path="login" element={<Login />} />
-//             <Route path="register" element={<Register />} />
-//             <Route path="about" element={<About />} />
-//             <Route path="contact" element={<ContactPage />} />
-//             <Route path="awards" element={<AwardsAndCertifications />} />
-//             <Route path="brandstory" element={<BrandStory />} />
-//             <Route path="flashsale" element={<FlashSalePage />} />
-//             <Route path="products" element={<ProductCard />} />
-//             <Route path="productdetails" element={<ProductDetails />} />
-//             <Route path="product/:id" element={<ProductDetails />} />
-//             <Route path="collections/:collection" element={<CollectionPage />} />
-
-//             {/* test  */}
-//             <Route path="user" element={<AdminUserPage />} />
-//             <Route path="test" element={<TestUserListPage />} />
-
-//             <Route path="*" element={<NotFound />} />
-//           </Route>
-
-//           <Route
-//             path="/admin"
-//             element={
-//               <ProtectedRoute role="admin">
-//                 <AdminLayout />
-//               </ProtectedRoute>
-//             }
-//           >
-//             <Route index element={<AdminHomePage />} />
-//           </Route>
-//         </Routes>
-//       </BrowserRouter>
-//     </CompareProvider>
-//   );
-// }
 function App() {
   return (
     <BrowserRouter>
-      <CompareProvider>
+      <WishlistProvider>
+        <CompareProvider>
         <ScrollToTop />
         <Toaster position="top-right" />
         <ComparisonBar />
@@ -127,6 +60,8 @@ function App() {
             <Route path="order/:id" element={<OrderDetailsPage />} />
 
             <Route path="*" element={<NotFound />} />
+
+            <Route path="wishlist" element={<WishlistPage />} />
           </Route>
 
           <Route
@@ -141,6 +76,7 @@ function App() {
           </Route>
         </Routes>
       </CompareProvider>
+      </WishlistProvider>
     </BrowserRouter>
   );
 }

@@ -12,6 +12,8 @@ import CartDrawer from "./CartDrawer";
 import { UserButton, useUser } from "@clerk/clerk-react";
 import { FaBoxOpen } from "react-icons/fa";
 
+import { useWishlist } from "../common/WishlistContent";
+
 const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const { theme, toggleTheme } = useTheme();
@@ -24,7 +26,7 @@ const Navbar = () => {
   };
   const displayName = user?.username || user?.fullName || user?.firstName || "";
 
-  const wishlistCount = 3;
+  
   const cartCount = 5;
 
   const handleWishlistClick = () => {
@@ -39,6 +41,10 @@ const Navbar = () => {
     if (!query) return;
     navigate(`/collections/all?search=${encodeURIComponent(query)}`);
   };
+
+  const { wishlistItems } = useWishlist();
+  const wishlistCount = wishlistItems?.length || 0;
+
   return (
     <header className="w-full bg-white dark:bg-gray-900 text-black dark:text-white shadow-md sticky top-0 z-[100]">
       <div className="px-4 py-3 md:px-6 max-w-7xl mx-auto">
