@@ -10,8 +10,13 @@ import {
 } from "lucide-react";
 import image_nem from "../../assets/about.webp";
 import type { Product } from "./InterfaceItem";
+<<<<<<< HEAD
 
 import { useCompare } from "../common/Compare/CompareContext";
+=======
+import { useWishlist } from "../common/WishlistContent";
+import { useCompare } from "../common/Compare/CompareContext"; 
+>>>>>>> 8e5b1ef645bf8cc428bce629e756afbce38991c6
 
 interface ProductCardProps {
   products?: Product[];
@@ -75,6 +80,8 @@ const ProductGrid: React.FC<ProductCardProps> = ({
   // 2. Lấy các hàm từ Context
   const { addToCompare, compareItems } = useCompare();
 
+  const { addToWishlist, isInWishlist } = useWishlist();
+
   const renderStars = (rating: number) => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
@@ -116,7 +123,7 @@ const ProductGrid: React.FC<ProductCardProps> = ({
           ? "w-full"
           : `grid gap-4 md:gap-6 ${
               isBundleMode
-                ? "grid-cols-3 md:grid-cols-3 lg:grid-cols-4"
+                ? "grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
                 : "grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4"
             }`
       }
@@ -138,6 +145,11 @@ const ProductGrid: React.FC<ProductCardProps> = ({
           product.status === "selling" && product.stock_quantity > 0;
         const isSelected = selectedProductId === product._id;
 
+<<<<<<< HEAD
+=======
+        const isFavorite = isInWishlist(product._id);
+        
+>>>>>>> 8e5b1ef645bf8cc428bce629e756afbce38991c6
         // 3. Kiểm tra xem sản phẩm này đã có trong danh sách so sánh chưa
         const isComparing = compareItems.some(
           (item) => item._id === product._id,
@@ -178,10 +190,25 @@ const ProductGrid: React.FC<ProductCardProps> = ({
               {/* PHẦN ICON TƯƠNG TÁC */}
               {!isBundleMode && canBuy && (
                 <div className="absolute top-2 -right-10 group-hover:right-2 transition-all duration-300 flex flex-col gap-2">
+<<<<<<< HEAD
                   <button className="p-1.5 bg-white rounded-full shadow-md text-gray-600 hover:bg-green-800 hover:text-white transition-colors">
                     <Heart size={14} />
                   </button>
 
+=======
+                  <button 
+                    onClick={(e)=>{
+                      e.preventDefault();
+                      addToWishlist(product); //goi ham them xoa wishlist
+                    }}
+                    className= {`p-1.5 rounded-full shadow-md transition-colors ${
+                      isFavorite ? "bg-green-700 text-white" : "bg-white text-gray-600 hover:bg-green-700 hover:text-white"
+                    }`}
+                    >
+                      <Heart size={14} className={isFavorite ? "fill-current" : ""} />
+                    </button>
+                  
+>>>>>>> 8e5b1ef645bf8cc428bce629e756afbce38991c6
                   {/* 4. Nút So sánh: Đổi icon và màu khi đã được chọn */}
                   <button
                     onClick={(e) => {
@@ -189,9 +216,15 @@ const ProductGrid: React.FC<ProductCardProps> = ({
                       addToCompare(product);
                     }}
                     className={`p-1.5 rounded-full shadow-md transition-all ${
+<<<<<<< HEAD
                       isComparing
                         ? "bg-green-700 text-white"
                         : "bg-white text-gray-600 hover:bg-green-800 hover:text-white"
+=======
+                        isComparing 
+                        ? "bg-green-600 text-white" 
+                        : "bg-white text-gray-600 hover:bg-green-700 hover:text-white"
+>>>>>>> 8e5b1ef645bf8cc428bce629e756afbce38991c6
                     }`}
                   >
                     {isComparing ? (
