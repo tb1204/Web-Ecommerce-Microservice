@@ -1,14 +1,7 @@
-<<<<<<< HEAD
 import React, { useState, useRef, useEffect } from "react";
 import { Wallet, ChevronDown } from "lucide-react";
 import locationDataRaw from "../data/danhmucxaphuong.json";
-=======
-import React, { useState} from "react";
-import { useNavigate } from "react-router-dom";
-import { ChevronLeft, Wallet, UserCircle } from "lucide-react";
 
-import locationDataRaw from "../data/dataLocation.json";
->>>>>>> 8e5b1ef645bf8cc428bce629e756afbce38991c6
 import goi from "../assets/goi/goi-bong.webp";
 import { Link } from "react-router-dom";
 

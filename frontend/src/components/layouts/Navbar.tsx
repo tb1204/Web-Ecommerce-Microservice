@@ -60,7 +60,7 @@ const Navbar = () => {
   ]);
 
   const unreadCount = notifications.filter((n) => n.unread).length;
-  const wishlistCount = 3; // Thay bằng useSelector(selectWishlistCount)
+  // const wishlistCount = 3; // Thay bằng useSelector(selectWishlistCount)
   const cartCount = 5; // Thay bằng useSelector(selectCartCount)
 
   // ==========================================================
@@ -69,16 +69,6 @@ const Navbar = () => {
   const handleWishlistClick = () => navigate("/wishlist");
   const displayName = user?.username || user?.fullName || user?.firstName || "";
 
-<<<<<<< HEAD
-=======
-  
-  const cartCount = 5;
-
-  const handleWishlistClick = () => {
-    navigate("/wishlist");
-  };
-
->>>>>>> 8e5b1ef645bf8cc428bce629e756afbce38991c6
   const handleSearch = (e: FormEvent) => {
     e.preventDefault();
     const query = searchTerm.trim();
@@ -86,12 +76,9 @@ const Navbar = () => {
     navigate(`/collections/all?search=${encodeURIComponent(query)}`);
   };
 
-<<<<<<< HEAD
-=======
   const { wishlistItems } = useWishlist();
   const wishlistCount = wishlistItems?.length || 0;
 
->>>>>>> 8e5b1ef645bf8cc428bce629e756afbce38991c6
   return (
     <header className="w-full bg-white dark:bg-gray-900 text-black dark:text-white shadow-md sticky top-0 z-[100]">
       <div className="px-4 py-3 md:px-6 max-w-7xl mx-auto">

@@ -3,7 +3,7 @@ import awardImage from "../assets/awards/awards.jpg";
 
 import customerReviewImage from "../assets/chung-nhan-va-giai-thuong/flash-sale-3.webp";
 
-const AwardsAndCertifications = () => {
+const AwardsAndCertificationsPage = () => {
   return (
     <div className="flex flex-col items-center w-full px-4 md:px-0 py-10">
       {/* Breadcrumb */}
@@ -105,4 +105,4 @@ const AwardsAndCertifications = () => {
   );
 };
 
-export default AwardsAndCertifications;
+export default AwardsAndCertificationsPage;

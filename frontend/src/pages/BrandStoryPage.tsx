@@ -1,7 +1,7 @@
 import main from "../assets/brand-story/main.jpg";
 import design from "../assets/brand-story/design.webp";
 
-const BrandStory = () => {
+const BrandStoryPage = () => {
   return (
     <div className="bg-white">
       {/* Header Section */}
@@ -92,4 +92,4 @@ const BrandStory = () => {
   );
 };
 
-export default BrandStory;
+export default BrandStoryPage;

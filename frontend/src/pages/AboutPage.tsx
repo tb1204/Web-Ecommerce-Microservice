@@ -11,7 +11,7 @@ interface TabItem {
 interface TabData {
   [key: string]: TabItem;
 }
-const About = () => {
+const AboutPage = () => {
   const [activeTab, setActiveTab] = useState("dinh-vi");
 
   const tabData: TabData = {
@@ -157,4 +157,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default AboutPage;

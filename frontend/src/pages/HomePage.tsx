@@ -4,7 +4,7 @@ import Banner from "../components/common/Banner";
 import ProductGrid from "../components/Products/FeaturedCategories";
 import ItemProductGrid from "../components/layouts/ItemProductGrid";
 import ProductBundle from "../components/Products/ProductBundle";
-function Home() {
+function HomePage() {
   return (
     <>
       <Banner></Banner>
@@ -15,4 +15,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default HomePage;

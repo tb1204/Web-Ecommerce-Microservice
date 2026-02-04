@@ -3,7 +3,7 @@ import loginImg from "../assets/login.webp";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
-const Login = () => {
+const LoginPage = () => {
   const { isSignedIn, user, isLoaded } = useUser();
   const navigate = useNavigate();
 
@@ -59,4 +59,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginPage;
