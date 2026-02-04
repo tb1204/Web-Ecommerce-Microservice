@@ -14,7 +14,9 @@ import type { Product } from "./InterfaceItem";
 import { useCompare } from "../common/Compare/CompareContext";
 
 import { useWishlist } from "../common/WishlistContent";
+
 import { toast } from "sonner";
+
 
 interface ProductCardProps {
   products?: Product[];
@@ -142,7 +144,9 @@ const ProductGrid: React.FC<ProductCardProps> = ({
         const canBuy =
           product.status === "selling" && product.stock_quantity > 0;
         const isSelected = selectedProductId === product._id;
+
         const isFavorite = isInWishlist(product._id);
+
 
         // 3. Kiểm tra xem sản phẩm này đã có trong danh sách so sánh chưa
         const isComparing = compareItems.some(
@@ -184,12 +188,9 @@ const ProductGrid: React.FC<ProductCardProps> = ({
               {/* PHẦN ICON TƯƠNG TÁC */}
               {!isBundleMode && canBuy && (
                 <div className="absolute top-2 -right-10 group-hover:right-2 transition-all duration-300 flex flex-col gap-2">
-                  {/* <button className="p-1.5 bg-white rounded-full shadow-md text-gray-600 hover:bg-green-800 hover:text-white transition-colors">
-                    <Heart size={14} />
-                  </button> */}
-
                   <button
                     onClick={(e) => {
+
                       e.preventDefault();
                       addToWishlist(product); //goi ham them xoa wishlist
                       if (isFavorite) {
@@ -209,12 +210,16 @@ const ProductGrid: React.FC<ProductCardProps> = ({
                         ? "bg-green-700 text-white"
                         : "bg-white text-gray-600 hover:bg-green-700 hover:text-white"
                     }`}
-                  >
+
+                    >
+                      <Heart size={14} className={isFavorite ? "fill-current" : ""} />
+                
                     <Heart
                       size={14}
                       className={isFavorite ? "fill-current" : ""}
                     />
                   </button>
+
 
                   {/* 4. Nút So sánh: Đổi icon và màu khi đã được chọn */}
                   <button
@@ -224,8 +229,9 @@ const ProductGrid: React.FC<ProductCardProps> = ({
                     }}
                     className={`p-1.5 rounded-full shadow-md transition-all ${
                       isComparing
-                        ? "bg-green-600 text-white"
-                        : "bg-white text-gray-600 hover:bg-green-700 hover:text-white"
+                        ? "bg-green-700 text-white"
+                        : "bg-white text-gray-600 hover:bg-green-800 hover:text-white"
+
                     }`}
                   >
                     {isComparing ? (
