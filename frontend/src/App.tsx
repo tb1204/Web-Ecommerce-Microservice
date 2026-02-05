@@ -50,23 +50,26 @@ function App() {
               <Route path="flashsale" element={<FlashSalePage />} />
               <Route path="products" element={<ProductCard />} />
               <Route path="product/:id" element={<ProductDetails />} />
-              <Route
-                path="collections/:collection"
-                element={<CollectionPage />}
-              />
+              <Route path="collections/:collection" element={<CollectionPage />} />
               <Route path="cart" element={<CartPage />} />
               <Route path="checkout" element={<CheckoutPage />} />
               <Route path="my-orders" element={<MyOrdersPage />} />
               <Route path="order/:id" element={<OrderDetailsPage />} />
               <Route path="wishlist" element={<WishlistPage />} />
+<<<<<<< HEAD
 
               {/* test */}
               <Route path="admin/user" element={<AdminUserPage />} />
               <Route path="admin" element={<AdminHomePage />} />
 
+=======
+              
+              {/* Trang 404 cho User */}
+>>>>>>> 5631dcd9d0638e15d4d8e9abd56d7f3cf18cd2ba
               <Route path="*" element={<NotFound />} />
             </Route>
 
+            {/* GROUP 2: CÁC TRANG DÀNH CHO ADMIN (QUẢN TRỊ) */}
             <Route
               path="/admin"
               element={
@@ -75,8 +78,10 @@ function App() {
                 </ProtectedRoute>
               }
             >
-              {/* <Route index element={<AdminHomePage />} /> */}
+              <Route index element={<AdminHomePage />} />
+              <Route path="user" element={<AdminUserPage />} />
             </Route>
+
           </Routes>
         </CompareProvider>
       </WishlistProvider>

@@ -60,14 +60,16 @@ const Navbar = () => {
   ]);
 
   const unreadCount = notifications.filter((n) => n.unread).length;
-  // const wishlistCount = 3; // Thay bằng useSelector(selectWishlistCount)
-  const cartCount = 5; // Thay bằng useSelector(selectCartCount)
-
-  // ==========================================================
 
   const toggleCartDrawer = () => setDrawerOpen(!drawerOpen);
-  const handleWishlistClick = () => navigate("/wishlist");
+ 
   const displayName = user?.username || user?.fullName || user?.firstName || "";
+
+  const cartCount = 5;
+
+  const handleWishlistClick = () => {
+    navigate("/wishlist");
+  };
 
   const handleSearch = (e: FormEvent) => {
     e.preventDefault();
