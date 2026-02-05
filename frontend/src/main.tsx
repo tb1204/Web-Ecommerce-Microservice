@@ -16,7 +16,15 @@ if (clerk_key) {
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <ClerkProvider publishableKey={clerk_key} localization={viLocalization}>
+    <ClerkProvider
+      publishableKey={clerk_key}
+      localization={viLocalization}
+      appearance={{
+        layout: {
+          unsafe_disableDevelopmentModeWarnings: true, // TẮT warning & badge dev mode
+        },
+      }}
+    >
       <ThemeProvider>
         <App />
       </ThemeProvider>

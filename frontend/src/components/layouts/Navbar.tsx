@@ -62,7 +62,7 @@ const Navbar = () => {
   const unreadCount = notifications.filter((n) => n.unread).length;
 
   const toggleCartDrawer = () => setDrawerOpen(!drawerOpen);
- 
+
   const displayName = user?.username || user?.fullName || user?.firstName || "";
 
   const cartCount = 5;
@@ -199,7 +199,11 @@ const Navbar = () => {
             <div className="relative group cursor-pointer hover:rounded-lg hover:bg-[#3cb371]/10">
               <div className="flex flex-col items-center md:flex-row md:items-center md:gap-1.5 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition">
                 {isLoaded && isSignedIn ? (
-                  <UserButton>
+                  <UserButton
+                    userProfileMode="navigation"
+                    userProfileUrl="/profile"
+                    afterSignOutUrl="/"
+                  >
                     <UserButton.MenuItems>
                       <UserButton.Action
                         label="Đơn hàng của bạn"

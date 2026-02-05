@@ -17,7 +17,6 @@ import { useWishlist } from "../common/WishlistContent";
 
 import { toast } from "sonner";
 
-
 interface ProductCardProps {
   products?: Product[];
   loading?: boolean;
@@ -147,7 +146,6 @@ const ProductGrid: React.FC<ProductCardProps> = ({
 
         const isFavorite = isInWishlist(product._id);
 
-
         // 3. Kiểm tra xem sản phẩm này đã có trong danh sách so sánh chưa
         const isComparing = compareItems.some(
           (item) => item._id === product._id,
@@ -190,7 +188,6 @@ const ProductGrid: React.FC<ProductCardProps> = ({
                 <div className="absolute top-2 -right-10 group-hover:right-2 transition-all duration-300 flex flex-col gap-2">
                   <button
                     onClick={(e) => {
-
                       e.preventDefault();
                       addToWishlist(product); //goi ham them xoa wishlist
                       if (isFavorite) {
@@ -210,16 +207,14 @@ const ProductGrid: React.FC<ProductCardProps> = ({
                         ? "bg-green-700 text-white"
                         : "bg-white text-gray-600 hover:bg-green-700 hover:text-white"
                     }`}
+                  >
+                    {/* <Heart size={14} className={isFavorite ? "fill-current" : ""} /> */}
 
-                    >
-                      <Heart size={14} className={isFavorite ? "fill-current" : ""} />
-                
                     <Heart
                       size={14}
                       className={isFavorite ? "fill-current" : ""}
                     />
                   </button>
-
 
                   {/* 4. Nút So sánh: Đổi icon và màu khi đã được chọn */}
                   <button
@@ -231,7 +226,6 @@ const ProductGrid: React.FC<ProductCardProps> = ({
                       isComparing
                         ? "bg-green-700 text-white"
                         : "bg-white text-gray-600 hover:bg-green-800 hover:text-white"
-
                     }`}
                   >
                     {isComparing ? (

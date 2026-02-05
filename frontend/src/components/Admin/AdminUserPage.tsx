@@ -5,7 +5,7 @@ import { Edit, Trash2, PlusCircle, Eye, XCircle } from "lucide-react";
 import { useAuth } from "@clerk/clerk-react";
 
 interface Membership {
-  tierName: string; //
+  tierName: string;
   discountRate?: number;
 }
 interface Address {

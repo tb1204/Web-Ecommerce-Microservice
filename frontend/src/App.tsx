@@ -27,7 +27,8 @@ import { CompareProvider } from "../src/components/common/Compare/CompareContext
 import ComparisonBar from "../src/components/common/Compare/ComparisonBar";
 
 import { WishlistProvider } from "./components/common/WishlistContent";
-import WishlistPage from "./components/common/WishlistPage";
+import WishlistPage from "./pages/WishlistPage";
+import CustomProfile from "./components/layouts/CustomProfile";
 
 function App() {
   return (
@@ -50,22 +51,26 @@ function App() {
               <Route path="flashsale" element={<FlashSalePage />} />
               <Route path="products" element={<ProductCard />} />
               <Route path="product/:id" element={<ProductDetails />} />
-              <Route path="collections/:collection" element={<CollectionPage />} />
+              <Route
+                path="collections/:collection"
+                element={<CollectionPage />}
+              />
               <Route path="cart" element={<CartPage />} />
               <Route path="checkout" element={<CheckoutPage />} />
               <Route path="my-orders" element={<MyOrdersPage />} />
               <Route path="order/:id" element={<OrderDetailsPage />} />
               <Route path="wishlist" element={<WishlistPage />} />
-<<<<<<< HEAD
 
               {/* test */}
               <Route path="admin/user" element={<AdminUserPage />} />
-              <Route path="admin" element={<AdminHomePage />} />
+              <Route path="ad" element={<AdminHomePage />} />
+              <Route path="profile" element={<CustomProfile />} />
+              {/* test admin chưa có role */}
 
-=======
-              
+              <Route path="admin" element={<AdminLayout />} />
+
               {/* Trang 404 cho User */}
->>>>>>> 5631dcd9d0638e15d4d8e9abd56d7f3cf18cd2ba
+
               <Route path="*" element={<NotFound />} />
             </Route>
 
@@ -81,7 +86,6 @@ function App() {
               <Route index element={<AdminHomePage />} />
               <Route path="user" element={<AdminUserPage />} />
             </Route>
-
           </Routes>
         </CompareProvider>
       </WishlistProvider>
