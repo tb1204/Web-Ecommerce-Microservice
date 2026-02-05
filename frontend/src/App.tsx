@@ -58,14 +58,13 @@ function App() {
               <Route path="checkout" element={<CheckoutPage />} />
               <Route path="my-orders" element={<MyOrdersPage />} />
               <Route path="order/:id" element={<OrderDetailsPage />} />
+              <Route path="wishlist" element={<WishlistPage />} />
 
               {/* test */}
               <Route path="admin/user" element={<AdminUserPage />} />
               <Route path="admin" element={<AdminHomePage />} />
 
               <Route path="*" element={<NotFound />} />
-
-              <Route path="wishlist" element={<WishlistPage />} />
             </Route>
 
             <Route

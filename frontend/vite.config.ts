@@ -1,11 +1,3 @@
-// import { defineConfig } from "vite";
-// import react from "@vitejs/plugin-react";
-
-// // https://vite.dev/config/
-// export default defineConfig({
-//   plugins: [react()],
-// });
-
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
@@ -17,10 +9,6 @@ export default defineConfig({
     // port: 5173,
     strictPort: true,
     // host: true, // bind tất cả interface (optional nhưng tốt cho ngrok)
-    allowedHosts: [
-      ".ngrok-free.dev", // ← wildcard: cho phép mọi *.ngrok-free.dev (random subdomain)
-      ".ngrok.io", // nếu ngrok dùng base khác
-      ".ngrok.app", // thêm nếu cần
-    ],
+    allowedHosts: [".ngrok-free.dev", ".ngrok.io", ".ngrok.app"],
   },
 });

@@ -48,7 +48,8 @@ const AdminUsersPage = () => {
 
   const getAuthHeader = async () => {
     const token = await getToken(); // ← Lấy JWT từ Clerk (hỗ trợ async)
-    console.log(`lay duoc token${token}`);
+    // console.log(`lay duoc token${token}`);
+    console.log("JWT:", JSON.stringify(token)); // Copy từ đây
     return token ? { Authorization: `Bearer ${token}` } : {};
   };
   // console.log("token", getToken());
@@ -287,11 +288,53 @@ const AdminUsersPage = () => {
       toast.success("Cập nhật trạng thái thành công");
       refreshUsers();
     } catch (err: unknown) {
-      // console.error("Error full:", err);
       const msg = axios.isAxiosError(err)
-        ? err.response?.data?.message || "Cập nhật thất bại"
+        ? err.response?.data?.message || "Cập nhật thất bại (Clerk sync error?)"
         : "Lỗi hệ thống";
       toast.error(msg);
+    }
+  };
+  // 2. Khóa/Mở khóa DB (chỉ DB, không chạm Clerk)
+  const handleLockUnlock = async (user: User, lock: boolean) => {
+    try {
+      const headers = await getAuthHeader();
+      const endpoint = lock ? "lock" : "unlock";
+      await axios.patch(
+        `http://localhost:8080/api/admin/users/${user.clerkId}/${endpoint}`,
+        {},
+        { headers },
+      );
+      toast.success(`Đã ${lock ? "khóa" : "mở khóa"} tài khoản trong hệ thống`);
+      refreshUsers();
+    } catch (err) {
+      toast.error(
+        "Cập nhật thất bại: " +
+          (axios.isAxiosError(err)
+            ? err.response?.data?.message
+            : "Lỗi hệ thống"),
+      );
+    }
+  };
+
+  // 3. Chặn/Bỏ chặn trên Clerk (chỉ Clerk, không update DB isActive)
+  const handleBanUnban = async (user: User, ban: boolean) => {
+    try {
+      const headers = await getAuthHeader();
+      await axios.patch(
+        `http://localhost:8080/api/admin/users/${user.clerkId}`,
+        { isActive: !ban }, // Nếu ban thì set isActive false trong DB (tùy bạn)
+        { headers },
+      );
+      // Gọi ban/unban Clerk qua PATCH chung (hoặc thêm endpoint riêng nếu cần)
+      toast.success(`Đã ${ban ? "chặn" : "bỏ chặn"} tài khoản trên Clerk`);
+      refreshUsers();
+    } catch (err) {
+      toast.error(
+        "Cập nhật thất bại: " +
+          (axios.isAxiosError(err)
+            ? err.response?.data?.message
+            : "Lỗi hệ thống"),
+      );
     }
   };
 
@@ -411,11 +454,21 @@ const AdminUsersPage = () => {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <select
-                      value={user.isActive ? "active" : "locked"}
+                      value={
+                        user.isActive
+                          ? "active"
+                          : user.isActive === false
+                            ? "locked"
+                            : "banned" // Nếu cần thêm field banned từ Clerk, sẽ update sau
+                      }
                       onChange={(e) => {
-                        const newStatus = e.target.value === "active";
-                        if (newStatus !== user.isActive) {
-                          handleToggleActive(user, newStatus);
+                        const newStatus = e.target.value;
+                        if (newStatus === "active") {
+                          handleToggleActive(user, true); // Hoạt động: update DB + unban Clerk
+                        } else if (newStatus === "locked") {
+                          handleLockUnlock(user, false); // Khóa: chỉ update DB (lock)
+                        } else if (newStatus === "banned") {
+                          handleBanUnban(user, true); // Chặn: chỉ ban trên Clerk
                         }
                       }}
                       className={`w-32 px-3 py-1.5 text-sm font-medium rounded-md border focus:outline-none focus:ring-2 transition ${
@@ -426,6 +479,7 @@ const AdminUsersPage = () => {
                     >
                       <option value="active">Hoạt động</option>
                       <option value="locked">Khóa</option>
+                      <option value="banned">Chặn</option>
                     </select>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm">
