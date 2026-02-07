@@ -3,9 +3,10 @@ import UserLayout from "./components/layouts/UserLayout";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import ProtectedRoute from "./components/common/ProtectedRoute";
+// import ProtectedRoute from "./components/common/ProtectedRoute";
 import AdminLayout from "./components/Admin/AdminLayout";
 import AdminHomePage from "./pages/AdminHomePage";
+import AdminProductPage from "../src/components/Admin/AdminProductPage";
 import AboutPage from "./pages/AboutPage";
 import CollectionPage from "./pages/CollectionPage";
 import ContactPage from "./pages/ContactPage";
@@ -29,6 +30,7 @@ import ComparisonBar from "../src/components/common/Compare/ComparisonBar";
 import { WishlistProvider } from "./components/common/WishlistContent";
 import WishlistPage from "./pages/WishlistPage";
 import CustomProfile from "./components/layouts/CustomProfile";
+//import AdminSliderUpload from "./components/Admin/AdminSliderUpload";
 
 function App() {
   return (
@@ -57,18 +59,13 @@ function App() {
               />
               <Route path="cart" element={<CartPage />} />
               <Route path="checkout" element={<CheckoutPage />} />
-              <Route path="my-orders" element={<MyOrdersPage />} />
-              <Route path="order/:id" element={<OrderDetailsPage />} />
+              <Route path="my-orders" element={<MyOrdersPage />} /><Route path="order/:id" element={<OrderDetailsPage />} />
               <Route path="wishlist" element={<WishlistPage />} />
 
               {/* test */}
-              <Route path="admin/user" element={<AdminUserPage />} />
+              <Route path="admin" element={<AdminLayout />} />
               <Route path="ad" element={<AdminHomePage />} />
               <Route path="profile" element={<CustomProfile />} />
-              {/* test admin chưa có role */}
-
-              <Route path="admin" element={<AdminLayout />} />
-
               {/* Trang 404 cho User */}
 
               <Route path="*" element={<NotFound />} />
@@ -77,14 +74,17 @@ function App() {
             {/* GROUP 2: CÁC TRANG DÀNH CHO ADMIN (QUẢN TRỊ) */}
             <Route
               path="/admin"
-              element={
-                <ProtectedRoute role="admin">
-                  <AdminLayout />
-                </ProtectedRoute>
-              }
+              // element={
+              //   <ProtectedRoute role="admin">
+              //     <AdminLayout />
+              //   </ProtectedRoute>
+              // }
+              element={<AdminLayout />}
             >
               <Route index element={<AdminHomePage />} />
-              <Route path="user" element={<AdminUserPage />} />
+              <Route path="users" element={<AdminUserPage />} />
+              <Route path="product" element={<AdminProductPage />} />
+              {/* <Route path="slider" element={<AdminSliderUpload />} /> */}
             </Route>
           </Routes>
         </CompareProvider>

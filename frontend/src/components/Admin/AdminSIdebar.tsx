@@ -64,7 +64,7 @@ const AdminSidebar = () => {
 
         {/* Products */}
         <NavLink
-          to="/admin/products"
+          to="/admin/product"
           className={({ isActive }: NavLinkClassProps) =>
             isActive
               ? "bg-emerald-700 text-white py-3 px-4 rounded-lg flex items-center space-x-3 font-medium"
