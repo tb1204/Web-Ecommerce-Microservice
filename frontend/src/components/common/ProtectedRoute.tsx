@@ -9,7 +9,6 @@ interface ProtectedRouteProps {
 const ProtectedRoute = ({ children, role }: ProtectedRouteProps) => {
   const { isLoaded, isSignedIn, user } = useUser();
 
-  // Đợi Clerk tải xong thông tin session
   if (!isLoaded) {
     return <div>Loading...</div>;
   }

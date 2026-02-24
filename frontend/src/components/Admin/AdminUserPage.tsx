@@ -1,7 +1,14 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "sonner";
-import { Edit, Trash2, PlusCircle, Eye, XCircle } from "lucide-react";
+import {
+  Edit,
+  Trash2,
+  PlusCircle,
+  Eye,
+  XCircle,
+  CheckCircle,
+} from "lucide-react";
 import { useAuth } from "@clerk/clerk-react";
 
 interface Membership {
@@ -25,13 +32,14 @@ interface User {
   lastName: string;
   phone?: string;
   gender?: "male" | "female" | "other";
-  avatarUrl?: string; // Thêm avatarUrl từ Clerk hoặc DB
+  avatarUrl?: string;
   roles: string[];
   isActive: boolean;
   membership?: Membership;
-  addresses?: Address[]; // Thêm địa chỉ nếu có trong DB
+  addresses?: Address[];
   createdAt?: string;
   updatedAt?: string;
+  isLocked?: boolean;
 }
 
 const AdminUsersPage = () => {
@@ -43,16 +51,20 @@ const AdminUsersPage = () => {
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
   };
+  const TIER_LABEL: Record<string, string> = {
+    Member: "Thành viên",
+    Silver: "Bạc",
+    Gold: "Vàng",
+    Diamond: "Kim cương",
+  };
 
-  const { getToken } = useAuth(); // ← Hook của Clerk để lấy token
+  const { getToken } = useAuth();
 
   const getAuthHeader = async () => {
-    const token = await getToken(); // ← Lấy JWT từ Clerk (hỗ trợ async)
-    // console.log(`lay duoc token${token}`);
-    console.log("JWT:", JSON.stringify(token)); // Copy từ đây
+    const token = await getToken();
     return token ? { Authorization: `Bearer ${token}` } : {};
   };
-  // console.log("token", getToken());
+
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -61,9 +73,22 @@ const AdminUsersPage = () => {
   const [editingUser, setEditingUser] = useState<User | null>(null);
   const [modalMode, setModalMode] = useState<"create" | "edit">("edit");
 
-  // Modal chi tiết user
   const [isDetailModalOpen, setIsDetailModalOpen] = useState<boolean>(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const getTierBadgeClass = (tierName?: string) => {
+    switch (tierName) {
+      case "Member":
+        return "bg-orange-100 text-orange-700 border-orange-200";
+      case "Silver":
+        return "bg-slate-100 text-slate-700 border-slate-200";
+      case "Gold":
+        return "bg-yellow-100 text-yellow-700 border-yellow-300";
+      case "Diamond":
+        return "bg-blue-50 text-blue-700 border-blue-200 ring-1 ring-blue-400/30";
+      default:
+        return "bg-gray-100 text-gray-600 border-gray-200";
+    }
+  };
 
   const [formData, setFormData] = useState<Partial<User>>({
     email: "",
@@ -76,7 +101,6 @@ const AdminUsersPage = () => {
     isActive: true,
   });
 
-  // Thêm state cho password (chỉ dùng khi tạo mới)
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -89,8 +113,12 @@ const AdminUsersPage = () => {
         const res = await axios.get("http://localhost:8080/api/admin/users", {
           headers,
         });
-        const data = Array.isArray(res.data) ? res.data : [];
-        setUsers(data);
+
+        setUsers(
+          Array.isArray(res.data)
+            ? res.data.map((u) => ({ ...u, isLocked: false }))
+            : [],
+        );
       } catch (err: unknown) {
         const msg = axios.isAxiosError(err)
           ? err.response?.data?.message || "Không tải được danh sách người dùng"
@@ -101,7 +129,6 @@ const AdminUsersPage = () => {
         setLoading(false);
       }
     };
-
     fetchUsers();
   }, []);
 
@@ -111,8 +138,12 @@ const AdminUsersPage = () => {
       const res = await axios.get("http://localhost:8080/api/admin/users", {
         headers,
       });
-      const data = Array.isArray(res.data) ? res.data : [];
-      setUsers(data);
+
+      setUsers(
+        Array.isArray(res.data)
+          ? res.data.map((u) => ({ ...u, isLocked: false }))
+          : [],
+      );
     } catch (err) {
       console.error("Refresh failed", err);
     }
@@ -127,11 +158,11 @@ const AdminUsersPage = () => {
       lastName: user.lastName,
       phone: user.phone,
       gender: user.gender,
-      roles: [...user.roles],
+      roles: user.roles.length > 0 ? user.roles : ["USER"],
       membership: user.membership,
       isActive: user.isActive,
     });
-    setPassword(""); // Không hiển thị password khi edit
+    setPassword("");
     setConfirmPassword("");
     setIsModalOpen(true);
   };
@@ -150,7 +181,7 @@ const AdminUsersPage = () => {
       lastName: "",
       phone: "",
       gender: undefined,
-      roles: [],
+      roles: ["USER"],
       membership: undefined,
       isActive: true,
     });
@@ -159,9 +190,7 @@ const AdminUsersPage = () => {
     setIsModalOpen(true);
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
+  const handleCloseModal = () => setIsModalOpen(false);
 
   const handleCloseDetailModal = () => {
     setIsDetailModalOpen(false);
@@ -201,8 +230,8 @@ const AdminUsersPage = () => {
 
     try {
       const headers = await getAuthHeader();
+
       if (modalMode === "edit" && editingUser) {
-        // Chỉ cập nhật thông tin, không gửi password
         await axios.patch(
           `http://localhost:8080/api/admin/users/${editingUser.clerkId}`,
           formData,
@@ -210,7 +239,6 @@ const AdminUsersPage = () => {
         );
         toast.success("Cập nhật thành công");
       } else {
-        // Tạo mới: Gửi lên backend để backend gọi Clerk
         if (!password || !confirmPassword) {
           toast.error("Vui lòng nhập mật khẩu và xác nhận");
           return;
@@ -220,7 +248,6 @@ const AdminUsersPage = () => {
           return;
         }
 
-        // Bước 1: Gọi backend tạo user ở Clerk
         const clerkRes = await axios.post(
           "http://localhost:8080/api/admin/users/create-clerk-user",
           {
@@ -231,23 +258,17 @@ const AdminUsersPage = () => {
             username: formData.username || undefined,
             phone: formData.phone,
             gender: formData.gender,
-            roles: formData.roles || ["USER"],
+            roles: formData.roles?.length ? formData.roles : ["USER"],
             membership: formData.membership,
           },
           { headers },
         );
 
-        // Lấy clerkId từ backend trả về
         const newClerkId = clerkRes.data.clerkId;
 
-        // Bước 2: Gửi clerkId + thông tin khác về backend để lưu DB
         await axios.post(
           "http://localhost:8080/api/admin/users",
-          {
-            ...formData,
-            clerkId: newClerkId,
-            isActive: true,
-          },
+          { ...formData, clerkId: newClerkId, isActive: true },
           { headers },
         );
 
@@ -259,82 +280,94 @@ const AdminUsersPage = () => {
     } catch (err: unknown) {
       let msg = "Thao tác thất bại";
       if (axios.isAxiosError(err)) {
-        const response = err.response;
-        if (response?.data?.errors) {
-          // Lỗi từ Clerk (nếu backend forward lỗi)
-          msg =
-            response.data.errors[0]?.message ||
-            response.data.errors[0]?.longMessage ||
-            msg;
-        } else {
-          msg =
-            response?.data?.message || response?.data?.error?.message || msg;
-        }
-        console.error("Lỗi từ backend:", response?.data);
-      } else {
-        console.error("Lỗi không xác định:", err);
+        msg = err.response?.data?.message || "Lỗi không xác định";
       }
       toast.error(msg);
+      console.error(err);
     }
   };
-  const handleToggleActive = async (user: User, checked: boolean) => {
+
+  // Chặn / Bỏ chặn (đồng bộ Clerk + DB)
+  const handleBanChange = async (user: User, shouldBan: boolean) => {
+    // 1. Update UI trước
+    setUsers((prev) =>
+      prev.map((u) =>
+        u.clerkId === user.clerkId ? { ...u, isActive: !shouldBan } : u,
+      ),
+    );
+
     try {
       const headers = await getAuthHeader();
-      await axios.patch(
-        `http://localhost:8080/api/admin/users/${user.clerkId}`,
-        { isActive: checked },
-        { headers },
-      );
-      toast.success("Cập nhật trạng thái thành công");
-      refreshUsers();
-    } catch (err: unknown) {
-      const msg = axios.isAxiosError(err)
-        ? err.response?.data?.message || "Cập nhật thất bại (Clerk sync error?)"
-        : "Lỗi hệ thống";
-      toast.error(msg);
-    }
-  };
-  // 2. Khóa/Mở khóa DB (chỉ DB, không chạm Clerk)
-  const handleLockUnlock = async (user: User, lock: boolean) => {
-    try {
-      const headers = await getAuthHeader();
-      const endpoint = lock ? "lock" : "unlock";
+      const endpoint = shouldBan ? "ban" : "unban";
       await axios.patch(
         `http://localhost:8080/api/admin/users/${user.clerkId}/${endpoint}`,
         {},
         { headers },
       );
-      toast.success(`Đã ${lock ? "khóa" : "mở khóa"} tài khoản trong hệ thống`);
-      refreshUsers();
+      toast.success(shouldBan ? "Đã chặn tài khoản" : "Đã bỏ chặn tài khoản");
     } catch (err) {
-      toast.error(
-        "Cập nhật thất bại: " +
-          (axios.isAxiosError(err)
-            ? err.response?.data?.message
-            : "Lỗi hệ thống"),
+      toast.error("Cập nhật thất bại");
+      // rollback
+      setUsers((prev) =>
+        prev.map((u) =>
+          u.clerkId === user.clerkId ? { ...u, isActive: shouldBan } : u,
+        ),
       );
     }
   };
 
-  // 3. Chặn/Bỏ chặn trên Clerk (chỉ Clerk, không update DB isActive)
-  const handleBanUnban = async (user: User, ban: boolean) => {
+  // Khóa / Mở khóa (chỉ Clerk, không lưu DB)
+  const handleLockChange = async (user: User, shouldLock: boolean) => {
+    // update UI trước
+    setUsers((prev) =>
+      prev.map((u) =>
+        u.clerkId === user.clerkId ? { ...u, isLocked: shouldLock } : u,
+      ),
+    );
+
+    try {
+      const headers = await getAuthHeader();
+      const endpoint = shouldLock ? "lock" : "unlock";
+
+      await axios.patch(
+        `http://localhost:8080/api/admin/users/${user.clerkId}/${endpoint}`,
+        {},
+        { headers },
+      );
+
+      toast.success(shouldLock ? "Đã khóa tài khoản" : "Đã mở khóa tài khoản");
+    } catch (err) {
+      toast.error("Cập nhật trạng thái khóa thất bại");
+
+      // rollback
+      setUsers((prev) =>
+        prev.map((u) =>
+          u.clerkId === user.clerkId ? { ...u, isLocked: !shouldLock } : u,
+        ),
+      );
+    }
+  };
+
+  // Cập nhật role trực tiếp từ bảng
+  const handleRoleChange = async (user: User, newRole: "USER" | "ADMIN") => {
+    // update UI trước
+    setUsers((prev) =>
+      prev.map((u) =>
+        u.clerkId === user.clerkId ? { ...u, roles: [newRole] } : u,
+      ),
+    );
+
     try {
       const headers = await getAuthHeader();
       await axios.patch(
         `http://localhost:8080/api/admin/users/${user.clerkId}`,
-        { isActive: !ban }, // Nếu ban thì set isActive false trong DB (tùy bạn)
+        { roles: [newRole] },
         { headers },
       );
-      // Gọi ban/unban Clerk qua PATCH chung (hoặc thêm endpoint riêng nếu cần)
-      toast.success(`Đã ${ban ? "chặn" : "bỏ chặn"} tài khoản trên Clerk`);
-      refreshUsers();
+      toast.success(`Đã cập nhật role thành ${newRole}`);
     } catch (err) {
-      toast.error(
-        "Cập nhật thất bại: " +
-          (axios.isAxiosError(err)
-            ? err.response?.data?.message
-            : "Lỗi hệ thống"),
-      );
+      toast.error("Cập nhật role thất bại");
+      refreshUsers(); // rollback
     }
   };
 
@@ -342,7 +375,6 @@ const AdminUsersPage = () => {
     if (!window.confirm(`Xác nhận xóa ${user.email}?`)) return;
     try {
       const headers = await getAuthHeader();
-      console.log(headers);
       await axios.delete(
         `http://localhost:8080/api/admin/users/${user.clerkId}`,
         { headers },
@@ -381,12 +413,12 @@ const AdminUsersPage = () => {
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
           <p className="mt-4 text-gray-600">Đang tải danh sách người dùng...</p>
         </div>
-      ) : !users || users.length === 0 ? (
+      ) : users.length === 0 ? (
         <div className="text-center py-20 text-gray-500">
           Chưa có người dùng nào trong hệ thống
         </div>
       ) : (
-        <div className="overflow-x-auto bg-white rounded-xl shadow-sm border border-gray-200">
+        <div className="overflow-hidden bg-white rounded-xl shadow-sm border border-gray-200">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
@@ -394,13 +426,13 @@ const AdminUsersPage = () => {
                   Email
                 </th>
                 <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                  Hạng thành viên
+                  Hạng
                 </th>
                 <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   Username
                 </th>
                 <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                  Roles
+                  Vai trò
                 </th>
                 <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   Trạng thái
@@ -420,68 +452,120 @@ const AdminUsersPage = () => {
                     <img
                       src={
                         user.avatarUrl ||
-                        "https://ui-avatars.com/api/?name=" +
-                          encodeURIComponent(
-                            user.firstName + " " + user.lastName,
-                          )
+                        `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                          user.firstName + " " + user.lastName,
+                        )}`
                       }
                       alt="Avatar"
                       className="w-10 h-10 rounded-full border-2 border-gray-300 object-cover"
                     />
                     {user.email}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                  {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                     {user.membership?.tierName || "Không có"}
+                  </td> */}
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span
+                      className={`px-2.5 py-1 text-xs font-bold rounded-full border ${getTierBadgeClass(user.membership?.tierName)}`}
+                    >
+                      {user.membership?.tierName
+                        ? TIER_LABEL[user.membership.tierName]
+                        : "Không có"}
+                    </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                     {user.username || "—"}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex flex-wrap gap-1.5">
-                      {user.roles.map((role) => (
-                        <span
-                          key={role}
-                          className={`px-2.5 py-1 text-xs font-medium rounded-full ${
-                            role === "ADMIN"
-                              ? "bg-red-100 text-red-800"
-                              : "bg-blue-100 text-blue-800"
-                          }`}
-                        >
-                          {role}
-                        </span>
-                      ))}
-                    </div>
-                  </td>
+
+                  {/* Role - Select option */}
                   <td className="px-6 py-4 whitespace-nowrap">
                     <select
-                      value={
-                        user.isActive
-                          ? "active"
-                          : user.isActive === false
-                            ? "locked"
-                            : "banned" // Nếu cần thêm field banned từ Clerk, sẽ update sau
+                      value={user.roles.includes("ADMIN") ? "ADMIN" : "USER"}
+                      onChange={(e) =>
+                        handleRoleChange(
+                          user,
+                          e.target.value as "USER" | "ADMIN",
+                        )
                       }
-                      onChange={(e) => {
-                        const newStatus = e.target.value;
-                        if (newStatus === "active") {
-                          handleToggleActive(user, true); // Hoạt động: update DB + unban Clerk
-                        } else if (newStatus === "locked") {
-                          handleLockUnlock(user, false); // Khóa: chỉ update DB (lock)
-                        } else if (newStatus === "banned") {
-                          handleBanUnban(user, true); // Chặn: chỉ ban trên Clerk
-                        }
-                      }}
-                      className={`w-32 px-3 py-1.5 text-sm font-medium rounded-md border focus:outline-none focus:ring-2 transition ${
-                        user.isActive
-                          ? "bg-green-50 border-green-300 text-green-800 focus:ring-green-500"
-                          : "bg-red-50 border-red-300 text-red-800 focus:ring-red-500"
+                      className={`w-40 px-3 py-1.5 text-sm font-medium rounded-lg border focus:outline-none focus:ring-2 transition ${
+                        user.roles.includes("ADMIN")
+                          ? "bg-red-50 border-red-300 text-red-800 focus:ring-red-500"
+                          : "bg-blue-50 border-blue-300 text-blue-800 focus:ring-blue-500"
                       }`}
                     >
-                      <option value="active">Hoạt động</option>
-                      <option value="locked">Khóa</option>
-                      <option value="banned">Chặn</option>
+                      <option value="USER">Khách hàng</option>
+                      <option value="ADMIN">Quản trị viên</option>
                     </select>
                   </td>
+
+                  {/* Trạng thái */}
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="flex items-center gap-4">
+                      {/* Select: Hoạt động / Chặn */}
+                      <div className="relative inline-block w-44">
+                        <select
+                          value={user.isActive ? "active" : "banned"}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            if (value === "active") {
+                              handleBanChange(user, false);
+                            } else if (value === "banned") {
+                              handleBanChange(user, true);
+                            }
+                          }}
+                          className={`w-full px-3 py-2 text-sm font-medium rounded-lg border appearance-none pr-10 focus:outline-none focus:ring-2 transition ${
+                            user.isActive
+                              ? "bg-green-50 border-green-300 text-green-800 focus:ring-green-500"
+                              : "bg-red-50 border-red-300 text-red-800 focus:ring-red-500"
+                          }`}
+                        >
+                          <option value="active">Hoạt động</option>
+                          <option value="banned">Chặn</option>
+                        </select>
+
+                        {/* Icon khi bị chặn */}
+                        {!user.isActive && (
+                          <div className="absolute inset-y-0 right-8 flex items-center pointer-events-none">
+                            <CheckCircle className="w-5 h-5 text-red-600" />
+                          </div>
+                        )}
+
+                        {/* Mũi tên dropdown */}
+                        <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                          <svg
+                            className="w-5 h-5 text-gray-400"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M19 9l-7 7-7-7"
+                            />
+                          </svg>
+                        </div>
+                      </div>
+
+                      {/* Checkbox Khóa */}
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={!!user.isLocked}
+                          onChange={(e) =>
+                            handleLockChange(user, e.target.checked)
+                          }
+                          className="h-5 w-5 text-orange-600 border-gray-300 rounded"
+                        />
+
+                        <span className="text-sm font-medium flex items-center gap-1">
+                          Khóa
+                        </span>
+                      </label>
+                    </div>
+                  </td>
+
                   <td className="px-6 py-4 whitespace-nowrap text-sm">
                     <div className="flex items-center gap-4">
                       <button
@@ -541,16 +625,16 @@ const AdminUsersPage = () => {
                     placeholder="example@gmail.com"
                   />
                 </div>
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    User Name
+                    Username
                   </label>
                   <input
                     type="text"
                     name="username"
                     value={formData.username || ""}
                     onChange={handleInputChange}
-                    required
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                   />
                 </div>
@@ -584,7 +668,6 @@ const AdminUsersPage = () => {
                   </div>
                 </div>
 
-                {/* Password chỉ hiển thị khi tạo mới */}
                 {modalMode === "create" && (
                   <>
                     <div>
@@ -639,7 +722,6 @@ const AdminUsersPage = () => {
                   </label>
                   <select
                     multiple
-                    name="roles"
                     value={formData.roles || []}
                     onChange={handleRolesChange}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 h-24"
@@ -654,14 +736,14 @@ const AdminUsersPage = () => {
                     Cấp bậc thành viên
                   </label>
                   <select
-                    name="membership.tierName"
                     value={formData.membership?.tierName || ""}
                     onChange={handleMembershipChange}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                   >
-                    <option value="">Không có</option>
-                    <option value="Gold">Gold</option>
-                    <option value="Silver">Silver</option>
+                    <option value="Member">Thành viên</option>
+                    <option value="Silver">Bạc</option>
+                    <option value="Gold">Vàng</option>
+                    <option value="Diamond">Kim cương</option>
                   </select>
                 </div>
 
@@ -686,7 +768,7 @@ const AdminUsersPage = () => {
         </div>
       )}
 
-      {/* Modal xem chi tiết user */}
+      {/* Modal chi tiết */}
       {isDetailModalOpen && selectedUser && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-[999] p-4">
           <div className="bg-white rounded-xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
@@ -707,7 +789,9 @@ const AdminUsersPage = () => {
                 <img
                   src={
                     selectedUser.avatarUrl ||
-                    `https://ui-avatars.com/api/?name=${encodeURIComponent(selectedUser.firstName + " " + selectedUser.lastName)}&size=128`
+                    `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                      selectedUser.firstName + " " + selectedUser.lastName,
+                    )}&size=128`
                   }
                   alt="Avatar"
                   className="w-24 h-24 rounded-full object-cover border-4 border-gray-200"
@@ -724,12 +808,6 @@ const AdminUsersPage = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Clerk ID</p>
-                  <p className="text-gray-900 break-all">
-                    {selectedUser.clerkId}
-                  </p>
-                </div>
                 <div>
                   <p className="text-sm font-medium text-gray-600">
                     Số điện thoại
@@ -759,7 +837,24 @@ const AdminUsersPage = () => {
                 <div>
                   <p className="text-sm font-medium text-gray-600">Vai trò</p>
                   <p className="text-gray-900">
-                    {selectedUser.roles.join(", ")}
+                    {selectedUser.roles.includes("ADMIN")
+                      ? "Quản trị viên"
+                      : "Khách hàng"}
+                  </p>
+                </div>
+
+                <div>
+                  <p className="text-sm font-medium text-gray-600">Ngày tạo</p>
+                  <p className="text-gray-900">
+                    {formatOnlyDate(selectedUser.createdAt)}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-600">
+                    Ngày cập nhật
+                  </p>
+                  <p className="text-gray-900">
+                    {formatOnlyDate(selectedUser.updatedAt)}
                   </p>
                 </div>
                 <div>
@@ -772,27 +867,12 @@ const AdminUsersPage = () => {
                         Hoạt động
                       </span>
                     ) : (
-                      <span className="text-red-600 font-medium">Khóa</span>
+                      <span className="text-red-600 font-medium">Bị chặn</span>
                     )}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Ngày tạo</p>
-                  <p className="text-gray-900">
-                    {formatOnlyDate(selectedUser.createdAt) || "—"}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-600">
-                    Ngày cập nhật
-                  </p>
-                  <p className="text-gray-900">
-                    {formatOnlyDate(selectedUser.updatedAt) || "—"}
                   </p>
                 </div>
               </div>
 
-              {/* Địa chỉ nếu có */}
               {selectedUser.addresses && selectedUser.addresses.length > 0 && (
                 <div className="mt-8">
                   <h3 className="text-lg font-semibold mb-3">Địa chỉ</h3>
@@ -814,15 +894,6 @@ const AdminUsersPage = () => {
                   </div>
                 </div>
               )}
-
-              <div className="mt-8 flex justify-end">
-                <button
-                  onClick={handleCloseDetailModal}
-                  className="px-6 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition"
-                >
-                  Đóng
-                </button>
-              </div>
             </div>
           </div>
         </div>

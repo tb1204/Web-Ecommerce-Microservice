@@ -5,7 +5,6 @@
 import {
   FaBoxOpen,
   FaClipboardList,
-  FaCommentDots,
   FaHome,
   FaImages,
   FaPercentage,
@@ -103,7 +102,7 @@ const AdminSidebar = () => {
 
         {/* Messages */}
         <NavLink
-          to="/admin/messages"
+          to="/admin/chat"
           className={({ isActive }: NavLinkClassProps) =>
             isActive
               ? "bg-emerald-700 text-white py-3 px-4 rounded-lg flex items-center space-x-3 font-medium"
@@ -116,7 +115,7 @@ const AdminSidebar = () => {
 
         {/* Sidebar Images / Banners */}
         <NavLink
-          to="/admin/sidebar-images"
+          to="/admin/slider"
           className={({ isActive }: NavLinkClassProps) =>
             isActive
               ? "bg-emerald-700 text-white py-3 px-4 rounded-lg flex items-center space-x-3 font-medium"
@@ -124,7 +123,7 @@ const AdminSidebar = () => {
           }
         >
           <FaImages className="text-lg" />
-          <span>Sidebar Images</span>
+          <span>Slider</span>
         </NavLink>
 
         {/* Vouchers */}

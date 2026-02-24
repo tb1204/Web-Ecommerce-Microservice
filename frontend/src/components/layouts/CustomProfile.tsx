@@ -38,7 +38,7 @@ const CustomProfile = () => {
   const [verificationCode, setVerificationCode] = useState("");
   const [emailAddressInstance, setEmailAddressInstance] = useState<any>(null);
   const [isChangingEmail, setIsChangingEmail] = useState(false);
-  const [isVerifying, d] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(false);
 
   useEffect(() => {
     if (isLoaded && user) {
@@ -122,7 +122,7 @@ const CustomProfile = () => {
   };
 
   const handleVerifyCode = async () => {
-    d(true);
+    setIsVerifying(true);
     try {
       await emailAddressInstance.attemptVerification({
         code: verificationCode,
@@ -139,7 +139,7 @@ const CustomProfile = () => {
     } catch (err: any) {
       alert("Mã OTP sai hoặc lỗi hệ thống!");
     } finally {
-      d(false);
+      setIsVerifying(false);
     }
   };
 
@@ -375,6 +375,7 @@ const CustomProfile = () => {
                       />
                       <button
                         onClick={handleVerifyCode}
+                        disabled={isVerifying}
                         className="bg-orange-500 hover:bg-orange-600 text-white px-4 rounded-lg transition font-bold text-sm"
                       >
                         Xác nhận
