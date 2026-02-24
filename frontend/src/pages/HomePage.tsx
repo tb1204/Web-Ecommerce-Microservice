@@ -1,5 +1,3 @@
-// import { UserButton } from "@clerk/clerk-react";
-//import { Link } from "react-router-dom";
 import Banner from "../components/common/Banner";
 import ProductGrid from "../components/Products/FeaturedCategories";
 import ItemProductGrid from "../components/layouts/ItemProductGrid";

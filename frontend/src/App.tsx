@@ -31,6 +31,8 @@ import ComparisonBar from "../src/components/common/Compare/ComparisonBar";
 import { WishlistProvider } from "./components/common/WishlistContent";
 import WishlistPage from "./pages/WishlistPage";
 import CustomProfile from "./components/layouts/CustomProfile";
+import AdminSliderUpload from "./components/Admin/AdminSliderUpload";
+import AdminChatPage from "./components/Admin/AdminChatPage";
 //import AdminSliderUpload from "./components/Admin/AdminSliderUpload";
 
 function App() {
@@ -60,7 +62,8 @@ function App() {
               />
               <Route path="cart" element={<CartPage />} />
               <Route path="checkout" element={<CheckoutPage />} />
-              <Route path="my-orders" element={<MyOrdersPage />} /><Route path="order/:id" element={<OrderDetailsPage />} />
+              <Route path="my-orders" element={<MyOrdersPage />} />
+              <Route path="order/:id" element={<OrderDetailsPage />} />
               <Route path="wishlist" element={<WishlistPage />} />
 
               {/* test */}
@@ -84,6 +87,10 @@ function App() {
             >
               <Route index element={<AdminHomePage />} />
               <Route path="users" element={<AdminUserPage />} />
+
+              <Route path="chat" element={<AdminChatPage />} />
+              <Route path="slider" element={<AdminSliderUpload />} />
+
               <Route path="product" element={<AdminProductPage />} />
               <Route path="orders" element={<AdminOrderPage />} />
               {/* <Route path="slider" element={<AdminSliderUpload />} /> */}
