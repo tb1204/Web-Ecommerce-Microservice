@@ -7,6 +7,7 @@ import RegisterPage from "./pages/RegisterPage";
 import AdminLayout from "./components/Admin/AdminLayout";
 import AdminHomePage from "./pages/AdminHomePage";
 import AdminProductPage from "../src/components/Admin/AdminProductPage";
+import AdminOrderPage from "../src/components/Admin/AdminOrderPage";
 import AboutPage from "./pages/AboutPage";
 import CollectionPage from "./pages/CollectionPage";
 import ContactPage from "./pages/ContactPage";
@@ -84,6 +85,7 @@ function App() {
               <Route index element={<AdminHomePage />} />
               <Route path="users" element={<AdminUserPage />} />
               <Route path="product" element={<AdminProductPage />} />
+              <Route path="orders" element={<AdminOrderPage />} />
               {/* <Route path="slider" element={<AdminSliderUpload />} /> */}
             </Route>
           </Routes>

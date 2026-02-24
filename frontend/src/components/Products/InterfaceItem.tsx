@@ -31,3 +31,38 @@ export interface Product {
   created_at?: string; 
   updated_at?: string;
 }
+// interface cho admin order
+export interface OrderItem {
+  orderDetailId: string;
+  productId: string;
+  productName: string;
+  quantity: number;
+  price: number;
+  lineTotal: number;
+}
+
+export interface Order {
+  _id: string;
+  orderNumber: string;
+  userId: string;
+  customerInfo: {
+    name: string;
+    phone: string;
+    email: string;
+    shippingAddress: string;
+  };
+  items: OrderItem[];
+  summary: {
+    totalAmount: number;
+    shippingFee: number;
+    totalQty: number;
+  };
+  payment: {
+    method: "VNPAY" | "CASH" | "MOMO";
+    status: "PAID" | "UNPAID";
+    transactionId?: string;
+  };
+  orderStatus: "PENDING" | "PROCESSING" | "SHIPPING" | "DELIVERED" | "CANCELLED" ;
+  createdAt: string;
+  updatedAt: string;
+}
