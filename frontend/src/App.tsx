@@ -6,6 +6,7 @@ import RegisterPage from "./pages/RegisterPage";
 // import ProtectedRoute from "./components/common/ProtectedRoute";
 import AdminLayout from "./components/Admin/AdminLayout";
 import AdminHomePage from "./pages/AdminHomePage";
+import AdminProductPage from "../src/components/Admin/AdminProductPage";
 import AboutPage from "./pages/AboutPage";
 import CollectionPage from "./pages/CollectionPage";
 import ContactPage from "./pages/ContactPage";
@@ -31,6 +32,7 @@ import WishlistPage from "./pages/WishlistPage";
 import CustomProfile from "./components/layouts/CustomProfile";
 import AdminSliderUpload from "./components/Admin/AdminSliderUpload";
 import AdminChatPage from "./components/Admin/AdminChatPage";
+//import AdminSliderUpload from "./components/Admin/AdminSliderUpload";
 
 function App() {
   return (
@@ -84,8 +86,12 @@ function App() {
             >
               <Route index element={<AdminHomePage />} />
               <Route path="users" element={<AdminUserPage />} />
+
               <Route path="chat" element={<AdminChatPage />} />
               <Route path="slider" element={<AdminSliderUpload />} />
+
+              <Route path="product" element={<AdminProductPage />} />
+              {/* <Route path="slider" element={<AdminSliderUpload />} /> */}
             </Route>
           </Routes>
         </CompareProvider>

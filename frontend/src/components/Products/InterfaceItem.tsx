@@ -1,5 +1,5 @@
 
-interface ProductImage {
+export interface ProductImage {
   url: string;
   is_primary: boolean;
 }
@@ -18,4 +18,16 @@ export interface Product {
   rating?: number;
   reviewCount?: number;
   category?: { name: string; code: string };
+  specifications?: {
+    material: string;
+    weight: string;
+    dimensions: string;
+    firmness: string;
+    design: string;
+    certification_number: string;
+  };
+  tags?: string[];
+  description?: string;
+  created_at?: string; 
+  updated_at?: string;
 }
