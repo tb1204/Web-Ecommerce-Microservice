@@ -8,6 +8,8 @@ import AdminLayout from "./components/Admin/AdminLayout";
 import AdminHomePage from "./pages/AdminHomePage";
 import AdminProductPage from "../src/components/Admin/AdminProductPage";
 import AdminOrderPage from "../src/components/Admin/AdminOrderPage";
+import AdminStatisticalPage from "../src/components/Admin/AdminStatisticalPage";
+import AdminVoucherPage from "../src/components/Admin/AdminVoucherPage";
 import AboutPage from "./pages/AboutPage";
 import CollectionPage from "./pages/CollectionPage";
 import ContactPage from "./pages/ContactPage";
@@ -88,7 +90,12 @@ function App() {
 
               <Route path="product" element={<AdminProductPage />} />
               <Route path="orders" element={<AdminOrderPage />} />
+
               <Route path="reviews" element={<AdminCommentPage />} />
+
+              <Route path="statistics" element={<AdminStatisticalPage />} />
+              <Route path="vouchers" element={<AdminVoucherPage />} />
+              {/* <Route path="slider" element={<AdminSliderUpload />} /> */}
             </Route>
           </Routes>
         </CompareProvider>
