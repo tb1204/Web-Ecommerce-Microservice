@@ -8,6 +8,7 @@ import {
   Eye,
   XCircle,
   CheckCircle,
+  ChevronDown,
 } from "lucide-react";
 import { useAuth } from "@clerk/clerk-react";
 
@@ -479,23 +480,36 @@ const AdminUsersPage = () => {
 
                   {/* Role - Select option */}
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <select
-                      value={user.roles.includes("ADMIN") ? "ADMIN" : "USER"}
-                      onChange={(e) =>
-                        handleRoleChange(
-                          user,
-                          e.target.value as "USER" | "ADMIN",
-                        )
-                      }
-                      className={`w-40 px-3 py-1.5 text-sm font-medium rounded-lg border focus:outline-none focus:ring-2 transition ${
-                        user.roles.includes("ADMIN")
-                          ? "bg-red-50 border-red-300 text-red-800 focus:ring-red-500"
-                          : "bg-blue-50 border-blue-300 text-blue-800 focus:ring-blue-500"
-                      }`}
-                    >
-                      <option value="USER">Khách hàng</option>
-                      <option value="ADMIN">Quản trị viên</option>
-                    </select>
+                    <div className="relative w-40">
+                      <select
+                        value={user.roles.includes("ADMIN") ? "ADMIN" : "USER"}
+                        onChange={(e) =>
+                          handleRoleChange(
+                            user,
+                            e.target.value as "USER" | "ADMIN",
+                          )
+                        }
+                        className={`w-full px-3 py-1.5 pr-8 text-sm font-medium rounded-lg border appearance-none cursor-pointer focus:outline-none focus:ring-2 transition ${
+                          user.roles.includes("ADMIN")
+                            ? "bg-red-50 border-red-300 text-red-800 focus:ring-red-500"
+                            : "bg-blue-50 border-blue-300 text-blue-800 focus:ring-blue-500"
+                        }`}
+                      >
+                        <option value="USER">Khách hàng</option>
+                        <option value="ADMIN">Quản trị viên</option>
+                      </select>
+
+                      {/* Icon mũi tên Lucide */}
+                      <div
+                        className={`absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none ${
+                          user.roles.includes("ADMIN")
+                            ? "text-red-500"
+                            : "text-blue-500"
+                        }`}
+                      >
+                        <ChevronDown size={16} strokeWidth={2.5} />
+                      </div>
+                    </div>
                   </td>
 
                   {/* Trạng thái */}
@@ -531,20 +545,8 @@ const AdminUsersPage = () => {
                         )}
 
                         {/* Mũi tên dropdown */}
-                        <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                          <svg
-                            className="w-5 h-5 text-gray-400"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M19 9l-7 7-7-7"
-                            />
-                          </svg>
+                        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400">
+                          <ChevronDown size={18} strokeWidth={2.5} />
                         </div>
                       </div>
 

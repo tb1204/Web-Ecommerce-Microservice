@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import nem from "../assets/nem/nem-bong-ep.webp";
 import goi from "../assets/goi/goi-cao-su.webp";
-// 1. Định nghĩa kiểu dữ liệu theo Schema của bạn
+
 interface OrderItem {
   productId: string;
   name: string;
@@ -41,7 +41,6 @@ interface OrderDetail {
   createdAt: string;
 }
 
-// 2. Biến Fake Data (Dữ liệu giả)
 const FAKE_ORDER_DETAIL: OrderDetail = {
   _id: "65de1234567890abcdef0001",
   orderNumber: "ORD-2026-001",
@@ -52,7 +51,7 @@ const FAKE_ORDER_DETAIL: OrderDetail = {
   },
   shippingAddress: "123 Đường ABC, Phường 5, Quận Ninh Kiều, Cần Thơ",
   summary: {
-    totalAmount: 2150000, // Tổng tiền hàng
+    totalAmount: 2150000,
     shippingFee: 30000,
     totalQty: 2,
   },
@@ -89,57 +88,86 @@ const OrderDetailsPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Giả lập việc fetch data từ API
     const timer = setTimeout(() => {
       setOrder(FAKE_ORDER_DETAIL);
       setLoading(false);
-    }, 500); // Đợi 0.5s cho giống thật
-
+    }, 500);
     return () => clearTimeout(timer);
   }, [id]);
 
   if (loading)
     return (
-      <div className="text-center p-20">Đang tải thông tin đơn hàng...</div>
+      <div className="text-center p-20 bg-gray-50 dark:bg-gray-900 min-h-screen text-gray-700 dark:text-gray-300">
+        Đang tải thông tin đơn hàng...
+      </div>
     );
+
   if (!order)
-    return <div className="text-center p-20">Không tìm thấy đơn hàng.</div>;
+    return (
+      <div className="text-center p-20 bg-gray-50 dark:bg-gray-900 min-h-screen text-gray-700 dark:text-gray-300">
+        Không tìm thấy đơn hàng.
+      </div>
+    );
 
   const totalPayable = order.summary.totalAmount + order.summary.shippingFee;
 
   return (
-    <div className="max-w-6xl mx-auto p-4 md:p-10 bg-white min-h-screen font-sans">
+    <div
+      className="max-w-6xl mx-auto p-4 md:p-10 
+      bg-gray-50 dark:bg-gray-900 
+      min-h-screen transition-colors duration-300"
+    >
       <Link
         to="/my-orders"
-        className="text-sm font-medium text-blue-600 hover:underline mb-6 inline-block"
+        className="text-sm font-medium 
+        text-blue-600 dark:text-blue-400 
+        hover:underline mb-6 inline-block"
       >
-        ← Quay lại danh sách đơn hàng
+        Quay lại danh sách đơn hàng
       </Link>
 
-      <div className="flex flex-col md:flex-row justify-between border-b pb-8 mb-8 gap-4">
+      <div
+        className="flex flex-col md:flex-row justify-between 
+        border-b border-gray-200 dark:border-gray-700 
+        pb-8 mb-8 gap-4"
+      >
         <div>
-          <h1 className="text-3xl font-black text-gray-900 uppercase tracking-tighter">
+          <h1
+            className="text-3xl font-black 
+            text-gray-900 dark:text-white 
+            uppercase tracking-tighter"
+          >
             Chi tiết đơn hàng
           </h1>
-          <p className="text-gray-500 mt-2">
+          <p className="text-gray-500 dark:text-gray-400 mt-2">
             Mã đơn:
-            <span className="font-mono font-bold text-black">
+            <span className="font-mono font-bold text-black dark:text-white ml-2">
               {order.orderNumber}
             </span>
           </p>
-          <p className="text-gray-500">
+          <p className="text-gray-500 dark:text-gray-400">
             Ngày đặt: {new Date(order.createdAt).toLocaleDateString("vi-VN")}
           </p>
         </div>
+
         <div className="flex flex-col sm:items-end gap-2">
           <span
-            className={`px-4 py-1 rounded-full text-xs font-bold uppercase ${order.payment.status === "PAID" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}
+            className={`px-4 py-1 rounded-full text-xs font-bold uppercase ${
+              order.payment.status === "PAID"
+                ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
+                : "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"
+            }`}
           >
             {order.payment.status === "PAID"
               ? "Đã thanh toán"
               : "Chờ thanh toán"}
           </span>
-          <span className="px-4 py-1 rounded-full text-xs font-bold uppercase bg-blue-100 text-blue-700">
+
+          <span
+            className="px-4 py-1 rounded-full text-xs font-bold uppercase 
+            bg-blue-100 text-blue-700 
+            dark:bg-blue-900/30 dark:text-blue-400"
+          >
             {order.orderStatus === "DELIVERED"
               ? "Đã giao hàng thành công"
               : "Đang xử lý"}
@@ -148,28 +176,32 @@ const OrderDetailsPage: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-        {/* Cột trái: Thông tin & Sản phẩm */}
         <div className="lg:col-span-2 space-y-10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <section>
-              <h3 className="text-sm font-bold text-gray-400 uppercase mb-4 tracking-widest">
+              <h3 className="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase mb-4 tracking-widest">
                 Người nhận hàng
               </h3>
-              <p className="font-bold text-gray-900">
+              <p className="font-bold text-gray-900 dark:text-white">
                 {order.customerInfo.name}
               </p>
-              <p className="text-gray-600">{order.customerInfo.phone}</p>
-              <p className="text-gray-600 italic mt-2">
+              <p className="text-gray-600 dark:text-gray-300">
+                {order.customerInfo.phone}
+              </p>
+              <p className="text-gray-600 dark:text-gray-400 italic mt-2">
                 {order.shippingAddress}
               </p>
             </section>
+
             <section>
-              <h3 className="text-sm font-bold text-gray-400 uppercase mb-4 tracking-widest">
+              <h3 className="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase mb-4 tracking-widest">
                 Phương thức thanh toán
               </h3>
-              <p className="font-bold text-gray-900">{order.payment.method}</p>
+              <p className="font-bold text-gray-900 dark:text-white">
+                {order.payment.method}
+              </p>
               {order.payment.transactionId && (
-                <p className="text-xs text-gray-500 font-mono mt-1">
+                <p className="text-xs text-gray-500 dark:text-gray-400 font-mono mt-1">
                   Giao dịch: {order.payment.transactionId}
                 </p>
               )}
@@ -177,10 +209,15 @@ const OrderDetailsPage: React.FC = () => {
           </div>
 
           <section>
-            <h3 className="text-lg font-bold text-gray-900 mb-6">
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-6">
               Danh sách sản phẩm
             </h3>
-            <div className="divide-y border-t border-b">
+
+            <div
+              className="divide-y border-t border-b 
+              border-gray-200 dark:border-gray-700 
+              dark:divide-gray-700"
+            >
               {order.orderItems.map((item) => (
                 <div
                   key={item.productId}
@@ -190,25 +227,28 @@ const OrderDetailsPage: React.FC = () => {
                     <img
                       src={item.image}
                       alt={item.name}
-                      className="w-24 h-24 object-cover rounded-xl border"
+                      className="w-24 h-24 object-cover rounded-xl border border-gray-200 dark:border-gray-600"
                     />
                     <div>
                       <Link
                         to={`/product/${item.productId}`}
-                        className="hover:text-blue-600 transition"
+                        className="hover:text-blue-600 dark:hover:text-blue-400 transition"
                       >
-                        <h4 className="font-bold text-gray-900">{item.name}</h4>
+                        <h4 className="font-bold text-gray-900 dark:text-white">
+                          {item.name}
+                        </h4>
                       </Link>
-                      <p className="text-sm text-gray-500 italic">
+                      <p className="text-sm text-gray-500 dark:text-gray-400 italic">
                         {item.variant}
                       </p>
-                      <p className="text-sm mt-1">
+                      <p className="text-sm mt-1 text-gray-700 dark:text-gray-300">
                         Số lượng:{" "}
                         <span className="font-bold">{item.quantity}</span>
                       </p>
                     </div>
                   </div>
-                  <p className="font-bold text-gray-900 whitespace-nowrap">
+
+                  <p className="font-bold text-gray-900 dark:text-white whitespace-nowrap">
                     {(item.price * item.quantity).toLocaleString()}đ
                   </p>
                 </div>
@@ -217,40 +257,58 @@ const OrderDetailsPage: React.FC = () => {
           </section>
         </div>
 
-        {/* Cột phải: Thanh toán */}
         <div className="lg:col-span-1">
-          <div className="bg-gray-50 p-6 rounded-3xl border border-gray-100 ">
-            <h3 className="text-xl font-bold text-gray-900 mb-6">
+          <div
+            className="bg-white dark:bg-gray-800 
+            p-6 rounded-3xl 
+            border border-gray-100 dark:border-gray-700 
+            shadow-sm transition-colors"
+          >
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6">
               Tổng đơn hàng
             </h3>
+
             <div className="space-y-4 text-sm">
-              <div className="flex justify-between text-gray-600">
+              <div className="flex justify-between text-gray-600 dark:text-gray-300">
                 <span>Tạm tính</span>
                 <span className="font-medium">
                   {order.summary.totalAmount.toLocaleString()}đ
                 </span>
               </div>
-              <div className="flex justify-between text-gray-600">
+
+              <div className="flex justify-between text-gray-600 dark:text-gray-300">
                 <span>Phí vận chuyển</span>
                 <span className="font-medium">
                   {order.summary.shippingFee.toLocaleString()}đ
                 </span>
               </div>
-              <div className="flex justify-between text-gray-600">
+
+              <div className="flex justify-between text-gray-600 dark:text-gray-300">
                 <span>Giảm giá</span>
-                <span className="font-medium text-red-500">-0đ</span>
+                <span className="font-medium text-red-500 dark:text-red-400">
+                  -0đ
+                </span>
               </div>
-              <div className="border-t pt-4 flex justify-between items-end">
-                <span className="font-bold text-gray-900 text-base">
+
+              <div className="border-t border-gray-200 dark:border-gray-700 pt-4 flex justify-between items-end">
+                <span className="font-bold text-gray-900 dark:text-white text-base">
                   Tổng số tiền
                 </span>
-                <span className="font-black text-2xl text-blue-600 leading-none">
+                <span className="font-black text-2xl text-green-600 dark:text-green-400 leading-none">
                   {totalPayable.toLocaleString()}đ
                 </span>
               </div>
             </div>
 
-            <button className="w-full mt-8 bg-black text-white py-4 rounded-2xl font-bold hover:bg-gray-800 transition active:scale-95 shadow-lg">
+            {/* ✅ NÚT XANH LÁ */}
+            <button
+              className="w-full mt-8 
+              bg-green-600 hover:bg-green-700 
+              dark:bg-green-500 dark:hover:bg-green-600 
+              text-white py-4 rounded-2xl 
+              font-bold transition 
+              active:scale-95 shadow-lg"
+            >
               In hóa đơn
             </button>
           </div>

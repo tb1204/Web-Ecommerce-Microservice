@@ -11,7 +11,7 @@ const WishlistPage: React.FC = () => {
     <div className="max-w-7xl mx-auto px-4 py-10 min-h-[60vh]">
       {/* Tiêu đề trang */}
       <div className="text-center mb-10">
-        <h1 className="text-3xl font-bold text-gray-800 uppercase tracking-tight">
+        <h1 className="text-3xl font-bold text-gray-800 dark:text-white uppercase tracking-tight">
           Sản phẩm yêu thích
         </h1>
         <div className="w-24 h-0.5 bg-green-700 mx-auto mt-2"></div>

@@ -25,7 +25,7 @@ const LoginPage = () => {
   }, [isLoaded, isSignedIn, user, navigate]);
 
   return (
-    <div className="flex min-h-screen bg-gray-50 dark:bg-gray-800">
+    <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* CỘT TRÁI: Chứa Form Clerk */}
       <div className="w-full md:w-1/2 flex flex-col justify-center items-center p-6">
         <div className="mb-8 text-center">

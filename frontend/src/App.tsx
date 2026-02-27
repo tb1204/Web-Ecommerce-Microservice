@@ -33,6 +33,7 @@ import WishlistPage from "./pages/WishlistPage";
 import CustomProfile from "./components/layouts/CustomProfile";
 import AdminSliderUpload from "./components/Admin/AdminSliderUpload";
 import AdminChatPage from "./components/Admin/AdminChatPage";
+import AdminCommentPage from "./components/Admin/AdminCommentPage";
 //import AdminSliderUpload from "./components/Admin/AdminSliderUpload";
 
 function App() {
@@ -65,13 +66,7 @@ function App() {
               <Route path="my-orders" element={<MyOrdersPage />} />
               <Route path="order/:id" element={<OrderDetailsPage />} />
               <Route path="wishlist" element={<WishlistPage />} />
-
-              {/* test */}
-              <Route path="admin" element={<AdminLayout />} />
-              <Route path="ad" element={<AdminHomePage />} />
               <Route path="profile" element={<CustomProfile />} />
-              {/* Trang 404 cho User */}
-
               <Route path="*" element={<NotFound />} />
             </Route>
 
@@ -93,7 +88,7 @@ function App() {
 
               <Route path="product" element={<AdminProductPage />} />
               <Route path="orders" element={<AdminOrderPage />} />
-              {/* <Route path="slider" element={<AdminSliderUpload />} /> */}
+              <Route path="reviews" element={<AdminCommentPage />} />
             </Route>
           </Routes>
         </CompareProvider>

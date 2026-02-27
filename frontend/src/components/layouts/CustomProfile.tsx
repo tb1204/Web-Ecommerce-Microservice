@@ -121,6 +121,40 @@ const CustomProfile = () => {
     }
   };
 
+  const getTierBadgeClass = (tierName?: string) => {
+    switch (tierName) {
+      case "Member":
+        return `
+        bg-orange-100 text-orange-700 border border-orange-200
+        dark:bg-orange-900/20 dark:text-orange-400 dark:border-orange-800
+      `;
+
+      case "Silver":
+        return `
+        bg-gray-100 text-gray-700 border border-gray-300
+        dark:bg-gray-700/40 dark:text-gray-200 dark:border-gray-600
+      `;
+
+      case "Gold":
+        return `
+        bg-yellow-100 text-yellow-800 border border-yellow-300
+        dark:bg-yellow-900/20 dark:text-yellow-400 dark:border-yellow-800
+      `;
+
+      case "Diamond":
+        return `
+        bg-blue-50 text-blue-700 border border-blue-200
+        dark:bg-blue-900/20 dark:text-blue-400 dark:border-blue-800
+      `;
+
+      default:
+        return `
+        bg-gray-100 text-gray-600 border border-gray-200
+        dark:bg-gray-700/30 dark:text-gray-300 dark:border-gray-600
+      `;
+    }
+  };
+
   const handleVerifyCode = async () => {
     setIsVerifying(true);
     try {
@@ -196,7 +230,9 @@ const CustomProfile = () => {
               <FiMail className="inline" />{" "}
               {user?.primaryEmailAddress?.emailAddress}
             </p>
-            <span className="inline-block px-3 py-1 rounded-full bg-green-50 dark:bg-green-900/20 text-[#14532d] text-xs font-bold uppercase tracking-wider mt-2">
+            <span
+              className={`inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mt-2 ${getTierBadgeClass(membership)}`}
+            >
               Hạng: {membership}
             </span>
           </div>
@@ -219,7 +255,7 @@ const CustomProfile = () => {
                   <input
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-none rounded-xl focus:ring-2 focus:ring-[#14532d] transition"
+                    className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-2 border-gray-400 dark:border-gray-600 rounded-xl focus:outline-none focus:border-gray-600 dark:focus:border-white transition"
                   />
                 </div>
                 <div className="space-y-2">
@@ -229,7 +265,7 @@ const CustomProfile = () => {
                   <input
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-none rounded-xl focus:ring-2 focus:ring-[#14532d] transition"
+                    className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-2 border-gray-400 dark:border-gray-600 rounded-xl focus:outline-none focus:border-gray-600 dark:focus:border-white transition"
                   />
                 </div>
                 <div className="space-y-2">
@@ -239,7 +275,7 @@ const CustomProfile = () => {
                   <input
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
-                    className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-none rounded-xl focus:ring-2 focus:ring-[#14532d] transition"
+                    className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-2 border-gray-400 dark:border-gray-600 rounded-xl focus:outline-none focus:border-gray-600 dark:focus:border-white transition"
                   />
                 </div>
                 <div className="space-y-2">
@@ -249,7 +285,7 @@ const CustomProfile = () => {
                   <input
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
-                    className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-none rounded-xl focus:ring-2 focus:ring-[#14532d] transition"
+                    className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-2 border-gray-400 dark:border-gray-600 rounded-xl focus:outline-none focus:border-gray-600 dark:focus:border-white transition"
                   />
                 </div>
                 <div className="space-y-2 md:col-span-2">
@@ -259,7 +295,7 @@ const CustomProfile = () => {
                   <select
                     value={gender}
                     onChange={(e) => setGender(e.target.value)}
-                    className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-none rounded-xl focus:ring-2 focus:ring-[#14532d] transition"
+                    className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-2 border-gray-400 dark:border-gray-600 rounded-xl focus:outline-none focus:border-gray-600 dark:focus:border-white transition"
                   >
                     <option value="">Chọn giới tính</option>
                     <option value="male">Nam</option>
@@ -281,7 +317,7 @@ const CustomProfile = () => {
                   value={newAddress}
                   onChange={(e) => setNewAddress(e.target.value)}
                   placeholder="Thêm địa chỉ mới..."
-                  className="flex-1 px-4 py-3 bg-gray-50 dark:bg-gray-800 border-none rounded-xl focus:ring-2 focus:ring-[#14532d] transition"
+                  className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-2 border-gray-400 dark:border-gray-600 rounded-xl focus:outline-none focus:border-gray-600 dark:focus:border-white transition"
                 />
                 <button
                   onClick={addAddress}
@@ -352,7 +388,7 @@ const CustomProfile = () => {
                   value={newEmail}
                   onChange={(e) => setNewEmail(e.target.value)}
                   placeholder="Email mới..."
-                  className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-none rounded-xl focus:ring-2 focus:ring-[#14532d] transition"
+                  className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-2 border-gray-400 dark:border-gray-600 rounded-xl focus:outline-none focus:border-gray-600 dark:focus:border-white transition"
                 />
                 <button
                   onClick={handleChangeEmail}
@@ -397,21 +433,21 @@ const CustomProfile = () => {
                   value={currentPassword}
                   onChange={(e) => setCurrentPassword(e.target.value)}
                   placeholder="Mật khẩu cũ"
-                  className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-none rounded-xl focus:ring-2 focus:ring-[#14532d] transition"
+                  className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-2 border-gray-400 dark:border-gray-600 rounded-xl focus:outline-none focus:border-gray-600 dark:focus:border-white transition"
                 />
                 <input
                   type="password"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                   placeholder="Mật khẩu mới"
-                  className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-none rounded-xl focus:ring-2 focus:ring-[#14532d] transition"
+                  className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-2 border-gray-400 dark:border-gray-600 rounded-xl focus:outline-none focus:border-gray-600 dark:focus:border-white transition"
                 />
                 <input
                   type="password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="Xác nhận lại"
-                  className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-none rounded-xl focus:ring-2 focus:ring-[#14532d] transition"
+                  className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-2 border-gray-400 dark:border-gray-600 rounded-xl focus:outline-none focus:border-gray-600 dark:focus:border-white transition"
                 />
                 {passwordError && (
                   <p className="text-red-500 text-[11px] font-bold text-center uppercase">

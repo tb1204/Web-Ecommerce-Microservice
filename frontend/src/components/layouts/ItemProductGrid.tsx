@@ -1,4 +1,3 @@
-import React from "react";
 import type { Product } from "../Products/InterfaceItem";
 import { Link } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
@@ -88,7 +87,7 @@ const products: Product[] = [
 
 const ItemProductGrid = () => {
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8 bg-white">
+    <div className="max-w-7xl mx-auto px-4 py-8 bg-gray-50 dark:bg-gray-900">
       {/* 2 Banner phía trên */}
       <div className="flex flex-col md:flex-row gap-4 mb-10">
         <div className="flex-1 overflow-hidden rounded-xl h-[200px] md:h-[280px]">
@@ -110,7 +109,7 @@ const ItemProductGrid = () => {
       {/* Header tiêu đề và Link danh mục */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 border-b border-gray-100 pb-4">
         <Link to="/danh-muc-nem" className="group">
-          <h2 className="text-3xl md:text-5xl font-serif font-bold text-gray-900 mb-6 md:mb-0 max-w-lg leading-tight group-hover:text-[#1a4d32] transition-colors duration-300">
+          <h2 className="text-3xl md:text-5xl font-serif font-bold text-gray-900 dark:text-gray-100 mb-6 md:mb-0 max-w-lg leading-tight group-hover:text-[#1a4d32] dark:group-hover:text-green-400 transition-colors duration-300">
             Nệm êm giá đẹp
           </h2>
         </Link>
@@ -118,19 +117,19 @@ const ItemProductGrid = () => {
         <div className="flex items-center gap-4 md:gap-8 text-sm md:text-base font-medium text-gray-600">
           <Link
             to="/nem-bong-ep"
-            className="hover:text-[#1a4d32] hover:underline underline-offset-8 transition-all"
+            className="hover:text-[#1a4d32]  text-gray-600 dark:text-gray-300 hover:underline underline-offset-8 transition-all"
           >
             Nệm bông ép
           </Link>
           <Link
             to="/nem-cao-su"
-            className="hover:text-[#1a4d32] hover:underline underline-offset-8 transition-all"
+            className="hover:text-[#1a4d32] text-gray-600 dark:text-gray-300 hover:underline underline-offset-8 transition-all"
           >
             Nệm cao su
           </Link>
           <Link
             to="/nem-lo-xo"
-            className="hover:text-[#1a4d32] hover:underline underline-offset-8 transition-all"
+            className="hover:text-[#1a4d32] text-gray-600 dark:text-gray-300 hover:underline underline-offset-8 transition-all"
           >
             Nệm lò xo
           </Link>
@@ -138,17 +137,17 @@ const ItemProductGrid = () => {
       </div>
 
       {/* Grid hiển thị danh sách sản phẩm */}
-      
+
       <ProductGrid products={products} loading={false} />
 
       {/* Nút xem thêm */}
       <div className="mt-10 flex justify-center">
         <Link
           to="/collections/all"
-          className="flex items-center gap-2 text-gray-700 hover:text-[#1a4d32] font-medium transition-all group"
+          className="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-[#1a4d32] dark:hover:text-green-400 font-medium transition-all group"
         >
           Xem thêm sản phẩm
-          <div className="w-6 h-6 rounded-full border border-gray-400 flex items-center justify-center group-hover:border-[#1a4d32] group-hover:bg-[#1a4d32] group-hover:text-white transition-all">
+          <div className="w-6 h-6 rounded-full border border-gray-400 dark:border-gray-600 flex items-center justify-center group-hover:border-[#1a4d32] dark:group-hover:border-green-400 group-hover:bg-[#1a4d32] dark:group-hover:bg-green-400 group-hover:text-white transition-all">
             <ChevronRight size={14} />
           </div>
         </Link>

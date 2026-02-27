@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import nem from "../assets/nem/nem-bong-ep.webp";
 import goi from "../assets/goi/goi-bong.webp";
-// Interface cho sản phẩm Chăn Ga Gối Nệm
+
 interface OrderItem {
   name: string;
   image: string;
@@ -50,7 +50,11 @@ const FAKE_ORDERS: Order[] = [
       },
     ],
     summary: { totalAmount: 12500000, shippingFee: 0, totalQty: 1 },
-    payment: { method: "VNPAY", status: "PAID", transactionId: "VNP-999888" },
+    payment: {
+      method: "VNPAY",
+      status: "PAID",
+      transactionId: "VNP-999888",
+    },
     orderStatus: "DELIVERED",
     createdAt: "2026-01-21T12:40:00Z",
   },
@@ -84,66 +88,80 @@ const MyOrdersPage: React.FC = () => {
   const getStatusStyle = (status: string) => {
     switch (status) {
       case "DELIVERED":
-        return "bg-green-100 text-green-700";
+        return "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400";
       case "PROCESSING":
-        return "bg-blue-100 text-blue-700";
+        return "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400";
       case "CANCELLED":
-        return "bg-red-100 text-red-700";
+        return "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400";
       default:
-        return "bg-gray-100 text-gray-700";
+        return "bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300";
     }
   };
 
   return (
-    <div className="max-w-7xl mx-auto p-4 sm:p-8 bg-gray-50 min-h-screen">
+    <div
+      className="max-w-7xl mx-auto p-4 sm:p-8 
+      bg-gray-50 dark:bg-gray-900 
+      min-h-screen transition-colors duration-300"
+    >
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
         <div>
-          <h2 className="text-2xl font-extrabold text-gray-900">
+          <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white">
             Đơn hàng của tôi
           </h2>
-          <p className="text-gray-500 text-sm">
+          <p className="text-gray-500 dark:text-gray-400 text-sm">
             Theo dõi lịch sử mua sắm chăn ga gối nệm
           </p>
         </div>
+
         <button
           onClick={() => navigate("/")}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition shadow-sm"
+          className="bg-blue-600 hover:bg-blue-700 
+          dark:bg-blue-500 dark:hover:bg-blue-600 
+          text-white px-4 py-2 rounded-lg 
+          text-sm font-medium transition shadow-sm"
         >
           Tiếp tục mua sắm
         </button>
       </div>
 
-      <div className="bg-white shadow-xl rounded-2xl overflow-hidden border border-gray-100">
+      <div
+        className="bg-white dark:bg-gray-800 
+        shadow-xl rounded-2xl overflow-hidden 
+        border border-gray-100 dark:border-gray-700 
+        transition-colors duration-300"
+      >
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+          <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+            <thead className="bg-gray-50 dark:bg-gray-700">
               <tr>
-                <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase">
+                <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 dark:text-gray-300 uppercase">
                   Sản phẩm
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase">
+                <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 dark:text-gray-300 uppercase">
                   Mã đơn
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase whitespace-nowrap">
+                <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 dark:text-gray-300 uppercase whitespace-nowrap">
                   Ngày mua
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase">
+                <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 dark:text-gray-300 uppercase">
                   Địa chỉ
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase ">
+                <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 dark:text-gray-300 uppercase">
                   Tổng tiền
                 </th>
-                <th className="px-6 py-4 text-center text-xs font-bold text-gray-500 uppercase">
+                <th className="px-6 py-4 text-center text-xs font-bold text-gray-500 dark:text-gray-300 uppercase">
                   Trạng thái
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100 bg-white">
+
+            <tbody className="divide-y divide-gray-100 dark:divide-gray-700 bg-white dark:bg-gray-800">
               {FAKE_ORDERS.map((order) => (
                 <tr
                   key={order._id}
                   onClick={() => handleRowClick(order._id)}
-                  className="hover:bg-gray-50/80 transition-all cursor-pointer group"
+                  className="hover:bg-gray-50/80 dark:hover:bg-gray-700/50 transition-all cursor-pointer group"
                 >
                   <td className="px-6 py-5">
                     <div className="flex items-center gap-4">
@@ -151,46 +169,51 @@ const MyOrdersPage: React.FC = () => {
                         <img
                           src={order.orderItems[0].image}
                           alt="product"
-                          className="w-14 h-14 object-cover rounded-xl border border-gray-200 shadow-sm"
+                          className="w-14 h-14 object-cover rounded-xl border border-gray-200 dark:border-gray-600 shadow-sm"
                         />
                         {order.orderItems.length > 1 && (
-                          <span className="absolute -top-2 -right-2 bg-black text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full border-2 border-white">
+                          <span className="absolute -top-2 -right-2 bg-black dark:bg-white dark:text-black text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full border-2 border-white dark:border-gray-800">
                             +{order.orderItems.length - 1}
                           </span>
                         )}
                       </div>
                       <div>
-                        <p className="text-sm font-semibold text-gray-900 line-clamp-1">
+                        <p className="text-sm font-semibold text-gray-900 dark:text-white line-clamp-1">
                           {order.orderItems[0].name}
                         </p>
-                        <p className="text-xs text-gray-400">
+                        <p className="text-xs text-gray-400 dark:text-gray-400">
                           {order.orderItems[0].variant}
                         </p>
                       </div>
                     </div>
                   </td>
-                  <td className="px-6 py-5 text-sm font-mono text-blue-600 font-medium tracking-tighter">
+
+                  <td className="px-6 py-5 text-sm font-mono text-blue-600 dark:text-blue-400 font-medium tracking-tighter">
                     {order.orderNumber}
                   </td>
-                  <td className="px-6 py-5 text-sm text-gray-600 whitespace-nowrap">
+
+                  <td className="px-6 py-5 text-sm text-gray-600 dark:text-gray-300 whitespace-nowrap">
                     {new Date(order.createdAt).toLocaleDateString("vi-VN")}
                   </td>
+
                   <td className="px-6 py-5">
-                    <p className="text-sm text-gray-500 line-clamp-2 max-w-[200px]">
+                    <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-2 max-w-[200px]">
                       {order.shippingAddress}
                     </p>
                   </td>
+
                   <td className="px-6 py-5 text-center">
-                    <p className="text-sm font-bold text-gray-900">
+                    <p className="text-sm font-bold text-gray-900 dark:text-white">
                       {(
                         order.summary.totalAmount + order.summary.shippingFee
                       ).toLocaleString()}
                       đ
                     </p>
-                    <p className="text-[10px] text-gray-400 uppercase font-medium">
+                    <p className="text-[10px] text-gray-400 dark:text-gray-500 uppercase font-medium">
                       {order.payment.method}
                     </p>
                   </td>
+
                   <td className="px-6 py-5 text-center whitespace-nowrap">
                     <span
                       className={`px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider ${getStatusStyle(order.orderStatus)}`}
@@ -199,8 +222,13 @@ const MyOrdersPage: React.FC = () => {
                         ? "Đã giao hàng"
                         : "Đang xử lý"}
                     </span>
+
                     <p
-                      className={`text-[10px] mt-1 font-medium ${order.payment.status === "PAID" ? "text-green-500" : "text-amber-500"}`}
+                      className={`text-[10px] mt-1 font-medium ${
+                        order.payment.status === "PAID"
+                          ? "text-green-500 dark:text-green-400"
+                          : "text-amber-500 dark:text-amber-400"
+                      }`}
                     >
                       ●{" "}
                       {order.payment.status === "PAID"

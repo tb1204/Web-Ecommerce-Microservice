@@ -21,18 +21,6 @@ type NavLinkClassProps = {
 };
 
 const AdminSidebar = () => {
-  //   const navigate = useNavigate();
-  //   // const dispatch = useDispatch();
-
-  //   // const handleLogout = () => {
-  //   //   dispatch(logout());
-  //   //   dispatch(clearCart());
-  //   //   navigate("/");
-  //   // };
-
-  //   const goToHome = () => {
-  //     navigate("/");
-  //   };
   return (
     <div className="p-6 bg-gray-900 min-h-screen text-gray-100">
       {/* Logo */}
@@ -41,10 +29,10 @@ const AdminSidebar = () => {
           ARTISANO
         </Link>
       </div>
-
+      {/* 
       <h2 className="text-xl font-semibold mb-8 text-center text-gray-300">
         Admin Dashboard
-      </h2>
+      </h2> */}
 
       {/* Navigation */}
       <nav className="flex flex-col space-y-1.5">

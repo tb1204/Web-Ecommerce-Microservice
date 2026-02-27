@@ -40,15 +40,14 @@ const RegisterPage = () => {
             },
             elements: {
               headerTitle:
-                "w-full text-center text-2xl font-bold text-gray-900 dark:text-white",
-              headerSubtitle:
-                "w-full text-center text-gray-600 dark:text-gray-400 mb-4",
+                "w-full text-center text-2xl font-bold text-gray-900 ",
+              headerSubtitle: "w-full text-center text-gray-600 mb-4",
               header: "w-full flex flex-col items-center",
               headerLogoBox: "hidden",
               formButtonPrimary:
                 "bg-black hover:bg-gray-800 text-sm normal-case w-full",
               rootBox: "w-full flex justify-center",
-              card: "shadow-md border border-gray-100 mx-auto w-full max-w-[400px] bg-white dark:bg-gray-800",
+              card: "shadow-md border border-gray-100 mx-auto w-full max-w-[400px] bg-white ",
               footer: "w-full flex justify-center",
               identityPreviewText: "text-center",
               identityPreviewEditButton: "mx-auto",

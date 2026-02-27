@@ -3,7 +3,6 @@ import { LayoutGrid, ChevronDown, ChevronRight } from "lucide-react";
 import nemIcon from "../../assets/icon-mega-menu/nệm.webp";
 import changaIcon from "../../assets/icon-mega-menu/chăn ga.svg";
 import phukienIcon from "../../assets/icon-mega-menu/phụ kiện 1.webp";
-import noithatIcon from "../../assets/icon-mega-menu/nội thất.svg";
 import goiIcon from "../../assets/icon-mega-menu/gối.svg";
 import khuyenmaiIcon from "../../assets/icon-mega-menu/khuyến mãi.svg";
 
@@ -87,12 +86,7 @@ function MegaMenu() {
         { title: "Phụ kiện nệm", items: ["Topper", "Tấm bảo vệ nệm"] },
       ],
     },
-    {
-      name: "Nội thất",
-      icon: noithatIcon,
-      hasSub: true,
-      subCategories: [{ title: "Giường", items: ["Giường gỗ", "Giường da"] }],
-    },
+
     {
       name: "Gối",
       icon: goiIcon,
@@ -160,10 +154,7 @@ function MegaMenu() {
               {category.hasSub && (
                 <div
                   className={`
-                  /* Desktop: Bay sang ngang */
                   lg:absolute lg:top-0 lg:left-full lg:w-[800px] lg:min-h-full lg:grid lg:grid-cols-3 lg:gap-x-8 lg:gap-y-10 lg:p-6 lg:opacity-0 lg:invisible lg:group-hover/item:opacity-100 lg:group-hover/item:visible lg:border-l lg:border-gray-100 lg:transition-all lg:duration-200
-                  
-                  /* Mobile: Xổ xuống dạng Accordion */
                   bg-gray-50 overflow-hidden transition-all duration-300 px-8
                   ${openCategory === index ? "max-h-[2000px] py-4" : "max-h-0 lg:max-h-none py-0 lg:py-6"}
                 `}

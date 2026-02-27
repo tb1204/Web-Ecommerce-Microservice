@@ -51,14 +51,6 @@ function CartDrawer({ drawerOpen, toggleCartDrawer }: CartDrawerProps) {
   // State theo dõi các sản phẩm được chọn (dùng productId làm key)
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
-  // Tự động chọn tất cả khi giỏ hàng thay đổi (tùy chọn - có thể bỏ nếu không muốn)
-  // useEffect(() => {
-  //   if (cartProducts.length > 0 && selectedItems.length === 0) {
-  //     setSelectedItems(cartProducts.map((item) => item.productId));
-  //   }
-  // }, [cartProducts]);
-
-  // Toggle chọn/bỏ chọn 1 item
   const toggleSelectItem = (productId: string) => {
     setSelectedItems((prev) =>
       prev.includes(productId)
@@ -222,7 +214,7 @@ function CartDrawer({ drawerOpen, toggleCartDrawer }: CartDrawerProps) {
               <span className="font-medium text-gray-600 dark:text-gray-400">
                 Tổng cộng ({selectedCount} sản phẩm):
               </span>
-              <span className="text-xl font-bold text-[#c91e2c]">
+              <span className="text-xl font-bold text-[#c91e2c] dark:text-red-400">
                 {totalAmount.toLocaleString("vi-VN")}đ
               </span>
             </div>

@@ -57,25 +57,70 @@ const Footer = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 mb-12">
             {/* Cột 1:  ARTISANO */}
             <div>
-              <h4 className="text-[#c2e6ba] font-bold text-lg mb-4 ">
-                ARTISANO
+              <h4 className="text-[#c2e6ba] font-bold text-lg mb-4">
+                NHẬN THÔNG BÁO
               </h4>
-              {/* Thông tin liên hệ */}
-              <div className="mt-6">
-                <p className="text-sm mb-2">
-                  <strong>Email:</strong> duongb2204925@ctu.edu.vn
-                </p>
-                <p className="text-sm mb-2">
-                  <strong>Hotline:</strong> 1900 6750
-                </p>
-                <p className="text-sm">
-                  <strong>Địa chỉ:</strong> Đường 3/2, Phường Ninh Kiều, Thành
-                  phố Cần Thơ, Việt Nam
-                </p>
-              </div>
+              <p className=" mb-4">
+                Nhận tin hàng mới, ưu đãi độc quyền đăng ký ngay!
+              </p>
+              <form className="flex flex-col sm:flex-row gap-3">
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  className="flex-1 p-3 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#c2e6ba] transition-all text-gray-700 placeholder-gray-400"
+                  required
+                />
+
+                {/* <button
+                  type="submit"
+                  className="bg-[#c2e6ba] text-[#04341f] px-6 py-3 text-sm font-bold rounded-lg hover:bg-white hover:scale-105 transition-all whitespace-nowrap shadow-lg uppercase"
+                >
+                  Đăng ký
+                </button> */}
+                <button
+                  type="submit"
+                  className=" bg-[#c2e6ba] text-[#04341f]  px-6 py-3 text-sm font-bold rounded-lg uppercase whitespace-nowrap transition-colors duration-200 
+    hover:bg-white  active:opacity-80 focus:outline-none "
+                >
+                  Đăng ký
+                </button>
+              </form>
             </div>
 
             {/* Cột 2: VỀ CHÚNG TÔI */}
+
+            <div>
+              <h4 className="text-[#c2e6ba] font-bold text-lg mb-4">
+                ARTISANO
+              </h4>
+              {/* Chuyển thành ul để đồng bộ với 3 cột kia */}
+              <ul className="space-y-2">
+                <li>
+                  <strong className="font-semibold">Email:</strong>{" "}
+                  <a
+                    href="mailto:duongb2204925@ctu.edu.vn"
+                    className="hover:text-[#c2e6ba] transition"
+                  >
+                    duongb2204925@ctu.edu.vn
+                  </a>
+                </li>
+                <li>
+                  <strong className="font-semibold">Hotline:</strong>{" "}
+                  <a
+                    href="tel:19006750"
+                    className="hover:text-[#c2e6ba] transition"
+                  >
+                    1900 6750
+                  </a>
+                </li>
+                <li>
+                  <strong className="font-semibold">Địa chỉ:</strong> Đường 3/2,
+                  Phường Ninh Kiều, Thành phố Cần Thơ, Việt Nam
+                </li>
+              </ul>
+            </div>
+
+            {/* Cột 3: VỀ CHÚNG TÔI */}
             <div>
               <h4 className="text-[#c2e6ba] font-bold text-lg mb-4 uppercase">
                 VỀ CHÚNG TÔI
@@ -113,7 +158,7 @@ const Footer = () => {
               </ul>
             </div>
 
-            {/* Cột 3: CHÍNH SÁCH BÁN HÀNG */}
+            {/* Cột 4: CHÍNH SÁCH BÁN HÀNG */}
             <div>
               <h4 className="text-[#c2e6ba] font-bold text-lg mb-4 uppercase">
                 CHÍNH SÁCH BÁN HÀNG
@@ -134,43 +179,10 @@ const Footer = () => {
                     Chính sách giao hàng
                   </a>
                 </li>
-                <li>
-                  <a href="#" className="hover:text-[#c2e6ba] transition">
-                    Chính sách trả góp
-                  </a>
-                </li>
+
                 <li>
                   <a href="#" className="hover:text-[#c2e6ba] transition">
                     Chính sách bảo mật
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            {/* Cột 4: DỊCH VỤ & THÔNG TIN KHÁC */}
-            <div>
-              <h4 className="text-[#c2e6ba] font-bold text-lg mb-4 uppercase">
-                DỊCH VỤ & THÔNG TIN KHÁC
-              </h4>
-              <ul className="space-y-2 text-sm md:text-base">
-                <li>
-                  <a href="#" className="hover:text-[#c2e6ba] transition">
-                    Chính sách vận chuyển
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-[#c2e6ba] transition">
-                    Khách hàng thân thiết
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-[#c2e6ba] transition">
-                    Câu hỏi thường gặp
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-[#c2e6ba] transition">
-                    Điều khoản & điều kiện
                   </a>
                 </li>
               </ul>

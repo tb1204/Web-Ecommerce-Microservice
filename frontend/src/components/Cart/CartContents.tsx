@@ -108,7 +108,7 @@ const CartContents = ({
                   {renderProductSpecs(product)}
 
                   {/* Giá sản phẩm */}
-                  <p className="font-bold text-[#c91e2c] text-lg mt-2">
+                  <p className="font-bold text-red-600 dark:text-red-400 text-lg mt-2">
                     {product.price.toLocaleString("vi-VN")} đ
                   </p>
                 </div>
