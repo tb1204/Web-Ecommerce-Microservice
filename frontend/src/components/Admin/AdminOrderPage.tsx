@@ -11,7 +11,7 @@ import {
   Clock,
   User,
   Printer,
-  Calendar, // Thêm icon Calendar
+  Calendar, 
 } from "lucide-react";
 import { toast } from "sonner";
 import { useReactToPrint } from "react-to-print";
@@ -193,8 +193,8 @@ const AdminOrderPage = () => {
       {/* HEADER */}
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="text-3xl font-black text-gray-800 flex items-center gap-3 italic tracking-tighter">
-            <ShoppingBag className="text-emerald-600" /> QUẢN LÝ ĐƠN HÀNG
+          <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-3">
+            <ShoppingBag className="text-emerald-600" /> Quản lý đơn hàng
           </h1>
         </div>
         <div className="flex items-center gap-4">
@@ -205,7 +205,7 @@ const AdminOrderPage = () => {
           )}
           <button 
             onClick={handlePrintAllProcessing}
-            className="flex items-center gap-2 px-6 py-3 bg-emerald-600 text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-emerald-700 shadow-xl shadow-emerald-100 active:scale-95 transition-all"
+            className="flex items-center gap-2 px-5 py-2.5 bg-emerald-500 text-white rounded-xl hover:bg-emerald-600 transition-all shadow-md active:scale-95"
           >
             <Printer size={18} /> In tất cả 
           </button>
@@ -269,7 +269,7 @@ const AdminOrderPage = () => {
       {loading ? (
         <div className="flex flex-col items-center justify-center py-24">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600"></div>
-          <p className="mt-4 text-gray-400 text-[10px] font-black uppercase tracking-[3px]">Đang tải dữ liệu...</p>
+          <p className="mt-4 text-gray-400 text-[12px] font-black tracking-[3px]">Đang tải dữ liệu...</p>
         </div>
       ) : (
         <>

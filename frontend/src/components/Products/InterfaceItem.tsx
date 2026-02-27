@@ -66,3 +66,34 @@ export interface Order {
   createdAt: string;
   updatedAt: string;
 }
+
+
+//interface cho voucher 
+export interface UsageLimit {
+  total: number;
+  perUser: number;
+  used: number;
+}
+
+export interface Validity {
+  start: string;
+  end: string;
+}
+
+export interface Voucher {
+  _id: string;
+  code: string;
+  name: string;
+  voucherType: "PRODUCT_DISCOUNT" | "SHIPPING_DISCOUNT";
+  discountType: "FIXED_AMOUNT" | "PERCENTAGE";
+  discountValue: number;
+  maxDiscountAmount: number;
+  minOrderAmount: number;
+  usageLimit: UsageLimit;
+  validity: Validity;
+  status: "ACTIVE" | "EXPIRED" | "DISABLED";
+  isStackable: boolean;
+  userUsedList: string[];
+  createdAt: string;
+  updatedAt: string;
+}

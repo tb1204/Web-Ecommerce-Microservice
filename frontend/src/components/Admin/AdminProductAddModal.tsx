@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { 
   X, PlusCircle, Award, Fingerprint, DollarSign, 
-  Image as ImageIcon, Link as LinkIcon, Trash2, Tag
+  Image as ImageIcon, Trash2, Tag, UploadCloud
 } from "lucide-react";
 import { toast } from "sonner";
 import type { Product, ProductImage } from "../Products/InterfaceItem";
@@ -16,7 +16,6 @@ interface InputGroupProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
 }
 
-// Định nghĩa kiểu dữ liệu riêng cho Form để xử lý input text cho các trường số và object
 interface ProductFormState {
   name: string;
   sku: string;
@@ -67,7 +66,6 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({ isOpen, onClose, onAd
   };
 
   const [formData, setFormData] = useState<ProductFormState>(initialFormState);
-  const [currentUrl, setCurrentUrl] = useState("");
 
   if (!isOpen) return null;
 
@@ -88,21 +86,32 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({ isOpen, onClose, onAd
     }
   };
 
-  const handleAddImage = () => {
-    if (!currentUrl.trim()) {
-      toast.error("Vui lòng dán link ảnh vào trước!");
-      return;
-    }
-    const newImage: ProductImage = { 
-      url: currentUrl, 
-      is_primary: formData.images.length === 0 
-    };
-    setFormData((prev) => ({ ...prev, images: [...prev.images, newImage] }));
-    setCurrentUrl(""); 
+  // --- HÀM XỬ LÝ CHỌN FILE TỪ MÁY TÍNH ---
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
+
+    Array.from(files).forEach((file) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result as string;
+        setFormData((prev) => ({
+          ...prev,
+          images: [
+            ...prev.images,
+            { url: base64String, is_primary: prev.images.length === 0 }
+          ]
+        }));
+      };
+      reader.readAsDataURL(file);
+    });
+    // Reset input để có thể chọn lại cùng 1 file nếu xóa đi
+    e.target.value = "";
   };
 
   const handleRemoveImage = (index: number) => {
     const newImages = formData.images.filter((_, i) => i !== index);
+    // Nếu xóa ảnh chính thì đặt ảnh đầu tiên còn lại làm ảnh chính
     if (newImages.length > 0 && formData.images[index].is_primary) {
       newImages[0].is_primary = true;
     }
@@ -118,7 +127,6 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({ isOpen, onClose, onAd
 
     const processedTags = formData.tags.split(',').map((t) => t.trim()).filter((t) => t !== "");
     
-    // Tạo object mới khớp 100% với Interface Product
     const newProduct: Product = { 
       _id: `p${Date.now()}`,
       name: formData.name,
@@ -147,7 +155,7 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({ isOpen, onClose, onAd
 
   return (
     <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-300">
-      <form onSubmit={handleSubmit} autoComplete="off" className="bg-white w-full max-w-5xl rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[95vh] animate-in zoom-in-95 duration-300">
+      <form onSubmit={handleSubmit} autoComplete="off" className="bg-white w-full max-w-5xl rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[95vh] animate-in zoom-in-95 duration-300 border">
         
         <div className="p-5 border-b flex justify-between items-center bg-emerald-600 text-white flex-shrink-0">
           <div className="flex items-center gap-3">
@@ -161,7 +169,7 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({ isOpen, onClose, onAd
         </div>
 
         <div className="p-8 overflow-y-auto space-y-8 scrollbar-hide bg-gray-50/20">
-          {/* PHẦN HÌNH ẢNH */}
+          {/* PHẦN HÌNH ẢNH - ĐÃ SỬA SANG CHỌN FILE */}
           <section className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
             <h3 className="text-sm font-black text-emerald-700 uppercase tracking-widest mb-4 flex items-center gap-2">
               <ImageIcon size={16} /> Quản lý hình ảnh
@@ -169,28 +177,50 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({ isOpen, onClose, onAd
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 bg-gray-50 p-6 rounded-2xl border-2 border-dashed border-gray-200">
               <div className="space-y-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-gray-500">URL Hình ảnh</label>
+                  <label className="text-xs font-bold text-gray-500 italic">Tải ảnh lên từ thiết bị</label>
                   <div className="relative">
-                    <LinkIcon size={14} className="absolute left-3 top-3.5 text-gray-400" />
                     <input 
-                      type="text" 
-                      value={currentUrl}
-                      onChange={(e) => setCurrentUrl(e.target.value)}
-                      placeholder="https://..."
-                      className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-gray-200 focus:border-emerald-500 outline-none text-xs font-medium"
+                      type="file" 
+                      id="file-upload"
+                      multiple 
+                      accept="image/*"
+                      onChange={handleFileChange}
+                      className="hidden" 
                     />
+                    <label 
+                      htmlFor="file-upload"
+                      className="flex flex-col items-center justify-center w-full py-6 bg-white border border-gray-200 rounded-xl cursor-pointer hover:bg-emerald-50 hover:border-emerald-200 transition-all group"
+                    >
+                      <UploadCloud size={28} className="text-gray-400 group-hover:text-emerald-500 mb-2" />
+                      <span className="text-[10px] font-black text-gray-500 group-hover:text-emerald-600 uppercase tracking-tighter">Nhấn để chọn ảnh</span>
+                    </label>
                   </div>
                 </div>
-                <button type="button" onClick={handleAddImage} className="w-full py-2 bg-emerald-600 text-white rounded-xl font-bold text-xs hover:bg-emerald-700 shadow-md">THÊM ẢNH</button>
+                <p className="text-[9px] text-gray-400 italic text-center">Hỗ trợ định dạng: JPG, PNG, WEBP. Ảnh đầu tiên sẽ tự động làm ảnh chính.</p>
               </div>
-              <div className="md:col-span-2 flex flex-wrap gap-4 min-h-[100px]">
+              <div className="md:col-span-2 flex flex-wrap gap-4 min-h-[100px] content-start">
                 {formData.images.map((img, index) => (
-                  <div key={index} className="relative w-20 h-20 group">
+                  <div key={index} className="relative w-20 h-20 group animate-in zoom-in-75">
                     <img src={img.url} className="w-full h-full object-cover rounded-xl border-2 border-white shadow-sm" alt="Preview" />
-                    <button type="button" onClick={() => handleRemoveImage(index)} className="absolute -top-2 -right-2 p-1 bg-red-500 text-white rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-all"><Trash2 size={10} /></button>
-                    {img.is_primary && <div className="absolute -bottom-1 left-1 right-1 bg-emerald-500 text-white text-[6px] font-black text-center py-0.5 rounded uppercase">Chính</div>}
+                    <button 
+                      type="button" 
+                      onClick={() => handleRemoveImage(index)} 
+                      className="absolute -top-2 -right-2 p-1 bg-red-500 text-white rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-all scale-75 group-hover:scale-100"
+                    >
+                      <Trash2 size={12} />
+                    </button>
+                    {img.is_primary && (
+                      <div className="absolute -bottom-1 left-1 right-1 bg-emerald-500 text-white text-[7px] font-black text-center py-0.5 rounded shadow-sm uppercase tracking-tighter">
+                        Ảnh chính
+                      </div>
+                    )}
                   </div>
                 ))}
+                {formData.images.length === 0 && (
+                  <div className="w-full flex items-center justify-center text-gray-300 italic text-xs">
+                    Chưa có hình ảnh nào được chọn...
+                  </div>
+                )}
               </div>
             </div>
           </section>

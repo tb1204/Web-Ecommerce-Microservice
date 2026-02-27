@@ -187,9 +187,7 @@ const AdminProductPage = () => {
             <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-3">
               <Package className="text-emerald-600" /> Quản lý sản phẩm
             </h1>
-            <p className="text-gray-500 mt-1">
-              Tìm thấy {filteredProducts.length} sản phẩm phù hợp
-            </p>
+           
           </div>
           <button
             onClick={() => setIsAddOpen(true)}
@@ -235,6 +233,7 @@ const AdminProductPage = () => {
         {loading ? (
           <div className="flex flex-col items-center justify-center py-20">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600"></div>
+            <p className="mt-4 text-gray-400 text-[12px] font-black tracking-[3px]">Đang tải dữ liệu...</p>
           </div>
         ) : filteredProducts.length === 0 ? (
           /* HIỂN THỊ KHI KHÔNG TÌM THẤY KẾT QUẢ */
