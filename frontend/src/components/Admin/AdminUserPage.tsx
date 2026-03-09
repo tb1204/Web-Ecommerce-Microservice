@@ -40,7 +40,8 @@ interface User {
   addresses?: Address[];
   createdAt?: string;
   updatedAt?: string;
-  isLocked?: boolean;
+  isBlocked?: boolean;
+  // isLocked?: boolean;
 }
 
 const AdminUsersPage = () => {
@@ -62,7 +63,10 @@ const AdminUsersPage = () => {
   const { getToken } = useAuth();
 
   const getAuthHeader = async () => {
-    const token = await getToken();
+    // const token = await getToken();
+
+    const token = await getToken({ template: "my-backend" });
+    console.log("TOKEN:", token);
     return token ? { Authorization: `Bearer ${token}` } : {};
   };
 
@@ -117,7 +121,7 @@ const AdminUsersPage = () => {
 
         setUsers(
           Array.isArray(res.data)
-            ? res.data.map((u) => ({ ...u, isLocked: false }))
+            ? res.data.map((u) => ({ ...u })) // bỏ isLocked: false
             : [],
         );
       } catch (err: unknown) {
@@ -142,7 +146,7 @@ const AdminUsersPage = () => {
 
       setUsers(
         Array.isArray(res.data)
-          ? res.data.map((u) => ({ ...u, isLocked: false }))
+          ? res.data.map((u) => ({ ...u })) // bỏ isLocked: false
           : [],
       );
     } catch (err) {
@@ -205,12 +209,16 @@ const AdminUsersPage = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // const handleRolesChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  //   const selected = Array.from(
+  //     e.target.selectedOptions,
+  //     (option) => option.value,
+  //   );
+  //   setFormData((prev) => ({ ...prev, roles: selected }));
+  // };
   const handleRolesChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selected = Array.from(
-      e.target.selectedOptions,
-      (option) => option.value,
-    );
-    setFormData((prev) => ({ ...prev, roles: selected }));
+    const value = e.target.value;
+    setFormData((prev) => ({ ...prev, roles: [value] }));
   };
 
   const handleMembershipChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -233,9 +241,14 @@ const AdminUsersPage = () => {
       const headers = await getAuthHeader();
 
       if (modalMode === "edit" && editingUser) {
+        const payload = {
+          ...formData,
+          membership: formData.membership?.tierName ?? undefined,
+        };
+        console.log("📦 Payload gửi lên:", JSON.stringify(payload, null, 2));
         await axios.patch(
           `http://localhost:8080/api/admin/users/${editingUser.clerkId}`,
-          formData,
+          payload,
           { headers },
         );
         toast.success("Cập nhật thành công");
@@ -248,7 +261,7 @@ const AdminUsersPage = () => {
           toast.error("Mật khẩu xác nhận không khớp");
           return;
         }
-
+        console.log(formData);
         const clerkRes = await axios.post(
           "http://localhost:8080/api/admin/users/create-clerk-user",
           {
@@ -260,16 +273,35 @@ const AdminUsersPage = () => {
             phone: formData.phone,
             gender: formData.gender,
             roles: formData.roles?.length ? formData.roles : ["USER"],
-            membership: formData.membership,
+            membership: formData.membership?.tierName ?? undefined, // ← gửi string "Member"
+            // membership: formData.membership,
           },
           { headers },
         );
 
         const newClerkId = clerkRes.data.clerkId;
+        console.log(
+          "📦 Payload gửi lên /api/admin/users:",
+          JSON.stringify(
+            {
+              ...formData,
+              clerkId: newClerkId,
+              membership: formData.membership?.tierName ?? undefined,
+              isActive: true,
+            },
+            null,
+            2,
+          ),
+        );
 
         await axios.post(
           "http://localhost:8080/api/admin/users",
-          { ...formData, clerkId: newClerkId, isActive: true },
+          {
+            ...formData,
+            clerkId: newClerkId,
+            isActive: true,
+            membership: formData.membership?.tierName ?? undefined,
+          },
           { headers },
         );
 
@@ -320,9 +352,14 @@ const AdminUsersPage = () => {
   // Khóa / Mở khóa (chỉ Clerk, không lưu DB)
   const handleLockChange = async (user: User, shouldLock: boolean) => {
     // update UI trước
+    // setUsers((prev) =>
+    //   prev.map((u) =>
+    //     u.clerkId === user.clerkId ? { ...u, isLocked: shouldLock } : u,
+    //   ),
+    // );
     setUsers((prev) =>
       prev.map((u) =>
-        u.clerkId === user.clerkId ? { ...u, isLocked: shouldLock } : u,
+        u.clerkId === user.clerkId ? { ...u, isBlocked: shouldLock } : u,
       ),
     );
 
@@ -341,12 +378,24 @@ const AdminUsersPage = () => {
       toast.error("Cập nhật trạng thái khóa thất bại");
 
       // rollback
+      // setUsers((prev) =>
+      //   prev.map((u) =>
+      //     u.clerkId === user.clerkId ? { ...u, isLocked: !shouldLock } : u,
+      //   ),
+      // );
       setUsers((prev) =>
         prev.map((u) =>
-          u.clerkId === user.clerkId ? { ...u, isLocked: !shouldLock } : u,
+          u.clerkId === user.clerkId ? { ...u, isBlocked: !shouldLock } : u,
         ),
       );
     }
+  };
+
+  const normalizeTierName = (raw: any): string => {
+    if (!raw) return "";
+    const str = typeof raw === "string" ? raw : raw.tierName || "";
+    // "DIAMOND" → "Diamond", "Diamond" → "Diamond"
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
   };
 
   // Cập nhật role trực tiếp từ bảng
@@ -449,7 +498,25 @@ const AdminUsersPage = () => {
                   key={user.clerkId}
                   className="hover:bg-gray-50 transition-colors"
                 >
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 flex items-center gap-3">
+                  <td className="px-6 py-4 text-sm font-medium text-gray-900 max-w-[220px]">
+                    <div className="flex items-center gap-3 min-w-0">
+                      <img
+                        src={
+                          user.avatarUrl ||
+                          `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                            user.firstName + " " + user.lastName,
+                          )}`
+                        }
+                        alt="Avatar"
+                        className="w-10 h-10 rounded-full border-2 border-gray-300 object-cover flex-shrink-0"
+                      />
+                      <span className="truncate block" title={user.email}>
+                        {user.email}
+                      </span>
+                    </div>
+                  </td>
+
+                  {/* <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 flex items-center gap-3">
                     <img
                       src={
                         user.avatarUrl ||
@@ -461,17 +528,14 @@ const AdminUsersPage = () => {
                       className="w-10 h-10 rounded-full border-2 border-gray-300 object-cover"
                     />
                     {user.email}
-                  </td>
-                  {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                    {user.membership?.tierName || "Không có"}
                   </td> */}
+
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span
-                      className={`px-2.5 py-1 text-xs font-bold rounded-full border ${getTierBadgeClass(user.membership?.tierName)}`}
+                      className={`px-2.5 py-1 text-xs font-bold rounded-full border ${getTierBadgeClass(normalizeTierName(user.membership))}`}
                     >
-                      {user.membership?.tierName
-                        ? TIER_LABEL[user.membership.tierName]
-                        : "Không có"}
+                      {TIER_LABEL[normalizeTierName(user.membership)] ||
+                        "Thành viên"}
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
@@ -554,7 +618,7 @@ const AdminUsersPage = () => {
                       <label className="flex items-center gap-2 cursor-pointer">
                         <input
                           type="checkbox"
-                          checked={!!user.isLocked}
+                          checked={!!user.isBlocked}
                           onChange={(e) =>
                             handleLockChange(user, e.target.checked)
                           }
@@ -701,7 +765,7 @@ const AdminUsersPage = () => {
                   </>
                 )}
 
-                <div>
+                {/* <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Giới tính
                   </label>
@@ -718,7 +782,7 @@ const AdminUsersPage = () => {
                   </select>
                 </div>
 
-                <div>
+                {/* <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Vai trò
                   </label>
@@ -731,6 +795,51 @@ const AdminUsersPage = () => {
                     <option value="USER">Khách hàng</option>
                     <option value="ADMIN">Quản trị viên</option>
                   </select>
+                </div> */}
+                {/* <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Vai trò
+                  </label>
+                  <div className="flex gap-3">
+                    {[
+                      { value: "USER", label: "Khách hàng" },
+                      { value: "ADMIN", label: "Quản trị viên" },
+                    ].map((role) => {
+                      const checked = (formData.roles || []).includes(
+                        role.value,
+                      );
+                      return (
+                        <label
+                          key={role.value}
+                          className={`flex items-center gap-2 px-3 py-1.5 rounded-full border cursor-pointer text-sm font-medium transition ${
+                            checked
+                              ? role.value === "ADMIN"
+                                ? "bg-red-50 border-red-300 text-red-700"
+                                : "bg-blue-50 border-blue-300 text-blue-700"
+                              : "bg-gray-50 border-gray-200 text-gray-500"
+                          }`}
+                        >
+                          <input
+                            type="checkbox"
+                            value={role.value}
+                            checked={checked}
+                            onChange={handleRolesChange}
+                            className="hidden"
+                          />
+                          <span
+                            className={`w-2 h-2 rounded-full ${
+                              checked
+                                ? role.value === "ADMIN"
+                                  ? "bg-red-400"
+                                  : "bg-blue-400"
+                                : "bg-gray-300"
+                            }`}
+                          />
+                          {role.label}
+                        </label>
+                      );
+                    })}
+                  </div>
                 </div>
 
                 <div>
@@ -747,6 +856,77 @@ const AdminUsersPage = () => {
                     <option value="Gold">Vàng</option>
                     <option value="Diamond">Kim cương</option>
                   </select>
+                </div>  */}
+
+                {/* Giới tính */}
+                {/* Giới tính */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Giới tính
+                  </label>
+                  <div className="relative">
+                    <select
+                      name="gender"
+                      value={formData.gender || ""}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 pr-8 border border-gray-300 rounded-md appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-green-500 bg-white"
+                    >
+                      <option value="">Chọn giới tính</option>
+                      <option value="male">Nam</option>
+                      <option value="female">Nữ</option>
+                      <option value="other">Khác</option>
+                    </select>
+                    <ChevronDown
+                      size={15}
+                      className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
+                    />
+                  </div>
+                </div>
+
+                {/* Vai trò */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Vai trò
+                  </label>
+                  <div className="relative">
+                    <select
+                      value={
+                        formData.roles?.includes("ADMIN") ? "ADMIN" : "USER"
+                      }
+                      onChange={handleRolesChange}
+                      className="w-full px-3 py-2 pr-8 border border-gray-300 rounded-md appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-green-500 bg-white"
+                    >
+                      <option value="USER">Khách hàng</option>
+                      <option value="ADMIN">Quản trị viên</option>
+                    </select>
+                    <ChevronDown
+                      size={15}
+                      className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
+                    />
+                  </div>
+                </div>
+
+                {/* Cấp bậc thành viên */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Cấp bậc thành viên
+                  </label>
+                  <div className="relative">
+                    <select
+                      value={normalizeTierName(formData.membership)}
+                      onChange={handleMembershipChange}
+                      className="w-full px-3 py-2 pr-8 border border-gray-300 rounded-md appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-green-500 bg-white"
+                    >
+                      <option value="Member">Thành viên</option>
+                      <option value="Silver">Bạc</option>
+                      <option value="Gold">Vàng</option>
+                      <option value="Diamond">Kim cương</option>
+                    </select>
+                    <ChevronDown
+                      size={15}
+                      className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
+                    />
+                  </div>
                 </div>
 
                 <div className="mt-8 flex justify-end gap-4">
@@ -833,7 +1013,8 @@ const AdminUsersPage = () => {
                     Hạng thành viên
                   </p>
                   <p className="text-gray-900">
-                    {selectedUser.membership?.tierName || "Không có"}
+                    {TIER_LABEL[normalizeTierName(selectedUser.membership)] ||
+                      "Thành viên"}
                   </p>
                 </div>
                 <div>
