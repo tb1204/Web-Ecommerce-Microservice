@@ -2,6 +2,7 @@
 // import { Link, NavLink, useNavigate } from "react-router-dom";
 // // import { clearCart } from "../../redux/slices/CartSlice";
 // // import { logout } from "../../redux/slices/authSlice";
+import { useClerk } from "@clerk/clerk-react";
 import {
   FaBoxOpen,
   FaClipboardList,
@@ -14,13 +15,20 @@ import {
   FaEnvelope,
   FaSignInAlt,
 } from "react-icons/fa";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
 type NavLinkClassProps = {
   isActive: boolean;
 };
 
 const AdminSidebar = () => {
+  const { signOut } = useClerk();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await signOut();
+    navigate("/login");
+  };
   return (
     <div className="p-6 bg-gray-900 min-h-screen text-gray-100">
       {/* Logo */}
@@ -157,7 +165,7 @@ const AdminSidebar = () => {
       {/* Logout button */}
       <div className="mt-10">
         <button
-          // onClick={handleLogout}  // bạn có thể bỏ comment khi đã thêm lại redux
+          onClick={handleLogout} // bạn có thể bỏ comment khi đã thêm lại redux
           className="w-full bg-red-600 hover:bg-red-700 text-white py-3 px-4 rounded-lg flex items-center justify-center space-x-3 font-medium transition-colors"
         >
           <FaSignInAlt className="text-lg" />
