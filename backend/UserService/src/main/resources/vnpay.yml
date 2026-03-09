@@ -1,0 +1,5 @@
+vnpay:
+  tmnCode: 3TNWGZ10
+  hashSecret: WLOYSXE85MYZB9SBRD38XA324UVCUR9D
+  payUrl: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
+  returnUrl: http://localhost:5173/vnpay-return
