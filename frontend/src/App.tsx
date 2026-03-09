@@ -36,6 +36,8 @@ import CustomProfile from "./components/layouts/CustomProfile";
 import AdminSliderUpload from "./components/Admin/AdminSliderUpload";
 import AdminChatPage from "./components/Admin/AdminChatPage";
 import AdminCommentPage from "./components/Admin/AdminCommentPage";
+import ProtectedRoute from "./components/common/ProtectedRoute";
+import AuthRedirect from "./pages/AuthRedirect";
 //import AdminSliderUpload from "./components/Admin/AdminSliderUpload";
 
 function App() {
@@ -69,28 +71,37 @@ function App() {
               <Route path="order/:id" element={<OrderDetailsPage />} />
               <Route path="wishlist" element={<WishlistPage />} />
               <Route path="profile" element={<CustomProfile />} />
+              <Route path="/auth-redirect" element={<AuthRedirect />} />
               <Route path="*" element={<NotFound />} />
             </Route>
 
             {/* GROUP 2: CÁC TRANG DÀNH CHO ADMIN (QUẢN TRỊ) */}
+            {/* <Route
+              path="/admin"
+              element={<AdminLayout />}
+            > */}
             <Route
               path="/admin"
-              // element={
-              //   <ProtectedRoute role="admin">
-              //     <AdminLayout />
-              //   </ProtectedRoute>
-              // }
-              element={<AdminLayout />}
+              element={
+                <ProtectedRoute role="admin">
+                  <AdminLayout />
+                </ProtectedRoute>
+              }
             >
               <Route index element={<AdminHomePage />} />
               <Route path="users" element={<AdminUserPage />} />
+
               <Route path="chat" element={<AdminChatPage />} />
               <Route path="slider" element={<AdminSliderUpload />} />
+
               <Route path="product" element={<AdminProductPage />} />
               <Route path="orders" element={<AdminOrderPage />} />
+
               <Route path="reviews" element={<AdminCommentPage />} />
+
               <Route path="statistics" element={<AdminStatisticalPage />} />
               <Route path="vouchers" element={<AdminVoucherPage />} />
+              {/* <Route path="slider" element={<AdminSliderUpload />} /> */}
             </Route>
           </Routes>
         </CompareProvider>
