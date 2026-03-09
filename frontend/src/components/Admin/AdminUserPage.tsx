@@ -62,7 +62,7 @@ const AdminUsersPage = () => {
   const { getToken } = useAuth();
 
   const getAuthHeader = async () => {
-    const token = await getToken();
+    const token = await getToken({ template: "my-backend" });
     return token ? { Authorization: `Bearer ${token}` } : {};
   };
 
