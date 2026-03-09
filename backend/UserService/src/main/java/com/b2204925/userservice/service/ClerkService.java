@@ -87,7 +87,7 @@ public class ClerkService {
         body.put("password", request.getPassword());
         body.put("first_name", request.getFirstName());
         body.put("last_name", request.getLastName());
-        body.put("username", request.getUsername());
+        // body.put("username", request.getUsername()); tắt ko gửi lên clerk
 
         // ✅ Set role vào public_metadata ngay lúc tạo
         String role = request.getRoles() != null && request.getRoles().contains("ADMIN")
