@@ -17,11 +17,11 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ isOpen, onClose
 
   useEffect(() => {
     if (isOpen) setClickedImage(null);
-  }, [isOpen, product?._id]);
+  }, [isOpen, product?.id]);
 
   if (!isOpen || !product) return null;
 
-  const primaryImg = product.images?.find((img) => img.is_primary)?.url;
+  const primaryImg = product.images?.find((img) => img.isPrimary)?.url;
   const defaultImage = primaryImg || product.images?.[0]?.url || "";
   const displayImage = clickedImage || defaultImage;
 
@@ -44,7 +44,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ isOpen, onClose
             <div>
               <h2 className="font-bold text-lg leading-none">Chi tiết sản phẩm</h2>
               <p className="text-[11px] text-emerald-100 mt-1 uppercase tracking-widest font-medium italic">
-                Mã nội bộ: {product.product_code || "CHƯA CÓ MÃ"}
+                Mã nội bộ: {product.productCode || "CHƯA CÓ MÃ"}
               </p>
             </div>
           </div>
@@ -75,7 +75,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ isOpen, onClose
                     className={`relative w-16 h-16 rounded-xl overflow-hidden border-2 transition-all ${displayImage === img.url ? 'border-emerald-500 scale-105 shadow-md' : 'border-transparent hover:border-emerald-200'}`}
                   >
                     <img src={img.url} className="w-full h-full object-cover" alt="" />
-                    {img.is_primary && <div className="absolute top-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-white shadow-sm"></div>}
+                    {img.isPrimary && <div className="absolute top-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-white shadow-sm"></div>}
                   </button>
                 ))}
               </div>
@@ -133,7 +133,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ isOpen, onClose
               <DetailBox label="Kích thước" value={product.specifications?.dimensions} icon={<Ruler size={14}/>} />
               <DetailBox label="Trọng lượng" value={product.specifications?.weight} icon={<Weight size={14}/>} />
               <DetailBox label="Thiết kế" value={product.specifications?.design} />
-              <DetailBox label="Số chứng nhận" value={product.specifications?.certification_number} icon={<ShieldCheck size={14}/>} />
+              <DetailBox label="Số chứng nhận" value={product.specifications?.certificationNumber} icon={<ShieldCheck size={14}/>} />
             </div>
           </section>
 
@@ -152,14 +152,14 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ isOpen, onClose
                   <div className="p-3 bg-blue-50 text-blue-500 rounded-2xl"><Clock size={20}/></div>
                   <div>
                     <p className="text-[10px] text-gray-400 font-black uppercase mb-0.5">Thời điểm khởi tạo</p>
-                    <p className="text-sm font-bold text-gray-700">{formatDateTime(product.created_at)}</p>
+                    <p className="text-sm font-bold text-gray-700">{formatDateTime(product.createdAt)}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="p-3 bg-orange-50 text-orange-500 rounded-2xl"><History size={20}/></div>
                   <div>
                     <p className="text-[10px] text-gray-400 font-black uppercase mb-0.5">Cập nhật lần cuối</p>
-                    <p className="text-sm font-bold text-gray-700">{formatDateTime(product.updated_at)}</p>
+                    <p className="text-sm font-bold text-gray-700">{formatDateTime(product.updatedAt)}</p>
                   </div>
                 </div>
               </div>
@@ -173,7 +173,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ isOpen, onClose
              <Warehouse size={18} className="text-emerald-500"/>
              <div className="leading-tight">
                 <p className="text-[10px] text-gray-400 font-black uppercase">Trạng thái kho</p>
-                <p className="text-lg font-black text-gray-700">{product.stock_quantity} <span className="text-xs font-normal">sản phẩm sẵn sàng</span></p>
+                <p className="text-lg font-black text-gray-700">{product.stockQuantity} <span className="text-xs font-normal">sản phẩm sẵn sàng</span></p>
              </div>
           </div>
           <div className="flex gap-4">
