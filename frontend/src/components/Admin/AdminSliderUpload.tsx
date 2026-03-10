@@ -267,10 +267,30 @@ function AdminSliderUpload() {
                 )}
 
                 {/* Overlay xóa */}
-                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-                  <span className="bg-red-600 text-white px-5 py-2.5 rounded font-semibold shadow-lg">
+                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center gap-4 transition-opacity">
+                  {/* Nút Xem */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      window.open(img.secure_url, "_blank");
+                    }}
+                    className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded font-semibold shadow"
+                    // className="bg-slate-700 hover:bg-slate-800 text-white px-4 py-2 rounded font-semibold shadow"
+                    // className="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded font-semibold shadow"
+                  >
+                    Xem
+                  </button>
+
+                  {/* Nút Xóa */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDelete(img.public_id);
+                    }}
+                    className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded font-semibold shadow"
+                  >
                     {deleting === img.public_id ? "Đang xóa..." : "Xóa"}
-                  </span>
+                  </button>
                 </div>
               </div>
             ))}

@@ -90,18 +90,13 @@ function App() {
             >
               <Route index element={<AdminHomePage />} />
               <Route path="users" element={<AdminUserPage />} />
-
               <Route path="chat" element={<AdminChatPage />} />
               <Route path="slider" element={<AdminSliderUpload />} />
-
               <Route path="product" element={<AdminProductPage />} />
               <Route path="orders" element={<AdminOrderPage />} />
-
               <Route path="reviews" element={<AdminCommentPage />} />
-
               <Route path="statistics" element={<AdminStatisticalPage />} />
               <Route path="vouchers" element={<AdminVoucherPage />} />
-              {/* <Route path="slider" element={<AdminSliderUpload />} /> */}
             </Route>
           </Routes>
         </CompareProvider>

@@ -1,0 +1,199 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+
+      routes:
+        - id: root
+          uri: forward:/home
+          predicates:
+            - Path=/
+          filters:
+            - SetResponseHeader=Content-Type, text/plain
+            - SetPath=/home # hoặc dùng RewritePath
+
+        # Route cho userservice
+        - id: userservice
+          uri: lb://userservice # thay bằng lb://userservice nếu dùng Eureka
+          # uri: http://localhost:8081
+          predicates:
+            - Path=/api/users/**
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 20 # 10 request/giây trung bình
+                redis-rate-limiter.burstCapacity: 40 # burst tối đa 20
+                redis-rate-limiter.requestedTokens: 1 # mỗi request tốn 1 token
+                key-resolver: "#{@ipKeyResolver}" # theo IP (bean trong GatewayConfig)
+            - name: CircuitBreaker
+              args:
+                name: defaultCB
+                fallbackUri: forward:/fallback/userservice
+
+        # Route cho orderservice (limit cao hơn ví dụ)
+        - id: orderservice
+          uri: lb://orderservice
+          predicates:
+            - Path=/api/orders/**
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 25
+                redis-rate-limiter.burstCapacity: 50
+                key-resolver: "#{@ipKeyResolver}"
+            - name: CircuitBreaker
+              args:
+                name: defaultCB
+                fallbackUri: forward:/fallback/orderservice
+
+        # Route cho productservice
+        - id: productservice
+          uri: lb://productservice
+          predicates:
+            - Path=/api/products/**
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 40
+                redis-rate-limiter.burstCapacity: 80
+                key-resolver: "#{@ipKeyResolver}"
+            - name: CircuitBreaker
+              args:
+                name: defaultCB
+                fallbackUri: forward:/fallback/productservice
+
+        # Route cho cartservice
+        - id: cartservice
+          uri: lb://cartservice
+          predicates:
+            - Path=/api/cart/**
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 25
+                redis-rate-limiter.burstCapacity: 50
+                key-resolver: "#{@ipKeyResolver}"
+            - name: CircuitBreaker
+              args:
+                name: defaultCB
+                fallbackUri: forward:/fallback/cartservice
+
+        # Ví dụ cho paymentservice (limit chặt vì nhạy cảm)
+        - id: paymentservice
+          uri: lb://paymentservice
+          predicates:
+            - Path=/api/payments/**
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 5
+                redis-rate-limiter.burstCapacity: 10
+                key-resolver: "#{@ipKeyResolver}"
+            - name: CircuitBreaker
+              args:
+                name: defaultCB
+                fallbackUri: forward:/fallback/paymentservice
+        # Ví dụ cho chatservice (limit chặt vì nhạy cảm)
+        - id: chatservice
+          uri: lb://chatservice
+          predicates:
+            - Path=/api/chat/**
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 15
+                redis-rate-limiter.burstCapacity: 30
+                key-resolver: "#{@ipKeyResolver}"
+            - name: CircuitBreaker
+              args:
+                name: defaultCB
+                fallbackUri: forward:/fallback/chatservice
+        # Ví dụ cho reviewservice (limit chặt vì nhạy cảm)
+        - id: reviewservice
+          uri: lb://reviewservice
+          predicates:
+            - Path=/api/review/**
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10
+                redis-rate-limiter.burstCapacity: 20
+                key-resolver: "#{@ipKeyResolver}"
+            - name: CircuitBreaker
+              args:
+                name: defaultCB
+                fallbackUri: forward:/fallback/reviewservice
+        # Ví dụ cho notificationservice (limit chặt vì nhạy cảm)
+        - id: notificationservice
+          uri: lb://notificationservice
+          predicates:
+            - Path=/api/notification/**
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10
+                redis-rate-limiter.burstCapacity: 20
+                key-resolver: "#{@ipKeyResolver}"
+            - name: CircuitBreaker
+              args:
+                name: defaultCB
+                fallbackUri: forward:/fallback/notificationservice
+      # Xử lý CORS duplicate header
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_FIRST
+
+      # Global CORS cho frontend (thay đổi allowedOrigins theo nhu cầu)
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        cors-configurations:
+          "[/**]":
+            allowedOrigins:
+              - "http://localhost:5173"
+              - "http://127.0.0.1:5173"
+              - "http://frontend:3000" # nếu dùng Docker
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: true
+
+# Config resilience4j-CircuitBreaker (tránh làm sập các service)
+resilience4j:
+  circuitbreaker:
+    instances:
+      defaultCB:
+        failureRateThreshold: 50 #50%
+        waitDurationInOpenState: 10s #sau 10s chạy lại
+        permittedNumberOfCallsInHalfOpenState: 5
+        slidingWindowSize: 100 # số request gần nhất để tính tỷ lệ lỗi
+# Eureka client (nếu bạn có discovery server)
+eureka:
+  client:
+    register-with-eureka: false # Gateway thường không cần đăng ký với eruka
+    fetch-registry: true #"Gateway lấy danh sách service từ Eureka"
+    service-url:
+      defaultZone: http://localhost:8761/eureka # thay bằng địa chỉ Eureka thật
+
+# Log để debug dễ dàng
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.cloud.loadbalancer: DEBUG
+    org.springframework.web.cors: DEBUG
+    reactor.netty.http.server: DEBUG
+    io.github.resilience4j: DEBUG
