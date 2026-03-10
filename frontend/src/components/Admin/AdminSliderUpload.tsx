@@ -1,3 +1,4 @@
+import { useAuth } from "@clerk/clerk-react";
 import { useState, useEffect } from "react";
 
 interface SliderImage {
@@ -7,6 +8,17 @@ interface SliderImage {
 }
 
 function AdminSliderUpload() {
+  const { getToken } = useAuth();
+
+  // const getAuthHeader = async () => {
+  //   const token = await getToken({ template: "my-backend" });
+  //   return token ? { Authorization: `Bearer ${token}` } : {};
+  // };
+  const getAuthHeader = async (): Promise<Record<string, string>> => {
+    const token = await getToken({ template: "my-backend" });
+    return token ? { Authorization: `Bearer ${token}` } : {};
+  };
+
   const [file, setFile] = useState<File | null>(null);
   const [title, setTitle] = useState("");
   const [type, setType] = useState<"slider" | "flashsale">("slider");
@@ -22,11 +34,12 @@ function AdminSliderUpload() {
     setMessage("");
 
     try {
+      const authHeader = await getAuthHeader();
       const res = await fetch(
         `http://localhost:8080/api/admin/sliders/list?folder=${type}&max=50`,
         {
           cache: "no-store",
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json", ...authHeader },
         },
       );
 
@@ -61,6 +74,7 @@ function AdminSliderUpload() {
   };
 
   const handleUpload = async () => {
+    const authHeader = await getAuthHeader();
     if (!file) {
       setMessage("Vui lòng chọn ảnh!");
       return;
@@ -74,7 +88,7 @@ function AdminSliderUpload() {
         "http://localhost:8080/api/admin/sliders/sign",
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json", ...authHeader },
           body: JSON.stringify({
             folder: type,
             title: type === "slider" && title.trim() ? title.trim() : undefined,
@@ -92,6 +106,7 @@ function AdminSliderUpload() {
       formData.append("api_key", apiKey);
       formData.append("timestamp", timestamp.toString());
       formData.append("signature", signature);
+      formData.append("folder", folder);
 
       if (context) {
         formData.append("context", context);
@@ -126,13 +141,14 @@ function AdminSliderUpload() {
     if (!confirm("Bạn có chắc muốn xóa ảnh này?")) return;
 
     setDeleting(publicId);
+    const authHeader = await getAuthHeader();
 
     try {
       const res = await fetch(
         "http://localhost:8080/api/admin/sliders/delete",
         {
           method: "DELETE",
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json", ...authHeader },
           body: JSON.stringify({ publicId }),
         },
       );
