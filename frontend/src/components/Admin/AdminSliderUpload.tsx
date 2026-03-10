@@ -92,7 +92,6 @@ function AdminSliderUpload() {
       formData.append("api_key", apiKey);
       formData.append("timestamp", timestamp.toString());
       formData.append("signature", signature);
-      formData.append("folder", folder);
 
       if (context) {
         formData.append("context", context);
