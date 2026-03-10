@@ -63,78 +63,29 @@ public class SliderController {
         String title = body.get("title");
         long timestamp = System.currentTimeMillis() / 1000;
 
-        // === PHẦN MỚI: Sinh public_id unique ===
-        // Quy tắc: folder/[slug-title hoặc banner]-[timestamp]-[random 6 ký tự]
-        String baseName;
-        if (StringUtils.isNotBlank(title)) {
-            baseName = title.trim()
-                    .toLowerCase()
-                    .replaceAll("[^a-z0-9\\s-]", "") // loại ký tự lạ
-                    .replaceAll("\\s+", "-");           // khoảng trắng → -
-        } else {
-            baseName = "banner";  // mặc định nếu không có title
-        }
-
-        // Thêm timestamp + random ngắn để đảm bảo unique
-        String randomSuffix = UUID.randomUUID().toString().substring(0, 8); // 8 ký tự random
-        String publicId = folder + "/" + baseName + "-" + timestamp + "-" + randomSuffix;
-
-        // === Tính params để ký (giữ nguyên) ===
         Map<String, String> params = new HashMap<>();
         params.put("timestamp", String.valueOf(timestamp));
         params.put("folder", folder);
         if (StringUtils.isNotBlank(title)) {
             params.put("context", "title=" + title);
         }
-
-        // Thêm public_id vào params để tính chữ ký (Cloudinary yêu cầu nếu dùng public_id)
-        params.put("public_id", publicId);
-
         String toSign = params.entrySet().stream()
                 .sorted(Map.Entry.comparingByKey())
                 .map(e -> e.getKey() + "=" + e.getValue())
                 .collect(Collectors.joining("&"));
-
         String signature = DigestUtils.sha1Hex(toSign + apiSecret);
-
-        // === Response trả về thêm publicId ===
         Map<String, Object> response = new HashMap<>();
         response.put("timestamp", timestamp);
         response.put("signature", signature);
         response.put("cloudName", cloudName);
         response.put("apiKey", apiKey);
         response.put("folder", folder);
-        response.put("publicId", publicId);               // <-- MỚI: trả public_id cho frontend
         if (StringUtils.isNotBlank(title)) {
             response.put("context", "title=" + title);
         }
-
         return ResponseEntity.ok(response);
     }
-    // @PostMapping("/sign")
-    // public ResponseEntity<Map<String, Object>> getSignature(@RequestBody Map<String, String> body) {
-    //     String folder = body.getOrDefault("folder", "slider");
-    //     String title = body.get("title");
-    //     long timestamp = System.currentTimeMillis() / 1000;
 
-    //     Map<String, String> params = new HashMap<>();
-    //     params.put("timestamp", String.valueOf(timestamp));
-    //     params.put("folder", folder);
-    //     if (StringUtils.isNotBlank(title)) params.put("context", "title=" + title);
-    //     String toSign = params.entrySet().stream()
-    //             .sorted(Map.Entry.comparingByKey())
-    //             .map(e -> e.getKey() + "=" + e.getValue())
-    //             .collect(Collectors.joining("&"));
-    //     String signature = DigestUtils.sha1Hex(toSign + apiSecret);
-    //     Map<String, Object> response = new HashMap<>();
-    //     response.put("timestamp", timestamp);
-    //     response.put("signature", signature);
-    //     response.put("cloudName", cloudName);
-    //     response.put("apiKey", apiKey);
-    //     response.put("folder", folder);
-    //     if (StringUtils.isNotBlank(title)) response.put("context", "title=" + title);
-    //     return ResponseEntity.ok(response);
-    // }
     // GET /api/admin/sliders/list?folder=slider&max=20
     @GetMapping("/list")
     public ResponseEntity<?> listImages(
