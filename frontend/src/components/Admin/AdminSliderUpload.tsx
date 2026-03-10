@@ -84,8 +84,15 @@ function AdminSliderUpload() {
 
       if (!signRes.ok) throw new Error("Lấy signature thất bại");
 
-      const { timestamp, signature, cloudName, apiKey, folder, context } =
-        await signRes.json();
+      const {
+        timestamp,
+        signature,
+        cloudName,
+        apiKey,
+        folder,
+        context,
+        publicId,
+      } = await signRes.json();
 
       const formData = new FormData();
       formData.append("file", file);
@@ -93,6 +100,7 @@ function AdminSliderUpload() {
       formData.append("timestamp", timestamp.toString());
       formData.append("signature", signature);
       formData.append("folder", folder);
+      formData.append("public_id", publicId);
 
       if (context) {
         formData.append("context", context);

@@ -71,7 +71,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/banners/flashsale").permitAll()
                 .requestMatchers("/api/admin/sliders/list").permitAll()
                 .requestMatchers("/api/admin/sliders/banners/**").permitAll()
-                .requestMatchers("/api/admin/**").authenticated()
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
