@@ -51,31 +51,16 @@ const AdminProductPage = () => {
     fetchData();
   }, []);
 
-  // Dữ liệu mẫu
-  
-
-  // useEffect(() => {
-  //   const fetchProducts = async () => {
-  //     setLoading(true);
-  //     setTimeout(() => {
-  //       setProducts(mockProducts);
-  //       setLoading(false);
-  //     }, 500);
-  //   };
-  //   fetchProducts();
-  // }, []);
-
   useEffect(() => {
   const fetchProducts = async () => {
     setLoading(true);
-    /* LOGIC CŨ CỦA BẰNG
+    /* LOGIC CŨ 
     setTimeout(() => {
       setProducts(mockProducts);
       setLoading(false);
     }, 500);
     */
     
-    // KẾT NỐI THẬT:
     try {
       const response = await axios.get("http://localhost:9001/api/products/all");
       if (response.status === 200) {
@@ -108,7 +93,7 @@ const AdminProductPage = () => {
 const handleDelete = async (id: string) => {
   if (!window.confirm("Bạn có chắc muốn xóa không?")) return;
   if (!id) {
-    toast.error("Lỗi: Không tìm thấy ID sản phẩm!"); // Đây là cái lỗi Bằng đang gặp nè
+    toast.error("Lỗi: Không tìm thấy ID sản phẩm!"); 
     return;
   }
 
@@ -116,18 +101,13 @@ const handleDelete = async (id: string) => {
     
     await axios.delete(`http://localhost:9001/api/products/delete/${id}`); 
     
-    setProducts(products.filter(p => p.id !== id)); // Dùng _id để lọc lại state
+    setProducts(products.filter(p => p.id !== id)); 
     toast.success("Xóa thành công!");
   } catch (error) {
     console.error("Lỗi xóa:", error);
     toast.error("Server từ chối lệnh xóa!");
   }
   
-
-  // --- PHẦN 2: XỬ LÝ FRONTEND (Để test giao diện ngay bây giờ) ---
-  // Giữ nguyên logic ban đầu của Bằng để cập nhật bảng ngay lập tức
-  // setProducts(products.filter(p => p._id !== id));
-  // toast.success("Xóa thành công (Chế độ Preview)!");
 };
   
 
@@ -158,90 +138,15 @@ const handleDelete = async (id: string) => {
   };
 
   
-// const handleSaveProduct = async (id: string, formData: FormData) => {
-//   // --- PHẦN 1: KẾT NỐI BACKEND (Cmt lại để dành cho sau này) ---
-//   /*
-//   try {
-//     // URL này đã khớp với cổng 9001 của Product Service
-//     const response = await axios.put(`http://localhost:9001/api/products/update/${id}`, formData);
-
-//     if (response.status === 200) {
-//       toast.success("Cập nhật dữ liệu vào Database thành công!");
-//       // Sau khi kết nối thật, dùng hàm này để đồng bộ dữ liệu chuẩn từ MongoDB
-//       // fetchProducts(); 
-//       setIsEditOpen(false);
-//     }
-//     return; 
-//   } catch (error: any) {
-//     console.error("Lỗi Backend Update:", error);
-//     toast.error("Lỗi: Không thể cập nhật sản phẩm trên Server!");
-//     return;
-//   }
-//   */
-
-//   // --- PHẦN 2: XỬ LÝ FRONTEND (Cập nhật giao diện ngay lập tức để test) ---
-//   try {
-//     // 1. Trích xuất chuỗi JSON từ formData
-//     const productDataRaw = formData.get('product');
-//     if (!productDataRaw) {
-//       console.error("Không tìm thấy key 'product' trong FormData");
-//       return;
-//     }
-
-//     // Chuyển từ chuỗi sang Object để lấy name, price, brand... mới
-//     const updatedData = JSON.parse(productDataRaw as string);
-    
-//     // 2. Lấy danh sách File ảnh mới (nếu Admin có chọn thay đổi ảnh)
-//     const imageFiles = formData.getAll('imageFiles') as File[];
-
-//     // 3. Cập nhật State để "file mẹ" đổi dữ liệu trên bảng
-//     setProducts((prev) =>
-//       prev.map((p) => {
-//         // Kiểm tra khớp ID (Sử dụng cả p._id và p.id để tránh lỗi Interface)
-//         if (p._id === id || p.id === id) {
-          
-//           // Logic xử lý ảnh: Có ảnh mới thì tạo link preview, không thì giữ ảnh cũ từ Cloudinary
-//           const newImages = imageFiles.length > 0 
-//             ? imageFiles.map((file, index) => ({
-//                 url: URL.createObjectURL(file), // Link ảo để hiện ảnh ngay lập tức
-//                 is_primary: index === 0
-//               }))
-//             : p.images;
-
-//           // Trả về Object đã được cập nhật thông tin mới
-//           return {
-//             ...p,            // Giữ lại các trường không sửa (như productCode)
-//             ...updatedData,  // Ghi đè thông tin mới từ Modal vào (name: "aaaaa", ...)
-//             images: newImages,
-//             updated_at: new Date().toISOString()
-//           };
-//         }
-//         return p; // Những sản phẩm khác giữ nguyên
-//       })
-//     );
-
-//     toast.success("Cập nhật thành công (Chế độ Preview)!");
-//     setIsEditOpen(false); // Đóng Modal sửa sau khi lưu
-//   } catch (error) {
-//     console.error("Lỗi xử lý Frontend Preview:", error);
-//     toast.error("Có lỗi xảy ra khi cập nhật hiển thị!");
-//   }
-// };
-
   // const handleAddProduct = (newProduct: Product) => {
   //   setProducts(prev => [newProduct, ...prev]);
   // };
 const handleAddProduct = async (formData: FormData) => {
-  // --- PHẦN 1: KẾT NỐI BACKEND (Đã comment lại để dành cho sau này) ---
  try {
-    // 1. Gửi dữ liệu đi (Key đã là imageFiles như mình sửa ở Modal)
     const response = await axios.post("http://localhost:9001/api/products/add", formData);
-
-    // 2. Chấp nhận mọi mã thành công từ 200-299
     if (response.status >= 200 && response.status < 300) {
       toast.success("Thêm nệm Artisano thành công rực rỡ!");
       
-      // 3. QUAN TRỌNG: Gọi lại API lấy danh sách để đồng bộ ảnh từ Cloudinary về bảng
       const refresh = await axios.get("http://localhost:9001/api/products/all");
       setProducts(refresh.data); 
       
@@ -252,44 +157,6 @@ const handleAddProduct = async (formData: FormData) => {
     toast.error("Server đã lưu nhưng có lỗi hiển thị, Bằng hãy F5 thử xem!");
   }
   
-
-  // --- PHẦN 2: XỬ LÝ FRONTEND (Để test giao diện mượt mà ngay bây giờ) ---
-  // try {
-  //   // 1. Trích xuất lại Object thông tin từ FormData
-  //   const productBlob = formData.get('product') as Blob;
-  //   const reader = new FileReader();
-
-  //   reader.onload = () => {
-  //     const productJson = JSON.parse(reader.result as string);
-      
-  //     // 2. Tạo URL preview cho các file ảnh để hiển thị lên bảng
-  //     const imageFiles = formData.getAll('files') as File[];
-  //     const previewImages = imageFiles.map((file, index) => ({
-  //       url: URL.createObjectURL(file), // Link tạm để hiện ảnh ngay lập tức
-  //       is_primary: index === 0
-  //     }));
-
-  //     // 3. Đóng gói thành Object Product hoàn chỉnh giống hệt cấu hình MongoDB
-  //     const newProduct: Product = {
-  //       ...productJson,
-  //       _id: `temp-${Date.now()}`, // ID giả lập cho Frontend
-  //       images: previewImages,
-  //       created_at: new Date().toISOString(),
-  //       updated_at: new Date().toISOString()
-  //     };
-
-  //     // 4. Cập nhật State để tấm nệm mới hiện lên đầu danh sách
-  //     setProducts(prev => [newProduct, ...prev]);
-      
-  //     toast.success("Thêm thành công (Chế độ Xem trước)!");
-  //     setIsAddOpen(false);
-  //   };
-
-  //   reader.readAsText(productBlob);
-  // } catch (error) {
-  //   console.error("Lỗi Preview:", error);
-  //   toast.error("Lỗi hiển thị dữ liệu tạm thời!");
-  // }
 };
 
   return (
@@ -311,7 +178,7 @@ const handleAddProduct = async (formData: FormData) => {
           </button>
         </div>
 
-        {/* BỘ LỌC (MỚI THÊM) */}
+        {/* BỘ LỌC  */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           <div className="md:col-span-2 relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />

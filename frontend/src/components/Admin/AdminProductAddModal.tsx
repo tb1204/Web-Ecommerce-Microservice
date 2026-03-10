@@ -274,69 +274,68 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({ isOpen, onClose, onAd
               <InputGroup label="Danh mục (Code)" name="category.code" value={formData.category.code} onChange={handleChange} /> */}
               
               {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-5"> */}
-  {/* Cột Tên Danh Mục */}
-  <div className="space-y-1.5">
-    <label className="text-xs text-gray-500 font-black uppercase italic">Danh mục (Tên)</label>
-    {!isNewCategory ? (
-      <select 
-        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm font-medium bg-white h-[42px] focus:border-emerald-500 outline-none"
-        value={formData.category.name}
-        onChange={(e) => {
-          const val = e.target.value;
-          if (val === "ADD_NEW") {
-            setIsNewCategory(true);
-            setFormData(prev => ({ ...prev, category: { name: "", code: "" } }));
-          } else {
-            const selected = categories.find(c => c.name === val);
-            setFormData(prev => ({ ...prev, category: selected || { name: val, code: "" } }));
-          }
-        }}
-      >
-        <option value="">-- Chọn danh mục --</option>
-        {categories.map(cat => (
-          <option key={cat.code} value={cat.name}>{cat.name}</option>
-        ))}
-        <option value="ADD_NEW" className="text-emerald-600 font-bold">+ THÊM DANH MỤC MỚI</option>
-      </select>
-    ) : (
-      <div className="relative">
-        <input 
-          type="text"
-          className="w-full px-4 py-2.5 rounded-xl border-2 border-emerald-500 bg-white text-sm font-medium outline-none"
-          placeholder="Nhập tên danh mục mới..."
-          value={formData.category.name}
-          onChange={(e) => {
-            const newName = e.target.value;
-            setFormData(prev => ({ 
-              ...prev, 
-              category: { name: newName, code: generateCategoryCode(newName) } 
-            }));
-          }}
-          autoFocus
-        />
-        <button 
-          type="button"
-          onClick={() => setIsNewCategory(false)}
-          className="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-red-500 font-bold hover:underline"
-        >
-          Hủy
-        </button>
-      </div>
-    )}
-  </div>
+              {/* Cột Tên Danh Mục */}
+              <div className="space-y-1.5">
+                <label className="text-xs text-gray-500 font-black uppercase italic">Danh mục (Tên)</label>
+                {!isNewCategory ? (
+                  <select 
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm font-medium bg-white h-[42px] focus:border-emerald-500 outline-none"
+                    value={formData.category.name}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      if (val === "ADD_NEW") {
+                        setIsNewCategory(true);
+                        setFormData(prev => ({ ...prev, category: { name: "", code: "" } }));
+                      } else {
+                        const selected = categories.find(c => c.name === val);
+                        setFormData(prev => ({ ...prev, category: selected || { name: val, code: "" } }));
+                      }
+                    }}
+                  >
+                    <option value="">-- Chọn danh mục --</option>
+                    {categories.map(cat => (
+                      <option key={cat.code} value={cat.name}>{cat.name}</option>
+                    ))}
+                    <option value="ADD_NEW" className="text-emerald-600 font-bold">+ THÊM DANH MỤC MỚI</option>
+                  </select>
+                ) : (
+                  <div className="relative">
+                    <input 
+                      type="text"
+                      className="w-full px-4 py-2.5 rounded-xl border-2 border-emerald-500 bg-white text-sm font-medium outline-none"
+                      placeholder="Nhập tên danh mục mới..."
+                      value={formData.category.name}
+                      onChange={(e) => {
+                        const newName = e.target.value;
+                        setFormData(prev => ({ 
+                          ...prev, 
+                          category: { name: newName, code: generateCategoryCode(newName) } 
+                        }));
+                      }}
+                      autoFocus
+                    />
+                    <button 
+                      type="button"
+                      onClick={() => setIsNewCategory(false)}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-red-500 font-bold hover:underline"
+                    >
+                      Hủy
+                    </button>
+                  </div>
+                  )}
+                </div>
 
-  {/* Cột Code (Tự động nhảy) */}
-  <div className="space-y-1.5">
-    <label className="text-xs text-gray-500 font-black uppercase italic">Danh mục (Code)</label>
-    <input 
-      type="text"
-      className="w-full px-4 py-2.5 rounded-xl border border-gray-100 bg-gray-100 text-gray-500 text-sm font-medium"
-      value={formData.category.code}
-      readOnly 
-      placeholder="Mã tự động"
-    />
-  </div>
-{/* </div> */}
+              {/* Cột Code  */}
+              <div className="space-y-1.5">
+                <label className="text-xs text-gray-500 font-black uppercase italic">Danh mục (Code)</label>
+                <input 
+                  type="text"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-100 bg-gray-100 text-gray-500 text-sm font-medium"
+                  value={formData.category.code}
+                  readOnly 
+                  placeholder="Mã tự động"
+                />
+              </div>
               
               <InputGroup label="Thương hiệu" name="brand" value={formData.brand} onChange={handleChange} />
             </div>
