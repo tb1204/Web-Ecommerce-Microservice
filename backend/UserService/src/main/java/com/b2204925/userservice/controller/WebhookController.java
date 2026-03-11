@@ -133,26 +133,64 @@ public class WebhookController {
     private User mapClerkDataToUser(JsonNode data) {
         User user = new User();
 
+        // ── EMAIL ────────────────────────────────────────────────────────
         JsonNode emails = data.path("email_addresses");
         if (emails.isArray() && !emails.isEmpty()) {
             user.setEmail(emails.get(0).path("email_address").asText());
         }
 
+        // ── EXTERNAL ACCOUNTS (Google / Facebook) ────────────────────────
+        JsonNode externalAccounts = data.path("external_accounts");
+        String provider = "clerk"; // fallback (không dùng trong case của bạn)
+
+        if (externalAccounts.isArray() && !externalAccounts.isEmpty()) {
+            JsonNode extAccount = externalAccounts.get(0);
+            String extProvider = extAccount.path("provider").asText(null);
+
+            if (extProvider != null) {
+                if (extProvider.contains("google")) {
+                    provider = "google";
+                } else if (extProvider.contains("facebook")) {
+                    provider = "facebook";
+                }
+            }
+
+            // Avatar: ưu tiên từ external account (URL gốc, chất lượng cao hơn)
+            String extAvatar = extAccount.path("avatar_url").asText(null);
+            if (extAvatar != null && !extAvatar.isBlank()) {
+                user.setAvatarUrl(extAvatar);
+            } else {
+                user.setAvatarUrl(data.path("image_url").asText(null));
+            }
+
+        } else {
+            user.setAvatarUrl(data.path("image_url").asText(null));
+        }
+
+        // ── CÁC FIELD CƠ BẢN ────────────────────────────────────────────
         user.setFirstName(data.path("first_name").asText(null));
         user.setLastName(data.path("last_name").asText(null));
-        user.setUsername(data.path("username").asText(null));
-        user.setAvatarUrl(data.path("image_url").asText(null));
-        user.setGender(data.path("gender").asText(null));
+        user.setGender(data.path("gender").asText(null)); // thường null với OAuth
 
+        // Username: Clerk OAuth thường null → fallback sang email prefix
+        String username = data.path("username").asText(null);
+        if (username == null && user.getEmail() != null) {
+            username = user.getEmail().split("@")[0];
+        }
+        user.setUsername(username);
+
+        // Phone: thường null với OAuth
         JsonNode phones = data.path("phone_numbers");
         if (phones.isArray() && !phones.isEmpty()) {
             user.setPhone(phones.get(0).path("phone_number").asText());
         }
 
+        // ── PROVIDER & DEFAULT FLAGS ─────────────────────────────────────
+        user.setProvider(provider);
         user.setRoles(new ArrayList<>(List.of("USER")));
-        user.setProvider("clerk");
         user.setIsActive(true);
         user.setIsBlocked(false);
+
         return user;
     }
 
@@ -180,3 +218,25 @@ public class WebhookController {
         }
     }
 }
+
+// private User mapClerkDataToUser(JsonNode data) {
+//     User user = new User();
+//     JsonNode emails = data.path("email_addresses");
+//     if (emails.isArray() && !emails.isEmpty()) {
+//         user.setEmail(emails.get(0).path("email_address").asText());
+//     }
+//     user.setFirstName(data.path("first_name").asText(null));
+//     user.setLastName(data.path("last_name").asText(null));
+//     user.setUsername(data.path("username").asText(null));
+//     user.setAvatarUrl(data.path("image_url").asText(null));
+//     user.setGender(data.path("gender").asText(null));
+//     JsonNode phones = data.path("phone_numbers");
+//     if (phones.isArray() && !phones.isEmpty()) {
+//         user.setPhone(phones.get(0).path("phone_number").asText());
+//     }
+//     user.setRoles(new ArrayList<>(List.of("USER")));
+//     user.setProvider("clerk");
+//     user.setIsActive(true);
+//     user.setIsBlocked(false);
+//     return user;
+    // }

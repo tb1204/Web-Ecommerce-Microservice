@@ -80,6 +80,9 @@ public class UserService {
         if (dto.getAvatarUrl() != null) {
             user.setAvatarUrl(dto.getAvatarUrl());
         }
+        if (dto.getEmail() != null) {
+            user.setEmail(dto.getEmail());
+        }
         user.setUpdatedAt(Instant.now());
         return userRepository.save(user);
     }

@@ -21,7 +21,7 @@ public class CustomJwtConverter implements Converter<Jwt, AbstractAuthentication
     public AbstractAuthenticationToken convert(Jwt jwt) {
 
         String role = jwt.getClaimAsString("role");
-        System.out.println("role " + role);
+        // System.out.println("role " + role);
         if (role == null) {
             role = "user";
         }
