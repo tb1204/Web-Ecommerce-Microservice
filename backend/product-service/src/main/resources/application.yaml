@@ -19,7 +19,7 @@ spring:
     uri: mongodb://localhost:27017/artisano
 
 server:
-  port: 9001
+  port: 8082
 
 clerk:
   secret-key: sk_test_mq9Hrj7XvqbGDNYwgSZvHDDZ5iMk3eOdodECqHEpOU

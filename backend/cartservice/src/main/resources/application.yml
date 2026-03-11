@@ -15,7 +15,7 @@ spring:
           issuer-uri: ${clerk.issuer}
 
 server:
-  port: 8082
+  port: 8083
 
 clerk:
   frontend-api: https://pro-oryx-45.clerk.accounts.dev
