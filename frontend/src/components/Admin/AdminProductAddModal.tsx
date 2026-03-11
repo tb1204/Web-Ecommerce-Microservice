@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { 
   X, PlusCircle, Award, Fingerprint, DollarSign, 
   Image as ImageIcon, Trash2, Tag, UploadCloud
 } from "lucide-react";
 import { toast } from "sonner";
-import type { Product, ProductImage } from "../Products/InterfaceItem";
+//import type { Product } from "../Products/InterfaceItem";
+import axios from "axios";
 
 interface ProductAddModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onAdd: (newProduct: Product) => void;
+  // Sửa lại type ở đây vì chúng ta gửi FormData chứa cả JSON và Files
+  onAdd: (formData: FormData) => void;
 }
 
 interface InputGroupProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -19,7 +21,7 @@ interface InputGroupProps extends React.InputHTMLAttributes<HTMLInputElement> {
 interface ProductFormState {
   name: string;
   sku: string;
-  product_code: string;
+  productCode: string;
   brand: string;
   origin: string;
   category: { name: string; code: string };
@@ -31,20 +33,32 @@ interface ProductFormState {
     dimensions: string;
     firmness: string;
     design: string;
-    certification_number: string;
+    certificationNumber: string;
   };
-  stock_quantity: string;
+  stockQuantity: string;
   status: "selling" | "stopselling";
   tags: string;
   description: string;
-  images: ProductImage[];
+  // Thay đổi: Lưu File vật lý và URL preview để hiển thị giao diện
+  imageObjects: { file: File; preview: string }[];
 }
+
+const generateCategoryCode = (name: string) => {
+  return name
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "") // Xóa dấu tiếng Việt
+    .replace(/đ/g, "d").replace(/Đ/g, "D")
+    .toUpperCase()
+    .trim()
+    .replace(/\s+/g, "-")           // Khoảng trắng thành gạch ngang
+    .replace(/[^\w-]/g, "");        // Xóa ký tự đặc biệt
+};
 
 const ProductAddModal: React.FC<ProductAddModalProps> = ({ isOpen, onClose, onAdd }) => {
   const initialFormState: ProductFormState = {
     name: "",
     sku: "",
-    product_code: "", 
+    productCode: "", 
     brand: "",
     origin: "",
     category: { name: "", code: "" },
@@ -56,19 +70,33 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({ isOpen, onClose, onAd
       dimensions: "",
       firmness: "",
       design: "",
-      certification_number: ""
+      certificationNumber: ""
     },
-    stock_quantity: "",
+    stockQuantity: "",
     status: "selling",
     tags: "", 
     description: "",
-    images: [] 
+    imageObjects: [] 
   };
 
   const [formData, setFormData] = useState<ProductFormState>(initialFormState);
+  const [categories, setCategories] = useState<{name: string, code: string}[]>([]);
+  const [isNewCategory, setIsNewCategory] = useState(false);
+
+  useEffect(() => {
+    const fetchCats = async () => {
+      try {
+        const res = await axios.get("http://localhost:9001/api/categories/all");
+        setCategories(res.data);
+      } catch (err) {
+        console.error("Lỗi lấy danh mục:", err);
+      }
+    };
+    if (isOpen) fetchCats();
+  }, [isOpen]);
 
   if (!isOpen) return null;
-
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     
@@ -86,69 +114,80 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({ isOpen, onClose, onAd
     }
   };
 
-  // --- HÀM XỬ LÝ CHỌN FILE TỪ MÁY TÍNH ---
+  // --- HÀM XỬ LÝ CHỌN FILE TỪ MÁY TÍNH (Sửa lại để lưu File thật) ---
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
 
-    Array.from(files).forEach((file) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader.result as string;
-        setFormData((prev) => ({
-          ...prev,
-          images: [
-            ...prev.images,
-            { url: base64String, is_primary: prev.images.length === 0 }
-          ]
-        }));
-      };
-      reader.readAsDataURL(file);
-    });
-    // Reset input để có thể chọn lại cùng 1 file nếu xóa đi
+    const newImageObjects = Array.from(files).map(file => ({
+      file: file,
+      preview: URL.createObjectURL(file) // Tạo link tạm để hiển thị ảnh
+    }));
+
+    setFormData((prev) => ({
+      ...prev,
+      imageObjects: [...prev.imageObjects, ...newImageObjects]
+    }));
+    
     e.target.value = "";
   };
 
   const handleRemoveImage = (index: number) => {
-    const newImages = formData.images.filter((_, i) => i !== index);
-    // Nếu xóa ảnh chính thì đặt ảnh đầu tiên còn lại làm ảnh chính
-    if (newImages.length > 0 && formData.images[index].is_primary) {
-      newImages[0].is_primary = true;
-    }
-    setFormData((prev) => ({ ...prev, images: newImages }));
+    // Thu hồi bộ nhớ của URL tạm thời
+    URL.revokeObjectURL(formData.imageObjects[index].preview);
+    
+    const newImages = formData.imageObjects.filter((_, i) => i !== index);
+    setFormData((prev) => ({ ...prev, imageObjects: newImages }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (formData.images.length === 0) {
+    if (formData.imageObjects.length === 0) {
       toast.error("Hãy thêm ít nhất 1 hình ảnh sản phẩm!");
       return;
+    }
+    if (isNewCategory && formData.category.name) {
+      try {
+        await axios.post("http://localhost:9001/api/categories/add", {
+          name: formData.category.name,
+          code: formData.category.code
+        });
+      } catch (err) {
+        console.error("Lỗi lưu danh mục mới:", err);
+      }
     }
 
     const processedTags = formData.tags.split(',').map((t) => t.trim()).filter((t) => t !== "");
     
-    const newProduct: Product = { 
-      _id: `p${Date.now()}`,
+    // 1. Tạo object chứa thông tin JSON
+    const productInfo = { 
       name: formData.name,
       sku: formData.sku,
-      product_code: formData.product_code,
+      productCode: formData.productCode,
       brand: formData.brand,
       origin: formData.origin,
       category: formData.category,
       price: Number(formData.price) || 0,
       originalPrice: Number(formData.originalPrice) || 0,
       specifications: formData.specifications,
-      stock_quantity: Number(formData.stock_quantity) || 0,
+      stockQuantity: Number(formData.stockQuantity) || 0,
       status: formData.status,
       tags: processedTags,
-      description: formData.description,
-      images: formData.images,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      description: formData.description
     };
 
-    onAdd(newProduct);
-    toast.success("Thêm sản phẩm mới thành công!");
+    // 2. Đóng gói vào FormData để gửi qua Backend (Multipart)
+    const data = new FormData();
+    // Chuyển JSON thành Blob và gán vào part "product"
+    data.append("product", new Blob([JSON.stringify(productInfo)], { type: "application/json" }));
+    
+    // Gán tất cả các file ảnh vào part "files"
+    formData.imageObjects.forEach((imgObj) => {
+      data.append("imageFiles", imgObj.file);
+    });
+
+    onAdd(data);
+    toast.success("Đang xử lý thêm sản phẩm và upload ảnh...");
     setFormData(initialFormState); 
     onClose();
   };
@@ -169,7 +208,6 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({ isOpen, onClose, onAd
         </div>
 
         <div className="p-8 overflow-y-auto space-y-8 scrollbar-hide bg-gray-50/20">
-          {/* PHẦN HÌNH ẢNH - ĐÃ SỬA SANG CHỌN FILE */}
           <section className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
             <h3 className="text-sm font-black text-emerald-700 uppercase tracking-widest mb-4 flex items-center gap-2">
               <ImageIcon size={16} /> Quản lý hình ảnh
@@ -199,9 +237,9 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({ isOpen, onClose, onAd
                 <p className="text-[9px] text-gray-400 italic text-center">Hỗ trợ định dạng: JPG, PNG, WEBP. Ảnh đầu tiên sẽ tự động làm ảnh chính.</p>
               </div>
               <div className="md:col-span-2 flex flex-wrap gap-4 min-h-[100px] content-start">
-                {formData.images.map((img, index) => (
+                {formData.imageObjects.map((img, index) => (
                   <div key={index} className="relative w-20 h-20 group animate-in zoom-in-75">
-                    <img src={img.url} className="w-full h-full object-cover rounded-xl border-2 border-white shadow-sm" alt="Preview" />
+                    <img src={img.preview} className="w-full h-full object-cover rounded-xl border-2 border-white shadow-sm" alt="Preview" />
                     <button 
                       type="button" 
                       onClick={() => handleRemoveImage(index)} 
@@ -209,14 +247,15 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({ isOpen, onClose, onAd
                     >
                       <Trash2 size={12} />
                     </button>
-                    {img.is_primary && (
+                    {/* Logic hiển thị nhãn Ảnh chính cho phần tử đầu tiên trong mảng */}
+                    {index === 0 && (
                       <div className="absolute -bottom-1 left-1 right-1 bg-emerald-500 text-white text-[7px] font-black text-center py-0.5 rounded shadow-sm uppercase tracking-tighter">
                         Ảnh chính
                       </div>
                     )}
                   </div>
                 ))}
-                {formData.images.length === 0 && (
+                {formData.imageObjects.length === 0 && (
                   <div className="w-full flex items-center justify-center text-gray-300 italic text-xs">
                     Chưa có hình ảnh nào được chọn...
                   </div>
@@ -225,15 +264,79 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({ isOpen, onClose, onAd
             </div>
           </section>
 
-          {/* PHẦN THÔNG TIN CƠ BẢN */}
           <section className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm space-y-6">
             <h3 className="text-sm font-black text-emerald-700 uppercase tracking-widest flex items-center gap-2"><Fingerprint size={16} /> Định danh & Phân loại</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               <InputGroup label="Tên sản phẩm (*)" name="name" value={formData.name} onChange={handleChange} required />
-              <InputGroup label="Mã SKU" name="sku" value={formData.sku} onChange={handleChange} />
-              <InputGroup label="Mã nội bộ" name="product_code" value={formData.product_code} onChange={handleChange} />
-              <InputGroup label="Danh mục (Tên)" name="category.name" value={formData.category.name} onChange={handleChange} />
-              <InputGroup label="Danh mục (Code)" name="category.code" value={formData.category.code} onChange={handleChange} />
+              <InputGroup label="Mã SKU" name="sku" placeholder="Có thể bỏ trống để tự động sinh mã" value={formData.sku} onChange={handleChange} />
+              <InputGroup label="Mã nội bộ" name="productCode" placeholder="Tự động sinh mã"  readOnly value={formData.productCode} onChange={handleChange} />
+              {/* <InputGroup label="Danh mục (Tên)" name="category.name" value={formData.category.name} onChange={handleChange} />
+              <InputGroup label="Danh mục (Code)" name="category.code" value={formData.category.code} onChange={handleChange} /> */}
+              
+              {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-5"> */}
+              {/* Cột Tên Danh Mục */}
+              <div className="space-y-1.5">
+                <label className="text-xs text-gray-500 font-black uppercase italic">Danh mục (Tên)</label>
+                {!isNewCategory ? (
+                  <select 
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm font-medium bg-white h-[42px] focus:border-emerald-500 outline-none"
+                    value={formData.category.name}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      if (val === "ADD_NEW") {
+                        setIsNewCategory(true);
+                        setFormData(prev => ({ ...prev, category: { name: "", code: "" } }));
+                      } else {
+                        const selected = categories.find(c => c.name === val);
+                        setFormData(prev => ({ ...prev, category: selected || { name: val, code: "" } }));
+                      }
+                    }}
+                  >
+                    <option value="">-- Chọn danh mục --</option>
+                    {categories.map(cat => (
+                      <option key={cat.code} value={cat.name}>{cat.name}</option>
+                    ))}
+                    <option value="ADD_NEW" className="text-emerald-600 font-bold">+ THÊM DANH MỤC MỚI</option>
+                  </select>
+                ) : (
+                  <div className="relative">
+                    <input 
+                      type="text"
+                      className="w-full px-4 py-2.5 rounded-xl border-2 border-emerald-500 bg-white text-sm font-medium outline-none"
+                      placeholder="Nhập tên danh mục mới..."
+                      value={formData.category.name}
+                      onChange={(e) => {
+                        const newName = e.target.value;
+                        setFormData(prev => ({ 
+                          ...prev, 
+                          category: { name: newName, code: generateCategoryCode(newName) } 
+                        }));
+                      }}
+                      autoFocus
+                    />
+                    <button 
+                      type="button"
+                      onClick={() => setIsNewCategory(false)}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-red-500 font-bold hover:underline"
+                    >
+                      Hủy
+                    </button>
+                  </div>
+                  )}
+                </div>
+
+              {/* Cột Code  */}
+              <div className="space-y-1.5">
+                <label className="text-xs text-gray-500 font-black uppercase italic">Danh mục (Code)</label>
+                <input 
+                  type="text"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-100 bg-gray-100 text-gray-500 text-sm font-medium"
+                  value={formData.category.code}
+                  readOnly 
+                  placeholder="Mã tự động"
+                />
+              </div>
+              
               <InputGroup label="Thương hiệu" name="brand" value={formData.brand} onChange={handleChange} />
             </div>
 
@@ -241,7 +344,7 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({ isOpen, onClose, onAd
             <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
               <InputGroup label="Giá bán (₫) (*)" name="price" type="number" value={formData.price} onChange={handleChange} required />
               <InputGroup label="Giá gốc (₫)" name="originalPrice" type="number" value={formData.originalPrice} onChange={handleChange} />
-              <InputGroup label="Số lượng tồn (*)" name="stock_quantity" type="number" value={formData.stock_quantity} onChange={handleChange} required />
+              <InputGroup label="Số lượng tồn (*)" name="stockQuantity" type="number" value={formData.stockQuantity} onChange={handleChange} required />
               <div className="space-y-1.5">
                 <label className="text-xs text-gray-500 ml-1 uppercase font-black tracking-tighter">Trạng thái</label>
                 <select name="status" value={formData.status} onChange={handleChange} className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-emerald-500 outline-none text-sm font-medium bg-white h-[42px]">
@@ -252,7 +355,6 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({ isOpen, onClose, onAd
             </div>
           </section>
 
-          {/* THÔNG SỐ KỸ THUẬT */}
           <section className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm space-y-6">
             <h3 className="text-sm font-black text-emerald-700 uppercase tracking-widest flex items-center gap-2"><Award size={16} /> Thông số chi tiết</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -261,11 +363,10 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({ isOpen, onClose, onAd
               <InputGroup label="Kích thước" name="specifications.dimensions" value={formData.specifications.dimensions} onChange={handleChange} />
               <InputGroup label="Trọng lượng" name="specifications.weight" value={formData.specifications.weight} onChange={handleChange} />
               <InputGroup label="Thiết kế" name="specifications.design" value={formData.specifications.design} onChange={handleChange} />
-              <InputGroup label="Chứng nhận" name="specifications.certification_number" value={formData.specifications.certification_number} onChange={handleChange} />
+              <InputGroup label="Chứng nhận" name="specifications.certificationNumber" value={formData.specifications.certificationNumber} onChange={handleChange} />
             </div>
           </section>
 
-          {/* TAGS & MÔ TẢ */}
           <section className="grid grid-cols-1 md:grid-cols-2 gap-8 pb-6">
             <div className="space-y-5 bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
               <InputGroup label="Tags (Dấu phẩy)" name="tags" value={formData.tags} onChange={handleChange} placeholder="cao_cap, em_ai" />

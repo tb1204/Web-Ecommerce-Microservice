@@ -3,6 +3,8 @@ import { toast } from "sonner";
 import { Edit, Trash2, PlusCircle, Eye, Package, ChevronLeft, ChevronRight, Search, Filter } from "lucide-react";
 import type { Product } from "../Products/InterfaceItem";
 
+import axios from "axios";
+
 // IMPORT COMPONENT 
 import ProductDetailModal from "./AdminProductDetailModalPage"; 
 import ProductEditModal from "./AdminProductEditModalPage";
@@ -25,120 +27,55 @@ const AdminProductPage = () => {
   // logic chia trang
   const [currentPage, setCurrentPage] = useState(1);
   const productPerPage = 3;
-
-  // Dữ liệu mẫu
-  const mockProducts: Product[] = [
-    { 
-      _id: "69705ecc51b0eaa48fd14ae5", 
-      name: "Nệm Cao Su Thiên Nhiên WolfBed Luxury", 
-      sku: "WB-LUX-001",
-      product_code: "MAT-2026-X1",
-      brand: "WolfBed", 
-      origin: "Việt Nam",
-      category: { name: "Nệm", code: "nem-cao-su" }, 
-      price: 15000000, 
-      specifications: {
-        material: "Cao su nguyên chất",
-        weight: "35kg",
-        dimensions: "180x200x15cm",
-        firmness: "Medium Firm",
-        design: "Công nghệ làm mát Hybrid",
-        certification_number: "ISO-9001:2026-WB"
-      },
-      stock_quantity: 15, 
-      status: "selling", 
-      images: [{ url: "https://cdn-media.sforum.vn/storage/app/media/anh-dep-83.jpg", is_primary: true }], 
-      tags: ["cao_cap"],
-      description: "Dòng nệm cao cấp nhất.",
-      rating: 5, 
-      reviewCount: 45 
-    },
-    { 
-      _id: "69705ecc51b0eaa48fd14ae4", 
-      name: "Topper Memory Foam Nâng Đỡ", 
-      sku: "WB-TOP-002",
-      product_code: "TOP-2026-M1",
-      brand: "WolfBed", 
-      origin: "Việt Nam",
-      category: { name: "Topper", code: "topper" }, 
-      price: 2160000, 
-      specifications: { material: "Memory Foam", weight: "10kg", dimensions: "160x200x5cm", firmness: "Soft", design: "Ergonomic", certification_number: "CERT-2026" },
-      stock_quantity: 8, 
-      status: "selling", 
-      images: [{ url: "https://cdn-media.sforum.vn/storage/app/media/anh-dep-82.jpg", is_primary: true }], 
-      tags: ["nem"],
-      description: "Giải pháp gia tăng sự êm ái.",
-      rating: 4.8, 
-      reviewCount: 120 
-    },
-    { 
-      _id: "69705ecc51b0eaa48fd14ae3", 
-      name: "Topper Memory Foam Nâng Đỡ", 
-      sku: "WB-TOP-002",
-      product_code: "TOP-2026-M2",
-      brand: "WolfBed", 
-      origin: "Việt Nam",
-      category: { name: "Goi", code: "Goi" }, 
-      price: 2160000, 
-      specifications: { material: "Memory Foam", weight: "10kg", dimensions: "160x200x5cm", firmness: "Soft", design: "Ergonomic", certification_number: "CERT-2026" },
-      stock_quantity: 8, 
-      status: "selling", 
-      images: [{ url: "https://statictuoitre.mediacdn.vn/thumb_w/640/2017/7-1512755474943.jpg", is_primary: true }], 
-      tags: ["nem"],
-      description: "Giải pháp gia tăng sự êm ái.",
-      rating: 4.8, 
-      reviewCount: 120 
-    },
-    { 
-      _id: "69705ecc51b0eaa48fd14ae2", 
-      name: "Topper Memory Foam Nâng Đỡ", 
-      sku: "WB-TOP-002",
-      product_code: "TOP-2026-M3",
-      brand: "WolfBed", 
-      origin: "Việt Nam",
-      category: { name: "Chan", code: "Chan" }, 
-      price: 2160000, 
-      specifications: { material: "Memory Foam", weight: "10kg", dimensions: "160x200x5cm", firmness: "Soft", design: "Ergonomic", certification_number: "CERT-2026" },
-      stock_quantity: 8, 
-      status: "selling", 
-      images: [{ url: "https://cdn-media.sforum.vn/storage/app/media/anh-dep-82.jpg", is_primary: true }], 
-      tags: ["nem"],
-      description: "Giải pháp gia tăng sự êm ái.",
-      rating: 4.8, 
-      reviewCount: 120 
-    },
-    { 
-      _id: "69705ecc51b0eaa48fd14ae1", 
-      name: "Topper Memory Foam Nâng Đỡ", 
-      sku: "WB-TOP-002",
-      product_code: "TOP-2026-M4",
-      brand: "WolfBed", 
-      origin: "Việt Nam",
-      category: { name: "Ga", code: "Ga" }, 
-      price: 2160000, 
-      specifications: { material: "Memory Foam", weight: "10kg", dimensions: "160x200x5cm", firmness: "Soft", design: "Ergonomic", certification_number: "CERT-2026" },
-      stock_quantity: 8, 
-      status: "selling", 
-      images: [{ url: "https://cdn-media.sforum.vn/storage/app/media/anh-dep-82.jpg", is_primary: true }], 
-      tags: ["nem"],
-      description: "Giải pháp gia tăng sự êm ái.",
-      rating: 4.8, 
-      reviewCount: 120 
-    }
-    
-  ];
+  const [categories, setCategories] = useState<{name: string, code: string}[]>([]);
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchData = async () => {
       setLoading(true);
-      setTimeout(() => {
-        setProducts(mockProducts);
+      try {
+        // Gọi song song cả 2 API để tối ưu tốc độ
+        const [prodRes, catRes] = await Promise.all([
+          axios.get("http://localhost:9001/api/products/all"),
+          axios.get("http://localhost:9001/api/categories/all")
+        ]);
+
+        if (prodRes.status === 200) setProducts(prodRes.data);
+        if (catRes.status === 200) setCategories(catRes.data);
+      } catch (error) {
+        console.error("Lỗi lấy dữ liệu:", error);
+        toast.error("Không thể kết nối với Server!");
+      } finally {
         setLoading(false);
-      }, 500);
+      }
     };
-    fetchProducts();
+    fetchData();
   }, []);
 
+  useEffect(() => {
+  const fetchProducts = async () => {
+    setLoading(true);
+    /* LOGIC CŨ 
+    setTimeout(() => {
+      setProducts(mockProducts);
+      setLoading(false);
+    }, 500);
+    */
+    
+    try {
+      const response = await axios.get("http://localhost:9001/api/products/all");
+      if (response.status === 200) {
+        setProducts(response.data);
+      }
+    } catch (error) {
+      console.error("Lỗi lấy dữ liệu từ Backend:", error);
+      toast.error("Không thể tải danh sách nệm từ Server!");
+    } finally {
+      setLoading(false);
+    }
+  };
+  fetchProducts();
+}, []);
+  
   // LOGIC LỌC DỮ LIỆU (QUAN TRỌNG)
   const filteredProducts = products.filter((p) => {
     const matchesName = p.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
@@ -147,36 +84,80 @@ const AdminProductPage = () => {
     return matchesName && matchesCategory;
   });
 
-  // Tự động lấy danh sách Category duy nhất từ dữ liệu để hiện lên thanh lọc
-  const uniqueCategories = Array.from(new Set(products.map(p => JSON.stringify(p.category))))
-    .map(str => JSON.parse(str))
-    .filter(cat => cat && cat.code);
-
   // Tính toán chia trang dựa trên danh sách ĐÃ LỌC
   const totalPages = Math.ceil(filteredProducts.length / productPerPage);
   const indexOfLastProduct = currentPage * productPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productPerPage;
   const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
 
-  const handleDelete = async (id: string) => {
-    if (!window.confirm("Xác nhận xóa sản phẩm?")) return;
-    setProducts(products.filter(p => p._id !== id));
+const handleDelete = async (id: string) => {
+  if (!window.confirm("Bạn có chắc muốn xóa không?")) return;
+  if (!id) {
+    toast.error("Lỗi: Không tìm thấy ID sản phẩm!"); 
+    return;
+  }
+
+  try {
+    
+    await axios.delete(`http://localhost:9001/api/products/delete/${id}`); 
+    
+    setProducts(products.filter(p => p.id !== id)); 
     toast.success("Xóa thành công!");
-  };
+  } catch (error) {
+    console.error("Lỗi xóa:", error);
+    toast.error("Server từ chối lệnh xóa!");
+  }
+  
+};
+  
 
   const handleViewDetail = (openProduct: Product) => {
     setSelectedProduct(openProduct);
     setIsDetailOpen(true);
   };
 
-  const handleSaveProduct = (updatedProduct: Product) => {
-    setProducts(prev => prev.map(p => p._id === updatedProduct._id ? updatedProduct : p));
-    setIsEditOpen(false);
+  const handleSaveProduct = async (updatedProduct: Product) => {
+    try {
+    const data = new FormData();
+    data.append("product", new Blob([JSON.stringify(updatedProduct)], { type: "application/json" }));
+    const response = await axios.put(
+      `http://localhost:9001/api/products/update/${updatedProduct.id}`, 
+      data, 
+      { headers: { 'Content-Type': 'multipart/form-data' } } 
+    );
+
+    if (response.status === 200) {
+      setProducts(prev => prev.map(p => p.id === updatedProduct.id ? response.data : p));
+      toast.success("Cập nhật nệm Artisano thành công rực rỡ!");
+      setIsEditOpen(false);
+    }
+  } catch (error) {
+    console.error("Lỗi cập nhật:", error);
+    toast.error("Server vẫn từ chối, Bằng kiểm tra lại tab Network nhé!");
+  }
   };
 
-  const handleAddProduct = (newProduct: Product) => {
-    setProducts(prev => [newProduct, ...prev]);
-  };
+  
+  // const handleAddProduct = (newProduct: Product) => {
+  //   setProducts(prev => [newProduct, ...prev]);
+  // };
+const handleAddProduct = async (formData: FormData) => {
+ try {
+    const response = await axios.post("http://localhost:9001/api/products/add", formData);
+    if (response.status >= 200 && response.status < 300) {
+      toast.success("Thêm nệm Artisano thành công rực rỡ!");
+      
+      const refresh = await axios.get("http://localhost:9001/api/products/all");
+      setProducts(refresh.data); 
+      
+      setIsAddOpen(false);
+    }
+  } catch (error: any) {
+    console.error("Lỗi thực sự:", error.response?.data || error.message);
+    toast.error("Server đã lưu nhưng có lỗi hiển thị, Bằng hãy F5 thử xem!");
+  }
+  
+};
 
   return (
     <>
@@ -197,7 +178,7 @@ const AdminProductPage = () => {
           </button>
         </div>
 
-        {/* BỘ LỌC (MỚI THÊM) */}
+        {/* BỘ LỌC  */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           <div className="md:col-span-2 relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
@@ -223,8 +204,11 @@ const AdminProductPage = () => {
               }}
             >
               <option value="all">Tất cả danh mục</option>
-              {uniqueCategories.map((cat: any) => (
-                <option key={cat.code} value={cat.code}>{cat.name}</option>
+              
+              {categories.map((cat) => (
+                <option key={cat.code} value={cat.code}>
+                  {cat.name}
+                </option>
               ))}
             </select>
           </div>
@@ -261,13 +245,13 @@ const AdminProductPage = () => {
                 </thead>
                 <tbody className="divide-y divide-gray-100 bg-white">
                   {currentProducts.map((product, index) => (
-                    <tr key={product._id} className="hover:bg-gray-50 transition-colors">
+                    <tr key={product.id} className="hover:bg-gray-50 transition-colors">
                       <td className="px-4 py-4 text-center text-sm font-bold text-gray-400">
                         {indexOfFirstProduct + index + 1}
                       </td>
                       <td className="px-4 py-4">
                         <div className="flex items-center gap-4">
-                          <img src={product.images[0]?.url} className="w-12 h-12 rounded-lg object-cover border" alt="" />
+                          <img src={product.images?.[0]?.url} className="w-12 h-12 rounded-lg object-cover border" alt="" />
                           <div className="max-w-[250px]">
                             <p className="text-sm font-bold text-gray-900 truncate">{product.name}</p>
                             <p className="text-[10px] text-gray-400 uppercase font-bold">{product.sku}</p>
@@ -279,15 +263,20 @@ const AdminProductPage = () => {
                       </td>
                       <td className="px-4 py-4 text-center text-sm font-black text-gray-900">
                         {product.price.toLocaleString("vi-VN")}₫
-                        <p className={`text-[11px] mt-1 font-bold ${product.stock_quantity > 10 ? 'text-blue-500' : 'text-red-500'}`}>
-                          Kho: {product.stock_quantity}
+                        <p className={`text-[11px] mt-1 font-bold ${product.stockQuantity > 10 ? 'text-blue-500' : 'text-red-500'}`}>
+                          Kho: {product.stockQuantity}
                         </p>
                       </td>
                       <td className="px-4 py-4 text-center">
                         <div className="flex justify-center gap-2">
                           <button onClick={() => handleViewDetail(product)} className="p-1.5 text-blue-500 hover:bg-blue-50 rounded-lg transition-all"><Eye size={16} /></button>
                           <button onClick={() => { setSelectedProduct(product); setIsEditOpen(true); }} className="p-1.5 text-indigo-500 hover:bg-indigo-50 rounded-lg transition-all"><Edit size={16} /></button>
-                          <button onClick={() => handleDelete(product._id)} className="p-1.5 text-red-500 hover:bg-red-50 rounded-lg transition-all"><Trash2 size={16} /></button>
+                          <button onClick={() => 
+                          {
+                            console.log("ID nhấn vào là:", product.id);
+                            handleDelete(product.id);
+                          }
+                            } className="p-1.5 text-red-500 hover:bg-red-50 rounded-lg transition-all"><Trash2 size={16} /></button>
                         </div>
                       </td>
                     </tr>

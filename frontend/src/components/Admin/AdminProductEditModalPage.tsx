@@ -3,11 +3,14 @@ import { X, Save, Info, Fingerprint, DollarSign, Award, History, Image as ImageI
 import { toast } from "sonner";
 import type { Product, ProductImage } from "../Products/InterfaceItem";
 
+import axios from "axios";
+
 interface ProductEditModalProps {
   isOpen: boolean;
   onClose: () => void;
   product: Product | null;
   onSave: (updatedProduct: Product) => void;
+  // onSave: (id: string, data: FormData) => void;
 }
 
 interface InputGroupProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -18,17 +21,43 @@ interface InputGroupProps extends React.InputHTMLAttributes<HTMLInputElement> {
 interface ProductFormState extends Omit<Product, 'images' | 'tags'> {
   tags: string;
   images: string[];
-  image_url: string; 
+  url: string; 
 }
+
+const generateCategoryCode = (name: string) => {
+  return name
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "") // Xóa dấu tiếng Việt
+    .replace(/đ/g, "d").replace(/Đ/g, "D")
+    .toUpperCase()
+    .trim()
+    .replace(/\s+/g, "-")           // Khoảng trắng thành gạch ngang
+    .replace(/[^\w-]/g, "");        // Xóa ký tự đặc biệt
+};
 
 const ProductEditModal: React.FC<ProductEditModalProps> = ({ isOpen, onClose, product, onSave }) => {
   const [formData, setFormData] = useState<ProductFormState | null>(null);
 
+  const [categories, setCategories] = useState<{name: string, code: string}[]>([]);
+  const [isNewCategory, setIsNewCategory] = useState(false);
+
   useEffect(() => {
-    if (product && isOpen && formData?._id !== product._id) {
-      const primaryImg = product.images?.find((img) => img.is_primary === true)?.url || "";
+  const fetchCats = async () => {
+    try {
+      const res = await axios.get("http://localhost:9001/api/categories/all");
+      setCategories(res.data);
+    } catch (err) {
+      console.error("Không lấy được danh mục:", err);
+    }
+  };
+  if (isOpen) fetchCats();
+}, [isOpen]);
+
+  useEffect(() => {
+    if (product && isOpen ) {
+      const primaryImg = product.images?.find((img) => img.isPrimary === true)?.url || "";
       const subImages = product.images
-        ?.filter((img) => img.is_primary !== true)
+        ?.filter((img) => img.isPrimary !== true)
         ?.map((img) => img.url) || [];
 
       setFormData({
@@ -36,14 +65,14 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({ isOpen, onClose, pr
         category: product.category || { name: "", code: "" },
         specifications: product.specifications || { 
           material: "", weight: "", dimensions: "", 
-          firmness: "", design: "", certification_number: "" 
+          firmness: "", design: "", certificationNumber: "" 
         },
         tags: Array.isArray(product.tags) ? product.tags.join(", ") : "",
         images: subImages,
-        image_url: primaryImg
+        url: primaryImg
       });
     }
-  }, [product, isOpen, formData?._id]);
+  }, [product, isOpen, formData?.id]);
 
   if (!isOpen || !formData) return null;
 
@@ -75,7 +104,7 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({ isOpen, onClose, pr
 
     const reader = new FileReader();
     reader.onloadend = () => {
-      setFormData((prev) => prev ? { ...prev, image_url: reader.result as string } : null);
+      setFormData((prev) => prev ? { ...prev, url: reader.result as string } : null);
     };
     reader.readAsDataURL(file);
   };
@@ -103,29 +132,46 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({ isOpen, onClose, pr
     setFormData({ ...formData, images: newImages });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData) return;
 
+    if (isNewCategory && formData.category!.name) {
+    try {
+      await axios.post("http://localhost:9001/api/categories/add", {
+        name: formData.category!.name,
+        code: formData.category!.code
+      });
+      
+    } catch (err) {
+      console.error("Lỗi lưu danh mục mới:", err);
+    }
+  }
+
     const updatedImages: ProductImage[] = [
-      { url: formData.image_url, is_primary: true },
-      ...formData.images.map((url) => ({ url, is_primary: false }))
+      { url: formData.url, isPrimary: true },
+      ...formData.images.map((url) => ({ url, isPrimary: false }))
     ];
 
     const finalTags = formData.tags.split(",").map(t => t.trim()).filter(Boolean);
 
     const finalData: Product = {
       ...formData,
+      id: product?.id,
       price: Number(formData.price),
       originalPrice: formData.originalPrice ? Number(formData.originalPrice) : undefined,
-      stock_quantity: Number(formData.stock_quantity),
+      stockQuantity: Number(formData.stockQuantity),
       tags: finalTags,
       images: updatedImages,
-      updated_at: new Date().toISOString()
+      updatedAt: new Date().toISOString()
     } as Product;
 
     onSave(finalData);
+    // onSave(product._id, formData);
     toast.success("Đã cập nhật thông tin sản phẩm!");
+
+    const newCat = { name: formData.category!.name, code: formData.category!.code };
+    setCategories(prev => [...prev, newCat]);
     onClose();
   };
 
@@ -163,8 +209,8 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({ isOpen, onClose, pr
                   <input type="file" id="main-image-edit" accept="image/*" className="hidden" onChange={handleMainFileChange} />
                 </div>
                 <div className="relative aspect-square bg-gray-50 rounded-2xl overflow-hidden border-2 border-emerald-500/20 flex items-center justify-center shadow-inner">
-                  {formData.image_url ? (
-                    <img src={formData.image_url} alt="Main" className="w-full h-full object-contain p-2 animate-in fade-in duration-500" />
+                  {formData.url ? (
+                    <img src={formData.url} alt="Main" className="w-full h-full object-contain p-2 animate-in fade-in duration-500" />
                   ) : (
                     <ImageIcon size={48} className="opacity-20" />
                   )}
@@ -212,13 +258,78 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({ isOpen, onClose, pr
               <InputGroup label="Mã SKU" name="sku" value={formData.sku || ""} onChange={handleChange} required />
               <div className="space-y-1.5 font-mono">
                 <label className="text-xs text-gray-500 ml-1 italic font-black flex items-center gap-1"><Fingerprint size={12}/> Mã nội bộ</label>
-                <input type="text" value={formData.product_code || ""} className="w-full px-4 py-2.5 rounded-xl border border-gray-100 bg-gray-50 text-gray-400 text-sm" disabled />
+                <input type="text" value={formData.productCode || ""} className="w-full px-4 py-2.5 rounded-xl border border-gray-100 bg-gray-50 text-gray-400 text-sm" disabled />
               </div>
               <InputGroup label="Thương hiệu" name="brand" value={formData.brand || ""} onChange={handleChange} />
               <InputGroup label="Xuất xứ" name="origin" value={formData.origin || ""} onChange={handleChange} icon={<MapPin size={12}/>} />
               <InputGroup label="Tags" name="tags" value={formData.tags} onChange={handleChange} icon={<Tag size={12}/>} placeholder="cao_cap, khang_khuan..." />
-              <InputGroup label="Danh mục (Tên)" name="category.name" value={formData.category?.name || ""} onChange={handleChange} />
-              <InputGroup label="Danh mục (Code)" name="category.code" value={formData.category?.code || ""} onChange={handleChange} />
+              {/* <InputGroup label="Danh mục (Tên)" name="category.name" value={formData.category?.name || ""} onChange={handleChange} />
+              <InputGroup label="Danh mục (Code)" name="category.code" value={formData.category?.code || ""} onChange={handleChange} /> */}
+              {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-5"> */}
+              <>
+              {/* Cột Tên Danh Mục */}
+              <div className="space-y-1.5">
+                <label className="text-xs text-gray-500 font-black uppercase italic">Danh mục (Tên)</label>
+                {!isNewCategory ? (
+                  <select 
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm font-medium bg-white h-[42px] focus:border-emerald-500 outline-none"
+                    value={formData.category?.name || ""}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      if (val === "ADD_NEW") {
+                        setIsNewCategory(true);
+                        setFormData(prev => prev ? { ...prev, category: { name: "", code: "" } } : null);
+                      } else {
+                        const selected = categories.find(c => c.name === val);
+                        setFormData(prev => prev ? { ...prev, category: selected || { name: val, code: "" } } : null);
+                      }
+                    }}
+                  >
+                    {/* <option value="">-- Chọn danh mục --</option> */}
+                    {categories.map(cat => (
+                      <option key={cat.code} value={cat.name}>{cat.name}</option>
+                    ))}
+                    <option value="ADD_NEW" className="text-emerald-600 font-bold">+ THÊM DANH MỤC MỚI</option>
+                  </select>
+                ) : (
+                  <div className="relative">
+                    <input 
+                      type="text"
+                      className="w-full px-4 py-2.5 rounded-xl border-2 border-emerald-500 bg-white text-sm font-medium outline-none"
+                      placeholder="Nhập tên danh mục mới"
+                      value={formData.category?.name || ""}
+                      onChange={(e) => {
+                      const newName = e.target.value;
+                      setFormData(prev => prev ? { 
+                          ...prev, 
+                          category: { name: newName, code: generateCategoryCode(newName) } 
+                        } : null);
+                      }}
+                      autoFocus
+                    />
+                    <button 
+                      type="button"
+                      onClick={() => setIsNewCategory(false)}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-red-500 font-bold hover:underline"
+                    >
+                      Hủy
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              {/* Cột Code (Tự động theo Name) */}
+              <div className="space-y-1.5">
+                <label className="text-xs text-gray-500 font-black uppercase italic">Danh mục (Code)</label>
+                <input 
+                  type="text"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-100 bg-gray-100 text-gray-500 text-sm font-medium "
+                  value={formData.category?.code || ""}
+                  readOnly // Khóa lại không cho sửa tay để đảm bảo chuẩn dữ liệu
+                  placeholder="Mã tự động"
+                />
+              </div></>
+
             </div>
           </section>
 
@@ -228,7 +339,7 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({ isOpen, onClose, pr
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
               <InputGroup label="Giá bán hiện tại (₫)" name="price" type="number" value={formData.price} onChange={handleChange} required />
               <InputGroup label="Giá gốc (₫)" name="originalPrice" type="number" value={formData.originalPrice || ""} onChange={handleChange} />
-              <InputGroup label="Số lượng tồn kho" name="stock_quantity" type="number" value={formData.stock_quantity} onChange={handleChange} required />
+              <InputGroup label="Số lượng tồn kho" name="stockQuantity" type="number" value={formData.stockQuantity} onChange={handleChange} required />
               <div className="space-y-1.5">
                 <label className="text-xs font-bold text-gray-500 ml-1 italic ">Trạng thái bán</label>
                 <select name="status" value={formData.status} onChange={handleChange} className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-emerald-500 outline-none text-sm font-medium bg-white cursor-pointer h-[42px]">
@@ -248,7 +359,7 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({ isOpen, onClose, pr
               <InputGroup label="Kích thước" name="specifications.dimensions" value={formData.specifications?.dimensions || ""} onChange={handleChange} />
               <InputGroup label="Trọng lượng" name="specifications.weight" value={formData.specifications?.weight || ""} onChange={handleChange} />
               <InputGroup label="Thiết kế" name="specifications.design" value={formData.specifications?.design || ""} onChange={handleChange} />
-              <InputGroup label="Số chứng nhận" name="specifications.certification_number" value={formData.specifications?.certification_number || ""} onChange={handleChange} />
+              <InputGroup label="Số chứng nhận" name="specifications.certificationNumber" value={formData.specifications?.certificationNumber || ""} onChange={handleChange} />
             </div>
           </section>
 

@@ -1,17 +1,17 @@
 
 export interface ProductImage {
   url: string;
-  is_primary: boolean;
+  isPrimary: boolean;
 }
 export interface Product {
-  _id: string;
+  id: string;
   name: string;
   sku?: string;
-  product_code?: string;
+  productCode?: string;
   brand?: string;
   origin?: string;
   price: number;
-  stock_quantity: number;
+  stockQuantity: number;
   originalPrice?: number;
   images: ProductImage[];
   status: "selling" | "stopselling";
@@ -24,12 +24,12 @@ export interface Product {
     dimensions: string;
     firmness: string;
     design: string;
-    certification_number: string;
+    certificationNumber: string;
   };
   tags?: string[];
   description?: string;
-  created_at?: string; 
-  updated_at?: string;
+  createdAt?: string; 
+  updatedAt?: string;
 }
 // interface cho admin order
 export interface OrderItem {
@@ -42,7 +42,7 @@ export interface OrderItem {
 }
 
 export interface Order {
-  _id: string;
+  id: string;
   orderNumber: string;
   userId: string;
   customerInfo: {
