@@ -21,7 +21,7 @@ spring:
   #     max-request-size: 10MB
 
 server:
-  port: 8080
+  port: 8081
 
 clerk:
   secret-key: sk_test_mq9Hrj7XvqbGDNYwgSZvHDDZ5iMk3eOdodECqHEpOU
