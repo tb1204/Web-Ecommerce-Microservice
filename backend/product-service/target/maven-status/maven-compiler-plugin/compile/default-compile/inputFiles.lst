@@ -1,4 +1,17 @@
+<<<<<<< HEAD
 D:\luanvanhk2dvb\backend\apigateway\src\main\java\com\b2204925\apigateway\ApigatewayApplication.java
 D:\luanvanhk2dvb\backend\apigateway\src\main\java\com\b2204925\apigateway\config\GatewayConfig.java
 D:\luanvanhk2dvb\backend\apigateway\src\main\java\com\b2204925\apigateway\controller\FallbackController.java
 D:\luanvanhk2dvb\backend\apigateway\src\main\java\com\b2204925\apigateway\controller\HomeController.java
+=======
+D:\luanvanhk2dvb\backend\product-service\src\main\java\com\b2204922\productservice\config\CloudinaryConfig.java
+D:\luanvanhk2dvb\backend\product-service\src\main\java\com\b2204922\productservice\controller\CategoryController.java
+D:\luanvanhk2dvb\backend\product-service\src\main\java\com\b2204922\productservice\controller\ProductController.java
+D:\luanvanhk2dvb\backend\product-service\src\main\java\com\b2204922\productservice\entity\Category.java
+D:\luanvanhk2dvb\backend\product-service\src\main\java\com\b2204922\productservice\entity\Product.java
+D:\luanvanhk2dvb\backend\product-service\src\main\java\com\b2204922\productservice\ProductServiceApplication.java
+D:\luanvanhk2dvb\backend\product-service\src\main\java\com\b2204922\productservice\repository\CategoryRepository.java
+D:\luanvanhk2dvb\backend\product-service\src\main\java\com\b2204922\productservice\repository\ProductRepository.java
+D:\luanvanhk2dvb\backend\product-service\src\main\java\com\b2204922\productservice\service\CategoryService.java
+D:\luanvanhk2dvb\backend\product-service\src\main\java\com\b2204922\productservice\service\ProductService.java
+>>>>>>> feat/cart-service
