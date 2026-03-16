@@ -9,8 +9,8 @@ interface Props {
 export const PrintInvoice = forwardRef<HTMLDivElement, Props>(({ orderList }, ref) => {
   return (
     <div ref={ref} className="p-10 bg-white font-sans text-gray-900">
-      {orderList.map((order) => (
-        <div key={order._id} className="invoice-page border-b-2 border-dashed border-gray-300 pb-10 mb-10 last:border-0 last:mb-0" style={{ pageBreakAfter: 'always' }}>
+      {orderList?.map((order) => (
+        <div key={order.id} className="invoice-page border-b-2 border-dashed border-gray-300 pb-10 mb-10 last:border-0 last:mb-0" style={{ pageBreakAfter: 'always' }}>
           {/* Header Hóa đơn */}
           <div className="text-center mb-8">
             <h1 className="text-4xl font-black text-emerald-600 italic">ARTISANO</h1>
@@ -42,7 +42,7 @@ export const PrintInvoice = forwardRef<HTMLDivElement, Props>(({ orderList }, re
               </tr>
             </thead>
             <tbody>
-              {order.items.map((item) => (
+              {order.items?.map((item) => (
                 <tr key={item.orderDetailId}>
                   <td className="border p-3">{item.productName}</td>
                   <td className="border p-3 text-center">{item.quantity}</td>

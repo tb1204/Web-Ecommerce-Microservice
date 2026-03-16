@@ -38,7 +38,7 @@ public class ProductController {
         return ResponseEntity.ok(Collections.singletonMap("message", "Xóa sản phẩm thành công!"));
     }
 
-    @PutMapping("update/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<Product> updateProduct(
             @PathVariable String id,
             @RequestPart("product") Product product,
@@ -53,5 +53,18 @@ public class ProductController {
 
         List<Product> products = productService.getAllProducts();
         return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("/detail/{id}")
+    public ResponseEntity<Product> getProductById(@PathVariable String id) {
+        Product product = productService.getProductById(id);
+        return ResponseEntity.ok(product);
+    }
+
+    @PutMapping("/updateStock")
+    public ResponseEntity<?> updateStock(@RequestParam String productId, @RequestParam int quantity) {
+        // Logic: tìm product theo id, lấy stock hiện tại + quantity (quantity âm là trừ, dương là cộng)
+        productService.updateStock(productId, quantity);
+        return ResponseEntity.ok("Cập nhật kho thành công");
     }
 }

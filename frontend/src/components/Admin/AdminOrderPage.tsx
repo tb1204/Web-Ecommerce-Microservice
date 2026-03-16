@@ -15,11 +15,9 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { useReactToPrint } from "react-to-print";
-
+import axios from "axios";
 import type { Order } from "../Products/InterfaceItem";
 import { PrintInvoice } from "./PrintInvoice";
-
-// IMPORT CÁC MODAL
 import AdminOrderDetailModal from "./AdminOrderDetailPage";
 
 
@@ -51,87 +49,122 @@ const AdminOrderPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const ordersPerPage = 3;
 
-  // Dữ liệu mẫu 
-  const mockOrders: Order[] = [
-    {
-      _id: "65de1234567890abcdef0001",
-      orderNumber: "ORD-2026-001",
-      userId: "user-001",
-      customerInfo: { name: "Trần Công Bằng", phone: "0901234567", email: "bang@example.com", shippingAddress: "Cần Thơ" },
-      items: [{ orderDetailId: "det-01", productId: "prod-01", productName: "Nệm Artisano Cao Cấp", quantity: 1, price: 1629000, lineTotal: 1629000 }],
-      summary: { totalAmount: 1629000, shippingFee: 0, totalQty: 1 },
-      payment: { method: "VNPAY", status: "PAID", transactionId: "VNP-999888" },
-      orderStatus: "SHIPPING",
-      createdAt: "2026-01-21T12:40:00.000Z",
-      updatedAt: "2026-01-21T15:00:00.000Z"
-    },
-    {
-      _id: "65de1234567890abcdef0002",
-      orderNumber: "ORD-2026-002",
-      userId: "user-002",
-      customerInfo: { name: "Lê Văn Tám", phone: "090888777", email: "tam@ex.com", shippingAddress: "Hồ Chí Minh" },
-      items: [],
-      summary: { totalAmount: 500000, shippingFee: 30000, totalQty: 1 },
-      payment: { method: "CASH", status: "UNPAID" },
-      orderStatus: "CANCELLED",
-      createdAt: "2026-01-22T08:20:00.000Z",
-      updatedAt: "2026-01-22T09:00:00.000Z"
-    },
-    {
-      _id: "65de1234567890abcdef0003",
-      orderNumber: "ORD-2026-003",
-      userId: "user-003",
-      customerInfo: { name: "Nguyễn Thị Bưởi", phone: "0901234567", email: "buoi@example.com", shippingAddress: "Vĩnh Long" },
-      items: [],
-      summary: { totalAmount: 1629000, shippingFee: 0, totalQty: 3 },
-      payment: { method: "VNPAY", status: "PAID" },
-      orderStatus: "PROCESSING",
-      createdAt: "2026-01-23T12:40:00.000Z",
-      updatedAt: "2026-01-23T15:00:00.000Z"
-    },
-    {
-      _id: "65de1234567890abcdef0004",
-      orderNumber: "ORD-2026-003",
-      userId: "user-003",
-      customerInfo: { name: "Nguyễn Thị Bưởi", phone: "0901234567", email: "buoi@example.com", shippingAddress: "Vĩnh Long" },
-      items: [],
-      summary: { totalAmount: 1629000, shippingFee: 0, totalQty: 3 },
-      payment: { method: "VNPAY", status: "PAID" },
-      orderStatus: "PROCESSING",
-      createdAt: "2026-01-23T12:40:00.000Z",
-      updatedAt: "2026-01-23T15:00:00.000Z"
-    },
-    {
-      _id: "65de1234567890abcdef0005",
-      orderNumber: "ORD-2026-003",
-      userId: "user-003",
-      customerInfo: { name: "Nguyễn Thị Bưởi", phone: "0901234567", email: "buoi@example.com", shippingAddress: "Vĩnh Long" },
-      items: [],
-      summary: { totalAmount: 1629000, shippingFee: 0, totalQty: 3 },
-      payment: { method: "VNPAY", status: "PAID" },
-      orderStatus: "PROCESSING",
-      createdAt: "2026-01-23T12:40:00.000Z",
-      updatedAt: "2026-01-23T15:00:00.000Z"
-    },
+  // Dữ liệu mẫu them truong cancelReason vao
+  // const mockOrders: Order[] = [
+  //   {
+  //     id: "65de1234567890abcdef0001",
+  //     orderNumber: "ORD-2026-001",
+  //     userId: "user-001",
+  //     customerInfo: { name: "Trần Công Bằng", phone: "0901234567", email: "bang@example.com", shippingAddress: "Cần Thơ" },
+  //     items: [{ orderDetailId: "det-01", productId: "prod-01", productName: "Nệm Artisano Cao Cấp", quantity: 1, price: 1629000, lineTotal: 1629000 }],
+  //     summary: { totalAmount: 1629000, shippingFee: 0, totalQty: 1 },
+  //     payment: { method: "VNPAY", status: "PAID", transactionId: "VNP-999888" },
+  //     orderStatus: "SHIPPING",
+  //     createdAt: "2026-01-21T12:40:00.000Z",
+  //     updatedAt: "2026-01-21T15:00:00.000Z"
+  //   },
+  //   {
+  //     id: "65de1234567890abcdef0002",
+  //     orderNumber: "ORD-2026-002",
+  //     userId: "user-002",
+  //     customerInfo: { name: "Lê Văn Tám", phone: "090888777", email: "tam@ex.com", shippingAddress: "Hồ Chí Minh" },
+  //     items: [],
+  //     summary: { totalAmount: 500000, shippingFee: 30000, totalQty: 1 },
+  //     payment: { method: "CASH", status: "UNPAID" },
+  //     orderStatus: "CANCELLED",
+  //     createdAt: "2026-01-22T08:20:00.000Z",
+  //     updatedAt: "2026-01-22T09:00:00.000Z"
+  //   },
+  //   {
+  //     id: "65de1234567890abcdef0003",
+  //     orderNumber: "ORD-2026-003",
+  //     userId: "user-003",
+  //     customerInfo: { name: "Nguyễn Thị Bưởi", phone: "0901234567", email: "buoi@example.com", shippingAddress: "Vĩnh Long" },
+  //     items: [],
+  //     summary: { totalAmount: 1629000, shippingFee: 0, totalQty: 3 },
+  //     payment: { method: "VNPAY", status: "PAID" },
+  //     orderStatus: "PROCESSING",
+  //     createdAt: "2026-01-23T12:40:00.000Z",
+  //     updatedAt: "2026-01-23T15:00:00.000Z"
+  //   },
+  //   {
+  //     id: "65de1234567890abcdef0004",
+  //     orderNumber: "ORD-2026-003",
+  //     userId: "user-003",
+  //     customerInfo: { name: "Nguyễn Thị Bưởi", phone: "0901234567", email: "buoi@example.com", shippingAddress: "Vĩnh Long" },
+  //     items: [],
+  //     summary: { totalAmount: 1629000, shippingFee: 0, totalQty: 3 },
+  //     payment: { method: "VNPAY", status: "PAID" },
+  //     orderStatus: "PROCESSING",
+  //     createdAt: "2026-01-23T12:40:00.000Z",
+  //     updatedAt: "2026-01-23T15:00:00.000Z"
+  //   },
+  //   {
+  //     id: "65de1234567890abcdef0005",
+  //     orderNumber: "ORD-2026-003",
+  //     userId: "user-003",
+  //     customerInfo: { name: "Nguyễn Thị Bưởi", phone: "0901234567", email: "buoi@example.com", shippingAddress: "Vĩnh Long" },
+  //     items: [],
+  //     summary: { totalAmount: 1629000, shippingFee: 0, totalQty: 3 },
+  //     payment: { method: "VNPAY", status: "PAID" },
+  //     orderStatus: "PROCESSING",
+  //     createdAt: "2026-01-23T12:40:00.000Z",
+  //     updatedAt: "2026-01-23T15:00:00.000Z"
+  //   },
     
-  ];
+  // ];
+
+  // useEffect(() => {
+  //   const fetchOrders = async () => {
+  //     setLoading(true);
+  //     setTimeout(() => {
+  //       setOrders(mockOrders);
+  //       setLoading(false);
+  //     }, 600);
+  //   };
+  //   fetchOrders();
+  // }, []);
+  const fetchOrders = async () => {
+    setLoading(true);
+    try {
+      // Gọi API cổng 9002 của Order Service
+      const response = await axios.get("http://localhost:9002/api/orders/all");
+      if (response.status === 200) {
+        setOrders(response.data);
+      }
+    } catch (error) {
+      console.error("Lỗi lấy đơn hàng:", error);
+      toast.error("Không thể tải danh sách đơn hàng từ Server!");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchOrders = async () => {
-      setLoading(true);
-      setTimeout(() => {
-        setOrders(mockOrders);
-        setLoading(false);
-      }, 600);
-    };
     fetchOrders();
   }, []);
 
-  const handleStatusChange = (id: string, newStatus: Order["orderStatus"]) => {
-    setOrders((prev) =>
-      prev.map((o) => (o._id === id ? { ...o, orderStatus: newStatus } : o))
-    );
-    toast.success(`Trạng thái đơn hàng đã đổi sang: ${newStatus}`);
+  // const handleStatusChange = (id: string, newStatus: Order["orderStatus"]) => {
+  //   setOrders((prev) =>
+  //     prev.map((o) => (o.id === id ? { ...o, orderStatus: newStatus } : o))
+  //   );
+  //   toast.success(`Trạng thái đơn hàng đã đổi sang: ${newStatus}`);
+  // };
+  const handleStatusChange = async (id: string, newStatus: string) => {
+    try {
+      // Khớp với @PatchMapping("/status/{id}") @RequestParam String status ở Backend
+      const response = await axios.patch(`http://localhost:9002/api/orders/status/${id}?status=${newStatus}`);
+      
+      if (response.status === 200) {
+        setOrders((prev) => prev.map((o) => (o.id === id ? response.data : o)));
+        toast.success(`Đã cập nhật đơn hàng sang: ${newStatus}`);
+      }
+    } catch (error: any) {
+      // Bắt lỗi "Đơn hàng đã hủy không thể đổi trạng thái" từ Backend trả về
+      const errorMsg = error.response?.data?.message || "Lỗi server từ chối cập nhật!";
+      toast.error(errorMsg);
+      console.error("Lỗi update status:", error);
+    }
   };
 
   const handlePrintInvoice = (order: Order) => {
@@ -288,7 +321,7 @@ const AdminOrderPage = () => {
               </thead>
               <tbody className="divide-y divide-gray-50 bg-white">
                 {currentOrders.map((order) => (
-                  <tr key={order._id} className="hover:bg-gray-50/50 transition-all group">
+                  <tr key={order.id} className="hover:bg-gray-50/50 transition-all group">
                     <td className="px-6 py-4 font-black text-emerald-600 text-sm italic group-hover:scale-105 transition-transform origin-left">{order.orderNumber}</td>
                     <td className="px-6 py-4 text-sm font-bold text-gray-700">
                       {new Date(order.createdAt).toLocaleDateString("vi-VN")}
@@ -312,7 +345,7 @@ const AdminOrderPage = () => {
                       <select
                         disabled={order.orderStatus === "CANCELLED" || order.orderStatus === "DELIVERED"}
                         value={order.orderStatus}
-                        onChange={(e) => handleStatusChange(order._id, e.target.value as Order["orderStatus"])}
+                        onChange={(e) => handleStatusChange(order.id, e.target.value as Order["orderStatus"])}
                         className={`px-3 py-2 rounded-xl text-[10px] font-black uppercase border-2 outline-none transition-all cursor-pointer shadow-sm ${getStatusColor(order.orderStatus)}`}
                       >
                         <option value="PENDING">Chờ xác nhận</option>

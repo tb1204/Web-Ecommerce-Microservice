@@ -35,7 +35,7 @@ const AdminOrderDetailModal = ({ isOpen, onClose, order, onEdit }: Props) => {
               <h2 className="text-xl font-black italic tracking-tighter uppercase">
                 Chi tiết đơn hàng #{order.orderNumber}
               </h2>
-              <p className="text-[10px] font-bold opacity-80 uppercase tracking-widest"> ID: {order._id} </p>
+              <p className="text-[10px] font-bold opacity-80 uppercase tracking-widest"> ID: {order.id} </p>
             </div>
           </div>
           <button onClick={onClose} className="p-2 hover:bg-emerald-700 rounded-full transition-all">
@@ -55,7 +55,7 @@ const AdminOrderDetailModal = ({ isOpen, onClose, order, onEdit }: Props) => {
                   <ShoppingBag size={14} className="text-emerald-500" /> Sản phẩm đã đặt ({order.summary.totalQty})
                 </h3>
                 <div className="space-y-4">
-                  {order.items.map((item, idx) => (
+                  {order.items?.map((item, idx) => (
                     <div key={idx} className="flex items-center justify-between p-4 rounded-2xl bg-gray-50/50 border border-gray-100 group hover:bg-white hover:shadow-md transition-all">
                       <div className="flex items-center gap-4">
                         {/* HIỂN THỊ ẢNH SẢN PHẨM */}
@@ -185,11 +185,11 @@ const AdminOrderDetailModal = ({ isOpen, onClose, order, onEdit }: Props) => {
         {/* FOOTER */}
         <div className="p-6 border-t bg-gray-50 flex justify-end gap-4 flex-shrink-0">
           <button onClick={onClose} className="px-8 py-3 text-[10px] font-black text-gray-400 uppercase tracking-[2px]">Đóng cửa sổ</button>
-          {order.orderStatus === "PENDING" && (
+          {/* {order.orderStatus === "PENDING" && (
             <button onClick={onEdit} className="px-10 py-4 bg-emerald-600 text-white rounded-2xl font-black shadow-xl shadow-emerald-100 hover:bg-emerald-700 active:scale-95 transition-all uppercase text-[10px] tracking-[2px] flex items-center gap-2">
               <Edit size={16} /> Chỉnh sửa ngay
             </button>
-          )}
+          )} */}
         </div>
       </div>
     </div>
