@@ -1,9 +1,3 @@
-//package com.b2204925.cartservice.exception;
-//
-//public class ErrorResponse {
-//}
-
-// exception/ErrorResponse.java
 package com.b2204925.cartservice.exception;
 
 import lombok.Builder;
@@ -13,6 +7,7 @@ import java.time.Instant;
 @Data
 @Builder
 public class ErrorResponse {
+
     private String code;
     private String message;
     private String detail;

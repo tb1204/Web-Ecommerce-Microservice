@@ -2,12 +2,16 @@ package com.b2204925.userservice.service;
 
 import com.b2204925.userservice.dto.AdminUserUpdateDto;
 import com.b2204925.userservice.dto.CreateClerkUserRequest;
+import com.b2204925.userservice.dto.UserResponse;
 import com.b2204925.userservice.entity.Membership;
 import com.b2204925.userservice.entity.User;
 import com.b2204925.userservice.exception.AppException;
 import com.b2204925.userservice.exception.ErrorCode;
 import com.b2204925.userservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -21,8 +25,11 @@ public class AdminUserService {
     private final ClerkService clerkService;
     private final UserRepository userRepository;
 
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+    // public List<User> getAllUsers() {
+    //     return userService.getAllUsers();
+    // }
+    public Page<UserResponse> getAllUsers(Pageable pageable) {
+        return userService.getAllUsers(pageable);
     }
 
     public User getUserByClerkId(String clerkId) {
@@ -79,6 +86,12 @@ public class AdminUserService {
         if (dto.getAvatarUrl() != null) {
             user.setAvatarUrl(dto.getAvatarUrl());
         }
+
+        if (dto.getUsername() != null) {          // ← THÊM ĐOẠN NÀY
+            user.setUsername(dto.getUsername());
+        }
+
+        clerkService.updateUserInfo(clerkId, dto);
 
         if (dto.getRoles() != null) {
             user.setRoles(dto.getRoles());

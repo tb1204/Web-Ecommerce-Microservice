@@ -13,11 +13,14 @@ import com.b2204925.cartservice.dto.res.CartItemResponse;
 import com.b2204925.cartservice.dto.res.CartResponse;
 import com.b2204925.cartservice.entity.Cart;
 import com.b2204925.cartservice.entity.CartItem;
+import com.b2204925.cartservice.entity.CartSummary;
 import com.b2204925.cartservice.exception.AppException;
 import com.b2204925.cartservice.exception.ErrorCode;
 import com.b2204925.cartservice.repository.CartRepository;
 import com.b2204925.cartservice.service.CartService;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
@@ -28,24 +31,30 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@RequiredArgsConstructor
 public class CartServiceImpl implements CartService {
 
     private final CartRepository cartRepository;
 
-    @Qualifier("loadBalancedRestTemplate")
     private final RestTemplate restTemplate;
+
+    @Autowired
+    public CartServiceImpl(CartRepository cartRepository,
+            @Qualifier("loadBalancedRestTemplate") RestTemplate restTemplate) {
+        this.cartRepository = cartRepository;
+        this.restTemplate = restTemplate;
+    }
 
     // ── Map entity → response ────────────────────────────────────────
     private CartItemResponse toItemResponse(CartItem item) {
         return CartItemResponse.builder()
                 .productId(item.getProductId())
                 .variantId(item.getVariantId())
-                .productName(item.getProductName())
+                .name(item.getName())
                 .image(item.getImage())
                 .quantity(item.getQuantity())
                 .price(item.getPrice())
-                .subtotal(item.getPrice() * item.getQuantity())
+                .lineTotal(item.getLineTotal())
+                // .subtotal(item.getPrice() * item.getQuantity())
                 .size(item.getSize())
                 .thickness(item.getThickness())
                 .color(item.getColor())
@@ -62,16 +71,24 @@ public class CartServiceImpl implements CartService {
                 .mapToInt(CartItem::getQuantity)
                 .sum();
 
-        double totalPrice = cart.getItems().stream()
-                .mapToDouble(i -> i.getPrice() * i.getQuantity())
-                .sum();
+        double subtotal = cart.getItems().stream()
+                .mapToDouble(CartItem::getLineTotal).sum();
 
+        // double totalPrice = cart.getItems().stream()
+        //         .mapToDouble(i -> i.getPrice() * i.getQuantity())
+        //         .sum();
+        CartSummary summary = CartSummary.builder()
+                .subtotal(subtotal)
+                .shippingThreshold(3_000_000)
+                .totalQty(totalQty)
+                .build();
         return CartResponse.builder()
                 .id(cart.getId())
                 .userId(cart.getUserId())
                 .items(itemResponses)
-                .totalQty(totalQty)
-                .totalPrice(totalPrice)
+                .summary(summary)
+                .note(cart.getNote())
+                .status(cart.getStatus())
                 .build();
     }
 
@@ -89,6 +106,7 @@ public class CartServiceImpl implements CartService {
         return toCartResponse(getOrCreateCart(userId));
     }
 
+    //code đúng gọi tới productservice 
     // ── ADD item ─────────────────────────────────────────────────────
 //     @Override
 //     public CartResponse addItem(String userId, AddToCartRequest req) {
@@ -120,7 +138,8 @@ public class CartServiceImpl implements CartService {
 //                 .findFirst()
 //                 .orElse(null);
 //         if (existing != null) {
-//             existing.setQuantity(existing.getQuantity() + req.getQuantity());
+//               existing.setQuantity(existing.getQuantity() + req.getQuantity());
+//               existing.setLineTotal(existing.getPrice() * existing.getQuantity());
 //         } else {
 //             // Lấy ảnh primary
 //             List<Map<String, Object>> images =
@@ -136,10 +155,11 @@ public class CartServiceImpl implements CartService {
 //             items.add(CartItem.builder()
 //                     .productId(req.getProductId())
 //                     .variantId(req.getVariantId())
-//                     .productName((String) product.get("name"))
+//                     .name((String) product.get("name"))
 //                     .image(image)
 //                     .quantity(req.getQuantity())
 //                     .price(((Number) variant.get("price")).doubleValue())
+//                     .lineTotal(((Number) variant.get("price")).doubleValue() * req.getQuantity())
 //                     .size((String) variant.get("size"))
 //                     .thickness((String) variant.get("thickness"))
 //                     .color((String) variant.get("color"))
@@ -147,6 +167,7 @@ public class CartServiceImpl implements CartService {
 //         }
 //         return toCartResponse(cartRepository.save(cart));
 //     }
+//fake dữ liệu, chưa gọi tới http service
     @Override
     public CartResponse addItem(String userId, AddToCartRequest req) {
 
@@ -161,15 +182,18 @@ public class CartServiceImpl implements CartService {
 
         if (existing != null) {
             existing.setQuantity(existing.getQuantity() + req.getQuantity());
+            existing.setLineTotal(existing.getPrice() * existing.getQuantity());
         } else {
             // TODO: thay bằng gọi product-service sau khi Eureka chạy
+            double lineTotal = 999000 * req.getQuantity();
             items.add(CartItem.builder()
                     .productId(req.getProductId())
                     .variantId(req.getVariantId())
-                    .productName("Test Product")
+                    .name("Test Product")
                     .image("https://test.com/image.jpg")
                     .quantity(req.getQuantity())
                     .price(999000)
+                    .lineTotal(lineTotal)
                     .size("160x200cm")
                     .thickness("10cm")
                     .color(null)
@@ -185,12 +209,14 @@ public class CartServiceImpl implements CartService {
         Cart cart = cartRepository.findByUserId(userId)
                 .orElseThrow(() -> new AppException(ErrorCode.CART_NOT_FOUND));
 
-        cart.getItems().stream()
+        CartItem item = cart.getItems().stream()
                 .filter(i -> i.getProductId().equals(req.getProductId())
                 && i.getVariantId().equals(req.getVariantId()))
                 .findFirst()
-                .orElseThrow(() -> new AppException(ErrorCode.ITEM_NOT_FOUND))
-                .setQuantity(req.getQuantity());
+                .orElseThrow(() -> new AppException(ErrorCode.ITEM_NOT_FOUND));
+
+        item.setQuantity(req.getQuantity());
+        item.setLineTotal(item.getPrice() * req.getQuantity());
 
         return toCartResponse(cartRepository.save(cart));
     }

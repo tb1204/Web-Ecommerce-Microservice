@@ -100,7 +100,7 @@ const FlashSalePage = () => {
         setBannerError(null);
 
         const res = await fetch(
-          "http://localhost:8080/api/admin/sliders/banners/flashsale",
+          "http://localhost:8081/api/admin/sliders/banners/flashsale",
           { cache: "no-store" },
         );
 

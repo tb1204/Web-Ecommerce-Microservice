@@ -45,6 +45,34 @@ interface User {
 }
 
 const AdminUsersPage = () => {
+  const [currentPage, setCurrentPage] = useState(0); // backend dùng 0-based
+  const [totalPages, setTotalPages] = useState(0);
+  const [totalElements, setTotalElements] = useState(0);
+  const PAGE_SIZE = 10;
+
+  // Fetch theo page
+  const fetchUsers = async (page = 0) => {
+    setLoading(true);
+    try {
+      const headers = await getAuthHeader();
+      const res = await axios.get(
+        `http://localhost:8081/api/admin/users?page=${page}&size=${PAGE_SIZE}`,
+        { headers },
+      );
+      setUsers(res.data.content); // chỉ 10 user
+      setTotalPages(res.data.totalPages);
+      setTotalElements(res.data.totalElements);
+      setCurrentPage(page);
+    } catch (err) {
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchUsers(0);
+  }, []);
+
   const formatOnlyDate = (iso?: string) => {
     if (!iso) return "—";
     const date = new Date(iso);
@@ -109,51 +137,54 @@ const AdminUsersPage = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const headers = await getAuthHeader();
-        const res = await axios.get("http://localhost:8080/api/admin/users", {
-          headers,
-        });
+  // useEffect(() => {
+  //   const fetchUsers = async () => {
+  //     setLoading(true);
+  //     setError(null);
+  //     try {
+  //       const headers = await getAuthHeader();
+  //       const res = await axios.get("http://localhost:8081/api/admin/users", {
+  //         headers,
+  //       });
 
-        setUsers(
-          Array.isArray(res.data)
-            ? res.data.map((u) => ({ ...u })) // bỏ isLocked: false
-            : [],
-        );
-      } catch (err: unknown) {
-        const msg = axios.isAxiosError(err)
-          ? err.response?.data?.message || "Không tải được danh sách người dùng"
-          : "Lỗi kết nối đến server";
-        setError(msg);
-        toast.error(msg);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchUsers();
-  }, []);
+  //       setUsers(
+  //         Array.isArray(res.data)
+  //           ? res.data.map((u) => ({ ...u })) // bỏ isLocked: false
+  //           : [],
+  //       );
+  //     } catch (err: unknown) {
+  //       const msg = axios.isAxiosError(err)
+  //         ? err.response?.data?.message || "Không tải được danh sách người dùng"
+  //         : "Lỗi kết nối đến server";
+  //       setError(msg);
+  //       toast.error(msg);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchUsers();
+  // }, []);
 
-  const refreshUsers = async () => {
-    try {
-      const headers = await getAuthHeader();
-      const res = await axios.get("http://localhost:8080/api/admin/users", {
-        headers,
-      });
+  // const refreshUsers = async () => {
+  //   try {
+  //     const headers = await getAuthHeader();
+  //     const res = await axios.get("http://localhost:8081/api/admin/users", {
+  //       headers,
+  //     });
 
-      setUsers(
-        Array.isArray(res.data)
-          ? res.data.map((u) => ({ ...u })) // bỏ isLocked: false
-          : [],
-      );
-    } catch (err) {
-      console.error("Refresh failed", err);
-    }
+  //     setUsers(
+  //       Array.isArray(res.data)
+  //         ? res.data.map((u) => ({ ...u })) // bỏ isLocked: false
+  //         : [],
+  //     );
+  //   } catch (err) {
+  //     console.error("Refresh failed", err);
+  //   }
+  // };
+
+  const refreshUsers = () => {
+    fetchUsers(currentPage);
   };
-
   const handleEdit = (user: User) => {
     setEditingUser(user);
     setModalMode("edit");
@@ -166,6 +197,7 @@ const AdminUsersPage = () => {
       roles: user.roles.length > 0 ? user.roles : ["USER"],
       membership: user.membership,
       isActive: user.isActive,
+      username: user.username || "",
     });
     setPassword("");
     setConfirmPassword("");
@@ -245,9 +277,9 @@ const AdminUsersPage = () => {
           ...formData,
           membership: formData.membership?.tierName ?? undefined,
         };
-        console.log("📦 Payload gửi lên:", JSON.stringify(payload, null, 2));
+
         await axios.patch(
-          `http://localhost:8080/api/admin/users/${editingUser.clerkId}`,
+          `http://localhost:8081/api/admin/users/${editingUser.clerkId}`,
           payload,
           { headers },
         );
@@ -261,9 +293,9 @@ const AdminUsersPage = () => {
           toast.error("Mật khẩu xác nhận không khớp");
           return;
         }
-        console.log(formData);
+        // console.log(formData);
         const clerkRes = await axios.post(
-          "http://localhost:8080/api/admin/users/create-clerk-user",
+          "http://localhost:8081/api/admin/users/create-clerk-user",
           {
             email: formData.email,
             password,
@@ -280,22 +312,22 @@ const AdminUsersPage = () => {
         );
 
         const newClerkId = clerkRes.data.clerkId;
-        console.log(
-          "📦 Payload gửi lên /api/admin/users:",
-          JSON.stringify(
-            {
-              ...formData,
-              clerkId: newClerkId,
-              membership: formData.membership?.tierName ?? undefined,
-              isActive: true,
-            },
-            null,
-            2,
-          ),
-        );
+        // console.log(
+        //   "📦 Payload gửi lên /api/admin/users:",
+        //   JSON.stringify(
+        //     {
+        //       ...formData,
+        //       clerkId: newClerkId,
+        //       membership: formData.membership?.tierName ?? undefined,
+        //       isActive: true,
+        //     },
+        //     null,
+        //     2,
+        //   ),
+        // );
 
         await axios.post(
-          "http://localhost:8080/api/admin/users",
+          "http://localhost:8081/api/admin/users",
           {
             ...formData,
             clerkId: newClerkId,
@@ -333,7 +365,7 @@ const AdminUsersPage = () => {
       const headers = await getAuthHeader();
       const endpoint = shouldBan ? "ban" : "unban";
       await axios.patch(
-        `http://localhost:8080/api/admin/users/${user.clerkId}/${endpoint}`,
+        `http://localhost:8081/api/admin/users/${user.clerkId}/${endpoint}`,
         {},
         { headers },
       );
@@ -368,7 +400,7 @@ const AdminUsersPage = () => {
       const endpoint = shouldLock ? "lock" : "unlock";
 
       await axios.patch(
-        `http://localhost:8080/api/admin/users/${user.clerkId}/${endpoint}`,
+        `http://localhost:8081/api/admin/users/${user.clerkId}/${endpoint}`,
         {},
         { headers },
       );
@@ -410,7 +442,7 @@ const AdminUsersPage = () => {
     try {
       const headers = await getAuthHeader();
       await axios.patch(
-        `http://localhost:8080/api/admin/users/${user.clerkId}`,
+        `http://localhost:8081/api/admin/users/${user.clerkId}`,
         { roles: [newRole] },
         { headers },
       );
@@ -426,7 +458,7 @@ const AdminUsersPage = () => {
     try {
       const headers = await getAuthHeader();
       await axios.delete(
-        `http://localhost:8080/api/admin/users/${user.clerkId}`,
+        `http://localhost:8081/api/admin/users/${user.clerkId}`,
         { headers },
       );
       toast.success("Xóa thành công");
@@ -580,7 +612,7 @@ const AdminUsersPage = () => {
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center gap-4">
                       {/* Select: Hoạt động / Chặn */}
-                      <div className="relative inline-block w-44">
+                      <div className="relative inline-block w-30">
                         <select
                           value={user.isActive ? "active" : "banned"}
                           onChange={(e) => {
@@ -661,6 +693,40 @@ const AdminUsersPage = () => {
               ))}
             </tbody>
           </table>
+          <div className="flex items-center justify-between px-6 py-4 border-t">
+            <p className="text-sm text-gray-600">
+              Tổng {totalElements} người dùng
+            </p>
+            <div className="flex gap-2">
+              <button
+                onClick={() => fetchUsers(currentPage - 1)}
+                disabled={currentPage === 0}
+                className="px-3 py-1.5 text-sm border rounded-lg disabled:opacity-40"
+              >
+                ← Trước
+              </button>
+              {Array.from({ length: totalPages }, (_, i) => i).map((page) => (
+                <button
+                  key={page}
+                  onClick={() => fetchUsers(page)}
+                  className={`px-3 py-1.5 text-sm border rounded-lg ${
+                    currentPage === page
+                      ? "bg-green-600 text-white"
+                      : "hover:bg-gray-50"
+                  }`}
+                >
+                  {page + 1}
+                </button>
+              ))}
+              <button
+                onClick={() => fetchUsers(currentPage + 1)}
+                disabled={currentPage === totalPages - 1}
+                className="px-3 py-1.5 text-sm border rounded-lg disabled:opacity-40"
+              >
+                Sau →
+              </button>
+            </div>
+          </div>
         </div>
       )}
 

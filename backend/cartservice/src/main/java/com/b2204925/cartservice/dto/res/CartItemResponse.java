@@ -17,11 +17,11 @@ public class CartItemResponse {
 
     private String productId;
     private String variantId;
-    private String productName;
+    private String name;
     private String image;
     private int quantity;
     private double price;
-    private double subtotal;   // price * quantity — tính động
+    private double lineTotal;
     private String size;
     private String thickness;
     private String color;

@@ -1,6 +1,7 @@
 com\b2204925\cartservice\repository\CartRepository.class
 com\b2204925\cartservice\exception\ErrorCode.class
 com\b2204925\cartservice\dto\req\UpdateQuantityRequest.class
+com\b2204925\cartservice\entity\CartSummary.class
 com\b2204925\cartservice\CartserviceApplication.class
 com\b2204925\cartservice\dto\req\AddToCartRequest.class
 com\b2204925\cartservice\dto\res\CartItemResponse$CartItemResponseBuilder.class
@@ -14,6 +15,7 @@ com\b2204925\cartservice\entity\Cart$CartBuilder.class
 com\b2204925\cartservice\dto\res\CartResponse.class
 com\b2204925\cartservice\entity\CartItem$CartItemBuilder.class
 com\b2204925\cartservice\dto\req\CheckoutItemsRequest.class
+com\b2204925\cartservice\entity\CartSummary$CartSummaryBuilder.class
 com\b2204925\cartservice\dto\res\CartResponse$CartResponseBuilder.class
 com\b2204925\cartservice\config\SecurityConfig.class
 com\b2204925\cartservice\exception\ErrorResponse.class

@@ -19,4 +19,5 @@ public class UserUpdateDto {
 
     private String avatarUrl;
     private String email;
+    private String username;
 }

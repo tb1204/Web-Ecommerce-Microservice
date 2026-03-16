@@ -15,7 +15,7 @@ spring:
           issuer-uri: ${clerk.issuer}
 
 server:
-  port: 8082
+  port: 8083
 
 clerk:
   frontend-api: https://pro-oryx-45.clerk.accounts.dev
@@ -25,7 +25,7 @@ clerk:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://discoveryserver:8761/eureka # ← đổi localhost
     register-with-eureka: true
     fetch-registry: true
 

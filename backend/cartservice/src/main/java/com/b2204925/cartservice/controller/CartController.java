@@ -1,11 +1,3 @@
-//package com.b2204925.cartservice.controller;
-//
-//public class CartController {
-//}
-// ═══════════════════════════════════════════════════════
-// CONTROLLER
-// ═══════════════════════════════════════════════════════
-// controller/CartController.java
 package com.b2204925.cartservice.controller;
 
 import com.b2204925.cartservice.dto.req.*;

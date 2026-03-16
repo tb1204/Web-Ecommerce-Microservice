@@ -1,19 +1,19 @@
 #test
 spring:
   application:
-    name: Identity Service
+    name: user-service
 
   data:
     mongodb:
       uri: mongodb://localhost:27017/artisano
       database: artisano
 
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          jwk-set-uri: ${clerk.jwks-url}
-          issuer-uri: ${clerk.issuer}
+  # security:
+  #   oauth2:
+  #     resourceserver:
+  #       jwt:
+  #         jwk-set-uri: ${clerk.jwks-url}
+  #         issuer-uri: ${clerk.issuer}
 
   # servlet:
   #   multipart:
@@ -49,9 +49,9 @@ cloudinary:
   api-secret: MA5qNJ0VC-TrlsB9YGQyOU4wgDo
 
 # Nếu sau này dùng Eureka (microservices), uncomment và config
-# eureka:
-#   client:
-#     service-url:
-#       defaultZone: http://localhost:8761/eureka
-#     register-with-eureka: true
-#     fetch-registry: true
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discoveryserver:8761/eureka # ← đổi localhost
+    register-with-eureka: true
+    fetch-registry: true

@@ -1,8 +1,3 @@
-//package com.b2204925.cartservice.dto.req;
-//
-//public class UpdateQuantityRequest {
-//}
-// dto/request/UpdateQuantityRequest.java
 package com.b2204925.cartservice.dto.req;
 
 import jakarta.validation.constraints.Min;

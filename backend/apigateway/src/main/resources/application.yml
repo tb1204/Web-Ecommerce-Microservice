@@ -26,7 +26,7 @@ spring:
 
         # Route cho userservice
         - id: userservice
-          uri: lb://userservice # thay bằng lb://userservice nếu dùng Eureka
+          uri: lb://user-service # thay bằng lb://userservice nếu dùng Eureka
           # uri: http://localhost:8081
           predicates:
             - Path=/api/users/**
@@ -42,9 +42,27 @@ spring:
                 name: defaultCB
                 fallbackUri: forward:/fallback/userservice
 
+        # Route cho userservice
+        - id: userservice-admin
+          uri: lb://user-service # thay bằng lb://userservice nếu dùng Eureka
+          # uri: http://localhost:8081
+          predicates:
+            - Path=/api/admin/**
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 20 # 10 request/giây trung bình
+                redis-rate-limiter.burstCapacity: 40 # burst tối đa 20
+                redis-rate-limiter.requestedTokens: 1 # mỗi request tốn 1 token
+                key-resolver: "#{@ipKeyResolver}" # theo IP (bean trong GatewayConfig)
+            - name: CircuitBreaker
+              args:
+                name: defaultCB
+                fallbackUri: forward:/fallback/userservice
+
         # Route cho orderservice (limit cao hơn ví dụ)
         - id: orderservice
-          uri: lb://orderservice
+          uri: lb://order-service
           predicates:
             - Path=/api/orders/**
           filters:
@@ -60,7 +78,7 @@ spring:
 
         # Route cho productservice
         - id: productservice
-          uri: lb://productservice
+          uri: lb://product-service
           predicates:
             - Path=/api/products/**
           filters:
@@ -76,7 +94,7 @@ spring:
 
         # Route cho cartservice
         - id: cartservice
-          uri: lb://cartservice
+          uri: lb://cart-service
           predicates:
             - Path=/api/cart/**
           filters:
@@ -92,7 +110,7 @@ spring:
 
         # Ví dụ cho paymentservice (limit chặt vì nhạy cảm)
         - id: paymentservice
-          uri: lb://paymentservice
+          uri: lb://payment-service
           predicates:
             - Path=/api/payments/**
           filters:
@@ -107,7 +125,7 @@ spring:
                 fallbackUri: forward:/fallback/paymentservice
         # Ví dụ cho chatservice (limit chặt vì nhạy cảm)
         - id: chatservice
-          uri: lb://chatservice
+          uri: lb://chat-service
           predicates:
             - Path=/api/chat/**
           filters:
@@ -122,7 +140,7 @@ spring:
                 fallbackUri: forward:/fallback/chatservice
         # Ví dụ cho reviewservice (limit chặt vì nhạy cảm)
         - id: reviewservice
-          uri: lb://reviewservice
+          uri: lb://review-service
           predicates:
             - Path=/api/review/**
           filters:
@@ -137,7 +155,7 @@ spring:
                 fallbackUri: forward:/fallback/reviewservice
         # Ví dụ cho notificationservice (limit chặt vì nhạy cảm)
         - id: notificationservice
-          uri: lb://notificationservice
+          uri: lb://notification-service
           predicates:
             - Path=/api/notification/**
           filters:

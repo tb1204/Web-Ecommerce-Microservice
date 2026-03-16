@@ -6,6 +6,7 @@ com\b2204925\userservice\exception\ErrorResponse$ErrorResponseBuilder.class
 com\b2204925\userservice\exception\ErrorResponse.class
 com\b2204925\userservice\exception\AppException.class
 com\b2204925\userservice\service\ClerkService.class
+com\b2204925\userservice\dto\UserResponse.class
 com\b2204925\userservice\controller\UserController.class
 com\b2204925\userservice\entity\User.class
 com\b2204925\userservice\entity\User$UserBuilder.class

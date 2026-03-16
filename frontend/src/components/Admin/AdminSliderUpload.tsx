@@ -36,7 +36,7 @@ function AdminSliderUpload() {
     try {
       const authHeader = await getAuthHeader();
       const res = await fetch(
-        `http://localhost:8080/api/admin/sliders/list?folder=${type}&max=50`,
+        `http://localhost:8081/api/admin/sliders/list?folder=${type}&max=50`,
         {
           cache: "no-store",
           headers: { "Content-Type": "application/json", ...authHeader },
@@ -85,7 +85,7 @@ function AdminSliderUpload() {
 
     try {
       const signRes = await fetch(
-        "http://localhost:8080/api/admin/sliders/sign",
+        "http://localhost:8081/api/admin/sliders/sign",
         {
           method: "POST",
           headers: { "Content-Type": "application/json", ...authHeader },
@@ -145,7 +145,7 @@ function AdminSliderUpload() {
 
     try {
       const res = await fetch(
-        "http://localhost:8080/api/admin/sliders/delete",
+        "http://localhost:8081/api/admin/sliders/delete",
         {
           method: "DELETE",
           headers: { "Content-Type": "application/json", ...authHeader },

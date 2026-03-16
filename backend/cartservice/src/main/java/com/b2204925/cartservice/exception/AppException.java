@@ -1,9 +1,3 @@
-//package com.b2204925.cartservice.exception;
-//
-//public class AppException {
-//}
-
-// exception/AppException.java
 package com.b2204925.cartservice.exception;
 
 import lombok.Getter;

@@ -1,11 +1,15 @@
 package com.b2204925.userservice.service;
 
+import com.b2204925.userservice.dto.UserResponse;
 import com.b2204925.userservice.dto.UserUpdateDto;
 import com.b2204925.userservice.entity.User;
 import com.b2204925.userservice.exception.AppException;
 import com.b2204925.userservice.exception.ErrorCode;
 import com.b2204925.userservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
@@ -62,6 +66,11 @@ public class UserService {
         });
     }
 
+    public Page<UserResponse> getAllUsers(Pageable pageable) {
+        return userRepository.findAll(pageable)
+                .map(user -> mapToResponse(user));
+    }
+
     // ─── Update profile (user tự cập nhật) ───────────────────────────────────
     public User updateUserProfile(String clerkId, UserUpdateDto dto) {
         User user = getUserOrThrow(clerkId);
@@ -82,6 +91,9 @@ public class UserService {
         }
         if (dto.getEmail() != null) {
             user.setEmail(dto.getEmail());
+        }
+        if (dto.getUsername() != null) {
+            user.setUsername(dto.getUsername());
         }
         user.setUpdatedAt(Instant.now());
         return userRepository.save(user);
@@ -120,5 +132,27 @@ public class UserService {
         user.setIsBlocked(false);
         user.setUpdatedAt(Instant.now());
         userRepository.save(user);
+    }
+
+    private UserResponse mapToResponse(User user) {
+        UserResponse res = new UserResponse();
+        res.setId(user.getId());
+        res.setClerkId(user.getClerkId());
+        res.setEmail(user.getEmail());
+        res.setUsername(user.getUsername());
+        res.setFirstName(user.getFirstName());
+        res.setLastName(user.getLastName());
+        res.setPhone(user.getPhone());
+        res.setGender(user.getGender());
+        res.setAvatarUrl(user.getAvatarUrl());
+        res.setRoles(user.getRoles());
+        res.setIsActive(user.getIsActive());
+        res.setIsBlocked(user.getIsBlocked());
+        // res.setActive(user.getIsActive());
+        // res.setBlocked(user.getIsBlocked());
+        res.setMembership(user.getMembership() != null ? user.getMembership().getTierName() : null);
+        res.setCreatedAt(user.getCreatedAt());
+        res.setUpdatedAt(user.getUpdatedAt());
+        return res;
     }
 }

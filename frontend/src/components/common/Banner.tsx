@@ -28,7 +28,7 @@ function Banner() {
       setLoading(true);
       try {
         const res = await fetch(
-          "http://localhost:8080/api/admin/sliders/list?folder=slider&max=50",
+          "http://localhost:8081/api/admin/sliders/list?folder=slider&max=50",
           {
             cache: "no-store",
             headers: { "Content-Type": "application/json" },

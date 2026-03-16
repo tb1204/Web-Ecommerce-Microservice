@@ -1,10 +1,3 @@
-//package com.b2204925.cartservice.exception;
-//
-//public class GlobalExceptionHandler {
-//}
-
-
-// exception/GlobalExceptionHandler.java
 package com.b2204925.cartservice.exception;
 
 import org.springframework.http.ResponseEntity;

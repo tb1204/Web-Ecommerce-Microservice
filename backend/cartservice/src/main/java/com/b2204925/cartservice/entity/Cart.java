@@ -2,11 +2,9 @@
 //
 //public class Cart {
 //}
-
 // ═══════════════════════════════════════════════════════
 // ENTITY
 // ═══════════════════════════════════════════════════════
-
 // entity/Cart.java
 package com.b2204925.cartservice.entity;
 
@@ -32,4 +30,8 @@ public class Cart {
 
     @Builder.Default
     private List<CartItem> items = new ArrayList<>();
+
+    private CartSummary summary;
+    private String note;
+    private String status;
 }
