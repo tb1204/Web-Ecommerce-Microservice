@@ -1,5 +1,6 @@
 import { useUser, useClerk, useAuth } from "@clerk/clerk-react";
 import { useState, useEffect } from "react";
+import { toast } from "sonner";
 import axios from "axios";
 import {
   FiCamera,
@@ -10,7 +11,7 @@ import {
   FiSave,
   FiUser,
 } from "react-icons/fi";
-
+import { ChevronDown } from "lucide-react";
 const CustomProfile = () => {
   const { isLoaded, isSignedIn, user } = useUser();
   const { signOut } = useClerk();
@@ -18,6 +19,8 @@ const CustomProfile = () => {
 
   const [username, setUsername] = useState("");
   const [firstName, setFirstName] = useState("");
+  const [displayFirstName, setDisplayFirstName] = useState("");
+  const [displayLastName, setDisplayLastName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
   const [gender, setGender] = useState("");
@@ -61,6 +64,8 @@ const CustomProfile = () => {
         setGender(data.gender || "");
         setMembership(data.membership?.tierName || data.membership || "Member");
         setAddresses(data.addresses || []);
+        setDisplayFirstName(data.firstName || "");
+        setDisplayLastName(data.lastName || "");
       } catch (err) {
         console.error("Lỗi load profile từ DB:", err);
         // Fallback về Clerk nếu DB lỗi
@@ -101,9 +106,9 @@ const CustomProfile = () => {
         { headers: { Authorization: `Bearer ${token}` } },
       );
 
-      alert("Ảnh đại diện đã cập nhật!");
+      toast.success("Ảnh đại diện đã cập nhật!");
     } catch (err) {
-      alert("Có lỗi khi upload ảnh.");
+      toast.error("Có lỗi khi upload ảnh.");
     }
   };
 
@@ -117,7 +122,8 @@ const CustomProfile = () => {
         firstName: firstName || undefined,
         lastName: lastName || undefined,
       });
-
+      setDisplayFirstName(firstName);
+      setDisplayLastName(lastName);
       // BƯỚC 2: Cập nhật MongoDB (tất cả fields)
       await axios.put(
         "http://localhost:8081/api/users/me",
@@ -125,7 +131,7 @@ const CustomProfile = () => {
         { headers: { Authorization: `Bearer ${token}` } },
       );
 
-      alert("Đã lưu thành công!");
+      toast.success("Đã lưu thành công!");
     } catch (err: any) {
       console.error("Lỗi:", err);
     }
@@ -140,7 +146,7 @@ const CustomProfile = () => {
         newPassword,
         signOutOfOtherSessions: true,
       });
-      alert("Đổi mật khẩu thành công!");
+      toast.success("Đổi mật khẩu thành công!");
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
@@ -169,7 +175,7 @@ const CustomProfile = () => {
       setEmailAddressInstance(emailRes);
       setVerificationStep(true);
     } catch (err: any) {
-      alert(err.errors?.[0]?.message || "Lỗi!");
+      toast.error(err.errors?.[0]?.message || "Lỗi!");
     } finally {
       setIsChangingEmail(false);
     }
@@ -191,11 +197,11 @@ const CustomProfile = () => {
         { headers: { Authorization: `Bearer ${token}` } },
       );
 
-      alert("Thay đổi email thành công!");
+      toast.success("Thay đổi email thành công!");
       setVerificationStep(false);
       setNewEmail("");
     } catch (err: any) {
-      alert("Mã OTP sai hoặc lỗi hệ thống!");
+      toast.error("Mã OTP sai hoặc lỗi hệ thống!");
     } finally {
       setIsVerifying(false);
     }
@@ -243,7 +249,7 @@ const CustomProfile = () => {
       await signOut();
       window.location.href = "/";
     } catch (err) {
-      alert("Lỗi khi xóa.");
+      toast.error("Lỗi khi xóa.");
     }
   };
 
@@ -270,7 +276,7 @@ const CustomProfile = () => {
           </div>
           <div className="text-center md:text-left space-y-1">
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-              {firstName} {lastName}
+              {displayFirstName} {displayLastName}
             </h1>
             <p className="text-gray-500 dark:text-gray-400 flex items-center justify-center md:justify-start gap-2">
               <FiMail className="inline" />{" "}
@@ -310,20 +316,28 @@ const CustomProfile = () => {
                     />
                   </div>
                 ))}
+
                 <div className="space-y-2 md:col-span-2">
                   <label className="text-xs font-bold text-gray-400 uppercase ml-1">
                     Giới tính
                   </label>
-                  <select
-                    value={gender}
-                    onChange={(e) => setGender(e.target.value)}
-                    className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-2 border-gray-400 dark:border-gray-600 rounded-xl focus:outline-none focus:border-gray-600 dark:focus:border-white transition"
-                  >
-                    <option value="">Chọn giới tính</option>
-                    <option value="male">Nam</option>
-                    <option value="female">Nữ</option>
-                    <option value="other">Khác</option>
-                  </select>
+                  <div className="relative">
+                    {" "}
+                    {/* ← bọc select + icon vào đây */}
+                    <select
+                      value={gender}
+                      onChange={(e) => setGender(e.target.value)}
+                      className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-2 border-gray-400 dark:border-gray-600 rounded-xl focus:outline-none focus:border-gray-600 dark:focus:border-white transition appearance-none cursor-pointer"
+                    >
+                      <option value="">Chọn giới tính</option>
+                      <option value="male">Nam</option>
+                      <option value="female">Nữ</option>
+                      <option value="other">Khác</option>
+                    </select>
+                    <div className="pointer-events-none absolute inset-y-0 right-4 flex items-center">
+                      <ChevronDown size={16} className="text-gray-400" />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
