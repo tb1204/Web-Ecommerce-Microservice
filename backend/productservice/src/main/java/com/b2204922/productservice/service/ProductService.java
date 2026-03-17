@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.core.io.InputStreamSource;
 
 
 import java.io.IOException;
@@ -27,6 +28,12 @@ public class ProductService {
     public List<Product> getAllProducts() {
         // Sắp xếp theo thời gian mới nhất lên đầu để Admin dễ quản lý
         return productRepository.findAll();
+    }
+
+    public Product getProductById(String id) {
+        log.info("🔍 Đang tìm sản phẩm có ID: {}", id);
+        return productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm với ID: " + id));
     }
 
     //Ham them san pham moi
@@ -127,7 +134,8 @@ public class ProductService {
                 }
                 product.setImages(productImages);
             } catch (IOException e) {
-                log.error("Lỗi upload ảnh: {}", e.getMessage());
+//                log.error("Lỗi upload ảnh: {}", e.getMessage());
+                log.error("Lỗi upload ảnh: " + e.getMessage());
                 throw new RuntimeException("Không thể upload ảnh lên Cloudinary!");
             }
         }
@@ -207,5 +215,20 @@ public class ProductService {
             }
         }
         return productRepository.save(existingProduct);
+    }
+
+
+    public void updateStock(String productId, int quantity) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm ID: " + productId));
+
+        int currentStock = product.getStockQuantity();
+        int newStock = currentStock + quantity;
+        if (newStock < 0) {
+            throw new RuntimeException("Số lượng trong kho không đủ để thực hiện giao dịch!");
+        }
+
+        product.setStockQuantity(newStock);
+        productRepository.save(product);
     }
 }

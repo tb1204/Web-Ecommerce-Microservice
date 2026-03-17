@@ -63,6 +63,7 @@ export interface Order {
     transactionId?: string;
   };
   orderStatus: "PENDING" | "PROCESSING" | "SHIPPING" | "DELIVERED" | "CANCELLED" ;
+  cancelReason: string;
   createdAt: string;
   updatedAt: string;
 }
