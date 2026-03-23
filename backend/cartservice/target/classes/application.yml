@@ -11,8 +11,8 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: ${clerk.jwks-url}
-          issuer-uri: ${clerk.issuer}
+          jwk-set-uri: https://pro-oryx-45.clerk.accounts.dev/.well-known/jwks.json
+          issuer-uri: https://pro-oryx-45.clerk.accounts.dev
 
 server:
   port: 8083
