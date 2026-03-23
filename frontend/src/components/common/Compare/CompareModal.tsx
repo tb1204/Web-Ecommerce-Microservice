@@ -73,7 +73,7 @@ const CompareModal: React.FC<CompareModalProps> = ({ isOpen, onClose }) => {
               Sản Phẩm
             </div>
             {compareItems.map((item) => (
-              <div key={item._id} className="border-b border-r border-gray-100 p-2 md:p-4 text-center group bg-white">
+              <div key={item.id} className="border-b border-r border-gray-100 p-2 md:p-4 text-center group bg-white">
                 <div className="w-14 h-14 md:w-28 md:h-28 mx-auto mb-2 md:mb-3 overflow-hidden rounded-lg shadow-sm border border-gray-50">
                   <img
                     src={item.images[0]?.url}
@@ -95,7 +95,7 @@ const CompareModal: React.FC<CompareModalProps> = ({ isOpen, onClose }) => {
                 </div>
                 {compareItems.map((item) => (
                   <div
-                    key={`${item._id}-${spec.key}`}
+                    key={`${item.id}-${spec.key}`}
                     className="p-2 md:p-4 border-b border-r border-gray-100 text-[10px] md:text-sm text-center font-medium text-gray-700 flex items-center justify-center bg-white px-1"
                   >
                     {spec.format ? spec.format(item[spec.key]) : (item[spec.key] as React.ReactNode)}
@@ -107,7 +107,7 @@ const CompareModal: React.FC<CompareModalProps> = ({ isOpen, onClose }) => {
             {/* HÀNG NÚT HÀNH ĐỘNG */}
             <div className="bg-gray-50/50 border-b border-r border-gray-100"></div>
             {compareItems.map((item) => (
-              <div key={`btn-${item._id}`} className="p-2 md:p-4 border-b border-r border-gray-100 flex justify-center items-center bg-white px-1">
+              <div key={`btn-${item.id}`} className="p-2 md:p-4 border-b border-r border-gray-100 flex justify-center items-center bg-white px-1">
                 <button className="bg-[#1a4d32] text-white w-full md:w-auto px-2 md:px-6 py-1.5 md:py-2.5 rounded-md md:rounded-lg text-[8px] md:text-xs font-bold flex items-center justify-center gap-1 hover:bg-[#2a6d4a] transition-all active:scale-95 shadow-md">
                   <ShoppingCart size={10} className="md:w-3.5 md:h-3.5" /> MUA
                 </button>

@@ -21,8 +21,9 @@ export interface Product {
   specifications?: {
     material: string;
     weight: string;
-    dimensions: string;
     firmness: string;
+    size: string;
+    thickness: string;
     design: string;
     certificationNumber: string;
   };
@@ -68,7 +69,11 @@ export interface Order {
   updatedAt: string;
 }
 
-
+export interface Category {
+  id?: string;
+  name: string;
+  code: string;
+}
 //interface cho voucher 
 export interface UsageLimit {
   total: number;

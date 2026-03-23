@@ -59,16 +59,16 @@ const ProductGrid: React.FC<ProductCardProps> = ({
         const hasDiscount = product.originalPrice && product.originalPrice > product.price;
         const displayDiscount = hasDiscount ? Math.round(((product.originalPrice! - product.price) / product.originalPrice!) * 100) : 0;
         const isStopSelling = product.status === "stopselling";
-        const isOutOfStock = product.status === "selling" && product.stock_quantity <= 0;
-        const canBuy = product.status === "selling" && product.stock_quantity > 0;
+        const isOutOfStock = product.status === "selling" && product.stockQuantity <= 0;
+        const canBuy = product.status === "selling" && product.stockQuantity > 0;
 
-        const isSelected = selectedProductId === product._id;
-        const isFavorite = isInWishlist(product._id);
-        const isComparing = compareItems.some((item) => item._id === product._id);
+        const isSelected = selectedProductId === product.id;
+        const isFavorite = isInWishlist(product.id);
+        const isComparing = compareItems.some((item) => item.id === product.id);
 
         return (
           <div
-            key={product._id}
+            key={product.id}
             // Nếu là mode bundle thì click vào card sẽ gọi onSelect
             onClick={() => isBundleMode && canBuy && onSelect && onSelect(product)}
             className={`
@@ -80,9 +80,9 @@ const ProductGrid: React.FC<ProductCardProps> = ({
             {/* IMAGE */}
             <div className="relative aspect-square overflow-hidden bg-gray-50 dark:bg-gray-700">
               {/* Nếu là bundle mode thì không chuyển trang khi click vào ảnh */}
-              <Link to={isBundleMode ? "#" : `/product/${product._id}`} className="block h-full">
+              <Link to={isBundleMode ? "#" : `/product/${product.id}`} className="block h-full">
                 <img
-                  src={product.images.find((img) => img.is_primary)?.url || product.images[0]?.url || image_nem}
+                  src={product.images.find((img) => img.isPrimary)?.url || product.images[0]?.url || image_nem}
                   alt={product.name}
                   className={`w-full h-full object-cover transition-transform duration-700 ${canBuy ? "group-hover:scale-110" : ""}`}
                 />
@@ -140,7 +140,7 @@ const ProductGrid: React.FC<ProductCardProps> = ({
             <div className="p-3 flex flex-col flex-grow">
               <div className="flex-grow">
                 <p className="text-[10px] uppercase font-bold tracking-widest mb-1 text-gray-400 dark:text-gray-500">{product.brand}</p>
-                <Link to={isBundleMode ? "#" : `/product/${product._id}`}>
+                <Link to={isBundleMode ? "#" : `/product/${product.id}`}>
                   <h3 className="text-sm font-bold line-clamp-2 h-10 leading-tight mb-2 transition-colors text-gray-800 dark:text-gray-100 hover:text-green-700 dark:hover:text-green-400">
                     {product.name}
                   </h3>

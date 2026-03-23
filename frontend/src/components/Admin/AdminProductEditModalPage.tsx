@@ -44,7 +44,7 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({ isOpen, onClose, pr
   useEffect(() => {
   const fetchCats = async () => {
     try {
-      const res = await axios.get("http://localhost:9001/api/categories/all");
+      const res = await axios.get("http://localhost:8082/api/categories/all");
       setCategories(res.data);
     } catch (err) {
       console.error("Không lấy được danh mục:", err);
@@ -64,8 +64,8 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({ isOpen, onClose, pr
         ...product,
         category: product.category || { name: "", code: "" },
         specifications: product.specifications || { 
-          material: "", weight: "", dimensions: "", 
-          firmness: "", design: "", certificationNumber: "" 
+          material: "", weight: "", firmness: "", 
+          size: "", thickness: "", design: "", certificationNumber: "" 
         },
         tags: Array.isArray(product.tags) ? product.tags.join(", ") : "",
         images: subImages,
@@ -138,7 +138,7 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({ isOpen, onClose, pr
 
     if (isNewCategory && formData.category!.name) {
     try {
-      await axios.post("http://localhost:9001/api/categories/add", {
+      await axios.post("http://localhost:8082/api/categories/add", {
         name: formData.category!.name,
         code: formData.category!.code
       });
@@ -356,7 +356,8 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({ isOpen, onClose, pr
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               <InputGroup label="Chất liệu" name="specifications.material" value={formData.specifications?.material || ""} onChange={handleChange} />
               <InputGroup label="Độ cứng" name="specifications.firmness" value={formData.specifications?.firmness || ""} onChange={handleChange} />
-              <InputGroup label="Kích thước" name="specifications.dimensions" value={formData.specifications?.dimensions || ""} onChange={handleChange} />
+              <InputGroup label="Kích thước" name="specifications.size" value={formData.specifications?.size || ""} onChange={handleChange} />
+              <InputGroup label="Độ dày" name="specifications.thickness" value={formData.specifications?.thickness || ""} onChange={handleChange} />
               <InputGroup label="Trọng lượng" name="specifications.weight" value={formData.specifications?.weight || ""} onChange={handleChange} />
               <InputGroup label="Thiết kế" name="specifications.design" value={formData.specifications?.design || ""} onChange={handleChange} />
               <InputGroup label="Số chứng nhận" name="specifications.certificationNumber" value={formData.specifications?.certificationNumber || ""} onChange={handleChange} />

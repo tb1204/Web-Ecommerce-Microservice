@@ -41,4 +41,11 @@ public class OrderController {
     public ResponseEntity<OrderResponse> cancelOrder(@PathVariable String id, @RequestBody OrderRequest request) {
         return ResponseEntity.ok(orderService.cancelOrder(id, request.getCancelReason()));
     }
+
+    @GetMapping("/check-purchased")
+    public ResponseEntity<Boolean> checkPurchased(@RequestParam String userId, @RequestParam String productId) {
+        // Gọi qua orderService thay vì orderRepository
+        boolean result = orderService.hasPurchased(userId, productId);
+        return ResponseEntity.ok(result);
+    }
 }

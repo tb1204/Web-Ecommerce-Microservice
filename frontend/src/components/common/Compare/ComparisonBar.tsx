@@ -46,10 +46,10 @@ const ComparisonBar = () => {
           <div className="flex flex-1 gap-2 md:gap-4 overflow-x-auto w-full scrollbar-hide py-1">
             {/* Render các sản phẩm đã chọn */}
             {compareItems.map((item) => (
-              <div key={item._id} className="relative w-16 h-16 md:w-20 md:h-20 border rounded-lg flex-shrink-0 group shadow-sm bg-white">
+              <div key={item.id} className="relative w-16 h-16 md:w-20 md:h-20 border rounded-lg flex-shrink-0 group shadow-sm bg-white">
                 <img src={item.images[0].url} alt={item.name} className="w-full h-full object-cover rounded-lg" />
                 <button 
-                  onClick={() => removeFromCompare(item._id)}
+                  onClick={() => removeFromCompare(item.id)}
                   className="absolute -top-1.5 -right-1.5 md:-top-2 md:-right-2 bg-red-500 text-white rounded-full p-1 shadow-md hover:bg-red-600 transition-all z-20 border-2 border-white"
                 >
                   <X className="w-2.5 h-2.5 md:w-3 md:h-3" strokeWidth={3} />

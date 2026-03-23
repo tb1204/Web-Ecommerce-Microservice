@@ -11,5 +11,7 @@ public interface OrderRepository extends MongoRepository<Order, String> {
 
     Optional<Order> findByOrderNumber(String orderNumber);
 
+    // Tìm xem có đơn hàng nào của User này, chứa Product này và đã ở trạng thái DELIVERED (Đã giao) chưa
+    boolean existsByUserIdAndItems_ProductIdAndOrderStatus(String userId, String productId, String orderStatus);
 
 }

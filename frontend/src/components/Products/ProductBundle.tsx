@@ -10,70 +10,70 @@ import banner_phu_3 from "../../assets/banner/Banner-phu-3.webp";
 const productsData: Record<string, Product[]> = {
   nem: [
     {
-      _id: "nem1",
+      id: "nem1",
       name: "Nệm foam Goodnight Eva gấp 3 nâng đỡ dày 10cm",
       brand: "WolfBed",
       price: 3099000,
       originalPrice: 4599000,
-      images: [{ url: image_nem, is_primary: true }],
+      images: [{ url: image_nem, isPrimary: true }],
       status: "selling",
       rating: 4,
       reviewCount: 150,
-      stock_quantity: 20,
+      stockQuantity: 20,
     },
     {
-      _id: "nem2",
+      id: "nem2",
       name: "Nệm foam tổng hợp Kim Cương Erica Smart Tech",
       brand: "WolfBed",
       price: 4239000,
       originalPrice: 4999000,
-      images: [{ url: image_nem, is_primary: true }],
+      images: [{ url: image_nem, isPrimary: true }],
       status: "selling",
       rating: 4.7,
       reviewCount: 120,
-      stock_quantity: 15,
+      stockQuantity: 15,
     },
   ],
   chanGa: [
     {
-      _id: "cg1",
+      id: "cg1",
       name: "Bộ ga chun Goodnight Airsilk 3CT màu xanh than",
       brand: "WolfBed",
       price: 650000,
       originalPrice: 850000,
-      images: [{ url: image_nem, is_primary: true }],
+      images: [{ url: image_nem, isPrimary: true }],
       status: "selling",
       rating: 4.5,
       reviewCount: 60,
-      stock_quantity: 30,
+      stockQuantity: 30,
     },
   ],
   goi: [
     {
-      _id: "g1",
+      id: "g1",
       name: "Gối nằm cao cấp Artisano",
       brand: "WolfBed",
       price: 450000,
       originalPrice: 650000,
-      images: [{ url: image_nem, is_primary: true }],
+      images: [{ url: image_nem, isPrimary: true }],
       status: "selling",
       rating: 4.5,
       reviewCount: 60,
-      stock_quantity: 30,
+      stockQuantity: 30,
     },
   ],
   phuKien: [
     {
-      _id: "pk1",
+      id: "pk1",
       name: "Tấm bảo vệ nệm Artisano",
       brand: "WolfBed",
       price: 250000,
       originalPrice: 450000,
-      images: [{ url: image_nem, is_primary: true }],
+      images: [{ url: image_nem, isPrimary: true }],
       status: "selling",
       rating: 4.5,
       reviewCount: 60,
-      stock_quantity: 30,
+      stockQuantity: 30,
     },
   ],
 };
@@ -201,7 +201,7 @@ const ProductBundle: React.FC = () => {
             products={currentProducts}
             loading={false}
             onSelect={handleSelectProduct}
-            selectedProductId={selectedProducts[steps[currentStep - 1].key]?._id}
+            selectedProductId={selectedProducts[steps[currentStep - 1].key]?.id}
             isBundleMode={true}
           />
         </div>
@@ -224,7 +224,7 @@ const ProductBundle: React.FC = () => {
                     {selected ? (
                       <div className="flex gap-4 items-center animate-in fade-in slide-in-from-right-2 duration-300">
                         <img
-                          src={selected.images.find((img) => img.is_primary)?.url || image_nem}
+                          src={selected.images.find((img) => img.isPrimary)?.url || image_nem}
                           alt={selected.name}
                           className="w-16 h-16 object-cover rounded-lg border border-gray-100 shadow-sm"
                         />

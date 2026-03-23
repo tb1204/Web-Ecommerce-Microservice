@@ -22,4 +22,6 @@ public interface IOrderService {
 
     //huy don hang
     OrderResponse cancelOrder(String id, String reason);
+
+    boolean hasPurchased(String userId, String productId);
 }
