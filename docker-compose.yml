@@ -73,7 +73,20 @@ services:
     environment:
       - SPRING_DATA_MONGODB_URI=mongodb://host.docker.internal:27017/artisano
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discoveryserver:8761/eureka
-      - CLERK_JWKS_URL=https://pro-oryx-45.clerk.accounts.dev/.well-known/jwks.json
+
+    networks:
+      - mattress-network
+
+  payment-service:
+    build: ./backend/paymentservice
+    container_name: payment-service
+    ports:
+      - "8085:8085"
+    depends_on:
+      - discoveryserver
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://host.docker.internal:27017/artisano
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discoveryserver:8761/eureka
     networks:
       - mattress-network
 

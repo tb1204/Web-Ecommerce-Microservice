@@ -38,6 +38,8 @@ import AdminChatPage from "./components/Admin/AdminChatPage";
 import AdminCommentPage from "./components/Admin/AdminCommentPage";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import AuthRedirect from "./pages/AuthRedirect";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import PaymentFailed from "./pages/PaymentFailed";
 //import AdminSliderUpload from "./components/Admin/AdminSliderUpload";
 
 function App() {
@@ -61,6 +63,8 @@ function App() {
               <Route path="flashsale" element={<FlashSalePage />} />
               <Route path="products" element={<ProductCard />} />
               <Route path="product/:id" element={<ProductDetails />} />
+              <Route path="payment-success" element={<PaymentSuccess />} />
+              <Route path="payment-failed" element={<PaymentFailed />} />
               <Route
                 path="collections/:collection"
                 element={<CollectionPage />}
