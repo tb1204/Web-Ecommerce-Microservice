@@ -1,143 +1,201 @@
 import { MessageCircleMore } from "lucide-react";
 import React, { useState, useMemo, useEffect, useRef } from "react";
 
+// interface Message {
+//   id: string;
+//   conversationId: string;
+//   senderId: string;
+//   senderRole: "USER" | "ADMIN" | "BOT";
+//   senderNickname: string;
+//   type: "TEXT" | "IMAGE" | "FILE";
+//   content: string;
+//   mediaUrl?: string | null;
+//   timestamp: string;
+//   isRead: boolean;
+//   readAt?: string | null;
+//   metadata?: Record<string, any>;
+// }
+
+// interface ConversationSummary {
+//   id: string;
+//   conversationId: string;
+//   type: "USER_ADMIN" | "USER_BOT" | "USER_ADMIN_BOT" | "GROUP";
+//   userId: string;
+//   userNickname: string;
+//   userEmail?: string;
+//   avatar?: string;
+//   lastMessagePreview: string;
+//   lastMessageAt: string;
+//   status: "ACTIVE" | "CLOSED" | "ARCHIVED";
+//   unreadCount: number;
+//   isPinned?: boolean;
+//   isMuted?: boolean;
+// }
+
+// XÓA cái cũ, thay bằng:
 interface Message {
-  _id: string;
+  id: string; // ← id → id
   conversationId: string;
   senderId: string;
   senderRole: "USER" | "ADMIN" | "BOT";
-  senderNickname: string;
-  type: "TEXT" | "IMAGE" | "FILE";
+  type: "TEXT" | "IMAGE" | "VIDEO" | "SYSTEM"; // ← bỏ FILE, thêm VIDEO, SYSTEM
   content: string;
   mediaUrl?: string | null;
-  timestamp: string;
-  isRead: boolean;
-  readAt?: string | null;
-  metadata?: Record<string, any>;
+  thumbnailUrl?: string | null; // ← thêm
+  mimeType?: string | null; // ← thêm
+  mediaSize?: number | null; // ← thêm
+  duration?: number | null; // ← thêm (video)
+  isDeleted: boolean; // ← thêm
+  metadata?: {
+    intent?: string;
+    confidence?: number;
+    isBotResponse?: boolean;
+    botFallback?: boolean;
+    quickReplies?: string[];
+  };
+  createdAt: string; // ← timestamp → createdAt
+  // XÓA: isRead, readAt, senderNickname
 }
 
+// XÓA cái cũ, thay bằng:
 interface ConversationSummary {
-  _id: string;
-  conversationId: string;
-  type: "USER_ADMIN" | "USER_BOT" | "USER_ADMIN_BOT" | "GROUP";
+  id: string; // ← id → id
   userId: string;
-  userNickname: string;
-  userEmail?: string;
-  avatar?: string;
-  lastMessagePreview: string;
-  lastMessageAt: string;
-  status: "ACTIVE" | "CLOSED" | "ARCHIVED";
-  unreadCount: number;
-  isPinned?: boolean;
-  isMuted?: boolean;
+  adminId?: string | null; // ← thêm
+  status: "WAITING" | "ACTIVE" | "BOT_ONLY" | "CLOSED"; // ← sửa lại
+  lastMessage?: string | null; // ← lastMessagePreview → lastMessage
+  lastMessageAt?: string | null;
+  lastSenderRole?: "USER" | "ADMIN" | "BOT"; // ← thêm
+  userLastReadAt?: string | null; // ← thêm
+  adminLastReadAt?: string | null; // ← thêm (tính unread từ đây)
+  botEnabled: boolean; // ← thêm
+  handoffToAdmin: boolean; // ← thêm
+  tags?: string[]; // ← thêm
+  userDisplayName?: string; // ← thêm (thay userNickname)
+  userAvatarUrl?: string | null; // ← thêm (thay avatar)
+  isPinned?: boolean; // ← giữ nguyên
+  isMuted?: boolean; // ← giữ nguyên
+  createdAt: string;
+  updatedAt: string;
+  // XÓA: id, conversationId, type, userNickname, userEmail, avatar
+  // XÓA: unreadCount (tính từ adminLastReadAt)
 }
 
 const fakeConversationSummaries: ConversationSummary[] = [
   {
-    _id: "conv_001",
-    conversationId: "conv_usr1001_admin001_20260223",
-    type: "USER_ADMIN",
+    id: "conv_001", // ← _id → id
     userId: "usr_1001",
-    userNickname: "Nguyễn Văn A",
-    userEmail: "vana@gmail.com",
-    lastMessagePreview: "Nệm này có độ cứng trung bình không ạ?",
-    lastMessageAt: "2026-02-23T14:30:00Z",
+    adminId: null,
     status: "ACTIVE",
-    unreadCount: 3,
+    lastMessage: "Nệm này có độ cứng trung bình không ạ?", // ← lastMessagePreview → lastMessage
+    lastMessageAt: "2026-02-23T14:30:00Z",
+    lastSenderRole: "USER",
+    adminLastReadAt: null, // ← thêm
+    userLastReadAt: null, // ← thêm
+    botEnabled: true, // ← thêm
+    handoffToAdmin: false, // ← thêm
+    userDisplayName: "Nguyễn Văn A", // ← userNickname → userDisplayName
+    userAvatarUrl: null, // ← avatar → userAvatarUrl
     isPinned: true,
     isMuted: false,
+    createdAt: "2026-02-23T10:00:00Z", // ← thêm
+    updatedAt: "2026-02-23T14:30:00Z", // ← thêm
   },
   {
-    _id: "conv_002",
-    conversationId: "conv_usr1002_admin001_20260223",
-    type: "USER_ADMIN",
+    id: "conv_002",
     userId: "usr_1002",
-    userNickname: "Trần Thị B",
-    userEmail: "thib@gmail.com",
-    lastMessagePreview: "Gối cao su non có bảo hành bao lâu vậy shop?",
-    lastMessageAt: "2026-02-23T09:15:00Z",
+    adminId: "admin_001",
     status: "ACTIVE",
-    unreadCount: 0,
+    lastMessage: "Gối cao su non có bảo hành bao lâu vậy shop?",
+    lastMessageAt: "2026-02-23T09:15:00Z",
+    lastSenderRole: "USER",
+    adminLastReadAt: "2026-02-23T09:20:00Z",
+    userLastReadAt: null,
+    botEnabled: false,
+    handoffToAdmin: true,
+    userDisplayName: "Trần Thị B",
+    userAvatarUrl: null,
     isPinned: false,
     isMuted: true,
+    createdAt: "2026-02-23T09:00:00Z",
+    updatedAt: "2026-02-23T09:20:00Z",
   },
   {
-    _id: "conv_003",
-    conversationId: "conv_usr1003_admin001_20260222",
-    type: "USER_ADMIN",
+    id: "conv_003",
     userId: "usr_1003",
-    userNickname: "Lê Minh C",
-    lastMessagePreview: "Có chương trình khuyến mãi tháng này không ạ?",
+    adminId: null,
+    status: "WAITING",
+    lastMessage: "Có chương trình khuyến mãi tháng này không ạ?",
     lastMessageAt: "2026-02-22T21:45:00Z",
-    status: "ACTIVE",
-    unreadCount: 1,
+    lastSenderRole: "USER",
+    adminLastReadAt: null,
+    userLastReadAt: null,
+    botEnabled: true,
+    handoffToAdmin: false,
+    userDisplayName: "Lê Minh C",
+    userAvatarUrl: null,
     isPinned: false,
     isMuted: false,
+    createdAt: "2026-02-22T21:00:00Z",
+    updatedAt: "2026-02-22T21:45:00Z",
   },
 ];
 
 const fakeMessagesByConv: Record<string, Message[]> = {
   conv_001: [
     {
-      _id: "msg_1",
+      id: "msg_1", // ← _id → id
       conversationId: "conv_001",
       senderId: "usr_1001",
       senderRole: "USER",
-      senderNickname: "Nguyễn Văn A",
       type: "TEXT",
       content: "Chào shop ơi",
-      mediaUrl: null,
-      timestamp: "2026-02-23T14:10:00Z",
-      isRead: true,
+      isDeleted: false, // ← thêm
+      createdAt: "2026-02-23T14:10:00Z", // ← timestamp → createdAt
     },
     {
-      _id: "msg_2",
+      id: "msg_2",
       conversationId: "conv_001",
       senderId: "usr_1001",
       senderRole: "USER",
-      senderNickname: "Nguyễn Văn A",
       type: "TEXT",
       content: "Nệm này có độ cứng trung bình không ạ?",
-      mediaUrl: null,
-      timestamp: "2026-02-23T14:30:00Z",
-      isRead: false,
+      isDeleted: false,
+      createdAt: "2026-02-23T14:30:00Z",
     },
   ],
   conv_002: [
     {
-      _id: "msg_3",
+      id: "msg_3",
       conversationId: "conv_002",
       senderId: "usr_1002",
       senderRole: "USER",
-      senderNickname: "Trần Thị B",
       type: "TEXT",
       content: "Gối cao su non có bảo hành bao lâu vậy shop?",
-      timestamp: "2026-02-23T09:15:00Z",
-      isRead: true,
+      isDeleted: false,
+      createdAt: "2026-02-23T09:15:00Z",
     },
     {
-      _id: "msg_4",
+      id: "msg_4",
       conversationId: "conv_002",
       senderId: "admin_001",
       senderRole: "ADMIN",
-      senderNickname: "Admin Shop",
       type: "TEXT",
       content: "Dạ chị ơi bảo hành 5 năm ạ, lỗi kỹ thuật đổi mới 100%",
-      timestamp: "2026-02-23T09:20:00Z",
-      isRead: true,
+      isDeleted: false,
+      createdAt: "2026-02-23T09:20:00Z",
     },
   ],
   conv_003: [
     {
-      _id: "msg_5",
+      id: "msg_5",
       conversationId: "conv_003",
       senderId: "usr_1003",
       senderRole: "USER",
-      senderNickname: "Lê Minh C",
       type: "TEXT",
       content: "Có chương trình khuyến mãi tháng này không ạ?",
-      timestamp: "2026-02-22T21:45:00Z",
-      isRead: false,
+      isDeleted: false,
+      createdAt: "2026-02-22T21:45:00Z",
     },
   ],
 };
@@ -160,6 +218,18 @@ const AdminChatPage: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
+  const getUnreadCount = (conv: ConversationSummary, msgs: Message[]) => {
+    if (!conv.adminLastReadAt)
+      return msgs.length > 0
+        ? msgs.filter((m) => m.senderRole === "USER").length
+        : 0;
+    return msgs.filter(
+      (msg) =>
+        msg.senderRole === "USER" &&
+        new Date(msg.createdAt) > new Date(conv.adminLastReadAt!),
+    ).length;
+  };
+
   // Đóng menu ba chấm khi click ngoài
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -174,7 +244,7 @@ const AdminChatPage: React.FC = () => {
   // Load messages khi chọn conversation
   useEffect(() => {
     if (selectedSummary) {
-      const loaded = fakeMessagesByConv[selectedSummary._id] || [];
+      const loaded = fakeMessagesByConv[selectedSummary.id] || []; // ← _id → id
       setMessages(loaded);
     } else {
       setMessages([]);
@@ -185,19 +255,18 @@ const AdminChatPage: React.FC = () => {
   useEffect(() => {
     if (messages.length > 0 && selectedSummary) {
       const hasUnread = messages.some(
-        (msg) => !msg.isRead && msg.senderRole === "USER",
+        (msg) =>
+          msg.senderRole === "USER" &&
+          (!selectedSummary.adminLastReadAt ||
+            new Date(msg.createdAt) >
+              new Date(selectedSummary.adminLastReadAt)),
       );
       if (hasUnread) {
-        const updatedMsgs = messages.map((msg) =>
-          !msg.isRead && msg.senderRole === "USER"
-            ? { ...msg, isRead: true, readAt: new Date().toISOString() }
-            : msg,
-        );
-        setMessages(updatedMsgs);
+        const now = new Date().toISOString();
         setSummaries((prev) =>
           prev.map((conv) =>
-            conv._id === selectedSummary._id
-              ? { ...conv, unreadCount: 0 }
+            conv.id === selectedSummary.id // ← _id → id
+              ? { ...conv, adminLastReadAt: now }
               : conv,
           ),
         );
@@ -210,30 +279,29 @@ const AdminChatPage: React.FC = () => {
       if (a.isPinned && !b.isPinned) return -1;
       if (!a.isPinned && b.isPinned) return 1;
       return (
-        new Date(b.lastMessageAt).getTime() -
-        new Date(a.lastMessageAt).getTime()
+        new Date(b.lastMessageAt ?? 0).getTime() -
+        new Date(a.lastMessageAt ?? 0).getTime()
       );
     });
   }, [summaries]);
 
   const filteredSummaries = useMemo(() => {
     return sortedSummaries.filter((conv) => {
-      // Logic tìm kiếm theo tên/nội dung (giữ nguyên)
       const matchSearch =
-        conv.userNickname.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        conv.lastMessagePreview
+        (conv.userDisplayName ?? "")
           .toLowerCase()
-          .includes(searchTerm.toLowerCase()) ||
-        (conv.userEmail &&
-          conv.userEmail.toLowerCase().includes(searchTerm.toLowerCase()));
+          .includes(searchTerm.toLowerCase()) || // ← userNickname → userDisplayName
+        (conv.lastMessage ?? "")
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase()); // ← lastMessagePreview → lastMessage
 
-      // Logic lọc theo trạng thái Đọc/Chưa đọc
+      const unreadCount = getUnreadCount(
+        conv,
+        fakeMessagesByConv[conv.id] || [],
+      );
       let matchStatus = true;
-      if (statusFilter === "UNREAD") {
-        matchStatus = conv.unreadCount > 0; // Nếu có tin chưa đọc thì unreadCount > 0
-      } else if (statusFilter === "READ") {
-        matchStatus = conv.unreadCount === 0; // Đã đọc hết thì unreadCount bằng 0
-      }
+      if (statusFilter === "UNREAD") matchStatus = unreadCount > 0;
+      else if (statusFilter === "READ") matchStatus = unreadCount === 0;
 
       return matchSearch && matchStatus;
     });
@@ -241,38 +309,34 @@ const AdminChatPage: React.FC = () => {
 
   const handleSendReply = () => {
     if (!selectedSummary) return;
-
     if (replyText.trim() || selectedImage) {
       const newMsgs: Message[] = [];
 
       if (replyText.trim()) {
         newMsgs.push({
-          _id: `msg_text_${Date.now()}`,
-          conversationId: selectedSummary.conversationId,
+          id: `msg_text_${Date.now()}`, // ← _id → id
+          conversationId: selectedSummary.id, // ← conversationId → id
           senderId: "admin_001",
           senderRole: "ADMIN",
-          senderNickname: "Admin Shop",
           type: "TEXT",
           content: replyText.trim(),
-          mediaUrl: null,
-          timestamp: new Date().toISOString(),
-          isRead: true,
+          isDeleted: false, // ← thêm
+          createdAt: new Date().toISOString(), // ← timestamp → createdAt
         });
       }
 
       if (selectedImage) {
         const fakeImageUrl = URL.createObjectURL(selectedImage);
         newMsgs.push({
-          _id: `msg_img_${Date.now()}`,
-          conversationId: selectedSummary.conversationId,
+          id: `msg_img_${Date.now()}`,
+          conversationId: selectedSummary.id,
           senderId: "admin_001",
           senderRole: "ADMIN",
-          senderNickname: "Admin Shop",
           type: "IMAGE",
           content: "Ảnh sản phẩm",
           mediaUrl: fakeImageUrl,
-          timestamp: new Date().toISOString(),
-          isRead: true,
+          isDeleted: false,
+          createdAt: new Date().toISOString(),
         });
         setSelectedImage(null);
         setImagePreview(null);
@@ -282,16 +346,16 @@ const AdminChatPage: React.FC = () => {
 
       setSummaries((prev) =>
         prev.map((conv) =>
-          conv._id === selectedSummary._id
+          conv.id === selectedSummary.id // ← _id → id
             ? {
                 ...conv,
-                lastMessagePreview: replyText.trim() || "Đã gửi ảnh",
+                lastMessage: replyText.trim() || "Đã gửi ảnh", // ← lastMessagePreview → lastMessage
                 lastMessageAt: new Date().toISOString(),
+                lastSenderRole: "ADMIN" as const,
               }
             : conv,
         ),
       );
-
       setReplyText("");
     }
   };
@@ -314,8 +378,13 @@ const AdminChatPage: React.FC = () => {
   const toggleMarkRead = (convId: string) => {
     setSummaries((prev) =>
       prev.map((conv) =>
-        conv._id === convId
-          ? { ...conv, unreadCount: conv.unreadCount > 0 ? 0 : 1 }
+        conv.id === convId // ← _id → id
+          ? {
+              ...conv,
+              adminLastReadAt: conv.adminLastReadAt
+                ? null
+                : new Date().toISOString(),
+            }
           : conv,
       ),
     );
@@ -325,7 +394,7 @@ const AdminChatPage: React.FC = () => {
   const togglePin = (convId: string) => {
     setSummaries((prev) =>
       prev.map((conv) =>
-        conv._id === convId ? { ...conv, isPinned: !conv.isPinned } : conv,
+        conv.id === convId ? { ...conv, isPinned: !conv.isPinned } : conv,
       ),
     );
     setOpenMenuId(null);
@@ -334,7 +403,7 @@ const AdminChatPage: React.FC = () => {
   const toggleMute = (convId: string) => {
     setSummaries((prev) =>
       prev.map((conv) =>
-        conv._id === convId ? { ...conv, isMuted: !conv.isMuted } : conv,
+        conv.id === convId ? { ...conv, isMuted: !conv.isMuted } : conv,
       ),
     );
     setOpenMenuId(null);
@@ -342,8 +411,8 @@ const AdminChatPage: React.FC = () => {
 
   const deleteConversation = (convId: string) => {
     if (window.confirm("Xóa cuộc trò chuyện này?")) {
-      setSummaries((prev) => prev.filter((c) => c._id !== convId));
-      if (selectedSummary?._id === convId) {
+      setSummaries((prev) => prev.filter((c) => c.id !== convId));
+      if (selectedSummary?.id === convId) {
         setSelectedSummary(null);
         setMessages([]);
       }
@@ -388,9 +457,9 @@ const AdminChatPage: React.FC = () => {
             ) : (
               filteredSummaries.map((conv) => (
                 <div
-                  key={conv._id}
+                  key={conv.id}
                   className={`p-4 border-b border-gray-200 cursor-pointer hover:bg-blue-50 relative ${
-                    selectedSummary?._id === conv._id
+                    selectedSummary?.id === conv.id
                       ? "bg-blue-50 border-l-4 border-blue-500"
                       : ""
                   }`}
@@ -427,7 +496,7 @@ const AdminChatPage: React.FC = () => {
                             onClick={(e) => {
                               e.stopPropagation();
                               setOpenMenuId(
-                                openMenuId === conv._id ? null : conv._id,
+                                openMenuId === conv.id ? null : conv.id,
                               );
                             }}
                             className="text-gray-600 hover:text-gray-900 p-1 rounded-full hover:bg-gray-200"
@@ -435,13 +504,13 @@ const AdminChatPage: React.FC = () => {
                             ⋯
                           </button>
 
-                          {openMenuId === conv._id && (
+                          {openMenuId === conv.id && (
                             <div
                               ref={menuRef}
                               className="absolute right-0 top-8 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50 py-1 text-sm"
                             >
                               <button
-                                onClick={() => toggleMarkRead(conv._id)}
+                                onClick={() => toggleMarkRead(conv.id)}
                                 className="w-full text-left px-4 py-2 hover:bg-gray-100"
                               >
                                 {conv.unreadCount > 0
@@ -449,13 +518,13 @@ const AdminChatPage: React.FC = () => {
                                   : "Đánh dấu chưa đọc"}
                               </button>
                               <button
-                                onClick={() => togglePin(conv._id)}
+                                onClick={() => togglePin(conv.id)}
                                 className="w-full text-left px-4 py-2 hover:bg-gray-100"
                               >
                                 {conv.isPinned ? "Bỏ ghim" : "Ghim"}
                               </button>
                               <button
-                                onClick={() => toggleMute(conv._id)}
+                                onClick={() => toggleMute(conv.id)}
                                 className="w-full text-left px-4 py-2 hover:bg-gray-100"
                               >
                                 {conv.isMuted
@@ -463,7 +532,7 @@ const AdminChatPage: React.FC = () => {
                                   : "Tắt thông báo"}
                               </button>
                               <button
-                                onClick={() => deleteConversation(conv._id)}
+                                onClick={() => deleteConversation(conv.id)}
                                 className="w-full text-left px-4 py-2 hover:bg-gray-100 text-red-600"
                               >
                                 Xóa tin nhắn
@@ -537,7 +606,7 @@ const AdminChatPage: React.FC = () => {
                 <div className="flex-1 p-4 md:p-6 overflow-y-auto space-y-4 bg-gray-50">
                   {messages.map((msg) => (
                     <div
-                      key={msg._id}
+                      key={msg.id}
                       className={`flex ${msg.senderRole === "ADMIN" ? "justify-end" : "justify-start"} group relative`}
                     >
                       {/* Container chính: Bỏ px-4 py-3 và các class bg- màu nền ở đây */}

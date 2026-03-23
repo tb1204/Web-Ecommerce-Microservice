@@ -1,14 +1,17 @@
-
 package com.b2204925.userservice.controller;
 
 import com.b2204925.userservice.dto.UserUpdateDto;
 import com.b2204925.userservice.entity.User;
 import com.b2204925.userservice.service.UserService;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/users")
@@ -28,7 +31,7 @@ public class UserController {
     @PutMapping("/me")
     public ResponseEntity<User> updateProfile(
             @AuthenticationPrincipal Jwt jwt,
-            @RequestBody UserUpdateDto dto) {
+            @Valid @RequestBody UserUpdateDto dto) {
         return ResponseEntity.ok(userService.updateUserProfile(jwt.getSubject(), dto));
     }
 
