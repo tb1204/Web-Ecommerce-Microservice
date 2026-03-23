@@ -63,7 +63,8 @@ public class ProductService {
         if (product.getSpecifications() != null) {
             var spec = product.getSpecifications();
             if (spec.getMaterial() != null) spec.setMaterial(spec.getMaterial().trim());
-            if (spec.getDimensions() != null) spec.setDimensions(spec.getDimensions().trim());
+            if (spec.getSize() != null) spec.setSize(spec.getSize().trim());
+            if (spec.getThickness() != null) spec.setThickness(spec.getThickness().trim());
             if (spec.getFirmness() != null) spec.setFirmness(spec.getFirmness().trim());
             if (spec.getWeight() != null) spec.setWeight(spec.getWeight().trim());
             if (spec.getDesign() != null) spec.setDesign(spec.getDesign().trim());

@@ -35,8 +35,8 @@ const AdminProductPage = () => {
       try {
         // Gọi song song cả 2 API để tối ưu tốc độ
         const [prodRes, catRes] = await Promise.all([
-          axios.get("http://localhost:9001/api/products/all"),
-          axios.get("http://localhost:9001/api/categories/all")
+          axios.get("http://localhost:8082/api/products/all"),
+          axios.get("http://localhost:8082/api/categories/all")
         ]);
 
         if (prodRes.status === 200) setProducts(prodRes.data);
@@ -62,7 +62,7 @@ const AdminProductPage = () => {
     */
     
     try {
-      const response = await axios.get("http://localhost:9001/api/products/all");
+      const response = await axios.get("http://localhost:8082/api/products/all");
       if (response.status === 200) {
         setProducts(response.data);
       }
@@ -99,7 +99,7 @@ const handleDelete = async (id: string) => {
 
   try {
     
-    await axios.delete(`http://localhost:9001/api/products/delete/${id}`); 
+    await axios.delete(`http://localhost:8082/api/products/delete/${id}`); 
     
     setProducts(products.filter(p => p.id !== id)); 
     toast.success("Xóa thành công!");
@@ -121,7 +121,7 @@ const handleDelete = async (id: string) => {
     const data = new FormData();
     data.append("product", new Blob([JSON.stringify(updatedProduct)], { type: "application/json" }));
     const response = await axios.put(
-      `http://localhost:9001/api/products/update/${updatedProduct.id}`, 
+      `http://localhost:8082/api/products/update/${updatedProduct.id}`, 
       data, 
       { headers: { 'Content-Type': 'multipart/form-data' } } 
     );
@@ -143,11 +143,11 @@ const handleDelete = async (id: string) => {
   // };
 const handleAddProduct = async (formData: FormData) => {
  try {
-    const response = await axios.post("http://localhost:9001/api/products/add", formData);
+    const response = await axios.post("http://localhost:8082/api/products/add", formData);
     if (response.status >= 200 && response.status < 300) {
       toast.success("Thêm nệm Artisano thành công rực rỡ!");
       
-      const refresh = await axios.get("http://localhost:9001/api/products/all");
+      const refresh = await axios.get("http://localhost:8082/api/products/all");
       setProducts(refresh.data); 
       
       setIsAddOpen(false);

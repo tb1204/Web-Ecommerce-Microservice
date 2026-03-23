@@ -19,7 +19,7 @@ spring:
     uri: mongodb://localhost:27017/artisano
 
 server:
-  port: 9002
+  port: 8084
 
 clerk:
   secret-key: sk_test_mq9Hrj7XvqbGDNYwgSZvHDDZ5iMk3eOdodECqHEpOU
@@ -34,7 +34,7 @@ logging:
   level:
     org.springframework.security: INFO
     org.springframework.web: INFO
-    com.b2204925: DEBUG
+    com.b2204922: DEBUG
 
 cloudinary:
   cloud-name: dkmzqfc8j

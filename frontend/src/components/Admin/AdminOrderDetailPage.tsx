@@ -1,4 +1,4 @@
-import { X, Package, User, MapPin, Truck,  Phone, Mail, CreditCard, Clock, ShoppingBag, Edit } from "lucide-react";
+import { X, Package, User, MapPin, Truck,  Phone, Mail, CreditCard, Clock, ShoppingBag, } from "lucide-react";
 import type { Order } from "../Products/InterfaceItem";
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
   onEdit: () => void;
 }
 
-const AdminOrderDetailModal = ({ isOpen, onClose, order, onEdit }: Props) => {
+const AdminOrderDetailModal = ({ isOpen, onClose, order }: Props) => {
   if (!isOpen || !order) return null;
 
   const formatDate = (dateStr: string) => {

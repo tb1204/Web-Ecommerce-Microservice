@@ -56,8 +56,9 @@ public class Product {
     public static class Specifications {
         private String material;
         private String weight;
-        private String dimensions;
         private String firmness;
+        private String size;
+        private String thickness;
         private String design;
         private String certificationNumber;
     }

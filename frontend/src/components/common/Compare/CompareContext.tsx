@@ -47,7 +47,7 @@ export const CompareProvider = ({ children }: { children: ReactNode }) => {
     }
 
     // 2. Kiểm tra trùng lặp
-    if (compareItems.find((p) => p._id === product._id)) {
+    if (compareItems.find((p) => p.id === product.id)) {
       toast.warning("Sản phẩm này đã có trong danh sách!");
       return;
     }
@@ -64,7 +64,7 @@ export const CompareProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const removeFromCompare = (productId: string) => {
-    setCompareItems(compareItems.filter((p) => p._id !== productId));
+    setCompareItems(compareItems.filter((p) => p.id !== productId));
   };
 
   const clearCompare = () => setCompareItems([]);

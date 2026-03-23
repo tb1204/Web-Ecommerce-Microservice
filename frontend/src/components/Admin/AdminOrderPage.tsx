@@ -128,7 +128,7 @@ const AdminOrderPage = () => {
     setLoading(true);
     try {
       // Gọi API cổng 9002 của Order Service
-      const response = await axios.get("http://localhost:9002/api/orders/all");
+      const response = await axios.get("http://localhost:8084/api/orders/all");
       if (response.status === 200) {
         setOrders(response.data);
       }
@@ -153,7 +153,7 @@ const AdminOrderPage = () => {
   const handleStatusChange = async (id: string, newStatus: string) => {
     try {
       // Khớp với @PatchMapping("/status/{id}") @RequestParam String status ở Backend
-      const response = await axios.patch(`http://localhost:9002/api/orders/status/${id}?status=${newStatus}`);
+      const response = await axios.patch(`http://localhost:8084/api/orders/status/${id}?status=${newStatus}`);
       
       if (response.status === 200) {
         setOrders((prev) => prev.map((o) => (o.id === id ? response.data : o)));

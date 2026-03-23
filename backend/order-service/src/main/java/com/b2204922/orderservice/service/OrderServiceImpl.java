@@ -31,7 +31,7 @@ public class OrderServiceImpl implements IOrderService {
 
     private final IPaymentService paymentService;
 
-    @Value("${product.service.url:http://localhost:8081}") // Cổng của product-service bạn đang dùng
+    @Value("${product.service.url:http://localhost:9001}") // Cổng của product-service bạn đang dùng
     private String productServiceUrl;
 
 //    @Value("${payment.service.url:http://localhost:9004}")
@@ -49,7 +49,7 @@ public class OrderServiceImpl implements IOrderService {
                     //Dung eureka
 //                    String url = "http://product-service/api/products/" + itemReq.getProductId();
                     //Goi truc tiep (test local khong dung eureka)
-                    String url = "http://localhost:9001/api/products/detail/" + itemReq.getProductId();
+                    String url = "http://localhost:8082/api/products/detail/" + itemReq.getProductId();
                     try {
                         @SuppressWarnings("unchecked") //tat canh bao Map
                         Map<String, Object> product = restTemplate.getForObject(url, Map.class);
@@ -323,5 +323,9 @@ public class OrderServiceImpl implements IOrderService {
         } catch (Exception e) {
             log.error("Lỗi khi cập nhật kho tại Product Service: {}", e.getMessage());
         }
+    }
+
+    public boolean hasPurchased(String userId, String productId) {
+        return orderRepository.existsByUserIdAndItems_ProductIdAndOrderStatus(userId, productId, "DELIVERED");
     }
 }

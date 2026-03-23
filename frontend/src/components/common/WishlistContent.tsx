@@ -19,10 +19,10 @@ export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const addToWishlist = (product: Product) => {
     setWishlistItems((prev) => {
-      const isExist = prev.find((item) => item._id === product._id);
+      const isExist = prev.find((item) => item.id === product.id);
       let newList;
       if (isExist) {
-        newList = prev.filter((item) => item._id !== product._id); // Toggle: Bỏ thích nếu nhấn lại
+        newList = prev.filter((item) => item.id !== product.id); // Toggle: Bỏ thích nếu nhấn lại
       } else {
         newList = [...prev, product];
       }
@@ -31,7 +31,7 @@ export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     });
   };
 
-  const isInWishlist = (productId: string) => wishlistItems.some((item) => item._id === productId);
+  const isInWishlist = (productId: string) => wishlistItems.some((item) => item.id === productId);
 
   return (
     <WishlistContext.Provider value={{ wishlistItems, addToWishlist, isInWishlist }}>

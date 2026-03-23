@@ -130,7 +130,8 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ isOpen, onClose
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               <DetailBox label="Chất liệu" value={product.specifications?.material} icon={<ImageIcon size={14}/>} />
               <DetailBox label="Độ cứng" value={product.specifications?.firmness} />
-              <DetailBox label="Kích thước" value={product.specifications?.dimensions} icon={<Ruler size={14}/>} />
+              <DetailBox label="Kích thước" value={product.specifications?.size} icon={<Ruler size={14}/>} />
+              <DetailBox label="Độ dày" value={product.specifications?.thickness} icon={<Ruler size={14}/>} />
               <DetailBox label="Trọng lượng" value={product.specifications?.weight} icon={<Weight size={14}/>} />
               <DetailBox label="Thiết kế" value={product.specifications?.design} />
               <DetailBox label="Số chứng nhận" value={product.specifications?.certificationNumber} icon={<ShieldCheck size={14}/>} />

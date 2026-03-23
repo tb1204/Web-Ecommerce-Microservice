@@ -23,10 +23,10 @@ const MainCollectionPage: React.FC = () => {
   // Dữ liệu gốc
   const allProducts: Product[] = useMemo(() => {
     const baseProducts: Product[] = [
-      { _id: "p1", name: "Topper memory foam Comfy Noah", brand: "Comfy", category: { name: "Topper", code: "topper" }, price: 2160000, originalPrice: 2400000, images: [{ url: image_nem, is_primary: true }], status: "selling", rating: 5, reviewCount: 120, stock_quantity: 10 },
-      { _id: "p2", name: "Chiếu điều hòa Doona Aqua", brand: "Doona", category: { name: "Chiếu điều hòa", code: "topper" }, price: 729000, originalPrice: 890000, images: [{ url: image_nem, is_primary: true }], status: "selling", rating: 4.8, reviewCount: 92, stock_quantity: 10 },
-      { _id: "p3", name: "Bảo vệ nệm Doona Bamboo", brand: "Doona", category: { name: "Bảo vệ nệm", code: "bao-ve-nem" }, price: 800000, originalPrice: 900000, images: [{ url: image_nem, is_primary: true }], status: "selling", rating: 4.7, reviewCount: 66, stock_quantity: 10 },
-      { _id: "p4", name: "Ga chống thấm Goodnight Sumi", brand: "Goodnight", category: { name: "Chăn ga gối", code: "chan-ga-goi" }, price: 239000, originalPrice: 390000, images: [{ url: image_nem, is_primary: true }], status: "selling", rating: 4.9, reviewCount: 45, stock_quantity: 10 },
+      { id: "p1", name: "Topper memory foam Comfy Noah", brand: "Comfy", category: { name: "Topper", code: "topper" }, price: 2160000, originalPrice: 2400000, images: [{ url: image_nem, isPrimary: true }], status: "selling", rating: 5, reviewCount: 120, stockQuantity: 10 },
+      { id: "p2", name: "Chiếu điều hòa Doona Aqua", brand: "Doona", category: { name: "Chiếu điều hòa", code: "topper" }, price: 729000, originalPrice: 890000, images: [{ url: image_nem, isPrimary: true }], status: "selling", rating: 4.8, reviewCount: 92, stockQuantity: 10 },
+      { id: "p3", name: "Bảo vệ nệm Doona Bamboo", brand: "Doona", category: { name: "Bảo vệ nệm", code: "bao-ve-nem" }, price: 800000, originalPrice: 900000, images: [{ url: image_nem, isPrimary: true }], status: "selling", rating: 4.7, reviewCount: 66, stockQuantity: 10 },
+      { id: "p4", name: "Ga chống thấm Goodnight Sumi", brand: "Goodnight", category: { name: "Chăn ga gối", code: "chan-ga-goi" }, price: 239000, originalPrice: 390000, images: [{ url: image_nem, isPrimary: true }], status: "selling", rating: 4.9, reviewCount: 45, stockQuantity: 10 },
     ];
     return Array.from({ length: 60 }, (_, i) => ({
       ...baseProducts[i % baseProducts.length],
