@@ -47,11 +47,12 @@ public class ProductController {
         return ResponseEntity.ok(updated);
     }
 
-    // @GetMapping("/by-ids")
-    // public ResponseEntity<List<Product>> getProductsByIds(@RequestParam List<String> ids) {
-    //     List<Product> products = productService.findProductsByIds(ids);
-    //     return ResponseEntity.ok(products);
-    // }
+    @GetMapping("/by-ids")
+    public ResponseEntity<List<Product>> getProductsByIds(@RequestParam List<String> ids) {
+        List<Product> products = productService.findProductsByIds(ids);
+        return ResponseEntity.ok(products);
+    }
+    
     @GetMapping("/all")
     public ResponseEntity<List<Product>> getAllProducts() {
 
