@@ -1,0 +1,50 @@
+#test
+spring:
+  application:
+    name: order-service
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${clerk.jwks-url}
+          issuer-uri: ${clerk.issuer}
+
+  # servlet:
+  #   multipart:
+  #     max-file-size: 10MB
+  #     max-request-size: 10MB
+  mongodb:
+    database: artisano
+    uri: mongodb://localhost:27017/artisano
+
+server:
+  port: 8084
+
+clerk:
+  secret-key: sk_test_mq9Hrj7XvqbGDNYwgSZvHDDZ5iMk3eOdodECqHEpOU
+  webhook-signing-secret: whsec_5SeFqqSkpDMiMWGe+Edi5tD8LezrF8D/
+  frontend-api: https://pro-oryx-45.clerk.accounts.dev
+  jwks-url: https://pro-oryx-45.clerk.accounts.dev/.well-known/jwks.json
+  issuer: https://pro-oryx-45.clerk.accounts.dev
+  api-url: https://api.clerk.com/v1
+
+# Logging (tùy chọn, để debug Clerk/JWT)
+logging:
+  level:
+    org.springframework.security: INFO
+    org.springframework.web: INFO
+    com.b2204922: DEBUG
+
+cloudinary:
+  cloud-name: dkmzqfc8j
+  api-key: 135129715757794
+  api-secret: MA5qNJ0VC-TrlsB9YGQyOU4wgDo
+
+# Nếu sau này dùng Eureka (microservices), uncomment và config
+# eureka:
+#   client:
+#     service-url:
+#       defaultZone: http://localhost:8761/eureka
+#     register-with-eureka: true
+#     fetch-registry: true

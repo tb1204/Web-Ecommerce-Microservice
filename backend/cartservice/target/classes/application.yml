@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: cart-service
+
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/artisano
+      database: artisano
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: https://pro-oryx-45.clerk.accounts.dev/.well-known/jwks.json
+          issuer-uri: https://pro-oryx-45.clerk.accounts.dev
+
+server:
+  port: 8083
+
+clerk:
+  frontend-api: https://pro-oryx-45.clerk.accounts.dev
+  jwks-url: https://pro-oryx-45.clerk.accounts.dev/.well-known/jwks.json
+  issuer: https://pro-oryx-45.clerk.accounts.dev
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discoveryserver:8761/eureka # ← đổi localhost
+    register-with-eureka: true
+    fetch-registry: true
+
+logging:
+  level:
+    org.springframework.security: INFO
+    org.springframework.web: INFO
+    com.b2204925: DEBUG
