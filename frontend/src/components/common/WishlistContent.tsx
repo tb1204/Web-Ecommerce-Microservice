@@ -93,7 +93,7 @@ export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({
       console.log("Wishlist IDs:", res.data);
 
       // Tạm thời để rỗng (bạn sẽ cải tiến sau)
-      setWishlistItems([]);
+      setWishlistItems(res.data as Product[]);
     } catch (err) {
       console.error("Lỗi lấy wishlist:", err);
       toast.error("Không thể tải danh sách yêu thích");

@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.ParameterizedTypeReference;\
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.web.client.RestTemplate;
 
 import org.springframework.http.HttpMethod;
@@ -28,6 +28,7 @@ import java.util.Map;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final RestTemplate restTemplate; 
 
     // ─── Queries ──────────────────────────────────────────────────────────────
     public List<User> getAllUsers() {
