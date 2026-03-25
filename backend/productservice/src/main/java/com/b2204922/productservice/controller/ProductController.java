@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import com.b2204922.productservice.repository.ProductRepository;
 
-
 import java.util.Collections;
 import java.util.List;
 
@@ -42,12 +41,18 @@ public class ProductController {
     public ResponseEntity<Product> updateProduct(
             @PathVariable String id,
             @RequestPart("product") Product product,
-            @RequestPart(value="imageFiles", required = false) List<MultipartFile> imageFiles
-    ){
+            @RequestPart(value = "imageFiles", required = false) List<MultipartFile> imageFiles
+    ) {
         Product updated = productService.updateProduct(id, product, imageFiles);
         return ResponseEntity.ok(updated);
     }
 
+    @GetMapping("/by-ids")
+    public ResponseEntity<List<Product>> getProductsByIds(@RequestParam List<String> ids) {
+        List<Product> products = productService.findProductsByIds(ids);
+        return ResponseEntity.ok(products);
+    }
+    
     @GetMapping("/all")
     public ResponseEntity<List<Product>> getAllProducts() {
 
