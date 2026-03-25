@@ -8,7 +8,10 @@ D:\luanvanhk2dvb\backend\userservice\src\main\java\com\b2204925\userservice\cont
 D:\luanvanhk2dvb\backend\userservice\src\main\java\com\b2204925\userservice\controller\WebhookController.java
 D:\luanvanhk2dvb\backend\userservice\src\main\java\com\b2204925\userservice\dto\AdminUserUpdateDto.java
 D:\luanvanhk2dvb\backend\userservice\src\main\java\com\b2204925\userservice\dto\CreateClerkUserRequest.java
+<<<<<<< HEAD
 D:\luanvanhk2dvb\backend\userservice\src\main\java\com\b2204925\userservice\dto\UserResponse.java
+=======
+>>>>>>> feat/user-service
 D:\luanvanhk2dvb\backend\userservice\src\main\java\com\b2204925\userservice\dto\UserUpdateDto.java
 D:\luanvanhk2dvb\backend\userservice\src\main\java\com\b2204925\userservice\entity\Address.java
 D:\luanvanhk2dvb\backend\userservice\src\main\java\com\b2204925\userservice\entity\Membership.java
