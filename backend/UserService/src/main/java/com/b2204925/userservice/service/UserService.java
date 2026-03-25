@@ -10,6 +10,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -120,5 +121,40 @@ public class UserService {
         user.setIsBlocked(false);
         user.setUpdatedAt(Instant.now());
         userRepository.save(user);
+    }
+
+    // Lấy danh sách wishlist (productId)
+    public List<String> getWishlist(String clerkId) {
+        User user = getUserOrThrow(clerkId);
+        return user.getWishlist() != null ? user.getWishlist() : new ArrayList<>();
+    }
+
+// Thêm productId vào wishlist
+    public List<String> addToWishlist(String clerkId, String productId) {
+        User user = getUserOrThrow(clerkId);
+
+        if (user.getWishlist() == null) {
+            user.setWishlist(new ArrayList<>());
+        }
+
+        // Không thêm trùng
+        if (!user.getWishlist().contains(productId)) {
+            user.getWishlist().add(productId);
+            user.setUpdatedAt(Instant.now());
+            userRepository.save(user);
+        }
+        return user.getWishlist();
+    }
+
+// Xóa productId khỏi wishlist
+    public List<String> removeFromWishlist(String clerkId, String productId) {
+        User user = getUserOrThrow(clerkId);
+
+        if (user.getWishlist() != null) {
+            user.getWishlist().remove(productId);
+            user.setUpdatedAt(Instant.now());
+            userRepository.save(user);
+        }
+        return user.getWishlist() != null ? user.getWishlist() : new ArrayList<>();
     }
 }
