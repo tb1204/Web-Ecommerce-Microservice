@@ -3,14 +3,18 @@ package com.b2204925.userservice.controller;
 import com.b2204925.userservice.dto.AdminUserUpdateDto;
 import com.b2204925.userservice.dto.CreateClerkUserRequest;
 import com.b2204925.userservice.entity.User;
+import com.b2204925.userservice.repository.UserRepository;
 import com.b2204925.userservice.service.AdminUserService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Map;
@@ -25,11 +29,15 @@ public class AdminUserController {
     private static final Logger logger = LoggerFactory.getLogger(AdminUserController.class);
 
     private final AdminUserService adminUserService;
+    private final UserRepository userRepository; // ← THÊM DÒNG NÀY
 
     // GET /api/admin/users
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        return ResponseEntity.ok(adminUserService.getAllUsers());
+    public ResponseEntity<?> getAllUsers(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(userRepository.findAll(pageable));
     }
 
     // GET /api/admin/users/{clerkId}
