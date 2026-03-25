@@ -56,6 +56,12 @@ public class User {
     @Builder.Default
     private List<Address> addresses = new ArrayList<>();
 
+// Thêm vào sau field addresses:
+@Builder.Default
+private List<String> wishlist = new ArrayList<>();
+// Lưu danh sách productId user đã thích
+// VD: ["product_001", "product_002"]
+    
     @JsonProperty("isActive")
     @Builder.Default
     private Boolean isActive = true;

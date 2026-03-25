@@ -1,4 +1,4 @@
-import { MessageCircleMore } from "lucide-react";
+import { MessageCircleMore, MessagesSquare } from "lucide-react";
 import React, { useState, useMemo, useEffect, useRef } from "react";
 
 // interface Message {
@@ -424,7 +424,9 @@ const AdminChatPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-6">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">
+        <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6 flex items-center gap-3">
+          <MessagesSquare className="text-emerald-600" />{" "}
+          {/* hoặc MessageSquare */}
           Quản lý Tin nhắn
         </h1>
 
@@ -467,14 +469,14 @@ const AdminChatPage: React.FC = () => {
                 >
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center font-semibold shrink-0">
-                      {conv.avatar ? (
+                      {conv.userAvatarUrl ? (
                         <img
-                          src={conv.avatar}
+                          src={conv.userAvatarUrl}
                           alt=""
                           className="rounded-full"
                         />
                       ) : (
-                        conv.userNickname.charAt(0)
+                        (conv.userDisplayName ?? "?").charAt(0)
                       )}
                     </div>
                     <div className="flex-1 min-w-0">
@@ -488,7 +490,7 @@ const AdminChatPage: React.FC = () => {
                               📌
                             </span>
                           )}
-                          {conv.userNickname}
+                          {conv.userDisplayName}
                         </h4>
 
                         <div className="relative">
@@ -513,7 +515,10 @@ const AdminChatPage: React.FC = () => {
                                 onClick={() => toggleMarkRead(conv.id)}
                                 className="w-full text-left px-4 py-2 hover:bg-gray-100"
                               >
-                                {conv.unreadCount > 0
+                                {getUnreadCount(
+                                  conv,
+                                  fakeMessagesByConv[conv.id] || [],
+                                ) > 0
                                   ? "Đánh dấu đã đọc"
                                   : "Đánh dấu chưa đọc"}
                               </button>
@@ -543,13 +548,19 @@ const AdminChatPage: React.FC = () => {
                       </div>
 
                       <p className="text-sm text-gray-600 truncate mt-0.5">
-                        {conv.lastMessagePreview}
+                        {conv.lastMessage}
                       </p>
 
                       <div className="flex items-center gap-2 mt-1.5">
-                        {conv.unreadCount > 0 && (
+                        {getUnreadCount(
+                          conv,
+                          fakeMessagesByConv[conv.id] || [],
+                        ) > 0 && (
                           <span className="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">
-                            {conv.unreadCount}
+                            {getUnreadCount(
+                              conv,
+                              fakeMessagesByConv[conv.id] || [],
+                            )}
                           </span>
                         )}
                       </div>
@@ -567,14 +578,14 @@ const AdminChatPage: React.FC = () => {
                 <div className="p-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center font-semibold">
-                      {selectedSummary.avatar ? (
+                      {selectedSummary.userAvatarUrl ? (
                         <img
-                          src={selectedSummary.avatar}
+                          src={selectedSummary.userAvatarUrl}
                           alt=""
                           className="rounded-full"
                         />
                       ) : (
-                        selectedSummary.userNickname.charAt(0)
+                        (selectedSummary.userDisplayName?.charAt(0) ?? "?")
                       )}
                     </div>
                     <div className="flex items-center gap-2">
@@ -583,13 +594,8 @@ const AdminChatPage: React.FC = () => {
                       )}
                       <div>
                         <h3 className="font-semibold text-gray-900">
-                          {selectedSummary.userNickname}
+                          {selectedSummary.userDisplayName}
                         </h3>
-                        {selectedSummary.userEmail && (
-                          <p className="text-sm text-gray-500">
-                            {selectedSummary.userEmail}
-                          </p>
-                        )}
                       </div>
                     </div>
                   </div>
@@ -651,13 +657,10 @@ const AdminChatPage: React.FC = () => {
                               : "justify-start text-gray-500"
                           }`}
                         >
-                          {new Date(msg.timestamp).toLocaleTimeString("vi-VN", {
+                          {new Date(msg.createdAt).toLocaleTimeString("vi-VN", {
                             hour: "2-digit",
                             minute: "2-digit",
                           })}
-                          {msg.isRead && msg.senderRole === "ADMIN" && (
-                            <span className="text-blue-500 font-bold">✓</span>
-                          )}
                         </p>
 
                         {/* Nút xóa tin nhắn: Điều chỉnh vị trí một chút để không đè lên nội dung */}

@@ -8,18 +8,6 @@ spring:
       uri: mongodb://localhost:27017/artisano
       database: artisano
 
-  # security:
-  #   oauth2:
-  #     resourceserver:
-  #       jwt:
-  #         jwk-set-uri: ${clerk.jwks-url}
-  #         issuer-uri: ${clerk.issuer}
-
-  # servlet:
-  #   multipart:
-  #     max-file-size: 10MB
-  #     max-request-size: 10MB
-
 server:
   port: 8081
 

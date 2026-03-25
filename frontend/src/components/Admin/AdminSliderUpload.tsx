@@ -1,4 +1,5 @@
 import { useAuth } from "@clerk/clerk-react";
+import { Images } from "lucide-react";
 import { useState, useEffect } from "react";
 
 interface SliderImage {
@@ -169,7 +170,10 @@ function AdminSliderUpload() {
 
   return (
     <div className="p-6 bg-white rounded-lg shadow-lg max-w-5xl mx-auto">
-      <h2 className="text-3xl font-bold mb-6 text-left">Quản lý Slider</h2>
+      <h1 className="text-3xl font-bold text-gray-800 mb-6 flex items-center gap-3">
+        <Images className="text-emerald-600" size={36} />
+        Quản lý Slider
+      </h1>
 
       {/* Chọn loại banner */}
       <div className="mb-8">

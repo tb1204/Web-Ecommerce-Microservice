@@ -29,20 +29,13 @@ public class WebSocketAuthInterceptor implements ChannelInterceptor {
         // Chỉ kiểm tra khi CONNECT (lúc kết nối WebSocket lần đầu)
         if (StompCommand.CONNECT.equals(accessor.getCommand())) {
             String authHeader = accessor.getFirstNativeHeader("Authorization");
-            // Frontend gửi: Authorization: Bearer <token>
-
             if (authHeader != null && authHeader.startsWith("Bearer ")) {
                 String token = authHeader.substring(7);
-                // Cắt bỏ "Bearer " lấy token
 
                 try {
-                    var jwt = jwtDecoder.decode(token);
-                    // Verify token
-
+                    var jwt = jwtDecoder.decode(token);//chữ ký hết hạn hợp lệ không
                     var authentication = customJwtConverter.convert(jwt);
-                    accessor.setUser(authentication);
-                    // Lưu authentication vào WebSocket session
-                    // Dùng để biết user nào đang kết nối
+                    accessor.setUser(authentication);  // Lưu authentication vào WebSocket session Dùng để biết user nào đang kết nối                    
 
                     log.info("WebSocket connected: {}", jwt.getSubject());
                 } catch (JwtException e) {
