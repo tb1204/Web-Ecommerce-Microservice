@@ -6,6 +6,8 @@ import com.b2204925.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Map;
+
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -34,30 +36,30 @@ public class UserController {
         return ResponseEntity.ok(userService.updateUserProfile(jwt.getSubject(), dto));
     }
 
-    // Thêm 3 endpoint vào UserController:
-// GET /api/users/me/wishlist
-    @GetMapping("/me/wishlist")
-    public ResponseEntity<List<String>> getWishlist(
-            @AuthenticationPrincipal Jwt jwt) {
-        return ResponseEntity.ok(userService.getWishlist(jwt.getSubject()));
-    }
+ // ================== WISHLIST ENDPOINTS ==================
 
-// POST /api/users/me/wishlist/{productId}
-    @PostMapping("/me/wishlist/{productId}")
-    public ResponseEntity<List<String>> addToWishlist(
-            @AuthenticationPrincipal Jwt jwt,
-            @PathVariable String productId) {
-        return ResponseEntity.ok(userService.addToWishlist(jwt.getSubject(), productId));
-    }
+// GET /api/users/me/wishlist  → trả về full thông tin sản phẩm
+@GetMapping("/me/wishlist")
+public ResponseEntity<List<Map<String, Object>>> getWishlist(
+        @AuthenticationPrincipal Jwt jwt) {
+    return ResponseEntity.ok(userService.getWishlist(jwt.getSubject()));
+}
 
-// DELETE /api/users/me/wishlist/{productId}
-    @DeleteMapping("/me/wishlist/{productId}")
-    public ResponseEntity<List<String>> removeFromWishlist(
-            @AuthenticationPrincipal Jwt jwt,
-            @PathVariable String productId) {
-        return ResponseEntity.ok(userService.removeFromWishlist(jwt.getSubject(), productId));
-    }
+// POST /api/users/me/wishlist/{productId}  → vẫn trả về List<String> (IDs)
+@PostMapping("/me/wishlist/{productId}")
+public ResponseEntity<List<String>> addToWishlist(
+        @AuthenticationPrincipal Jwt jwt,
+        @PathVariable String productId) {
+    return ResponseEntity.ok(userService.addToWishlist(jwt.getSubject(), productId));
+}
 
+// DELETE /api/users/me/wishlist/{productId} → vẫn trả về List<String> (IDs)
+@DeleteMapping("/me/wishlist/{productId}")
+public ResponseEntity<List<String>> removeFromWishlist(
+        @AuthenticationPrincipal Jwt jwt,
+        @PathVariable String productId) {
+    return ResponseEntity.ok(userService.removeFromWishlist(jwt.getSubject(), productId));
+}
     // POST /api/users/logout
     @PostMapping("/logout")
     public ResponseEntity<String> logout() {

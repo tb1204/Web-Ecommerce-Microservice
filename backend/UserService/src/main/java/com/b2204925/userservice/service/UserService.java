@@ -6,16 +6,25 @@ import com.b2204925.userservice.exception.AppException;
 import com.b2204925.userservice.exception.ErrorCode;
 import com.b2204925.userservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.ParameterizedTypeReference;\
+import org.springframework.web.client.RestTemplate;
 
+import org.springframework.http.HttpMethod;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserService {
 
     private final UserRepository userRepository;
@@ -123,21 +132,46 @@ public class UserService {
         userRepository.save(user);
     }
 
-    // Lấy danh sách wishlist (productId)
-    public List<String> getWishlist(String clerkId) {
+    // ================== WISHLIST - GỌI PRODUCT-SERVICE LẤY FULL PRODUCT ==================
+
+
+
+
+    public List<Map<String, Object>> getWishlist(String clerkId) {
         User user = getUserOrThrow(clerkId);
-        return user.getWishlist() != null ? user.getWishlist() : new ArrayList<>();
+        
+        List<String> productIds = user.getWishlist() != null ? user.getWishlist() : new ArrayList<>();
+        
+        if (productIds.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        try {
+            String idsParam = String.join(",", productIds);
+            String url = "http://localhost:9001/api/products/by-ids?ids=" + idsParam;
+
+            ResponseEntity<List<Map<String, Object>>> response = restTemplate.exchange(
+                    url,
+                    HttpMethod.GET,
+                    null,
+                    new ParameterizedTypeReference<List<Map<String, Object>>>() {}
+            );
+
+            return response.getBody() != null ? response.getBody() : new ArrayList<>();
+
+        } catch (Exception e) {
+            log.error("Lỗi khi gọi Product Service lấy wishlist cho user {}: {}", clerkId, e.getMessage());
+            return new ArrayList<>();
+        }
     }
 
-// Thêm productId vào wishlist
     public List<String> addToWishlist(String clerkId, String productId) {
         User user = getUserOrThrow(clerkId);
-
+        
         if (user.getWishlist() == null) {
             user.setWishlist(new ArrayList<>());
         }
-
-        // Không thêm trùng
+        
         if (!user.getWishlist().contains(productId)) {
             user.getWishlist().add(productId);
             user.setUpdatedAt(Instant.now());
@@ -146,10 +180,9 @@ public class UserService {
         return user.getWishlist();
     }
 
-// Xóa productId khỏi wishlist
     public List<String> removeFromWishlist(String clerkId, String productId) {
         User user = getUserOrThrow(clerkId);
-
+        
         if (user.getWishlist() != null) {
             user.getWishlist().remove(productId);
             user.setUpdatedAt(Instant.now());
