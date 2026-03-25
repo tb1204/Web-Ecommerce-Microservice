@@ -1,7 +1,10 @@
 package com.b2204922.productservice.entity;
+
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor //Tao ham xay dung khong tham so
 @AllArgsConstructor //Tao ham xay dung day du tham so
 public class Product {
+
     @Id
     private String id;
 
@@ -38,6 +42,7 @@ public class Product {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Category {
+
         private String name;
         private String code;
     }
@@ -46,7 +51,9 @@ public class Product {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class ProductImage {
+
         private String url;
+        @JsonProperty("is_primary")
         private Boolean isPrimary;
     }
 
@@ -54,6 +61,7 @@ public class Product {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Specifications {
+
         private String material;
         private String weight;
         private String dimensions;
@@ -62,4 +70,3 @@ public class Product {
         private String certificationNumber;
     }
 }
-
