@@ -1,6 +1,5 @@
 import { useUser, useClerk, useAuth } from "@clerk/clerk-react";
 import { useState, useEffect } from "react";
-import { toast } from "sonner";
 import axios from "axios";
 import {
   FiCamera,
@@ -11,7 +10,9 @@ import {
   FiSave,
   FiUser,
 } from "react-icons/fi";
-import { ChevronDown } from "lucide-react";
+
+import { toast } from "sonner";
+
 const CustomProfile = () => {
   const { isLoaded, isSignedIn, user } = useUser();
   const { signOut } = useClerk();
@@ -19,8 +20,6 @@ const CustomProfile = () => {
 
   const [username, setUsername] = useState("");
   const [firstName, setFirstName] = useState("");
-  const [displayFirstName, setDisplayFirstName] = useState("");
-  const [displayLastName, setDisplayLastName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
   const [gender, setGender] = useState("");
@@ -64,8 +63,6 @@ const CustomProfile = () => {
         setGender(data.gender || "");
         setMembership(data.membership?.tierName || data.membership || "Member");
         setAddresses(data.addresses || []);
-        setDisplayFirstName(data.firstName || "");
-        setDisplayLastName(data.lastName || "");
       } catch (err) {
         console.error("Lỗi load profile từ DB:", err);
         // Fallback về Clerk nếu DB lỗi
@@ -116,24 +113,17 @@ const CustomProfile = () => {
     try {
       const token = await getToken({ template: "my-backend" });
 
-      // BƯỚC 1: Cập nhật Clerk (username, firstName, lastName)
-      await user?.update({
-        username: username || undefined,
-        firstName: firstName || undefined,
-        lastName: lastName || undefined,
-      });
-      setDisplayFirstName(firstName);
-      setDisplayLastName(lastName);
-      // BƯỚC 2: Cập nhật MongoDB (tất cả fields)
+      // Chỉ cập nhật DB — đủ rồi
       await axios.put(
         "http://localhost:8081/api/users/me",
-        { username, firstName, lastName, phone, gender },
+        { firstName, lastName, phone, gender, avatarUrl: user?.imageUrl },
         { headers: { Authorization: `Bearer ${token}` } },
       );
 
-      toast.success("Đã lưu thành công!");
+      toast.success("Đã lưu thông tin thành công!");
     } catch (err: any) {
       console.error("Lỗi:", err);
+      toast.error(err.response?.data?.message || "Lỗi khi lưu");
     }
   };
   const handleChangePassword = async () => {
@@ -151,19 +141,7 @@ const CustomProfile = () => {
       setNewPassword("");
       setConfirmPassword("");
     } catch (err: any) {
-      const clerkError = err.errors?.[0];
-      const errorMap: Record<string, string> = {
-        form_password_incorrect: "Mật khẩu hiện tại không đúng.",
-        form_password_pwned:
-          "Mật khẩu này quá phổ biến, vui lòng chọn mật khẩu khác.",
-        form_password_too_short: "Mật khẩu quá ngắn.",
-        form_password_no_match: "Mật khẩu xác nhận không khớp.",
-        form_param_nil: "Vui lòng điền đầy đủ thông tin.",
-      };
-      const msg = clerkError?.code
-        ? errorMap[clerkError.code] || clerkError.message || "Lỗi hệ thống."
-        : "Lỗi hệ thống.";
-      setPasswordError(msg);
+      setPasswordError(err.errors?.[0]?.message || "Lỗi hệ thống.");
     }
   };
 
@@ -207,22 +185,15 @@ const CustomProfile = () => {
     }
   };
 
-  const MEMBERSHIP_LABEL: Record<string, string> = {
-    MEMBER: "Thành viên",
-    SILVER: "Bạc",
-    GOLD: "Vàng",
-    DIAMOND: "Kim cương",
-  };
-
   const getTierBadgeClass = (tierName?: string) => {
     switch (tierName) {
-      case "MEMBER":
+      case "Member":
         return "bg-orange-100 text-orange-700 border border-orange-200";
-      case "SILVER":
+      case "Silver":
         return "bg-gray-100 text-gray-700 border border-gray-300";
-      case "GOLD":
+      case "Gold":
         return "bg-yellow-100 text-yellow-800 border border-yellow-300";
-      case "DIAMOND":
+      case "Diamond":
         return "bg-blue-50 text-blue-700 border border-blue-200";
       default:
         return "bg-gray-100 text-gray-600 border border-gray-200";
@@ -276,7 +247,7 @@ const CustomProfile = () => {
           </div>
           <div className="text-center md:text-left space-y-1">
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-              {displayFirstName} {displayLastName}
+              {firstName} {lastName}
             </h1>
             <p className="text-gray-500 dark:text-gray-400 flex items-center justify-center md:justify-start gap-2">
               <FiMail className="inline" />{" "}
@@ -285,7 +256,7 @@ const CustomProfile = () => {
             <span
               className={`inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mt-2 ${getTierBadgeClass(membership)}`}
             >
-              Hạng: {MEMBERSHIP_LABEL[membership] || membership}
+              Hạng: {membership}
             </span>
           </div>
         </div>
@@ -316,28 +287,20 @@ const CustomProfile = () => {
                     />
                   </div>
                 ))}
-
                 <div className="space-y-2 md:col-span-2">
                   <label className="text-xs font-bold text-gray-400 uppercase ml-1">
                     Giới tính
                   </label>
-                  <div className="relative">
-                    {" "}
-                    {/* ← bọc select + icon vào đây */}
-                    <select
-                      value={gender}
-                      onChange={(e) => setGender(e.target.value)}
-                      className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-2 border-gray-400 dark:border-gray-600 rounded-xl focus:outline-none focus:border-gray-600 dark:focus:border-white transition appearance-none cursor-pointer"
-                    >
-                      <option value="">Chọn giới tính</option>
-                      <option value="male">Nam</option>
-                      <option value="female">Nữ</option>
-                      <option value="other">Khác</option>
-                    </select>
-                    <div className="pointer-events-none absolute inset-y-0 right-4 flex items-center">
-                      <ChevronDown size={16} className="text-gray-400" />
-                    </div>
-                  </div>
+                  <select
+                    value={gender}
+                    onChange={(e) => setGender(e.target.value)}
+                    className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-2 border-gray-400 dark:border-gray-600 rounded-xl focus:outline-none focus:border-gray-600 dark:focus:border-white transition"
+                  >
+                    <option value="">Chọn giới tính</option>
+                    <option value="male">Nam</option>
+                    <option value="female">Nữ</option>
+                    <option value="other">Khác</option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -463,7 +426,6 @@ const CustomProfile = () => {
               <h2 className="text-lg font-bold mb-6 flex items-center gap-2">
                 <FiLock className="text-[#14532d]" /> Bảo mật
               </h2>
-
               <div className="space-y-4">
                 <input
                   type="password"
