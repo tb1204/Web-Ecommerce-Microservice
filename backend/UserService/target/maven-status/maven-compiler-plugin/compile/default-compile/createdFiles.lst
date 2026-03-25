@@ -15,6 +15,7 @@ com\b2204925\userservice\UserServiceApplication.class
 com\b2204925\userservice\config\CustomJwtConverter.class
 com\b2204925\userservice\exception\GlobalExceptionHandler.class
 com\b2204925\userservice\entity\Membership.class
+com\b2204925\userservice\service\UserService$1.class
 com\b2204925\userservice\dto\CreateClerkUserRequest.class
 com\b2204925\userservice\exception\ErrorCode.class
 com\b2204925\userservice\dto\AdminUserUpdateDto.class
