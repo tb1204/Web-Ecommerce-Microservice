@@ -1,16 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "@clerk/clerk-react";
-// import type { Product } from "../Products/InterfaceItem";
 import { toast } from "sonner";
 
-// interface WishlistContextType {
-//   wishlistItems: Product[];
-//   addToWishlist: (product: Product) => Promise<void>;
-//   isInWishlist: (productId: string) => boolean;
-//   loading: boolean;
-//   refetch: () => Promise<void>;
-// }
 interface Product {
   _id: string;
   name: string;
@@ -46,37 +38,35 @@ export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({
   const [loading, setLoading] = useState(false);
   const { getToken } = useAuth();
 
-  // Hàm lấy token giống hệt AdminUsersPage của bạn
   const getAuthHeader = async () => {
     const token = await getToken({ template: "my-backend" });
     return token ? { Authorization: `Bearer ${token}` } : {};
   };
 
-  // Lấy wishlist từ backend
+  // Lấy danh sách wishlist từ backend
   const fetchWishlist = async () => {
     setLoading(true);
     try {
       const headers = await getAuthHeader();
       const res = await axios.get(
-        "http://localhost:8080/api/users/me/wishlist",
+        "http://localhost:8081/api/users/me/wishlist",
         { headers },
       );
 
-      // Hiện tại backend trả về List<String> (chỉ productId)
-      // Nếu bạn muốn hiển thị full Product → sau này sửa backend
-      console.log("Wishlist IDs:", res.data);
+      console.log("Wishlist response:", res.data);
 
-      // Tạm thời để rỗng (bạn sẽ cải tiến sau)
-      setWishlistItems(res.data as Product[]);
-    } catch (err) {
+      // Backend hiện đang trả về mảng Product → ép kiểu an toàn
+      setWishlistItems(Array.isArray(res.data) ? res.data : []);
+    } catch (err: any) {
       console.error("Lỗi lấy wishlist:", err);
       toast.error("Không thể tải danh sách yêu thích");
+      setWishlistItems([]); // Tránh lỗi undefined khi render
     } finally {
       setLoading(false);
     }
   };
 
-  // Thêm / Xóa (toggle)
+  // Thêm / Xóa khỏi wishlist (toggle)
   const addToWishlist = async (product: Product) => {
     try {
       const headers = await getAuthHeader();
@@ -85,26 +75,24 @@ export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({
       );
 
       if (isCurrentlyInWishlist) {
-        // Xóa
         await axios.delete(
-          `http://localhost:8080/api/users/me/wishlist/${product._id}`,
+          `http://localhost:8081/api/users/me/wishlist/${product._id}`,
           { headers },
         );
         toast.success("Đã xóa khỏi yêu thích");
       } else {
-        // Thêm
         await axios.post(
-          `http://localhost:8080/api/users/me/wishlist/${product._id}`,
+          `http://localhost:8081/api/users/me/wishlist/${product._id}`,
           {},
           { headers },
         );
         toast.success("Đã thêm vào yêu thích ❤️");
       }
 
-      // Refresh lại danh sách
+      // Refresh lại danh sách sau khi thêm/xóa
       await fetchWishlist();
     } catch (err: any) {
-      console.error(err);
+      console.error("Wishlist error:", err);
       toast.error("Thao tác thất bại, vui lòng thử lại");
     }
   };
@@ -113,7 +101,7 @@ export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({
     return wishlistItems.some((item) => item._id === productId);
   };
 
-  // Load wishlist khi mở app
+  // Tự động load wishlist khi component mount
   useEffect(() => {
     fetchWishlist();
   }, []);
@@ -135,7 +123,11 @@ export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({
 
 export const useWishlist = () => {
   const context = useContext(WishlistContext);
-  if (!context)
+  if (!context) {
     throw new Error("useWishlist must be used within a WishlistProvider");
+  }
   return context;
 };
+
+// ==================== EXPORT DEFAULT Ở CUỐI FILE ====================
+export default WishlistProvider;
