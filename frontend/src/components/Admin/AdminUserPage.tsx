@@ -9,6 +9,7 @@ import {
   XCircle,
   CheckCircle,
   ChevronDown,
+  Users,
 } from "lucide-react";
 import { useAuth } from "@clerk/clerk-react";
 
@@ -474,7 +475,10 @@ const AdminUsersPage = () => {
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-gray-800">Quản lý Người dùng</h1>
+        <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-3">
+          <Users className="text-emerald-600" />
+          Quản lý Người dùng
+        </h1>
         <button
           onClick={handleCreate}
           className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
