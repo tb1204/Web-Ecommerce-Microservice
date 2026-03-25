@@ -60,7 +60,7 @@ const products: Product[] = [
     stockQuantity: 5,
   },
   {
-    id: "p4",
+    id: "p5",
     name: "Nệm Lò Xo Túi Độc Lập Cao Cấp",
     brand: "WolfBed",
     price: 8900000,
@@ -72,7 +72,7 @@ const products: Product[] = [
     stockQuantity: 5,
   },
   {
-    id: "p4",
+    id: "p6",
     name: "Nệm Lò Xo Túi Độc Lập Cao Cấp",
     brand: "WolfBed",
     price: 8900000,

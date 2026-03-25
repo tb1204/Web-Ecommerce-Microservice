@@ -14,21 +14,18 @@
     <name>product-service</name>
     <description>product-service</description>
 
-<<<<<<< HEAD:backend/productservice/pom.xml
-=======
+
     <!--    <properties>-->
     <!--        <java.version>17</java.version>-->
     <!--        <spring-cloud.version>2024.0.1</spring-cloud.version>-->
     <!--    </properties>-->
->>>>>>> feat/order-service:backend/product-service/pom.xml
+
     <properties>
         <java.version>17</java.version>
         <lombok.version>1.18.34</lombok.version>
         <spring-cloud.version>2023.0.3</spring-cloud.version>
     </properties>
 
-<<<<<<< HEAD:backend/productservice/pom.xml
-=======
     <!--    <dependencies>-->
     <!--        <dependency>-->
     <!--            <groupId>org.springframework.boot</groupId>-->
@@ -74,28 +71,26 @@
     <!--        </dependency>-->
     <!--    </dependencies>-->
 
->>>>>>> feat/order-service:backend/product-service/pom.xml
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-<<<<<<< HEAD:backend/productservice/pom.xml
-=======
+
         <!--        <dependency>-->
         <!--            <groupId>org.springframework.boot</groupId>-->
         <!--            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>-->
         <!--        </dependency>-->
 
->>>>>>> feat/order-service:backend/product-service/pom.xml
+
         <dependency>
             <groupId>org.apache.httpcomponents.client5</groupId>
             <artifactId>httpclient5</artifactId>
         </dependency>
 
-<<<<<<< HEAD:backend/productservice/pom.xml
-=======
+
 
 
         <!--        <dependency>-->
@@ -103,7 +98,7 @@
         <!--            <artifactId>spring-boot-starter-security</artifactId>-->
         <!--        </dependency>-->
 
->>>>>>> feat/order-service:backend/product-service/pom.xml
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
@@ -146,7 +141,7 @@
         </dependency>
     </dependencies>
 
-<<<<<<< HEAD:backend/productservice/pom.xml
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -159,7 +154,7 @@
         </dependencies>
     </dependencyManagement>
 
-=======
+
     <!--    <dependencyManagement>-->
     <!--        <dependencies>-->
     <!--            <dependency>-->
@@ -188,7 +183,7 @@
     <!--            </plugin>-->
     <!--        </plugins>-->
     <!--    </build>-->
->>>>>>> feat/order-service:backend/product-service/pom.xml
+
     <build>
         <plugins>
             <plugin>

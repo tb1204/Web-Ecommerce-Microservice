@@ -34,7 +34,7 @@ export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({
     try {
       const headers = await getAuthHeader();
       const res = await axios.get(
-        "http://localhost:8080/api/users/me/wishlist",
+        "http://localhost:8081/api/users/me/wishlist",
         { headers },
       );
       setWishlistItems(res.data as Product[]);
@@ -55,13 +55,13 @@ export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({
 
       if (isCurrentlyInWishlist) {
         await axios.delete(
-          `http://localhost:8080/api/users/me/wishlist/${product.id}`,
+          `http://localhost:8081/api/users/me/wishlist/${product.id}`,
           { headers },
         );
         toast.success("Đã xóa khỏi yêu thích");
       } else {
         await axios.post(
-          `http://localhost:8080/api/users/me/wishlist/${product.id}`,
+          `http://localhost:8081/api/users/me/wishlist/${product.id}`,
           {},
           { headers },
         );
