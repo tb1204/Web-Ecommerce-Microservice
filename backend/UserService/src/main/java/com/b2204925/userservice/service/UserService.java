@@ -1,6 +1,5 @@
 package com.b2204925.userservice.service;
 
-import com.b2204925.userservice.dto.UserResponse;
 import com.b2204925.userservice.dto.UserUpdateDto;
 import com.b2204925.userservice.entity.User;
 import com.b2204925.userservice.exception.AppException;
@@ -8,20 +7,28 @@ import com.b2204925.userservice.exception.ErrorCode;
 import com.b2204925.userservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.web.client.RestTemplate;
 
+import org.springframework.http.HttpMethod;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserService {
 
     private final UserRepository userRepository;
+    private final RestTemplate restTemplate; 
 
     // ─── Queries ──────────────────────────────────────────────────────────────
     public List<User> getAllUsers() {
@@ -66,11 +73,6 @@ public class UserService {
         });
     }
 
-    public Page<UserResponse> getAllUsers(Pageable pageable) {
-        return userRepository.findAll(pageable)
-                .map(user -> mapToResponse(user));
-    }
-
     // ─── Update profile (user tự cập nhật) ───────────────────────────────────
     public User updateUserProfile(String clerkId, UserUpdateDto dto) {
         User user = getUserOrThrow(clerkId);
@@ -91,9 +93,6 @@ public class UserService {
         }
         if (dto.getEmail() != null) {
             user.setEmail(dto.getEmail());
-        }
-        if (dto.getUsername() != null) {
-            user.setUsername(dto.getUsername());
         }
         user.setUpdatedAt(Instant.now());
         return userRepository.save(user);
@@ -134,25 +133,62 @@ public class UserService {
         userRepository.save(user);
     }
 
-    private UserResponse mapToResponse(User user) {
-        UserResponse res = new UserResponse();
-        res.setId(user.getId());
-        res.setClerkId(user.getClerkId());
-        res.setEmail(user.getEmail());
-        res.setUsername(user.getUsername());
-        res.setFirstName(user.getFirstName());
-        res.setLastName(user.getLastName());
-        res.setPhone(user.getPhone());
-        res.setGender(user.getGender());
-        res.setAvatarUrl(user.getAvatarUrl());
-        res.setRoles(user.getRoles());
-        res.setIsActive(user.getIsActive());
-        res.setIsBlocked(user.getIsBlocked());
-        // res.setActive(user.getIsActive());
-        // res.setBlocked(user.getIsBlocked());
-        res.setMembership(user.getMembership() != null ? user.getMembership().getTierName() : null);
-        res.setCreatedAt(user.getCreatedAt());
-        res.setUpdatedAt(user.getUpdatedAt());
-        return res;
+    // ================== WISHLIST - GỌI PRODUCT-SERVICE LẤY FULL PRODUCT ==================
+
+
+
+
+    public List<Map<String, Object>> getWishlist(String clerkId) {
+        User user = getUserOrThrow(clerkId);
+        
+        List<String> productIds = user.getWishlist() != null ? user.getWishlist() : new ArrayList<>();
+        
+        if (productIds.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        try {
+            String idsParam = String.join(",", productIds);
+            String url = "http://localhost:9001/api/products/by-ids?ids=" + idsParam;
+
+            ResponseEntity<List<Map<String, Object>>> response = restTemplate.exchange(
+                    url,
+                    HttpMethod.GET,
+                    null,
+                    new ParameterizedTypeReference<List<Map<String, Object>>>() {}
+            );
+
+            return response.getBody() != null ? response.getBody() : new ArrayList<>();
+
+        } catch (Exception e) {
+            log.error("Lỗi khi gọi Product Service lấy wishlist cho user {}: {}", clerkId, e.getMessage());
+            return new ArrayList<>();
+        }
+    }
+
+    public List<String> addToWishlist(String clerkId, String productId) {
+        User user = getUserOrThrow(clerkId);
+        
+        if (user.getWishlist() == null) {
+            user.setWishlist(new ArrayList<>());
+        }
+        
+        if (!user.getWishlist().contains(productId)) {
+            user.getWishlist().add(productId);
+            user.setUpdatedAt(Instant.now());
+            userRepository.save(user);
+        }
+        return user.getWishlist();
+    }
+
+    public List<String> removeFromWishlist(String clerkId, String productId) {
+        User user = getUserOrThrow(clerkId);
+        
+        if (user.getWishlist() != null) {
+            user.getWishlist().remove(productId);
+            user.setUpdatedAt(Instant.now());
+            userRepository.save(user);
+        }
+        return user.getWishlist() != null ? user.getWishlist() : new ArrayList<>();
     }
 }

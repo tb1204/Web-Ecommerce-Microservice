@@ -1,6 +1,5 @@
 package com.b2204925.userservice.service;
 
-import com.b2204925.userservice.dto.AdminUserUpdateDto;
 import com.b2204925.userservice.dto.CreateClerkUserRequest;
 import com.b2204925.userservice.exception.AppException;
 import com.b2204925.userservice.exception.ErrorCode;
@@ -130,33 +129,6 @@ public class ClerkService {
             logger.warn("Clerk delete user {} failed (may already be deleted): {}", clerkId, e.getMessage());
             // không throw — vẫn cho phép xóa DB nếu Clerk 404
         }
-    }
-
-    public void updateUserInfo(String clerkId, AdminUserUpdateDto dto) {
-        Map<String, Object> body = new HashMap<>();
-
-        if (dto.getFirstName() != null) {
-            body.put("first_name", dto.getFirstName());
-        }
-        if (dto.getLastName() != null) {
-            body.put("last_name", dto.getLastName());
-        }
-        if (dto.getUsername() != null) {
-            body.put("username", dto.getUsername());
-        }
-
-        if (body.isEmpty()) {
-            return; // không có gì để update
-        }
-        HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth(clerkSecretKey);
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        restTemplate.patchForObject(
-                clerkApiUrl + "/users/" + clerkId,
-                new HttpEntity<>(body, headers),
-                String.class
-        );
     }
 
     public void banUser(String clerkId) {

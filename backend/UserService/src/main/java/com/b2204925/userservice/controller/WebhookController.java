@@ -105,6 +105,8 @@ public class WebhookController {
             existing.setFirstName(mapped.getFirstName());
             existing.setLastName(mapped.getLastName());
             existing.setUsername(mapped.getUsername());
+            existing.setPhone(mapped.getPhone());
+            existing.setGender(mapped.getGender());
             existing.setAvatarUrl(mapped.getAvatarUrl());
             existing.setProvider(mapped.getProvider());
             existing.setUpdatedAt(Instant.now());

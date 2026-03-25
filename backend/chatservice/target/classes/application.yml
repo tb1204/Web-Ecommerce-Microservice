@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: chat-service
+
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/artisano
+      database: artisano
+
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+      # Cho phép upload file tối đa 50MB (video)
+
+server:
+  port: 8086
+
+clerk:
+  jwks-url: https://pro-oryx-45.clerk.accounts.dev/.well-known/jwks.json
+  issuer: https://pro-oryx-45.clerk.accounts.dev
+
+cloudinary:
+  cloud-name: dkmzqfc8j
+  api-key: 135129715757794
+  api-secret: MA5qNJ0VC-TrlsB9YGQyOU4wgDo
+
+dialogflow:
+  project-id: your-dialogflow-project-id
+  language-code: vi
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discoveryserver:8761/eureka
+    register-with-eureka: true
+    fetch-registry: true
+
+logging:
+  level:
+    org.springframework.security: INFO
+    org.springframework.web.socket: DEBUG
+    com.b2204925: DEBUG

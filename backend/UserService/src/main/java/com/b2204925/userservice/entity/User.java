@@ -1,18 +1,20 @@
 package com.b2204925.userservice.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-import com.b2204925.userservice.entity.Address;
-import com.b2204925.userservice.entity.Membership;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
@@ -56,12 +58,10 @@ public class User {
     @Builder.Default
     private List<Address> addresses = new ArrayList<>();
 
-// Thêm vào sau field addresses:
-@Builder.Default
-private List<String> wishlist = new ArrayList<>();
-// Lưu danh sách productId user đã thích
-// VD: ["product_001", "product_002"]
-    
+    // Thêm vào sau field addresses:
+    @Builder.Default
+    private List<String> wishlist = new ArrayList<>();
+
     @JsonProperty("isActive")
     @Builder.Default
     private Boolean isActive = true;
