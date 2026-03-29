@@ -7,7 +7,6 @@ function Header() {
     <header className=" dark:bg-black ">
       <Topbar />
       <Navbar />
-
       <Menu />
     </header>
   );

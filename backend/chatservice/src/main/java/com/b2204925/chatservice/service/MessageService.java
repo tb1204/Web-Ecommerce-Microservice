@@ -22,12 +22,31 @@ public class MessageService {
 
     private final MessageRepository messageRepository;
 
-    // ── Gửi TEXT ─────────────────────────────────────────────────
+    // code thật
+//     public MessageResponse sendTextMessage(
+//             String conversationId,
+//             String senderId,
+//             String senderRole,
+//             String content) {
+//         Message message = Message.builder()
+//                 .conversationId(conversationId)
+//                 .senderId(senderId)
+//                 .senderRole(SenderRole.valueOf(senderRole))
+//                 .type(MessageType.TEXT)
+//                 .content(content)
+//                 .metadata(MessageMetadata.builder().build())
+//                 .build();
+//         return toResponse(messageRepository.save(message));
+//     }
+//code test
     public MessageResponse sendTextMessage(
             String conversationId,
             String senderId,
             String senderRole,
             String content) {
+
+        log.info("=== [2] sendTextMessage START - convId: {}, sender: {}, content: {}",
+                conversationId, senderId, content);
 
         Message message = Message.builder()
                 .conversationId(conversationId)
@@ -38,15 +57,45 @@ public class MessageService {
                 .metadata(MessageMetadata.builder().build())
                 .build();
 
-        return toResponse(messageRepository.save(message));
+        Message saved = messageRepository.save(message);
+        log.info("=== [2] TEXT MESSAGE SAVED TO MONGODB - ID: {} ===", saved.getId());
+
+        return toResponse(saved);
     }
 
-    // ── Gửi MEDIA (ảnh/video) ────────────────────────────────────
+    // ── Gửi MEDIA (ảnh/video) ────────────────────────── code thật
+//     public MessageResponse sendMediaMessage(
+//             String conversationId,
+//             String senderId,
+//             String senderRole,
+//             SendMessageRequest req) {
+//         if (req.getMediaUrl() == null || req.getMediaUrl().isBlank()) {
+//             throw new AppException(ErrorCode.MESSAGE_TYPE_NOT_SUPPORTED,
+//                     "mediaUrl không được để trống");
+//         }
+//         Message message = Message.builder()
+//                 .conversationId(conversationId)
+//                 .senderId(senderId)
+//                 .senderRole(SenderRole.valueOf(senderRole))
+//                 .type(req.getType())
+//                 .mediaUrl(req.getMediaUrl())
+//                 .thumbnailUrl(req.getThumbnailUrl())
+//                 .mimeType(req.getMimeType())
+//                 .mediaSize(req.getMediaSize())
+//                 .duration(req.getDuration())
+//                 .metadata(MessageMetadata.builder().build())
+//                 .build();
+//         return toResponse(messageRepository.save(message));
+//     }
+//code test
     public MessageResponse sendMediaMessage(
             String conversationId,
             String senderId,
             String senderRole,
             SendMessageRequest req) {
+
+        log.info("=== [3] sendMediaMessage START - convId: {}, sender: {}, type: {}",
+                conversationId, senderId, req.getType());
 
         if (req.getMediaUrl() == null || req.getMediaUrl().isBlank()) {
             throw new AppException(ErrorCode.MESSAGE_TYPE_NOT_SUPPORTED,
@@ -59,14 +108,17 @@ public class MessageService {
                 .senderRole(SenderRole.valueOf(senderRole))
                 .type(req.getType())
                 .mediaUrl(req.getMediaUrl())
-                .thumbnailUrl(req.getThumbnailUrl()) // ← thêm
-                .mimeType(req.getMimeType()) // ← thêm
+                .thumbnailUrl(req.getThumbnailUrl())
+                .mimeType(req.getMimeType())
                 .mediaSize(req.getMediaSize())
-                .duration(req.getDuration()) // ← thêm
+                .duration(req.getDuration())
                 .metadata(MessageMetadata.builder().build())
                 .build();
 
-        return toResponse(messageRepository.save(message));
+        Message saved = messageRepository.save(message);
+        log.info("=== [3] MEDIA MESSAGE SAVED TO MONGODB - ID: {} ===", saved.getId());
+
+        return toResponse(saved);
     }
 
     // ── Gửi BOT message ──────────────────────────────────────────
@@ -89,7 +141,7 @@ public class MessageService {
                         .intent(intent)
                         .confidence(confidence)
                         .botFallback(isFallback)
-                        .quickReplies(quickReplies) // ← thêm
+                        .quickReplies(quickReplies)
                         .build())
                 .build();
 

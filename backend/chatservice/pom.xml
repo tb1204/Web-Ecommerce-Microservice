@@ -65,8 +65,8 @@
         <!-- Cloudinary (upload ảnh/video) -->
         <dependency>
             <groupId>com.cloudinary</groupId>
-            <artifactId>cloudinary-http44</artifactId>
-            <version>1.36.0</version>
+            <artifactId>cloudinary-http5</artifactId>
+            <version>2.0.0</version>
         </dependency>
 
         <!-- Lombok -->

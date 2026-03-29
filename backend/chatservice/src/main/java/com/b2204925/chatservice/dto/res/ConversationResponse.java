@@ -22,12 +22,11 @@ public class ConversationResponse {
     private Instant adminLastReadAt;     // ← thêm
     private Boolean botEnabled;
     private Boolean handoffToAdmin;
-    // Thêm 4 field tương ứng:
     private String userDisplayName;
     private String userAvatarUrl;
     private Boolean isPinned;
     private Boolean isMuted;
-    private List<String> tags;           // ← thêm
+    private List<String> tags;
     private Instant createdAt;
     private Instant updatedAt;
 }

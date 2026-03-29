@@ -27,24 +27,17 @@ public class Conversation {
 
     private SenderRole lastSenderRole;
     // USER | BOT | ADMIN
-    // Dùng để hiển thị "Bot đang trả lời" hoặc "Admin đang hỗ trợ"
 
-    // ── Read tracking ────────────────────────────────────────────
     private Instant userLastReadAt;
     // Thời điểm user đọc tin cuối
-    // Tin chưa đọc của user = message.createdAt > userLastReadAt
 
     private Instant adminLastReadAt;
     // Thời điểm admin đọc tin cuối
-    // Tin chưa đọc của admin = message.createdAt > adminLastReadAt
 
-    // Thêm vào sau field tags:
     private String userDisplayName;
 // Snapshot tên user khi tạo conversation
-// Để admin thấy tên, không cần gọi user-service
 
     private String userAvatarUrl;
-// Snapshot avatar user
 
     @Builder.Default
     private Boolean isPinned = false;
@@ -63,7 +56,6 @@ public class Conversation {
 
     private String botSessionId;
 
-    // ── Tags ─────────────────────────────────────────────────────
     private List<String> tags;
     // VD: ["order_456", "urgent", "complaint"]
 

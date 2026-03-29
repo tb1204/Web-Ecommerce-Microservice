@@ -13,23 +13,13 @@ public class SendMessageRequest {
     @NotNull
     private MessageType type;
     // TEXT | IMAGE | VIDEO
-
     private String content;
-    // Bắt buộc nếu type = TEXT
-
     private String mediaUrl;
     // Bắt buộc nếu type = IMAGE hoặc VIDEO
-
     private String thumbnailUrl;
     // Preview nhỏ cho ảnh/video
-    // Frontend upload xong Cloudinary → truyền vào đây
+    private String mimeType;  // VD: "image/jpeg", "video/mp4"
+    private Long mediaSize;    // Bytes
+    private Integer duration;// Giây — chỉ có khi type = VIDEO
 
-    private String mimeType;
-    // VD: "image/jpeg", "video/mp4"
-
-    private Long mediaSize;
-    // Bytes
-
-    private Integer duration;
-    // Giây — chỉ có khi type = VIDEO
 }

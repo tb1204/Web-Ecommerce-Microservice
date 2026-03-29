@@ -18,8 +18,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         registry.enableSimpleBroker("/topic", "/queue");
-        // /topic = broadcast (1 → nhiều người)
-        // /queue = private (1 → 1 người)
+        // /topic = broadcast queue = private
 
         registry.setApplicationDestinationPrefixes("/app");
         // Frontend gửi message đến: /app/chat.send
@@ -36,7 +35,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
                 // Frontend kết nối WebSocket tại: ws://localhost:8086/ws
                 .setAllowedOriginPatterns("*")
                 .withSockJS();
-        // SockJS = fallback nếu browser không hỗ trợ WebSocket thuần
+
     }
 
     @Override

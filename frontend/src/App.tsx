@@ -40,6 +40,7 @@ import ProtectedRoute from "./components/common/ProtectedRoute";
 import AuthRedirect from "./pages/AuthRedirect";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentFailed from "./pages/PaymentFailed";
+
 //import AdminSliderUpload from "./components/Admin/AdminSliderUpload";
 
 function App() {
@@ -69,6 +70,7 @@ function App() {
                 path="collections/:collection"
                 element={<CollectionPage />}
               />
+
               <Route path="cart" element={<CartPage />} />
               <Route path="checkout" element={<CheckoutPage />} />
               <Route path="my-orders" element={<MyOrdersPage />} />

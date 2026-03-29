@@ -63,7 +63,6 @@ public class ConversationController {
     }
 
     // Admin/User đóng phòng chat
-    // PATCH /api/chat/conversations/{id}/close
     @PatchMapping("/{conversationId}/close")
     public ResponseEntity<ConversationResponse> close(
             @PathVariable String conversationId) {
@@ -85,5 +84,15 @@ public class ConversationController {
             conversationService.markReadByUser(conversationId);
         }
         return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/{conversationId}/pin")
+    public ResponseEntity<ConversationResponse> togglePin(@PathVariable String conversationId) {
+        return ResponseEntity.ok(conversationService.togglePin(conversationId));
+    }
+
+    @PatchMapping("/{conversationId}/mute")
+    public ResponseEntity<ConversationResponse> toggleMute(@PathVariable String conversationId) {
+        return ResponseEntity.ok(conversationService.toggleMute(conversationId));
     }
 }

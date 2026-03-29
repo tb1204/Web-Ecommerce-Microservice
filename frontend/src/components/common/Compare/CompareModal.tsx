@@ -12,7 +12,6 @@ interface CompareModalProps {
 interface CompareSpec {
   label: string;
   key: keyof Product;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   format?: (value: any) => string;
 }
 
@@ -45,7 +44,6 @@ const CompareModal: React.FC<CompareModalProps> = ({ isOpen, onClose }) => {
     <div className="fixed inset-0 z-[1000] flex items-center justify-center p-2 md:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
       {/* max-w-2xl cho mobile khi có ít SP và max-w-6xl cho PC */}
       <div className="bg-white w-full max-w-2xl md:max-w-6xl max-h-[85vh] md:max-h-[90vh] rounded-xl md:rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-in zoom-in-95 duration-300">
-        
         {/* HEADER */}
         <div className="p-3 md:p-4 border-b flex justify-between items-center bg-gray-50/50">
           <h2 className="text-sm md:text-xl font-bold text-[#1a4d32] uppercase tracking-tight">
@@ -73,7 +71,10 @@ const CompareModal: React.FC<CompareModalProps> = ({ isOpen, onClose }) => {
               Sản Phẩm
             </div>
             {compareItems.map((item) => (
-              <div key={item.id} className="border-b border-r border-gray-100 p-2 md:p-4 text-center group bg-white">
+              <div
+                key={item.id}
+                className="border-b border-r border-gray-100 p-2 md:p-4 text-center group bg-white"
+              >
                 <div className="w-14 h-14 md:w-28 md:h-28 mx-auto mb-2 md:mb-3 overflow-hidden rounded-lg shadow-sm border border-gray-50">
                   <img
                     src={item.images[0]?.url}
@@ -98,7 +99,9 @@ const CompareModal: React.FC<CompareModalProps> = ({ isOpen, onClose }) => {
                     key={`${item.id}-${spec.key}`}
                     className="p-2 md:p-4 border-b border-r border-gray-100 text-[10px] md:text-sm text-center font-medium text-gray-700 flex items-center justify-center bg-white px-1"
                   >
-                    {spec.format ? spec.format(item[spec.key]) : (item[spec.key] as React.ReactNode)}
+                    {spec.format
+                      ? spec.format(item[spec.key])
+                      : (item[spec.key] as React.ReactNode)}
                   </div>
                 ))}
               </React.Fragment>
@@ -107,7 +110,10 @@ const CompareModal: React.FC<CompareModalProps> = ({ isOpen, onClose }) => {
             {/* HÀNG NÚT HÀNH ĐỘNG */}
             <div className="bg-gray-50/50 border-b border-r border-gray-100"></div>
             {compareItems.map((item) => (
-              <div key={`btn-${item.id}`} className="p-2 md:p-4 border-b border-r border-gray-100 flex justify-center items-center bg-white px-1">
+              <div
+                key={`btn-${item.id}`}
+                className="p-2 md:p-4 border-b border-r border-gray-100 flex justify-center items-center bg-white px-1"
+              >
                 <button className="bg-[#1a4d32] text-white w-full md:w-auto px-2 md:px-6 py-1.5 md:py-2.5 rounded-md md:rounded-lg text-[8px] md:text-xs font-bold flex items-center justify-center gap-1 hover:bg-[#2a6d4a] transition-all active:scale-95 shadow-md">
                   <ShoppingCart size={10} className="md:w-3.5 md:h-3.5" /> MUA
                 </button>

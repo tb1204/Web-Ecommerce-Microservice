@@ -29,7 +29,6 @@ public class Message {
 
     private String thumbnailUrl;
     // Preview nhỏ cho ảnh/video
-    // VD: https://res.cloudinary.com/.../thumbnail
 
     private String mimeType;
     // VD: "image/jpeg", "video/mp4"

@@ -74,7 +74,7 @@ public class ConversationService {
         return toResponse(saved);
     }
 
-    // ── Admin nhận phòng ─────────────────────────────────────────
+    // ── Admin nhận phòng 
     public ConversationResponse adminJoin(String conversationId, String adminId) {
         Conversation conversation = findById(conversationId);
 
@@ -125,7 +125,7 @@ public class ConversationService {
         Conversation conversation = findById(conversationId);
         conversation.setLastMessage(lastMessage);
         conversation.setLastMessageAt(Instant.now());
-        conversation.setLastSenderRole(senderRole);   // ← thêm
+        conversation.setLastSenderRole(senderRole);
         conversation.setUpdatedAt(Instant.now());
         conversationRepository.save(conversation);
     }
@@ -166,6 +166,23 @@ public class ConversationService {
     public Conversation findById(String conversationId) {
         return conversationRepository.findById(conversationId)
                 .orElseThrow(() -> new AppException(ErrorCode.CONVERSATION_NOT_FOUND));
+    }
+    // Trong ConversationService.java
+
+    public ConversationResponse togglePin(String conversationId) {
+        Conversation conv = findById(conversationId);
+        conv.setIsPinned(!Boolean.TRUE.equals(conv.getIsPinned()));
+        conv.setUpdatedAt(Instant.now());
+        conversationRepository.save(conv);
+        return toResponse(conv);
+    }
+
+    public ConversationResponse toggleMute(String conversationId) {
+        Conversation conv = findById(conversationId);
+        conv.setIsMuted(!Boolean.TRUE.equals(conv.getIsMuted()));
+        conv.setUpdatedAt(Instant.now());
+        conversationRepository.save(conv);
+        return toResponse(conv);
     }
 
     private ConversationResponse toResponse(Conversation c) {

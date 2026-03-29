@@ -22,7 +22,5 @@ public class MessageMetadata {
     private Boolean botFallback = false;
 
     private List<String> quickReplies;
-    // Dialogflow quick reply buttons
-    // VD: ["Xem đơn hàng", "Hủy đơn", "Liên hệ admin"]
-    // Frontend hiển thị các nút này cho user bấm
+    // Dialogflow quick reply buttons  VD: ["Xem đơn hàng", "Hủy đơn", "Liên hệ admin"] Frontend hiển thị các nút này cho user bấm
 }

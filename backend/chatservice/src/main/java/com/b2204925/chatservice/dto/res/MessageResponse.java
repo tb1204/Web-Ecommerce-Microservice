@@ -18,10 +18,10 @@ public class MessageResponse {
     private MessageType type;
     private String content;
     private String mediaUrl;
-    private String thumbnailUrl;   // ← thêm
-    private String mimeType;       // ← thêm
+    private String thumbnailUrl;
+    private String mimeType;
+    private Integer duration;
     private Long mediaSize;
-    private Integer duration;      // ← thêm
     private MessageMetadata metadata;
     private Boolean isDeleted;
     private Instant createdAt;
