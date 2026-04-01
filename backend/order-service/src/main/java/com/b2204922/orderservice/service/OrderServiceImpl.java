@@ -1,5 +1,7 @@
 package com.b2204922.orderservice.service;
 
+import com.b2204922.orderservice.config.RabbitMQConfig;
+import com.b2204922.orderservice.dto.NotificationDTO;
 import com.b2204922.orderservice.entity.Order;
 import com.b2204922.orderservice.entity.OrderItem;
 import com.b2204922.orderservice.exception.ResourceNotFoundException;
@@ -8,6 +10,7 @@ import com.b2204922.orderservice.dto.response.OrderResponse;
 import com.b2204922.orderservice.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -27,11 +30,11 @@ public class OrderServiceImpl implements IOrderService {
     private final OrderRepository orderRepository;
     private final RestTemplate restTemplate;
 
-    private final NotificationClientService notificationClientService;
-
     private final IPaymentService paymentService;
 
-    @Value("${product.service.url:http://localhost:9001}") // Cổng của product-service bạn đang dùng
+    private final RabbitTemplate rabbitTemplate;
+
+    @Value("${product.service.url:http://localhost:8082}") // Cổng của product-service bạn đang dùng
     private String productServiceUrl;
 
 //    @Value("${payment.service.url:http://localhost:9004}")
@@ -116,18 +119,24 @@ public class OrderServiceImpl implements IOrderService {
         });
 
         try {
-            notificationClientService.sendOrderStatusNotification(
-                    savedOrder.getUserId(),
-                    savedOrder.getId(),
-                    savedOrder.getOrderNumber(),
-                    savedOrder.getCustomerInfo().getName(),
-                    savedOrder.getCustomerInfo().getEmail(),
-                    savedOrder.getCustomerInfo().getPhone(),
-                    "Mới", // Trạng thái cũ
-                    "PENDING" // Trạng thái mới
-            );
+            NotificationDTO dto = NotificationDTO.builder()
+                    .userId(savedOrder.getUserId())
+                    .orderId(savedOrder.getId())
+                    .orderNumber(savedOrder.getOrderNumber())
+                    .customerName(savedOrder.getCustomerInfo().getName())
+                    .customerEmail(savedOrder.getCustomerInfo().getEmail())
+                    .title("Đặt hàng thành công")
+                    .message("Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.")
+                    .type("ORDER_STATUS")
+                    .newStatus("PENDING")
+                    .build();
+
+            rabbitTemplate.convertAndSend(
+                    RabbitMQConfig.EXCHANGE,
+                    RabbitMQConfig.ROUTING_KEY, dto);
+            log.info("Đã bắn tin RabbitMQ: Đặt hàng thành công {}", savedOrder.getOrderNumber());
         } catch (Exception e) {
-            log.error("Chưa gửi được email thông báo: {}", e.getMessage());
+            log.error("Lỗi gửi thông báo RabbitMQ: {}", e.getMessage());
         }
 
         return convertToOrderResponse(savedOrder);
@@ -226,20 +235,37 @@ public class OrderServiceImpl implements IOrderService {
 
         Order savedOrder = orderRepository.save(order);
 
-        // 4. Gửi thông báo mail
+        //4 GỬI THÔNG BÁO CẬP NHẬT TRẠNG THÁI / GIAO HÀNG THÀNH CÔNG
         try {
-            notificationClientService.sendOrderStatusNotification(
-                    savedOrder.getUserId(),
-                    savedOrder.getId(),
-                    savedOrder.getOrderNumber(),
-                    savedOrder.getCustomerInfo().getName(),
-                    savedOrder.getCustomerInfo().getEmail(),
-                    savedOrder.getCustomerInfo().getPhone(),
-                    oldStatus,
-                    status
-            );
+            String title = "Cập nhật đơn hàng";
+            String message = "Đơn hàng #" + savedOrder.getOrderNumber() + " đã chuyển sang trạng thái: " + status;
+            String productIdForNoti = null;
+            if ("DELIVERED".equals(status)) {
+                title = "Giao hàng thành công";
+                message = "Bạn đã nhận được hàng? Hãy chia sẻ cảm nhận với Artisano nhé!";
+                if (savedOrder.getItems() != null && !savedOrder.getItems().isEmpty()) {
+                    productIdForNoti = savedOrder.getItems().get(0).getProductId(); //lay id dau tien de KH vao cmt
+                }
+            }
+
+            NotificationDTO dto = NotificationDTO.builder()
+                    .userId(savedOrder.getUserId())
+                    .orderId(savedOrder.getId())
+                    .orderNumber(savedOrder.getOrderNumber())
+                    .productId(productIdForNoti)
+                    .customerName(savedOrder.getCustomerInfo().getName())
+                    .customerEmail(savedOrder.getCustomerInfo().getEmail())
+                    .title(title)
+                    .message(message)
+                    .type("ORDER_STATUS")
+                    .newStatus(status)
+                    .build();
+
+            rabbitTemplate.convertAndSend(
+                    RabbitMQConfig.EXCHANGE,
+                    RabbitMQConfig.ROUTING_KEY, dto);
         } catch (Exception e) {
-            log.error("Thông báo gửi mail thất bại: {}", e.getMessage());
+            log.error("Lỗi gửi thông báo cập nhật: {}", e.getMessage());
         }
 
         return convertToOrderResponse(savedOrder);
@@ -294,20 +320,23 @@ public class OrderServiceImpl implements IOrderService {
 
         Order savedOrder = orderRepository.save(order);
         try {
-            notificationClientService.sendOrderStatusNotification(
-                    savedOrder.getUserId(),
-                    savedOrder.getId(),
-                    savedOrder.getOrderNumber(),
-                    savedOrder.getCustomerInfo().getName(),
-                    savedOrder.getCustomerInfo().getEmail(),
-                    savedOrder.getCustomerInfo().getPhone(),
-                    oldStatus,   // Thường là "PENDING"
-                    "CANCELLED"  // Trạng thái mới
-            );
-            log.info("Đã gửi lệnh thông báo hủy đơn hàng {} sang Notification Service", savedOrder.getOrderNumber());
+            NotificationDTO dto = NotificationDTO.builder()
+                    .userId(savedOrder.getUserId())
+                    .orderId(savedOrder.getId())
+                    .orderNumber(savedOrder.getOrderNumber())
+                    .customerName(savedOrder.getCustomerInfo().getName())
+                    .customerEmail(savedOrder.getCustomerInfo().getEmail())
+                    .title("Đơn hàng đã hủy")
+                    .message("Đơn hàng #" + savedOrder.getOrderNumber() + " đã bị hủy. Lý do: " + reason)
+                    .type("ORDER_STATUS")
+                    .newStatus("CANCELLED")
+                    .build();
+
+            rabbitTemplate.convertAndSend(
+                    RabbitMQConfig.EXCHANGE,
+                    RabbitMQConfig.ROUTING_KEY, dto);
         } catch (Exception e) {
-            // Chỉ log lỗi chứ không làm sập luồng chính của khách
-            log.warn("Lỗi gọi Notification Service (có thể do chưa khởi động): {}", e.getMessage());
+            log.warn("Lỗi gửi thông báo hủy: {}", e.getMessage());
         }
 
         return convertToOrderResponse(savedOrder);
@@ -316,7 +345,7 @@ public class OrderServiceImpl implements IOrderService {
     private void callProductServiceToUpdateStock(String productId, int quantity) {
         // quantity âm nếu là trừ kho (khi giao hàng/đặt hàng)
         // quantity dương nếu là cộng lại kho (khi hủy)
-        String url = "http://localhost:9001/api/products/updateStock?productId=" + productId + "&quantity=" + quantity;
+        String url = "http://localhost:8082/api/products/updateStock?productId=" + productId + "&quantity=" + quantity;
         try {
             restTemplate.put(url, null);
             log.info("Đã cập nhật kho cho sản phẩm {} với số lượng {}", productId, quantity);
@@ -327,5 +356,17 @@ public class OrderServiceImpl implements IOrderService {
 
     public boolean hasPurchased(String userId, String productId) {
         return orderRepository.existsByUserIdAndItems_ProductIdAndOrderStatus(userId, productId, "DELIVERED");
+    }
+
+    private void pushNotification(NotificationDTO dto) {
+        try {
+            rabbitTemplate.convertAndSend(
+                    RabbitMQConfig.EXCHANGE,
+                    RabbitMQConfig.ROUTING_KEY,
+                    dto);
+            log.info("Đã đưa tin nhắn thông báo vào RabbitMQ cho đơn: {}", dto.getOrderNumber());
+        } catch (Exception e) {
+            log.error("Lỗi truyền tin  RabbitMQ: {}", e.getMessage());
+        }
     }
 }

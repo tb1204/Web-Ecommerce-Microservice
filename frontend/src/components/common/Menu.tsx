@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ChevronDown, Zap, Menu as MenuIcon, X } from "lucide-react";
 import MegaMenu from "../layouts/MegaMenu";
 
-// Giữ nguyên các import icon của bạn
+
 import nemIcon from "../../assets/icon-mega-menu/nệm.webp";
 import changaIcon from "../../assets/icon-mega-menu/chăn ga.svg";
 import phukienIcon from "../../assets/icon-mega-menu/phụ kiện 1.webp";

@@ -1,5 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import logo1 from "../../assets/logo2.jpg";
+//ket noi backend
+import SockJS from 'sockjs-client';
+import Stomp from 'stompjs';
+import axios from 'axios';
 
 import {
   FaRegHeart,
@@ -13,7 +17,7 @@ import { FiUser, FiUserPlus, FiLogIn } from "react-icons/fi";
 import { IoIosSearch } from "react-icons/io";
 import { MdLightMode, MdDarkMode } from "react-icons/md";
 import { useTheme } from "../../context/ThemeContext";
-import { useState, type FormEvent } from "react";
+import { useState, type FormEvent, useEffect } from "react";
 import CartDrawer from "./CartDrawer";
 import { UserButton, useUser } from "@clerk/clerk-react";
 
@@ -23,13 +27,13 @@ import { UserButton, useUser } from "@clerk/clerk-react";
 // import { selectWishlistCount } from "../../redux/wishlistSlice";
 // import { selectNotifications } from "../../redux/notificationSlice";
 
-interface Notification {
-  id: number;
-  type: "comment" | "order";
-  content: string;
-  time: string;
-  unread: boolean;
-}
+// interface Notification {
+//   id: number;
+//   type: "comment" | "order";
+//   content: string;
+//   time: string;
+//   unread: boolean;
+// }
 
 import { useWishlist } from "../common/WishlistContent";
 
@@ -41,25 +45,106 @@ const Navbar = () => {
   const isDark = theme === "dark";
   const navigate = useNavigate();
 
-  const [notifications] = useState<Notification[]>([
-    {
-      id: 1,
-      type: "comment",
-      content:
-        "Admin đã phản hồi bình luận của bạn trong sản phẩm 'Áo thun Polo'.",
-      time: "2 phút trước",
-      unread: true,
-    },
-    {
-      id: 2,
-      type: "order",
-      content: "Đơn hàng #SHP123 đã chuyển sang trạng thái 'Đang giao'.",
-      time: "1 giờ trước",
-      unread: false,
-    },
-  ]);
+  // const [notifications] = useState<Notification[]>([
+  //   {
+  //     id: 1,
+  //     type: "comment",
+  //     content:
+  //       "Admin đã phản hồi bình luận của bạn trong sản phẩm 'Áo thun Polo'.",
+  //     time: "2 phút trước",
+  //     unread: true,
+  //   },
+  //   {
+  //     id: 2,
+  //     type: "order",
+  //     content: "Đơn hàng #SHP123 đã chuyển sang trạng thái 'Đang giao'.",
+  //     time: "1 giờ trước",
+  //     unread: false,
+  //   },
+  // ]);
 
-  const unreadCount = notifications.filter((n) => n.unread).length;
+  const [notifications, setNotifications] = useState<any[]>([]);
+  // const unreadCount = notifications.filter((n) => n.unread).length;
+  const [unreadCount, setUnreadCount] = useState(0);
+  //Lấy thông báo cũ khi vừa mở Web 
+  useEffect(() => {
+    if (isSignedIn && user?.id) {
+      axios.get(`http://localhost:8087/api/notifications/user/${user.id}`)
+        .then(res => {
+          setNotifications(res.data);
+          setUnreadCount(res.data.filter((n: any) => n.status === 'UNREAD').length);
+        })
+        .catch(err => console.error("Lỗi lấy thông báo:", err));
+    }
+  }, [isSignedIn, user?.id]);
+  // Kết nối WebSocket hứng thông báo "Nóng"
+  useEffect(() => {
+    if (!isSignedIn || !user?.id) return;
+
+    const socket = new SockJS('http://localhost:8087/ws-notifications');
+    const stompClient = Stomp.over(socket);
+    stompClient.debug = () => {}; // Tắt log linh tinh
+
+    stompClient.connect({}, () => {
+      console.log('WebSocket đã sẵn sàng!');
+      stompClient.subscribe(`/topic/notifications/${user.id}`, (message) => {
+        const newNoti = JSON.parse(message.body);
+        
+        // Thêm vào đầu danh sách và tăng số chưa đọc
+        setNotifications((prev) => [newNoti, ...prev]);
+        setUnreadCount((prev) => prev + 1);
+      });
+    }, (err) => console.log('Lỗi kết nối WebSocket:', err));
+
+    return () => { if (stompClient) stompClient.disconnect(() => {}); };
+  }, [isSignedIn, user?.id]);
+  //Hàm nhấn vào thông báo để đánh dấu đã đọc
+  // const handleMarkAsRead = async (notiId: string) => {
+  //   try {
+  //     await axios.put(`http://localhost:8087/api/notifications/${notiId}/read`);
+  //     setNotifications(prev => 
+  //       prev.map(n => n.id === notiId ? { ...n, status: 'READ' } : n)
+  //     );
+  //     setUnreadCount(prev => Math.max(0, prev - 1));
+  //   } catch (err) {
+  //     console.error("Lỗi cập nhật trạng thái đọc:", err);
+  //   }
+  // };
+  const handleMarkAsRead = async (noti: any) => {
+    try {
+      // Nếu chưa đọc thì gọi API báo cho Backend
+      if (noti.status === 'UNREAD') {
+        await axios.put(`http://localhost:8087/api/notifications/${noti.id}/read`);
+        
+        // Cập nhật State 
+        setNotifications(prev => 
+          prev.map(n => n.id === noti.id ? { ...n, status: 'READ' } : n)
+        );
+        setUnreadCount(prev => Math.max(0, prev - 1));
+      }
+      // 2. ĐIỀU HƯỚNG THÔNG MINH
+      if (noti.type === 'COMMENT' && noti.productId) {
+        // Nếu là Admin reply -> Dẫn về trang sản phẩm
+        navigate(`/product/${noti.productId}`);
+      } 
+      else if (noti.orderId) {
+        // KIỂM TRA TRẠNG THÁI ĐƠN HÀNG
+        if (noti.newStatus === 'DELIVERED' && noti.productId) {
+          // Nếu đã giao hàng thành công -> Dẫn về trang sản phẩm để khách đánh giá
+          navigate(`/product/${noti.productId}`);
+        } else {
+          // Các trường hợp khác (Mới đặt, Đang giao, Hủy...) -> Dẫn về trang chi tiết đơn hàng
+          navigate(`/order/${noti.orderId}`);
+        }
+      } 
+      else {
+        // Mặc định dẫn về danh sách đơn hàng
+        navigate("/my-orders");
+      }
+    } catch (err) {
+      console.error("Lỗi xử lý thông báo:", err);
+    }
+  };
 
   const toggleCartDrawer = () => setDrawerOpen(!drawerOpen);
 
@@ -144,7 +229,9 @@ const Navbar = () => {
                   <h3 className="font-bold text-sm">
                     Thông báo ({unreadCount})
                   </h3>
-                  <span className="text-[11px] text-[#3cb371] cursor-pointer hover:underline">
+                  <span 
+                  onClick={() => navigate("/my-orders")}
+                  className="text-[11px] text-[#3cb371] cursor-pointer hover:underline">
                     Xem tất cả
                   </span>
                 </div>
@@ -154,14 +241,13 @@ const Navbar = () => {
                     notifications.map((noti) => (
                       <div
                         key={noti.id}
+                        onClick={() => handleMarkAsRead(noti)}
                         className={`flex gap-3 px-4 py-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition cursor-pointer border-b border-gray-50 dark:border-gray-700 last:border-0 ${
-                          noti.unread
-                            ? "bg-[#3cb371]/5 dark:bg-[#3cb371]/10"
-                            : ""
+                          noti.status === 'UNREAD' ? "bg-[#3cb371]/5 dark:bg-[#3cb371]/10" : ""
                         }`}
                       >
                         <div className="mt-1 shrink-0">
-                          {noti.type === "comment" ? (
+                          {noti.type?.toUpperCase() === "COMMENT" ? (
                             <FaCommentDots
                               className="text-blue-500"
                               size={18}
@@ -174,14 +260,14 @@ const Navbar = () => {
                           )}
                         </div>
                         <div className="flex flex-col gap-1 flex-1">
-                          <p className="text-sm leading-[1.4] text-gray-800 dark:text-gray-200 font-medium">
-                            {noti.content}
+                          <p className={`text-sm leading-[1.4] ${noti.status === 'UNREAD' ? "font-bold text-black dark:text-white" : "text-gray-600 dark:text-gray-400"}`}>
+                            {noti.message}
                           </p>
                           <span className="text-[11px] text-gray-400 font-normal">
-                            {noti.time}
+                            {new Date(noti.createdAt).toLocaleString('vi-VN')}
                           </span>
                         </div>
-                        {noti.unread && (
+                        {noti.status === 'UNREAD' && (
                           <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 shrink-0"></div>
                         )}
                       </div>

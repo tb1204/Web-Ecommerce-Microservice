@@ -68,7 +68,7 @@ const AdminProductPage = () => {
       }
     } catch (error) {
       console.error("Lỗi lấy dữ liệu từ Backend:", error);
-      toast.error("Không thể tải danh sách nệm từ Server!");
+      toast.error("Không thể tải danh sách từ Server!");
     } finally {
       setLoading(false);
     }
