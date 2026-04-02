@@ -36,5 +36,5 @@ public interface ProductRepository extends MongoRepository<Product, String> {
     // List<Product> findBySpecificationsDimensions(String dimensions); // sử dụng nhưng tạm thời commentt
 
     //Kiem tra trung sku
-    boolean existsBySku(String sku);
+//    boolean existsBySku(String sku);
 }

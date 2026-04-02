@@ -3,18 +3,28 @@ export interface ProductImage {
   url: string;
   isPrimary: boolean;
 }
+export interface ProductVariant {
+  variantId: string;
+  sku: string;
+  size: string;
+  thickness: string;
+  color?: string;
+  price: number;
+  originalPrice: number;
+  stockQuantity: number;
+  status: string;
+}
 export interface Product {
   id: string;
   name: string;
-  sku?: string;
   productCode?: string;
   brand?: string;
   origin?: string;
-  price: number;
-  stockQuantity: number;
-  originalPrice?: number;
+  price: number; 
+  totalStockQuantity: number; 
+  variants: ProductVariant[];
   images: ProductImage[];
-  status: "selling" | "stopselling";
+  status: "AVAILABLE" | "OUT_OF_STOCK" | "selling" | "stopselling"; 
   rating?: number;
   reviewCount?: number;
   category?: { name: string; code: string };
@@ -22,8 +32,6 @@ export interface Product {
     material: string;
     weight: string;
     firmness: string;
-    size: string;
-    thickness: string;
     design: string;
     certificationNumber: string;
   };
@@ -32,6 +40,35 @@ export interface Product {
   createdAt?: string; 
   updatedAt?: string;
 }
+// export interface Product {
+//   id: string;
+//   name: string;
+//   sku?: string;
+//   productCode?: string;
+//   brand?: string;
+//   origin?: string;
+//   price: number;
+//   stockQuantity: number;
+//   originalPrice?: number;
+//   images: ProductImage[];
+//   status: "selling" | "stopselling";
+//   rating?: number;
+//   reviewCount?: number;
+//   category?: { name: string; code: string };
+//   specifications?: {
+//     material: string;
+//     weight: string;
+//     firmness: string;
+//     size: string;
+//     thickness: string;
+//     design: string;
+//     certificationNumber: string;
+//   };
+//   tags?: string[];
+//   description?: string;
+//   createdAt?: string; 
+//   updatedAt?: string;
+// }
 // interface cho admin order
 export interface OrderItem {
   orderDetailId: string;

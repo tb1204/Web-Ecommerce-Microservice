@@ -16,16 +16,19 @@ public class Product {
     private String id;
 
     private String name;
-    private String sku;
+//    private String sku;
     private String productCode;
     private Category category;
     private String brand;
     private String origin;
     private Double price;
-    private Double originalPrice;
+
 
     private Specifications specifications;
-    private Integer stockQuantity;
+
+    private List<ProductVariant> variants;
+
+    private Integer totalStockQuantity;
     private List<String> tags;
     private List<ProductImage> images;
     private String status;
@@ -33,6 +36,22 @@ public class Product {
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class ProductVariant {
+        private String variantId;   // ID riêng cho từng biến thể
+        private String sku;         // Mã kho riêng (VD: ART-160-10-TRANG)
+        private String size;        // 1m6 x 2m
+        private String thickness;   // 10cm
+        private String color;       // Trắng
+        private Double price;       // Giá riêng cho biến thể này
+        private Double originalPrice; // Giá gốc chưa giảm (Để hiện gạch ngang)
+        private Integer stockQuantity; // Kho riêng cho biến thể này
+        private String status;      // ACTIVE hoặc OUT_OF_STOCK
+    }
 
     @Data
     @NoArgsConstructor
@@ -57,8 +76,8 @@ public class Product {
         private String material;
         private String weight;
         private String firmness;
-        private String size;
-        private String thickness;
+//        private String size;
+//        private String thickness;
         private String design;
         private String certificationNumber;
     }

@@ -51,37 +51,37 @@ const AdminProductPage = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-  const fetchProducts = async () => {
-    setLoading(true);
-    /* LOGIC CŨ 
-    setTimeout(() => {
-      setProducts(mockProducts);
-      setLoading(false);
-    }, 500);
-    */
+//   useEffect(() => {
+//   const fetchProducts = async () => {
+//     setLoading(true);
+//     /* LOGIC CŨ 
+//     setTimeout(() => {
+//       setProducts(mockProducts);
+//       setLoading(false);
+//     }, 500);
+//     */
     
-    try {
-      const response = await axios.get("http://localhost:8082/api/products/all");
-      if (response.status === 200) {
-        setProducts(response.data);
-      }
-    } catch (error) {
-      console.error("Lỗi lấy dữ liệu từ Backend:", error);
-      toast.error("Không thể tải danh sách từ Server!");
-    } finally {
-      setLoading(false);
-    }
-  };
-  fetchProducts();
-}, []);
+//     try {
+//       const response = await axios.get("http://localhost:8082/api/products/all");
+//       if (response.status === 200) {
+//         setProducts(response.data);
+//       }
+//     } catch (error) {
+//       console.error("Lỗi lấy dữ liệu từ Backend:", error);
+//       toast.error("Không thể tải danh sách từ Server!");
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+//   fetchProducts();
+// }, []);
   
   // LOGIC LỌC DỮ LIỆU (QUAN TRỌNG)
   const filteredProducts = products.filter((p) => {
-    const matchesName = p.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                       p.sku?.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesName = p.name.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSku = p.variants?.some(v => v.sku.toLowerCase().includes(searchTerm.toLowerCase()));
     const matchesCategory = selectedCategory === "all" || p.category?.code === selectedCategory;
-    return matchesName && matchesCategory;
+    return (matchesName || matchesSku) && matchesCategory;
   });
 
   // Tính toán chia trang dựa trên danh sách ĐÃ LỌC
@@ -90,25 +90,23 @@ const AdminProductPage = () => {
   const indexOfFirstProduct = indexOfLastProduct - productPerPage;
   const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
 
-const handleDelete = async (id: string) => {
-  if (!window.confirm("Bạn có chắc muốn xóa không?")) return;
-  if (!id) {
-    toast.error("Lỗi: Không tìm thấy ID sản phẩm!"); 
-    return;
-  }
+  const handleDelete = async (id: string) => {
+    if (!window.confirm("Bạn có chắc muốn xóa không?")) return;
+    if (!id) {
+      toast.error("Lỗi: Không tìm thấy ID sản phẩm!"); 
+      return;
+    }
 
-  try {
+    try {
+      await axios.delete(`http://localhost:8082/api/products/delete/${id}`); 
+      setProducts(products.filter(p => p.id !== id)); 
+      toast.success("Xóa thành công!");
+    } catch (error) {
+      console.error("Lỗi xóa:", error);
+      toast.error("Server từ chối lệnh xóa!");
+    }
     
-    await axios.delete(`http://localhost:8082/api/products/delete/${id}`); 
-    
-    setProducts(products.filter(p => p.id !== id)); 
-    toast.success("Xóa thành công!");
-  } catch (error) {
-    console.error("Lỗi xóa:", error);
-    toast.error("Server từ chối lệnh xóa!");
-  }
-  
-};
+  };
   
 
   const handleViewDetail = (openProduct: Product) => {
@@ -184,7 +182,7 @@ const handleAddProduct = async (formData: FormData) => {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
             <input
               type="text"
-              placeholder="Tìm theo tên sản phẩm hoặc mã SKU..."
+              placeholder="Tìm theo tên sản phẩm ..."
               className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all shadow-sm"
               value={searchTerm}
               onChange={(e) => {
@@ -254,7 +252,7 @@ const handleAddProduct = async (formData: FormData) => {
                           <img src={product.images?.[0]?.url} className="w-12 h-12 rounded-lg object-cover border" alt="" />
                           <div className="max-w-[250px]">
                             <p className="text-sm font-bold text-gray-900 truncate">{product.name}</p>
-                            <p className="text-[10px] text-gray-400 uppercase font-bold">{product.sku}</p>
+                            <p className="text-[10px] text-gray-400 uppercase font-bold">{product.productCode || "Chưa có mã"}</p>
                           </div>
                         </div>
                       </td>
@@ -263,8 +261,8 @@ const handleAddProduct = async (formData: FormData) => {
                       </td>
                       <td className="px-4 py-4 text-center text-sm font-black text-gray-900">
                         {product.price.toLocaleString("vi-VN")}₫
-                        <p className={`text-[11px] mt-1 font-bold ${product.stockQuantity > 10 ? 'text-blue-500' : 'text-red-500'}`}>
-                          Kho: {product.stockQuantity}
+                        <p className={`text-[11px] mt-1 font-bold ${product.totalStockQuantity > 10 ? 'text-blue-500' : 'text-red-500'}`}>
+                          Kho: {product.totalStockQuantity}
                         </p>
                       </td>
                       <td className="px-4 py-4 text-center">

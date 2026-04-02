@@ -17,7 +17,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/products")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5173")
+
 public class ProductController {
 
     private final ProductService productService; // Kết nối với Service
@@ -69,10 +69,9 @@ public class ProductController {
     }
 
     @PutMapping("/updateStock")
-    public ResponseEntity<?> updateStock(@RequestParam String productId, @RequestParam int quantity) {
-        // Logic: tìm product theo id, lấy stock hiện tại + quantity (quantity âm là trừ, dương là cộng)
-        productService.updateStock(productId, quantity);
-        return ResponseEntity.ok("Cập nhật kho thành công");
+    public ResponseEntity<?> updateStock(@RequestParam String productId, @RequestParam String variantId, @RequestParam int quantity) {
+        productService.updateVariantStock(productId, variantId, quantity);
+        return ResponseEntity.ok(Collections.singletonMap("message", "Cập nhật kho biến thể thành công"));
     }
 
     @PostMapping("/get-category-map")
