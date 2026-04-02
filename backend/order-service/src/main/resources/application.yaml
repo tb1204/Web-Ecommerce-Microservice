@@ -1,7 +1,25 @@
+# spring:
+#   application:
+#     name: order-service
+#   data: # ← THÊM data
+#     mongodb:
+#       uri: mongodb://localhost:27017/artisano
+#       database: artisano
+#   security:
+#     oauth2:
+#       resourceserver:
+#         jwt:
+#           jwk-set-uri: ${clerk.jwks-url}
+#           issuer-uri: ${clerk.issuer}
 #test
 spring:
   application:
     name: order-service
+
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/artisano
+      database: artisano
 
   security:
     oauth2:
@@ -14,9 +32,9 @@ spring:
   #   multipart:
   #     max-file-size: 10MB
   #     max-request-size: 10MB
-  mongodb:
-    database: artisano
-    uri: mongodb://localhost:27017/artisano
+  # mongodb:
+  #   database: artisano
+  #   uri: mongodb://localhost:27017/artisano
 
 server:
   port: 8084

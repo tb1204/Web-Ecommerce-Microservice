@@ -14,6 +14,7 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 public class OrderController {
+
     private final IOrderService orderService;
 
     @PostMapping("/add")
@@ -47,5 +48,16 @@ public class OrderController {
         // Gọi qua orderService thay vì orderRepository
         boolean result = orderService.hasPurchased(userId, productId);
         return ResponseEntity.ok(result);
+    }
+    // Trong OrderController
+
+    @PatchMapping("/payment-status/{orderNumber}")
+    public ResponseEntity<OrderResponse> updatePaymentStatus(
+            @PathVariable String orderNumber,
+            @RequestParam String status,
+            @RequestParam(required = false) String transactionId) {
+        return ResponseEntity.ok(
+                orderService.updatePaymentStatus(orderNumber, status, transactionId)
+        );
     }
 }

@@ -16,6 +16,7 @@ import banner_cat_phukien from "../assets/flash-sale/flash-sale-5-phukien.webp";
 import { CirclePlus } from "lucide-react";
 
 const FlashSalePage = () => {
+  const BASE_URL = "http://localhost:8081";
   const categories = [
     { name: "NỆM", code: "nem", categoryBanner: banner_cat_nem },
     { name: "CHĂN GA", code: "chan-ga", categoryBanner: banner_cat_changa },
@@ -100,7 +101,7 @@ const FlashSalePage = () => {
         setBannerError(null);
 
         const res = await fetch(
-          "http://localhost:8081/api/admin/sliders/banners/flashsale",
+          `${BASE_URL}/api/admin/sliders/banners/flashsale`,
           { cache: "no-store" },
         );
 

@@ -28,7 +28,7 @@ import java.util.Map;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final RestTemplate restTemplate; 
+    private final RestTemplate restTemplate;
 
     // ─── Queries ──────────────────────────────────────────────────────────────
     public List<User> getAllUsers() {
@@ -134,45 +134,72 @@ public class UserService {
     }
 
     // ================== WISHLIST - GỌI PRODUCT-SERVICE LẤY FULL PRODUCT ==================
-
-
-
-
+    // public List<Map<String, Object>> getWishlist(String clerkId) {
+    //     User user = getUserOrThrow(clerkId);
+    //     List<String> productIds = user.getWishlist() != null ? user.getWishlist() : new ArrayList<>();
+    //     if (productIds.isEmpty()) {
+    //         return new ArrayList<>();
+    //     }
+    //     try {
+    //         String idsParam = String.join(",", productIds);
+    //         String url = "http://localhost:9001/api/products/by-ids?ids=" + idsParam;
+    //         ResponseEntity<List<Map<String, Object>>> response = restTemplate.exchange(
+    //                 url,
+    //                 HttpMethod.GET,
+    //                 null,
+    //                 new ParameterizedTypeReference<List<Map<String, Object>>>() {}
+    //         );
+    //         return response.getBody() != null ? response.getBody() : new ArrayList<>();
+    //     } catch (Exception e) {
+    //         log.error("Lỗi khi gọi Product Service lấy wishlist cho user {}: {}", clerkId, e.getMessage());
+    //         return new ArrayList<>();
+    //     }
+    // }
     public List<Map<String, Object>> getWishlist(String clerkId) {
         User user = getUserOrThrow(clerkId);
-        
         List<String> productIds = user.getWishlist() != null ? user.getWishlist() : new ArrayList<>();
-        
+
         if (productIds.isEmpty()) {
             return new ArrayList<>();
         }
 
         try {
             String idsParam = String.join(",", productIds);
-            String url = "http://localhost:9001/api/products/by-ids?ids=" + idsParam;
+            String url = "http://localhost:8082/api/products/by-ids?ids=" + idsParam;
 
             ResponseEntity<List<Map<String, Object>>> response = restTemplate.exchange(
-                    url,
-                    HttpMethod.GET,
-                    null,
-                    new ParameterizedTypeReference<List<Map<String, Object>>>() {}
+                    url, HttpMethod.GET, null,
+                    new ParameterizedTypeReference<List<Map<String, Object>>>() {
+            }
             );
 
-            return response.getBody() != null ? response.getBody() : new ArrayList<>();
+            List<Map<String, Object>> products = response.getBody();
+            if (products == null) {
+                return new ArrayList<>();
+            }
+
+            // ✅ Map _id → id để frontend dùng được
+            return products.stream().map(p -> {
+                Map<String, Object> mapped = new java.util.HashMap<>(p);
+                if (mapped.containsKey("_id") && !mapped.containsKey("id")) {
+                    mapped.put("id", mapped.get("_id"));
+                }
+                return mapped;
+            }).collect(java.util.stream.Collectors.toList());
 
         } catch (Exception e) {
-            log.error("Lỗi khi gọi Product Service lấy wishlist cho user {}: {}", clerkId, e.getMessage());
+            log.error("Lỗi gọi Product Service cho wishlist user {}: {}", clerkId, e.getMessage());
             return new ArrayList<>();
         }
     }
 
     public List<String> addToWishlist(String clerkId, String productId) {
         User user = getUserOrThrow(clerkId);
-        
+
         if (user.getWishlist() == null) {
             user.setWishlist(new ArrayList<>());
         }
-        
+
         if (!user.getWishlist().contains(productId)) {
             user.getWishlist().add(productId);
             user.setUpdatedAt(Instant.now());
@@ -183,7 +210,7 @@ public class UserService {
 
     public List<String> removeFromWishlist(String clerkId, String productId) {
         User user = getUserOrThrow(clerkId);
-        
+
         if (user.getWishlist() != null) {
             user.getWishlist().remove(productId);
             user.setUpdatedAt(Instant.now());

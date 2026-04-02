@@ -46,6 +46,8 @@ interface User {
 }
 
 const AdminUsersPage = () => {
+  const BASE_URL = "http://localhost:8081";
+
   const [currentPage, setCurrentPage] = useState(0); // backend dùng 0-based
   const [totalPages, setTotalPages] = useState(0);
   const [totalElements, setTotalElements] = useState(0);
@@ -57,7 +59,7 @@ const AdminUsersPage = () => {
     try {
       const headers = await getAuthHeader();
       const res = await axios.get(
-        `http://localhost:8081/api/admin/users?page=${page}&size=${PAGE_SIZE}`,
+        `${BASE_URL}/api/admin/users?page=${page}&size=${PAGE_SIZE}`,
         { headers },
       );
       setUsers(res.data.content); // chỉ 10 user
@@ -137,51 +139,6 @@ const AdminUsersPage = () => {
 
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
-  // useEffect(() => {
-  //   const fetchUsers = async () => {
-  //     setLoading(true);
-  //     setError(null);
-  //     try {
-  //       const headers = await getAuthHeader();
-  //       const res = await axios.get("http://localhost:8081/api/admin/users", {
-  //         headers,
-  //       });
-
-  //       setUsers(
-  //         Array.isArray(res.data)
-  //           ? res.data.map((u) => ({ ...u })) // bỏ isLocked: false
-  //           : [],
-  //       );
-  //     } catch (err: unknown) {
-  //       const msg = axios.isAxiosError(err)
-  //         ? err.response?.data?.message || "Không tải được danh sách người dùng"
-  //         : "Lỗi kết nối đến server";
-  //       setError(msg);
-  //       toast.error(msg);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   fetchUsers();
-  // }, []);
-
-  // const refreshUsers = async () => {
-  //   try {
-  //     const headers = await getAuthHeader();
-  //     const res = await axios.get("http://localhost:8081/api/admin/users", {
-  //       headers,
-  //     });
-
-  //     setUsers(
-  //       Array.isArray(res.data)
-  //         ? res.data.map((u) => ({ ...u })) // bỏ isLocked: false
-  //         : [],
-  //     );
-  //   } catch (err) {
-  //     console.error("Refresh failed", err);
-  //   }
-  // };
 
   const refreshUsers = () => {
     fetchUsers(currentPage);
@@ -280,7 +237,7 @@ const AdminUsersPage = () => {
         };
 
         await axios.patch(
-          `http://localhost:8081/api/admin/users/${editingUser.clerkId}`,
+          `${BASE_URL}/api/admin/users/${editingUser.clerkId}`,
           payload,
           { headers },
         );
@@ -296,7 +253,7 @@ const AdminUsersPage = () => {
         }
         // console.log(formData);
         const clerkRes = await axios.post(
-          "http://localhost:8081/api/admin/users/create-clerk-user",
+          "${BASE_URL}/api/admin/users/create-clerk-user",
           {
             email: formData.email,
             password,
@@ -328,7 +285,7 @@ const AdminUsersPage = () => {
         // );
 
         await axios.post(
-          "http://localhost:8081/api/admin/users",
+          `${BASE_URL}/api/admin/users`,
           {
             ...formData,
             clerkId: newClerkId,
@@ -366,7 +323,7 @@ const AdminUsersPage = () => {
       const headers = await getAuthHeader();
       const endpoint = shouldBan ? "ban" : "unban";
       await axios.patch(
-        `http://localhost:8081/api/admin/users/${user.clerkId}/${endpoint}`,
+        `${BASE_URL}/api/admin/users/${user.clerkId}/${endpoint}`,
         {},
         { headers },
       );
@@ -401,7 +358,7 @@ const AdminUsersPage = () => {
       const endpoint = shouldLock ? "lock" : "unlock";
 
       await axios.patch(
-        `http://localhost:8081/api/admin/users/${user.clerkId}/${endpoint}`,
+        `${BASE_URL}/api/admin/users/${user.clerkId}/${endpoint}`,
         {},
         { headers },
       );
@@ -443,7 +400,7 @@ const AdminUsersPage = () => {
     try {
       const headers = await getAuthHeader();
       await axios.patch(
-        `http://localhost:8081/api/admin/users/${user.clerkId}`,
+        `${BASE_URL}/api/admin/users/${user.clerkId}`,
         { roles: [newRole] },
         { headers },
       );
@@ -458,10 +415,9 @@ const AdminUsersPage = () => {
     if (!window.confirm(`Xác nhận xóa ${user.email}?`)) return;
     try {
       const headers = await getAuthHeader();
-      await axios.delete(
-        `http://localhost:8081/api/admin/users/${user.clerkId}`,
-        { headers },
-      );
+      await axios.delete(`${BASE_URL}/api/admin/users/${user.clerkId}`, {
+        headers,
+      });
       toast.success("Xóa thành công");
       refreshUsers();
     } catch (err: unknown) {

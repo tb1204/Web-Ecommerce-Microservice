@@ -1,4 +1,3 @@
-
 export interface ProductImage {
   url: string;
   isPrimary: boolean;
@@ -14,9 +13,15 @@ export interface Product {
   stockQuantity: number;
   originalPrice?: number;
   images: ProductImage[];
-  status: "selling" | "stopselling";
+  status:
+    | "selling"
+    | "stopselling"
+    | "AVAILABLE"
+    | "UNAVAILABLE"
+    | "OUT_OF_STOCK";
   rating?: number;
   reviewCount?: number;
+  colors?: string[]; // Thêm mảng màu sắc để hỗ trợ chăn ga, gối
   category?: { name: string; code: string };
   specifications?: {
     material: string;
@@ -29,7 +34,7 @@ export interface Product {
   };
   tags?: string[];
   description?: string;
-  createdAt?: string; 
+  createdAt?: string;
   updatedAt?: string;
 }
 // interface cho admin order
@@ -63,7 +68,12 @@ export interface Order {
     status: "PAID" | "UNPAID";
     transactionId?: string;
   };
-  orderStatus: "PENDING" | "PROCESSING" | "SHIPPING" | "DELIVERED" | "CANCELLED" ;
+  orderStatus:
+    | "PENDING"
+    | "PROCESSING"
+    | "SHIPPING"
+    | "DELIVERED"
+    | "CANCELLED";
   cancelReason: string;
   createdAt: string;
   updatedAt: string;
@@ -74,7 +84,7 @@ export interface Category {
   name: string;
   code: string;
 }
-//interface cho voucher 
+//interface cho voucher
 export interface UsageLimit {
   total: number;
   perUser: number;

@@ -5,6 +5,7 @@ import { useAuth } from "@clerk/clerk-react";
 import { XCircle } from "lucide-react";
 
 const PaymentFailed = () => {
+  const BASE_URL = "http://localhost:8085";
   const [params] = useSearchParams();
   const navigate = useNavigate();
   const { getToken } = useAuth();
@@ -22,7 +23,7 @@ const PaymentFailed = () => {
       try {
         const token = await getToken({ template: "my-backend" });
         const res = await axios.get(
-          `http://localhost:8085/api/payments/order/${orderId}`,
+          `${BASE_URL}/api/payments/order/${orderId}`,
           { headers: { Authorization: `Bearer ${token}` } },
         );
         setPayment(res.data);

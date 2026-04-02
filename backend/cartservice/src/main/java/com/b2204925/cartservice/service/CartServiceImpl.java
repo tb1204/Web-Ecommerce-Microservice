@@ -108,101 +108,97 @@ public class CartServiceImpl implements CartService {
 
     //code đúng gọi tới productservice 
     // ── ADD item ─────────────────────────────────────────────────────
-//     @Override
-//     public CartResponse addItem(String userId, AddToCartRequest req) {
-//         // Gọi product-service qua Eureka
-//         Map<String, Object> product;
-//         try {
-//             product = restTemplate.getForObject(
-//                     "http://productservice/api/products/" + req.getProductId(),
-//                     Map.class);
-//         } catch (RestClientException e) {
-//             throw new AppException(ErrorCode.PRODUCT_SERVICE_ERROR);
-//         }
-//         if (product == null) {
-//             throw new AppException(ErrorCode.PRODUCT_NOT_FOUND);
-//         }
-//         // Tìm variant
-//         List<Map<String, Object>> variants =
-//                 (List<Map<String, Object>>) product.get("variants");
-//         Map<String, Object> variant = variants.stream()
-//                 .filter(v -> req.getVariantId().equals(v.get("id")))
-//                 .findFirst()
-//                 .orElseThrow(() -> new AppException(ErrorCode.VARIANT_NOT_FOUND));
-//         Cart cart = getOrCreateCart(userId);
-//         List<CartItem> items = cart.getItems();
-//         // Nếu đã có cùng productId + variantId → tăng số lượng
-//         CartItem existing = items.stream()
-//                 .filter(i -> i.getProductId().equals(req.getProductId())
-//                         && i.getVariantId().equals(req.getVariantId()))
-//                 .findFirst()
-//                 .orElse(null);
-//         if (existing != null) {
-//               existing.setQuantity(existing.getQuantity() + req.getQuantity());
-//               existing.setLineTotal(existing.getPrice() * existing.getQuantity());
-//         } else {
-//             // Lấy ảnh primary
-//             List<Map<String, Object>> images =
-//                     (List<Map<String, Object>>) product.get("images");
-//             String image = null;
-//             if (images != null && !images.isEmpty()) {
-//                 image = (String) images.stream()
-//                         .filter(img -> Boolean.TRUE.equals(img.get("isPrimary")))
-//                         .findFirst()
-//                         .orElse(images.get(0))
-//                         .get("url");
-//             }
-//             items.add(CartItem.builder()
-//                     .productId(req.getProductId())
-//                     .variantId(req.getVariantId())
-//                     .name((String) product.get("name"))
-//                     .image(image)
-//                     .quantity(req.getQuantity())
-//                     .price(((Number) variant.get("price")).doubleValue())
-//                     .lineTotal(((Number) variant.get("price")).doubleValue() * req.getQuantity())
-//                     .size((String) variant.get("size"))
-//                     .thickness((String) variant.get("thickness"))
-//                     .color((String) variant.get("color"))
-//                     .build());
-//         }
-//         return toCartResponse(cartRepository.save(cart));
-//     }
-//fake dữ liệu, chưa gọi tới http service
     @Override
     public CartResponse addItem(String userId, AddToCartRequest req) {
-
+        // Gọi product-service qua Eureka
+        Map<String, Object> product;
+        try {
+            product = restTemplate.getForObject(
+                    "http://productservice/api/products/" + req.getProductId(),
+                    Map.class);
+        } catch (RestClientException e) {
+            throw new AppException(ErrorCode.PRODUCT_SERVICE_ERROR);
+        }
+        if (product == null) {
+            throw new AppException(ErrorCode.PRODUCT_NOT_FOUND);
+        }
+        // Tìm variant
+        List<Map<String, Object>> variants
+                = (List<Map<String, Object>>) product.get("variants");
+        Map<String, Object> variant = variants.stream()
+                .filter(v -> req.getVariantId().equals(v.get("id")))
+                .findFirst()
+                .orElseThrow(() -> new AppException(ErrorCode.VARIANT_NOT_FOUND));
         Cart cart = getOrCreateCart(userId);
         List<CartItem> items = cart.getItems();
-
+        // Nếu đã có cùng productId + variantId → tăng số lượng
         CartItem existing = items.stream()
                 .filter(i -> i.getProductId().equals(req.getProductId())
                 && i.getVariantId().equals(req.getVariantId()))
                 .findFirst()
                 .orElse(null);
-
         if (existing != null) {
             existing.setQuantity(existing.getQuantity() + req.getQuantity());
             existing.setLineTotal(existing.getPrice() * existing.getQuantity());
         } else {
-            // TODO: thay bằng gọi product-service sau khi Eureka chạy
-            double lineTotal = 999000 * req.getQuantity();
+            // Lấy ảnh primary
+            List<Map<String, Object>> images
+                    = (List<Map<String, Object>>) product.get("images");
+            String image = null;
+            if (images != null && !images.isEmpty()) {
+                image = (String) images.stream()
+                        .filter(img -> Boolean.TRUE.equals(img.get("isPrimary")))
+                        .findFirst()
+                        .orElse(images.get(0))
+                        .get("url");
+            }
             items.add(CartItem.builder()
                     .productId(req.getProductId())
                     .variantId(req.getVariantId())
-                    .name("Test Product")
-                    .image("https://test.com/image.jpg")
+                    .name((String) product.get("name"))
+                    .image(image)
                     .quantity(req.getQuantity())
-                    .price(999000)
-                    .lineTotal(lineTotal)
-                    .size("160x200cm")
-                    .thickness("10cm")
-                    .color(null)
+                    .price(((Number) variant.get("price")).doubleValue())
+                    .lineTotal(((Number) variant.get("price")).doubleValue() * req.getQuantity())
+                    .size((String) variant.get("size"))
+                    .thickness((String) variant.get("thickness"))
+                    .color((String) variant.get("color"))
                     .build());
         }
-
         return toCartResponse(cartRepository.save(cart));
     }
 
+// //fake dữ liệu, chưa gọi tới http service
+//     @Override
+//     public CartResponse addItem(String userId, AddToCartRequest req) {
+//         Cart cart = getOrCreateCart(userId);
+//         List<CartItem> items = cart.getItems();
+//         CartItem existing = items.stream()
+//                 .filter(i -> i.getProductId().equals(req.getProductId())
+//                 && i.getVariantId().equals(req.getVariantId()))
+//                 .findFirst()
+//                 .orElse(null);
+//         if (existing != null) {
+//             existing.setQuantity(existing.getQuantity() + req.getQuantity());
+//             existing.setLineTotal(existing.getPrice() * existing.getQuantity());
+//         } else {
+//             // TODO: thay bằng gọi product-service sau khi Eureka chạy
+//             double lineTotal = 999000 * req.getQuantity();
+//             items.add(CartItem.builder()
+//                     .productId(req.getProductId())
+//                     .variantId(req.getVariantId())
+//                     .name("Test Product")
+//                     .image("https://test.com/image.jpg")
+//                     .quantity(req.getQuantity())
+//                     .price(999000)
+//                     .lineTotal(lineTotal)
+//                     .size("160x200cm")
+//                     .thickness("10cm")
+//                     .color(null)
+//                     .build());
+//         }
+//         return toCartResponse(cartRepository.save(cart));
+//     }
     // ── UPDATE quantity ──────────────────────────────────────────────
     @Override
     public CartResponse updateQuantity(String userId, UpdateQuantityRequest req) {

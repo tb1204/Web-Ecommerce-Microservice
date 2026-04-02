@@ -1,0 +1,498 @@
+[
+  {
+    "name": "Nệm Lò Xo Cao Cấp Artisano Spring Luxury",
+    "sku": "ART-N-001",
+    "productCode": "N001",
+    "category": { "name": "Nệm", "code": "nem" },
+    "brand": "Artisano",
+    "origin": "Việt Nam",
+    "price": 8500000,
+    "originalPrice": 10000000,
+    "specifications": {
+      "material": "Lò xo túi độc lập + Foam Memory",
+      "weight": "25kg",
+      "firmness": "Vừa",
+      "size": "160x200cm",
+      "thickness": "25cm",
+      "design": "Viền trần bông 3D thoáng khí",
+      "certificationNumber": "QDVN-2023-001"
+    },
+    "stockQuantity": 50,
+    "tags": ["lò xo", "cao cấp", "memory foam", "thoáng khí"],
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dkmzqfc8j/image/upload/v1/artisano/products/nem-lo-xo-1.jpg",
+        "isPrimary": true
+      }
+    ],
+    "status": "AVAILABLE",
+    "description": "Nệm lò xo túi độc lập kết hợp foam memory cao cấp, hỗ trợ tối ưu cột sống, thoáng khí vượt trội.",
+    "createdAt": { "$date": "2025-01-01T00:00:00Z" },
+    "updatedAt": { "$date": "2025-01-01T00:00:00Z" }
+  },
+  {
+    "name": "Nệm Foam Thuần Túy Artisano Pure Foam",
+    "sku": "ART-N-002",
+    "productCode": "N002",
+    "category": { "name": "Nệm", "code": "nem" },
+    "brand": "Artisano",
+    "origin": "Việt Nam",
+    "price": 5200000,
+    "originalPrice": 6500000,
+    "specifications": {
+      "material": "Foam HR 40kg/m³",
+      "weight": "18kg",
+      "firmness": "Cứng",
+      "size": "120x200cm",
+      "thickness": "20cm",
+      "design": "Bề mặt gấp sóng massage",
+      "certificationNumber": "QDVN-2023-002"
+    },
+    "stockQuantity": 35,
+    "tags": ["foam", "cứng", "chỉnh hình", "học sinh"],
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dkmzqfc8j/image/upload/v1/artisano/products/nem-foam-1.jpg",
+        "isPrimary": true
+      }
+    ],
+    "status": "AVAILABLE",
+    "description": "Nệm foam HR mật độ cao, độ cứng vừa phải, phù hợp cho người cần hỗ trợ cột sống.",
+    "createdAt": { "$date": "2025-01-01T00:00:00Z" },
+    "updatedAt": { "$date": "2025-01-01T00:00:00Z" }
+  },
+  {
+    "name": "Nệm Cao Su Thiên Nhiên Artisano Natural Latex",
+    "sku": "ART-N-003",
+    "productCode": "N003",
+    "category": { "name": "Nệm", "code": "nem" },
+    "brand": "Artisano",
+    "origin": "Việt Nam",
+    "price": 12000000,
+    "originalPrice": 14500000,
+    "specifications": {
+      "material": "Cao su thiên nhiên 100% Talalay",
+      "weight": "30kg",
+      "firmness": "Mềm",
+      "size": "180x200cm",
+      "thickness": "22cm",
+      "design": "Lỗ thoáng khí 7 vùng nâng đỡ",
+      "certificationNumber": "QDVN-2023-003"
+    },
+    "stockQuantity": 20,
+    "tags": ["cao su thiên nhiên", "latex", "mềm", "kháng khuẩn"],
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dkmzqfc8j/image/upload/v1/artisano/products/nem-latex-1.jpg",
+        "isPrimary": true
+      }
+    ],
+    "status": "AVAILABLE",
+    "description": "Nệm cao su thiên nhiên 100% Talalay, kháng khuẩn tự nhiên, đàn hồi tốt, tuổi thọ cao.",
+    "createdAt": { "$date": "2025-01-01T00:00:00Z" },
+    "updatedAt": { "$date": "2025-01-01T00:00:00Z" }
+  },
+  {
+    "name": "Nệm Lò Xo Bonnell Artisano Classic",
+    "sku": "ART-N-004",
+    "productCode": "N004",
+    "category": { "name": "Nệm", "code": "nem" },
+    "brand": "Artisano",
+    "origin": "Việt Nam",
+    "price": 3800000,
+    "originalPrice": 4500000,
+    "specifications": {
+      "material": "Lò xo Bonnell + Foam thường",
+      "weight": "22kg",
+      "firmness": "Vừa",
+      "size": "140x200cm",
+      "thickness": "18cm",
+      "design": "Viền tufted cổ điển",
+      "certificationNumber": "QDVN-2023-004"
+    },
+    "stockQuantity": 60,
+    "tags": ["lò xo bonnell", "tiết kiệm", "gia đình"],
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dkmzqfc8j/image/upload/v1/artisano/products/nem-bonnell-1.jpg",
+        "isPrimary": true
+      }
+    ],
+    "status": "AVAILABLE",
+    "description": "Nệm lò xo Bonnell truyền thống, giá tốt, phù hợp gia đình.",
+    "createdAt": { "$date": "2025-01-01T00:00:00Z" },
+    "updatedAt": { "$date": "2025-01-01T00:00:00Z" }
+  },
+  {
+    "name": "Gối Cao Su Thiên Nhiên Artisano Latex Pillow",
+    "sku": "ART-G-001",
+    "productCode": "G001",
+    "category": { "name": "Gối", "code": "goi" },
+    "brand": "Artisano",
+    "origin": "Việt Nam",
+    "price": 650000,
+    "originalPrice": 800000,
+    "specifications": {
+      "material": "Cao su thiên nhiên 100%",
+      "weight": "1.2kg",
+      "firmness": "Vừa",
+      "size": "40x60cm",
+      "thickness": "12cm",
+      "design": "Bề mặt lượn sóng contour",
+      "certificationNumber": "QDVN-2023-010"
+    },
+    "stockQuantity": 100,
+    "tags": ["gối cao su", "chỉnh hình cổ", "kháng khuẩn"],
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dkmzqfc8j/image/upload/v1/artisano/products/goi-latex-1.jpg",
+        "isPrimary": true
+      }
+    ],
+    "status": "AVAILABLE",
+    "description": "Gối cao su thiên nhiên bề mặt contour, hỗ trợ cổ và vai, kháng khuẩn tự nhiên.",
+    "createdAt": { "$date": "2025-01-01T00:00:00Z" },
+    "updatedAt": { "$date": "2025-01-01T00:00:00Z" }
+  },
+  {
+    "name": "Gối Memory Foam Artisano Cloud",
+    "sku": "ART-G-002",
+    "productCode": "G002",
+    "category": { "name": "Gối", "code": "goi" },
+    "brand": "Artisano",
+    "origin": "Việt Nam",
+    "price": 480000,
+    "originalPrice": 580000,
+    "specifications": {
+      "material": "Memory Foam visco-elastic",
+      "weight": "0.9kg",
+      "firmness": "Mềm",
+      "size": "40x60cm",
+      "thickness": "10cm",
+      "design": "Bề mặt phẳng thoáng khí",
+      "certificationNumber": "QDVN-2023-011"
+    },
+    "stockQuantity": 80,
+    "tags": ["gối memory foam", "mềm", "thoáng khí"],
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dkmzqfc8j/image/upload/v1/artisano/products/goi-memory-1.jpg",
+        "isPrimary": true
+      }
+    ],
+    "status": "AVAILABLE",
+    "description": "Gối memory foam ghi nhớ hình dạng, phân bổ áp lực đều, giảm đau vai gáy.",
+    "createdAt": { "$date": "2025-01-01T00:00:00Z" },
+    "updatedAt": { "$date": "2025-01-01T00:00:00Z" }
+  },
+  {
+    "name": "Gối Bông Tổng Hợp Artisano Soft",
+    "sku": "ART-G-003",
+    "productCode": "G003",
+    "category": { "name": "Gối", "code": "goi" },
+    "brand": "Artisano",
+    "origin": "Việt Nam",
+    "price": 180000,
+    "originalPrice": 220000,
+    "specifications": {
+      "material": "Bông tổng hợp PP cao cấp",
+      "weight": "0.6kg",
+      "firmness": "Mềm",
+      "size": "40x60cm",
+      "thickness": "8cm",
+      "design": "Vỏ cotton 100%",
+      "certificationNumber": "QDVN-2023-012"
+    },
+    "stockQuantity": 150,
+    "tags": ["gối bông", "mềm mại", "phổ thông"],
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dkmzqfc8j/image/upload/v1/artisano/products/goi-bong-1.jpg",
+        "isPrimary": true
+      }
+    ],
+    "status": "AVAILABLE",
+    "description": "Gối bông tổng hợp mềm mại, vỏ cotton thoáng mát, phù hợp mọi đối tượng.",
+    "createdAt": { "$date": "2025-01-01T00:00:00Z" },
+    "updatedAt": { "$date": "2025-01-01T00:00:00Z" }
+  },
+  {
+    "name": "Chăn Lông Vũ Mùa Đông Artisano Winter",
+    "sku": "ART-C-001",
+    "productCode": "C001",
+    "category": { "name": "Chăn ga", "code": "chan-ga" },
+    "brand": "Artisano",
+    "origin": "Việt Nam",
+    "price": 1200000,
+    "originalPrice": 1500000,
+    "specifications": {
+      "material": "Lông vũ trắng 90% + Vỏ microfiber",
+      "weight": "2.5kg",
+      "firmness": null,
+      "size": "180x200cm",
+      "thickness": "8cm",
+      "design": "Đường may ô vuông chống xê dịch",
+      "certificationNumber": "QDVN-2023-020"
+    },
+    "stockQuantity": 45,
+    "tags": ["chăn lông vũ", "mùa đông", "ấm áp", "sang trọng"],
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dkmzqfc8j/image/upload/v1/artisano/products/chan-long-vu-1.jpg",
+        "isPrimary": true
+      }
+    ],
+    "status": "AVAILABLE",
+    "description": "Chăn lông vũ trắng cao cấp, giữ nhiệt tốt mùa đông, nhẹ và mềm mại.",
+    "createdAt": { "$date": "2025-01-01T00:00:00Z" },
+    "updatedAt": { "$date": "2025-01-01T00:00:00Z" }
+  },
+  {
+    "name": "Chăn Hè Mỏng Artisano Summer Cool",
+    "sku": "ART-C-002",
+    "productCode": "C002",
+    "category": { "name": "Chăn ga", "code": "chan-ga" },
+    "brand": "Artisano",
+    "origin": "Việt Nam",
+    "price": 450000,
+    "originalPrice": 550000,
+    "specifications": {
+      "material": "Bamboo Lyocell 100%",
+      "weight": "0.8kg",
+      "firmness": null,
+      "size": "180x200cm",
+      "thickness": "2cm",
+      "design": "Vân sọc thoáng mát",
+      "certificationNumber": "QDVN-2023-021"
+    },
+    "stockQuantity": 70,
+    "tags": ["chăn hè", "thoáng mát", "bamboo", "mỏng nhẹ"],
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dkmzqfc8j/image/upload/v1/artisano/products/chan-he-1.jpg",
+        "isPrimary": true
+      }
+    ],
+    "status": "AVAILABLE",
+    "description": "Chăn hè sợi bamboo mỏng nhẹ, thấm hút mồ hôi tốt, mát mẻ suốt đêm hè.",
+    "createdAt": { "$date": "2025-01-01T00:00:00Z" },
+    "updatedAt": { "$date": "2025-01-01T00:00:00Z" }
+  },
+  {
+    "name": "Bộ Ga Giường Cotton Artisano Pure Cotton 4 Món",
+    "sku": "ART-C-003",
+    "productCode": "C003",
+    "category": { "name": "Chăn ga", "code": "chan-ga" },
+    "brand": "Artisano",
+    "origin": "Việt Nam",
+    "price": 780000,
+    "originalPrice": 950000,
+    "specifications": {
+      "material": "Cotton 100% sợi 200TC",
+      "weight": "1.5kg",
+      "firmness": null,
+      "size": "160x200cm",
+      "thickness": null,
+      "design": "Họa tiết hoa nhẹ nhàng",
+      "certificationNumber": "QDVN-2023-022"
+    },
+    "stockQuantity": 90,
+    "tags": ["ga giường", "cotton", "bộ 4 món", "thoáng mát"],
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dkmzqfc8j/image/upload/v1/artisano/products/ga-cotton-1.jpg",
+        "isPrimary": true
+      }
+    ],
+    "status": "AVAILABLE",
+    "description": "Bộ ga 4 món cotton 100%, gồm: ga phủ, vỏ chăn, 2 vỏ gối. Mềm mịn, dễ giặt.",
+    "createdAt": { "$date": "2025-01-01T00:00:00Z" },
+    "updatedAt": { "$date": "2025-01-01T00:00:00Z" }
+  },
+  {
+    "name": "Topper Nệm Cao Su Artisano Topper Latex 5cm",
+    "sku": "ART-P-001",
+    "productCode": "P001",
+    "category": { "name": "Phụ kiện", "code": "phu-kien" },
+    "brand": "Artisano",
+    "origin": "Việt Nam",
+    "price": 2200000,
+    "originalPrice": 2800000,
+    "specifications": {
+      "material": "Cao su thiên nhiên Talalay",
+      "weight": "8kg",
+      "firmness": "Mềm",
+      "size": "160x200cm",
+      "thickness": "5cm",
+      "design": "Bề mặt lỗ thoáng khí",
+      "certificationNumber": "QDVN-2023-030"
+    },
+    "stockQuantity": 30,
+    "tags": ["topper", "cao su thiên nhiên", "nâng cấp nệm", "mềm mại"],
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dkmzqfc8j/image/upload/v1/artisano/products/topper-latex-1.jpg",
+        "isPrimary": true
+      }
+    ],
+    "status": "AVAILABLE",
+    "description": "Topper cao su thiên nhiên 5cm giúp nâng cấp nệm cũ, tăng độ mềm mại và thoáng khí.",
+    "createdAt": { "$date": "2025-01-01T00:00:00Z" },
+    "updatedAt": { "$date": "2025-01-01T00:00:00Z" }
+  },
+  {
+    "name": "Topper Nệm Memory Foam Artisano Topper 7cm",
+    "sku": "ART-P-002",
+    "productCode": "P002",
+    "category": { "name": "Phụ kiện", "code": "phu-kien" },
+    "brand": "Artisano",
+    "origin": "Việt Nam",
+    "price": 1800000,
+    "originalPrice": 2200000,
+    "specifications": {
+      "material": "Memory Foam visco-elastic",
+      "weight": "7kg",
+      "firmness": "Mềm",
+      "size": "160x200cm",
+      "thickness": "7cm",
+      "design": "Vỏ bọc tháo rời được giặt máy",
+      "certificationNumber": "QDVN-2023-031"
+    },
+    "stockQuantity": 25,
+    "tags": ["topper", "memory foam", "nâng cấp nệm"],
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dkmzqfc8j/image/upload/v1/artisano/products/topper-memory-1.jpg",
+        "isPrimary": true
+      }
+    ],
+    "status": "AVAILABLE",
+    "description": "Topper memory foam 7cm, vỏ bọc tháo rời giặt máy được, nâng cấp trải nghiệm ngủ tức thì.",
+    "createdAt": { "$date": "2025-01-01T00:00:00Z" },
+    "updatedAt": { "$date": "2025-01-01T00:00:00Z" }
+  },
+  {
+    "name": "Tấm Bảo Vệ Nệm Chống Thấm Artisano Protect",
+    "sku": "ART-P-003",
+    "productCode": "P003",
+    "category": { "name": "Phụ kiện", "code": "phu-kien" },
+    "brand": "Artisano",
+    "origin": "Việt Nam",
+    "price": 350000,
+    "originalPrice": 420000,
+    "specifications": {
+      "material": "Cotton + màng TPU chống thấm",
+      "weight": "0.9kg",
+      "firmness": null,
+      "size": "160x200cm",
+      "thickness": null,
+      "design": "Viền thun co giãn 4 góc",
+      "certificationNumber": "QDVN-2023-032"
+    },
+    "stockQuantity": 120,
+    "tags": ["bảo vệ nệm", "chống thấm", "chống bụi bẩn", "vệ sinh"],
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dkmzqfc8j/image/upload/v1/artisano/products/bao-ve-nem-1.jpg",
+        "isPrimary": true
+      }
+    ],
+    "status": "AVAILABLE",
+    "description": "Tấm bảo vệ nệm chống thấm nước, chống bụi mạt, bề mặt cotton thoáng mát. Giặt máy được.",
+    "createdAt": { "$date": "2025-01-01T00:00:00Z" },
+    "updatedAt": { "$date": "2025-01-01T00:00:00Z" }
+  },
+  {
+    "name": "Tấm Bảo Vệ Nệm Bamboo Artisano EcoGuard",
+    "sku": "ART-P-004",
+    "productCode": "P004",
+    "category": { "name": "Phụ kiện", "code": "phu-kien" },
+    "brand": "Artisano",
+    "origin": "Việt Nam",
+    "price": 520000,
+    "originalPrice": 650000,
+    "specifications": {
+      "material": "Bamboo Lyocell + màng TPU",
+      "weight": "1.1kg",
+      "firmness": null,
+      "size": "160x200cm",
+      "thickness": null,
+      "design": "Kháng khuẩn tự nhiên",
+      "certificationNumber": "QDVN-2023-033"
+    },
+    "stockQuantity": 80,
+    "tags": ["bảo vệ nệm", "bamboo", "kháng khuẩn", "eco"],
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dkmzqfc8j/image/upload/v1/artisano/products/bao-ve-nem-bamboo-1.jpg",
+        "isPrimary": true
+      }
+    ],
+    "status": "AVAILABLE",
+    "description": "Tấm bảo vệ nệm sợi bamboo kháng khuẩn tự nhiên, thân thiện môi trường, chống thấm hiệu quả.",
+    "createdAt": { "$date": "2025-01-01T00:00:00Z" },
+    "updatedAt": { "$date": "2025-01-01T00:00:00Z" }
+  },
+  {
+    "name": "Bảo Vệ Gối Chống Thấm Artisano PillowGuard",
+    "sku": "ART-P-005",
+    "productCode": "P005",
+    "category": { "name": "Phụ kiện", "code": "phu-kien" },
+    "brand": "Artisano",
+    "origin": "Việt Nam",
+    "price": 85000,
+    "originalPrice": 110000,
+    "specifications": {
+      "material": "Microfiber + màng TPU",
+      "weight": "0.15kg",
+      "firmness": null,
+      "size": "40x60cm",
+      "thickness": null,
+      "design": "Khóa kéo kín 3 mặt",
+      "certificationNumber": "QDVN-2023-034"
+    },
+    "stockQuantity": 200,
+    "tags": ["bảo vệ gối", "chống thấm", "chống mạt", "vệ sinh"],
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dkmzqfc8j/image/upload/v1/artisano/products/bao-ve-goi-1.jpg",
+        "isPrimary": true
+      }
+    ],
+    "status": "AVAILABLE",
+    "description": "Vỏ bảo vệ gối chống thấm nước, chống mạt giường, khóa kéo kín 3 mặt. Giặt máy 60°C được.",
+    "createdAt": { "$date": "2025-01-01T00:00:00Z" },
+    "updatedAt": { "$date": "2025-01-01T00:00:00Z" }
+  },
+  {
+    "name": "Bảo Vệ Gối Bamboo Artisano PillowGuard Eco",
+    "sku": "ART-P-006",
+    "productCode": "P006",
+    "category": { "name": "Phụ kiện", "code": "phu-kien" },
+    "brand": "Artisano",
+    "origin": "Việt Nam",
+    "price": 120000,
+    "originalPrice": 150000,
+    "specifications": {
+      "material": "Bamboo Lyocell + màng TPU",
+      "weight": "0.2kg",
+      "firmness": null,
+      "size": "40x60cm",
+      "thickness": null,
+      "design": "Kháng khuẩn, khóa kéo kín",
+      "certificationNumber": "QDVN-2023-035"
+    },
+    "stockQuantity": 180,
+    "tags": ["bảo vệ gối", "bamboo", "kháng khuẩn", "eco"],
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dkmzqfc8j/image/upload/v1/artisano/products/bao-ve-goi-bamboo-1.jpg",
+        "isPrimary": true
+      }
+    ],
+    "status": "AVAILABLE",
+    "description": "Vỏ bảo vệ gối sợi bamboo kháng khuẩn tự nhiên, mềm mịn, chống thấm hiệu quả.",
+    "createdAt": { "$date": "2025-01-01T00:00:00Z" },
+    "updatedAt": { "$date": "2025-01-01T00:00:00Z" }
+  }
+]

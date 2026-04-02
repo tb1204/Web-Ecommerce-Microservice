@@ -8,6 +8,7 @@ import com.b2204925.paymentservice.dto.req.RefundRequest;
 import com.b2204925.paymentservice.dto.res.PaymentResponse;
 import com.b2204925.paymentservice.entity.Payment;
 import com.b2204925.paymentservice.entity.PaymentMethod;
+import com.b2204925.paymentservice.service.OrderClientService;
 import com.b2204925.paymentservice.entity.PaymentStatus;
 import com.b2204925.paymentservice.exception.AppException;
 import com.b2204925.paymentservice.exception.ErrorCode;
@@ -29,6 +30,7 @@ public class PaymentService {
 
     private final PaymentRepository paymentRepository;
     private final VNPayUtil vnPayUtil;
+    private final OrderClientService orderClientService;
 
     public PaymentResponse createPayment(String userId, CreatePaymentRequest req) {
         paymentRepository.findByOrderId(req.getOrderId()).ifPresent(p -> {
@@ -73,6 +75,33 @@ public class PaymentService {
                 .stream().map(this::toResponse).collect(Collectors.toList());
     }
 
+    // public PaymentResponse handleVNPayReturn(Map<String, String> params) {
+    //     String orderId = params.get("vnp_TxnRef");
+    //     String responseCode = params.get("vnp_ResponseCode");
+    //     String transactionStatus = params.get("vnp_TransactionStatus");
+    //     String transactionId = params.get("vnp_TransactionNo");
+    //     Payment payment = paymentRepository.findByOrderId(orderId)
+    //             .orElseThrow(() -> new AppException(ErrorCode.PAYMENT_NOT_FOUND));
+    //     payment.setResponseCode(responseCode);
+    //     payment.setTransactionId(transactionId);
+    //     payment.setPaymentGatewayResponse(params.toString());
+    //     payment.setUpdatedAt(Instant.now());
+    //     boolean isValidSignature = vnPayUtil.verifyReturn(params);
+    //     boolean isResponseSuccess = "00".equals(responseCode);
+    //     boolean isTransactionSuccess = "00".equals(transactionStatus);
+    //     if (isValidSignature && isResponseSuccess && isTransactionSuccess) {
+    //         payment.setPaymentStatus(PaymentStatus.PAID);
+    //         payment.setPaidAt(Instant.now());
+    //         log.info("VNPay SUCCESS for order {}", orderId);
+    //     } else {
+    //         payment.setPaymentStatus(PaymentStatus.FAILED);
+    //         // ← THÊM: lưu message tiếng Việt thay vì mã số
+    //         String failMessage = vnPayUtil.getResponseMessage(responseCode);
+    //         payment.setFailedReason(failMessage);
+    //         log.warn("VNPay FAILED for order {} | reason: {}", orderId, failMessage);
+    //     }
+    //     return toResponse(paymentRepository.save(payment));
+    // }
     public PaymentResponse handleVNPayReturn(Map<String, String> params) {
         String orderId = params.get("vnp_TxnRef");
         String responseCode = params.get("vnp_ResponseCode");
@@ -95,17 +124,21 @@ public class PaymentService {
             payment.setPaymentStatus(PaymentStatus.PAID);
             payment.setPaidAt(Instant.now());
             log.info("VNPay SUCCESS for order {}", orderId);
+
+            Payment saved = paymentRepository.save(payment);
+            orderClientService.updatePaymentStatus(orderId, "PAID", transactionId); // ← THÊM
+            return toResponse(saved);
+
         } else {
             payment.setPaymentStatus(PaymentStatus.FAILED);
-
-            // ← THÊM: lưu message tiếng Việt thay vì mã số
             String failMessage = vnPayUtil.getResponseMessage(responseCode);
             payment.setFailedReason(failMessage);
-
             log.warn("VNPay FAILED for order {} | reason: {}", orderId, failMessage);
-        }
 
-        return toResponse(paymentRepository.save(payment));
+            Payment saved = paymentRepository.save(payment);
+            orderClientService.updatePaymentStatus(orderId, "FAILED", transactionId); // ← THÊM
+            return toResponse(saved);
+        }
     }
 
     public PaymentResponse confirmCOD(String orderId) {
@@ -154,7 +187,7 @@ public class PaymentService {
         return toResponse(paymentRepository.save(payment));
     }
 
-    private PaymentResponse toResponse(Paymenta p) {
+    private PaymentResponse toResponse(Payment p) {
         return PaymentResponse.builder()
                 .id(p.getId())
                 .orderId(p.getOrderId())

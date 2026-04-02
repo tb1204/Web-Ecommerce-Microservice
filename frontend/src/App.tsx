@@ -41,73 +41,81 @@ import AuthRedirect from "./pages/AuthRedirect";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentFailed from "./pages/PaymentFailed";
 
+import store from "./store";
+import { Provider } from "react-redux";
+
 //import AdminSliderUpload from "./components/Admin/AdminSliderUpload";
 
 function App() {
   return (
-    <BrowserRouter>
-      <WishlistProvider>
-        <CompareProvider>
-          <ScrollToTop />
-          <Toaster position="top-right" />
-          <ComparisonBar />
+    <Provider store={store}>
+      <BrowserRouter>
+        <WishlistProvider>
+          <CompareProvider>
+            <ScrollToTop />
+            <Toaster position="top-right" />
+            <ComparisonBar />
 
-          <Routes>
-            <Route path="/" element={<UserLayout />}>
-              <Route index element={<HomePage />} />
-              <Route path="login" element={<LoginPage />} />
-              <Route path="register" element={<RegisterPage />} />
-              <Route path="about" element={<AboutPage />} />
-              <Route path="contact" element={<ContactPage />} />
-              <Route path="awards" element={<AwardsAndCertificationsPage />} />
-              <Route path="brandstory" element={<BrandStoryPage />} />
-              <Route path="flashsale" element={<FlashSalePage />} />
-              <Route path="products" element={<ProductCard />} />
-              <Route path="product/:id" element={<ProductDetails />} />
-              <Route path="payment-success" element={<PaymentSuccess />} />
-              <Route path="payment-failed" element={<PaymentFailed />} />
-              <Route
-                path="collections/:collection"
-                element={<CollectionPage />}
-              />
+            <Routes>
+              <Route path="/" element={<UserLayout />}>
+                <Route index element={<HomePage />} />
+                <Route path="login" element={<LoginPage />} />
+                <Route path="register" element={<RegisterPage />} />
+                <Route path="about" element={<AboutPage />} />
+                <Route path="contact" element={<ContactPage />} />
+                <Route
+                  path="awards"
+                  element={<AwardsAndCertificationsPage />}
+                />
+                <Route path="brandstory" element={<BrandStoryPage />} />
+                <Route path="flashsale" element={<FlashSalePage />} />
+                <Route path="products" element={<ProductCard />} />
+                <Route path="product/:id" element={<ProductDetails />} />
+                <Route path="payment-success" element={<PaymentSuccess />} />
+                <Route path="payment-failed" element={<PaymentFailed />} />
+                <Route
+                  path="collections/:collection"
+                  element={<CollectionPage />}
+                />
 
-              <Route path="cart" element={<CartPage />} />
-              <Route path="checkout" element={<CheckoutPage />} />
-              <Route path="my-orders" element={<MyOrdersPage />} />
-              <Route path="order/:id" element={<OrderDetailsPage />} />
-              {/* <Route path="wishlist" element={<WishlistPage />} /> */}
-              <Route path="profile" element={<CustomProfile />} />
-              <Route path="/auth-redirect" element={<AuthRedirect />} />
-              <Route path="*" element={<NotFound />} />
-            </Route>
+                <Route path="cart" element={<CartPage />} />
+                <Route path="checkout" element={<CheckoutPage />} />
+                <Route path="my-orders" element={<MyOrdersPage />} />
+                <Route path="order/:id" element={<OrderDetailsPage />} />
+                {/* <Route path="wishlist" element={<WishlistPage />} /> */}
+                <Route path="profile" element={<CustomProfile />} />
+                <Route path="/auth-redirect" element={<AuthRedirect />} />
+                <Route path="*" element={<NotFound />} />
+              </Route>
 
-            {/* GROUP 2: CÁC TRANG DÀNH CHO ADMIN (QUẢN TRỊ) */}
-            {/* <Route
+              {/* GROUP 2: CÁC TRANG DÀNH CHO ADMIN (QUẢN TRỊ) */}
+              {/* <Route
               path="/admin"
               element={<AdminLayout />}
             > */}
-            <Route
-              path="/admin"
-              element={
-                <ProtectedRoute role="admin">
-                  <AdminLayout />
-                </ProtectedRoute>
-              }
-            >
-              <Route index element={<AdminHomePage />} />
-              <Route path="users" element={<AdminUserPage />} />
-              <Route path="chat" element={<AdminChatPage />} />
-              <Route path="slider" element={<AdminSliderUpload />} />
-              <Route path="product" element={<AdminProductPage />} />
-              <Route path="orders" element={<AdminOrderPage />} />
-              <Route path="reviews" element={<AdminCommentPage />} />
-              <Route path="statistics" element={<AdminStatisticalPage />} />
-              <Route path="vouchers" element={<AdminVoucherPage />} />
-            </Route>
-          </Routes>
-        </CompareProvider>
-      </WishlistProvider>
-    </BrowserRouter>
+              <Route
+                path="/admin"
+                element={
+                  <ProtectedRoute role="admin">
+                    <AdminLayout />
+                  </ProtectedRoute>
+                }
+              >
+                <Route index element={<AdminHomePage />} />
+                <Route path="users" element={<AdminUserPage />} />
+                <Route path="chat" element={<AdminChatPage />} />
+                <Route path="slider" element={<AdminSliderUpload />} />
+                <Route path="product" element={<AdminProductPage />} />
+                <Route path="orders" element={<AdminOrderPage />} />
+                <Route path="reviews" element={<AdminCommentPage />} />
+                <Route path="statistics" element={<AdminStatisticalPage />} />
+                <Route path="vouchers" element={<AdminVoucherPage />} />
+              </Route>
+            </Routes>
+          </CompareProvider>
+        </WishlistProvider>
+      </BrowserRouter>
+    </Provider>
   );
 }
 

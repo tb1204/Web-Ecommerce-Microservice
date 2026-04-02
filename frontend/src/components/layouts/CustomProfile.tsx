@@ -14,6 +14,7 @@ import {
 import { toast } from "sonner";
 
 const CustomProfile = () => {
+  const BASE_URL = "http://localhost:8081";
   const { isLoaded, isSignedIn, user } = useUser();
   const { signOut } = useClerk();
   const { getToken } = useAuth();
@@ -50,7 +51,7 @@ const CustomProfile = () => {
       try {
         const token = await getToken({ template: "my-backend" });
         console.log("JWT TOKEN:", token);
-        const res = await axios.get("http://localhost:8081/api/users/me", {
+        const res = await axios.get(`${BASE_URL}/api/users/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = res.data;
@@ -98,7 +99,7 @@ const CustomProfile = () => {
       // 3. Đồng bộ về DB
       const token = await getToken({ template: "my-backend" });
       await axios.put(
-        "http://localhost:8081/api/users/me",
+        `${BASE_URL}/api/users/me`,
         { avatarUrl: user?.imageUrl },
         { headers: { Authorization: `Bearer ${token}` } },
       );
@@ -115,7 +116,7 @@ const CustomProfile = () => {
 
       // Chỉ cập nhật DB — đủ rồi
       await axios.put(
-        "http://localhost:8081/api/users/me",
+        `${BASE_URL}/api/users/me`,
         { firstName, lastName, phone, gender, avatarUrl: user?.imageUrl },
         { headers: { Authorization: `Bearer ${token}` } },
       );
@@ -170,7 +171,7 @@ const CustomProfile = () => {
       // Đồng bộ email mới về DB
       const token = await getToken({ template: "my-backend" });
       await axios.put(
-        "http://localhost:8081/api/users/me",
+        `${BASE_URL}/api/users/me`,
         { email: newEmail },
         { headers: { Authorization: `Bearer ${token}` } },
       );

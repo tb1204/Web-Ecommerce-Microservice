@@ -5,6 +5,10 @@ import axios from "axios";
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
 
+// client.activate();    // bật kết nối
+// client.deactivate();  // tắt kết nối
+// client.subscribe();   // đăng ký nhận message
+// client.publish();     // gửi message
 interface Message {
   id: string;
   conversationId: string;
@@ -171,7 +175,7 @@ const AdminChatPage: React.FC = () => {
                 setSummaries((prev) => {
                   const exists = prev.some((c) => c.id === newConv.id);
                   if (exists)
-                    return prev.map((c) => (c.id === newConv.id ? newConv : c));
+                    return prev.map((c) => (c.id === newConv.id ? newConv : c)); //id conversation
                   return [newConv, ...prev];
                 });
               } catch (e) {
@@ -213,7 +217,7 @@ const AdminChatPage: React.FC = () => {
         ...waitingRes.data,
         ...activeRes.data,
       ];
-      // Deduplicate
+      // remove duplicates
       const unique = merged.filter(
         (v, i, a) => a.findIndex((t) => t.id === v.id) === i,
       );
@@ -509,6 +513,8 @@ const AdminChatPage: React.FC = () => {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+    // file.size chính là dung lượng tính bằng Byte
+    // console.log("Dung lượng file:", file.size);
     if (!file) return;
 
     if (file.type.startsWith("image/") || file.type.startsWith("video/")) {

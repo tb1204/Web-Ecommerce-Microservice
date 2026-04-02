@@ -123,6 +123,23 @@ spring:
               args:
                 name: defaultCB
                 fallbackUri: forward:/fallback/paymentservice
+
+        # Ví dụ cho voucherservice (limit chặt vì nhạy cảm)
+        - id: voucherservice
+          uri: lb://voucher-service
+          predicates:
+            - Path=/api/vouchers/**, /api/admin/vouchers/**
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 5
+                redis-rate-limiter.burstCapacity: 10
+                key-resolver: "#{@ipKeyResolver}"
+            - name: CircuitBreaker
+              args:
+                name: defaultCB
+                fallbackUri: forward:/fallback/voucherservice
+
         # Ví dụ cho chatservice (limit chặt vì nhạy cảm)
         - id: chatservice
           uri: lb://chat-service

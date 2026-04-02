@@ -80,6 +80,7 @@ const WishlistContext = createContext<WishlistContextType | undefined>(
 export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const BASE_URL = "http://localhost:8081";
   const [wishlistItems, setWishlistItems] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
   const { getToken } = useAuth();
@@ -94,10 +95,9 @@ export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({
     setLoading(true);
     try {
       const headers = await getAuthHeader();
-      const res = await axios.get(
-        "http://localhost:8081/api/users/me/wishlist",
-        { headers },
-      );
+      const res = await axios.get(`${BASE_URL}/api/users/me/wishlist`, {
+        headers,
+      });
 
       console.log("Wishlist response:", res.data);
 
@@ -121,14 +121,13 @@ export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({
       );
 
       if (isCurrentlyInWishlist) {
-        await axios.delete(
-          `http://localhost:8081/api/users/me/wishlist/${product._id}`,
-          { headers },
-        );
+        await axios.delete(`${BASE_URL}/api/users/me/wishlist/${product._id}`, {
+          headers,
+        });
         toast.success("Đã xóa khỏi yêu thích");
       } else {
         await axios.post(
-          `http://localhost:8081/api/users/me/wishlist/${product._id}`,
+          `${BASE_URL}/api/users/me/wishlist/${product._id}`,
           {},
           { headers },
         );

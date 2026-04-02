@@ -7,13 +7,13 @@ com\b2204925\paymentservice\PaymentserviceApplication.class
 com\b2204925\paymentservice\dto\res\PaymentResponse.class
 com\b2204925\paymentservice\exception\ErrorCode.class
 com\b2204925\paymentservice\util\VNPayUtil.class
-com\b2204925\paymentservice\controller\PaymentController.class
 com\b2204925\paymentservice\repository\PaymentRepository.class
-com\b2204925\paymentservice\service\PaymentService.class
 com\b2204925\paymentservice\dto\req\CreatePaymentRequest.class
 com\b2204925\paymentservice\config\SecurityConfig.class
 com\b2204925\paymentservice\entity\Payment.class
+com\b2204925\paymentservice\service\OrderClientService.class
 com\b2204925\paymentservice\entity\PaymentStatus.class
+com\b2204925\paymentservice\config\RestTemplateConfig.class
 com\b2204925\paymentservice\exception\ErrorResponse.class
 com\b2204925\paymentservice\entity\Payment$PaymentBuilder.class
 com\b2204925\paymentservice\dto\res\PaymentResponse$PaymentResponseBuilder.class

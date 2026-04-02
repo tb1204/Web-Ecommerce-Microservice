@@ -11,7 +11,7 @@ import {
   Clock,
   User,
   Printer,
-  Calendar, 
+  Calendar,
 } from "lucide-react";
 import { toast } from "sonner";
 import { useReactToPrint } from "react-to-print";
@@ -20,8 +20,8 @@ import type { Order } from "../Products/InterfaceItem";
 import { PrintInvoice } from "./PrintInvoice";
 import AdminOrderDetailModal from "./AdminOrderDetailPage";
 
-
 const AdminOrderPage = () => {
+  const ORDER_API_URL = "http://localhost:8084";
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -37,14 +37,13 @@ const AdminOrderPage = () => {
   // --- QUẢN LÝ MODAL ---
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
-  
 
   // --- BỘ LỌC ---
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [paymentFilter, setPaymentFilter] = useState<string>("all");
   const [startDate, setStartDate] = useState(""); // Lọc từ ngày
-  const [endDate, setEndDate] = useState("");     // Lọc đến ngày
+  const [endDate, setEndDate] = useState(""); // Lọc đến ngày
 
   const [currentPage, setCurrentPage] = useState(1);
   const ordersPerPage = 3;
@@ -111,7 +110,7 @@ const AdminOrderPage = () => {
   //     createdAt: "2026-01-23T12:40:00.000Z",
   //     updatedAt: "2026-01-23T15:00:00.000Z"
   //   },
-    
+
   // ];
 
   // useEffect(() => {
@@ -128,7 +127,7 @@ const AdminOrderPage = () => {
     setLoading(true);
     try {
       // Gọi API cổng 9002 của Order Service
-      const response = await axios.get("http://localhost:8084/api/orders/all");
+      const response = await axios.get(`${ORDER_API_URL}/api/orders/all`);
       if (response.status === 200) {
         setOrders(response.data);
       }
@@ -153,15 +152,18 @@ const AdminOrderPage = () => {
   const handleStatusChange = async (id: string, newStatus: string) => {
     try {
       // Khớp với @PatchMapping("/status/{id}") @RequestParam String status ở Backend
-      const response = await axios.patch(`http://localhost:8084/api/orders/status/${id}?status=${newStatus}`);
-      
+      const response = await axios.patch(
+        `${ORDER_API_URL}/api/orders/status/${id}?status=${newStatus}`,
+      );
+
       if (response.status === 200) {
         setOrders((prev) => prev.map((o) => (o.id === id ? response.data : o)));
         toast.success(`Đã cập nhật đơn hàng sang: ${newStatus}`);
       }
     } catch (error: any) {
       // Bắt lỗi "Đơn hàng đã hủy không thể đổi trạng thái" từ Backend trả về
-      const errorMsg = error.response?.data?.message || "Lỗi server từ chối cập nhật!";
+      const errorMsg =
+        error.response?.data?.message || "Lỗi server từ chối cập nhật!";
       toast.error(errorMsg);
       console.error("Lỗi update status:", error);
     }
@@ -169,17 +171,23 @@ const AdminOrderPage = () => {
 
   const handlePrintInvoice = (order: Order) => {
     setItemsToPrint([order]);
-    setTimeout(() => { reactToPrintFn(); }, 100);
+    setTimeout(() => {
+      reactToPrintFn();
+    }, 100);
   };
 
   const handlePrintAllProcessing = () => {
-    const processingOrders = orders.filter(o => o.orderStatus === "PROCESSING");
+    const processingOrders = orders.filter(
+      (o) => o.orderStatus === "PROCESSING",
+    );
     if (processingOrders.length === 0) {
       toast.error("Không có đơn hàng nào đang đóng gói để in!");
       return;
     }
     setItemsToPrint(processingOrders);
-    setTimeout(() => { reactToPrintFn(); }, 100);
+    setTimeout(() => {
+      reactToPrintFn();
+    }, 100);
   };
 
   const handleResetFilters = () => {
@@ -195,29 +203,42 @@ const AdminOrderPage = () => {
   const filteredOrders = orders.filter((order) => {
     const orderDate = new Date(order.createdAt).getTime();
     const start = startDate ? new Date(startDate).getTime() : 0;
-    const end = endDate ? new Date(endDate).setHours(23, 59, 59, 999) : Infinity;
+    const end = endDate
+      ? new Date(endDate).setHours(23, 59, 59, 999)
+      : Infinity;
 
     const matchesSearch =
       order.orderNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
       order.customerInfo.name.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus = statusFilter === "all" || order.orderStatus === statusFilter;
-    const matchesPayment = paymentFilter === "all" || order.payment.method === paymentFilter;
+    const matchesStatus =
+      statusFilter === "all" || order.orderStatus === statusFilter;
+    const matchesPayment =
+      paymentFilter === "all" || order.payment.method === paymentFilter;
     const matchesDate = orderDate >= start && orderDate <= end;
 
     return matchesSearch && matchesStatus && matchesPayment && matchesDate;
   });
 
   const totalPages = Math.ceil(filteredOrders.length / ordersPerPage);
-  const currentOrders = filteredOrders.slice((currentPage - 1) * ordersPerPage, currentPage * ordersPerPage);
+  const currentOrders = filteredOrders.slice(
+    (currentPage - 1) * ordersPerPage,
+    currentPage * ordersPerPage,
+  );
 
   const getStatusColor = (status: Order["orderStatus"]) => {
     switch (status) {
-      case "PENDING": return "bg-amber-50 text-amber-600 border-amber-200";
-      case "PROCESSING": return "bg-blue-50 text-blue-600 border-blue-200";
-      case "SHIPPING": return "bg-purple-50 text-purple-600 border-purple-200";
-      case "DELIVERED": return "bg-emerald-50 text-emerald-600 border-emerald-200";
-      case "CANCELLED": return "bg-red-50 text-red-600 border-red-200";
-      default: return "bg-gray-50 text-gray-600 border-gray-200";
+      case "PENDING":
+        return "bg-amber-50 text-amber-600 border-amber-200";
+      case "PROCESSING":
+        return "bg-blue-50 text-blue-600 border-blue-200";
+      case "SHIPPING":
+        return "bg-purple-50 text-purple-600 border-purple-200";
+      case "DELIVERED":
+        return "bg-emerald-50 text-emerald-600 border-emerald-200";
+      case "CANCELLED":
+        return "bg-red-50 text-red-600 border-red-200";
+      default:
+        return "bg-gray-50 text-gray-600 border-gray-200";
     }
   };
 
@@ -231,18 +252,24 @@ const AdminOrderPage = () => {
           </h1>
         </div>
         <div className="flex items-center gap-4">
-          {(searchTerm || statusFilter !== "all" || paymentFilter !== "all" || startDate || endDate) && (
-            <button onClick={handleResetFilters} className="text-[10px] font-black text-red-500 uppercase flex items-center gap-1 hover:underline transition-all">
+          {(searchTerm ||
+            statusFilter !== "all" ||
+            paymentFilter !== "all" ||
+            startDate ||
+            endDate) && (
+            <button
+              onClick={handleResetFilters}
+              className="text-[10px] font-black text-red-500 uppercase flex items-center gap-1 hover:underline transition-all"
+            >
               <X size={14} /> Xóa lọc
             </button>
           )}
-          <button 
+          <button
             onClick={handlePrintAllProcessing}
             className="flex items-center gap-2 px-5 py-2.5 bg-emerald-500 text-white rounded-xl hover:bg-emerald-600 transition-all shadow-md active:scale-95"
           >
-            <Printer size={18} /> In tất cả 
+            <Printer size={18} /> In tất cả
           </button>
-          
         </div>
       </div>
 
@@ -250,15 +277,39 @@ const AdminOrderPage = () => {
       <div className="bg-white p-6 rounded-[32px] shadow-sm border border-gray-100 mb-6 space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <div className="md:col-span-2 space-y-2">
-            <label className="text-[10px] font-black text-gray-400 uppercase ml-1 tracking-widest flex items-center gap-2"><Search size={12} className="text-emerald-500" /> Tìm kiếm đơn hàng</label>
+            <label className="text-[10px] font-black text-gray-400 uppercase ml-1 tracking-widest flex items-center gap-2">
+              <Search size={12} className="text-emerald-500" /> Tìm kiếm đơn
+              hàng
+            </label>
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-              <input type="text" placeholder="Mã đơn, tên khách..." className="w-full pl-11 pr-4 py-3 bg-gray-50/50 border border-gray-100 rounded-2xl outline-none focus:border-emerald-500 focus:bg-white text-sm font-bold transition-all" value={searchTerm} onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1); }} />
+              <Search
+                className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+                size={18}
+              />
+              <input
+                type="text"
+                placeholder="Mã đơn, tên khách..."
+                className="w-full pl-11 pr-4 py-3 bg-gray-50/50 border border-gray-100 rounded-2xl outline-none focus:border-emerald-500 focus:bg-white text-sm font-bold transition-all"
+                value={searchTerm}
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
+                  setCurrentPage(1);
+                }}
+              />
             </div>
           </div>
           <div className="space-y-2">
-            <label className="text-[10px] font-black text-gray-400 uppercase ml-1 tracking-widest flex items-center gap-2"><Filter size={12} className="text-emerald-500" /> Trạng thái</label>
-            <select className="w-full px-4 py-3 bg-gray-50/50 border border-gray-100 rounded-2xl outline-none focus:border-emerald-500 focus:bg-white text-sm font-bold text-gray-600 appearance-none cursor-pointer" value={statusFilter} onChange={(e) => { setStatusFilter(e.target.value); setCurrentPage(1); }}>
+            <label className="text-[10px] font-black text-gray-400 uppercase ml-1 tracking-widest flex items-center gap-2">
+              <Filter size={12} className="text-emerald-500" /> Trạng thái
+            </label>
+            <select
+              className="w-full px-4 py-3 bg-gray-50/50 border border-gray-100 rounded-2xl outline-none focus:border-emerald-500 focus:bg-white text-sm font-bold text-gray-600 appearance-none cursor-pointer"
+              value={statusFilter}
+              onChange={(e) => {
+                setStatusFilter(e.target.value);
+                setCurrentPage(1);
+              }}
+            >
               <option value="all">Tất cả trạng thái</option>
               <option value="PENDING">Chờ xác nhận</option>
               <option value="PROCESSING">Đang đóng gói</option>
@@ -268,8 +319,17 @@ const AdminOrderPage = () => {
             </select>
           </div>
           <div className="space-y-2">
-            <label className="text-[10px] font-black text-gray-400 uppercase ml-1 tracking-widest flex items-center gap-2"><CreditCard size={12} className="text-emerald-500" /> Thanh toán</label>
-            <select className="w-full px-4 py-3 bg-gray-50/50 border border-gray-100 rounded-2xl outline-none focus:border-emerald-500 focus:bg-white text-sm font-bold text-gray-600 appearance-none cursor-pointer" value={paymentFilter} onChange={(e) => { setPaymentFilter(e.target.value); setCurrentPage(1); }}>
+            <label className="text-[10px] font-black text-gray-400 uppercase ml-1 tracking-widest flex items-center gap-2">
+              <CreditCard size={12} className="text-emerald-500" /> Thanh toán
+            </label>
+            <select
+              className="w-full px-4 py-3 bg-gray-50/50 border border-gray-100 rounded-2xl outline-none focus:border-emerald-500 focus:bg-white text-sm font-bold text-gray-600 appearance-none cursor-pointer"
+              value={paymentFilter}
+              onChange={(e) => {
+                setPaymentFilter(e.target.value);
+                setCurrentPage(1);
+              }}
+            >
               <option value="all">Mọi phương thức</option>
               <option value="VNPAY">VNPAY</option>
               <option value="CASH">Tiền mặt (COD)</option>
@@ -279,20 +339,28 @@ const AdminOrderPage = () => {
 
         {/* LỌC THEO THỜI GIAN */}
         <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-gray-50">
-          <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-1"><Calendar size={12}/> Khoảng ngày đặt hàng:</span>
+          <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-1">
+            <Calendar size={12} /> Khoảng ngày đặt hàng:
+          </span>
           <div className="flex items-center gap-2 bg-gray-50 p-1 rounded-xl border border-gray-100 w-fit shadow-inner">
-            <input 
-                type="date" 
-                className="bg-transparent px-3 py-1.5 text-xs font-bold text-gray-600 outline-none cursor-pointer" 
-                value={startDate} 
-                onChange={(e)=> { setStartDate(e.target.value); setCurrentPage(1); }} 
+            <input
+              type="date"
+              className="bg-transparent px-3 py-1.5 text-xs font-bold text-gray-600 outline-none cursor-pointer"
+              value={startDate}
+              onChange={(e) => {
+                setStartDate(e.target.value);
+                setCurrentPage(1);
+              }}
             />
             <span className="text-gray-300 font-bold">→</span>
-            <input 
-                type="date" 
-                className="bg-transparent px-3 py-1.5 text-xs font-bold text-gray-600 outline-none cursor-pointer" 
-                value={endDate} 
-                onChange={(e)=> { setEndDate(e.target.value); setCurrentPage(1); }} 
+            <input
+              type="date"
+              className="bg-transparent px-3 py-1.5 text-xs font-bold text-gray-600 outline-none cursor-pointer"
+              value={endDate}
+              onChange={(e) => {
+                setEndDate(e.target.value);
+                setCurrentPage(1);
+              }}
             />
           </div>
         </div>
@@ -302,7 +370,9 @@ const AdminOrderPage = () => {
       {loading ? (
         <div className="flex flex-col items-center justify-center py-24">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600"></div>
-          <p className="mt-4 text-gray-400 text-[12px] font-black tracking-[3px]">Đang tải dữ liệu...</p>
+          <p className="mt-4 text-gray-400 text-[12px] font-black tracking-[3px]">
+            Đang tải dữ liệu...
+          </p>
         </div>
       ) : (
         <>
@@ -321,31 +391,60 @@ const AdminOrderPage = () => {
               </thead>
               <tbody className="divide-y divide-gray-50 bg-white">
                 {currentOrders.map((order) => (
-                  <tr key={order.id} className="hover:bg-gray-50/50 transition-all group">
-                    <td className="px-6 py-4 font-black text-emerald-600 text-sm italic group-hover:scale-105 transition-transform origin-left">{order.orderNumber}</td>
+                  <tr
+                    key={order.id}
+                    className="hover:bg-gray-50/50 transition-all group"
+                  >
+                    <td className="px-6 py-4 font-black text-emerald-600 text-sm italic group-hover:scale-105 transition-transform origin-left">
+                      {order.orderNumber}
+                    </td>
                     <td className="px-6 py-4 text-sm font-bold text-gray-700">
                       {new Date(order.createdAt).toLocaleDateString("vi-VN")}
-                      <span className="block text-[10px] text-gray-400 font-bold uppercase italic"><Clock size={10} className="inline mr-1"/>{new Date(order.createdAt).toLocaleTimeString("vi-VN", {hour: '2-digit', minute:'2-digit'})}</span>
+                      <span className="block text-[10px] text-gray-400 font-bold uppercase italic">
+                        <Clock size={10} className="inline mr-1" />
+                        {new Date(order.createdAt).toLocaleTimeString("vi-VN", {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </span>
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
-                        <div className="p-1.5 bg-emerald-50 rounded-lg text-emerald-600"><User size={14} /></div>
+                        <div className="p-1.5 bg-emerald-50 rounded-lg text-emerald-600">
+                          <User size={14} />
+                        </div>
                         <div className="flex flex-col">
-                          <span className="text-sm font-black text-gray-800 leading-none">{order.customerInfo.name}</span>
-                          <span className="text-[10px] text-gray-400 font-bold mt-1 uppercase tracking-tighter">{order.customerInfo.phone}</span>
+                          <span className="text-sm font-black text-gray-800 leading-none">
+                            {order.customerInfo.name}
+                          </span>
+                          <span className="text-[10px] text-gray-400 font-bold mt-1 uppercase tracking-tighter">
+                            {order.customerInfo.phone}
+                          </span>
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-4 text-center">
-                      <span className={`px-3 py-1 rounded-lg text-[10px] font-black border-2 uppercase ${order.payment.status === 'PAID' ? 'bg-blue-50 text-blue-600 border-blue-100' : 'bg-red-50 text-red-600 border-red-100'}`}>
-                        {order.payment.status === 'PAID' ? 'Đã trả' : 'Chưa trả'}
+                      <span
+                        className={`px-3 py-1 rounded-lg text-[10px] font-black border-2 uppercase ${order.payment.status === "PAID" ? "bg-blue-50 text-blue-600 border-blue-100" : "bg-red-50 text-red-600 border-red-100"}`}
+                      >
+                        {order.payment.status === "PAID"
+                          ? "Đã trả"
+                          : "Chưa trả"}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-center">
                       <select
-                        disabled={order.orderStatus === "CANCELLED" || order.orderStatus === "DELIVERED"}
+                        disabled={
+                          order.orderStatus === "CANCELLED" ||
+                          order.orderStatus === "DELIVERED"
+                        }
                         value={order.orderStatus}
-                        onChange={(e) => handleStatusChange(order.id, e.target.value as Order["orderStatus"])}
+                        onChange={(e) =>
+                          handleStatusChange(
+                            order.id,
+                            e.target.value as Order["orderStatus"],
+                          )
+                        }
                         className={`px-3 py-2 rounded-xl text-[10px] font-black uppercase border-2 outline-none transition-all cursor-pointer shadow-sm ${getStatusColor(order.orderStatus)}`}
                       >
                         <option value="PENDING">Chờ xác nhận</option>
@@ -355,10 +454,12 @@ const AdminOrderPage = () => {
                         <option value="CANCELLED">Hủy đơn hàng</option>
                       </select>
                     </td>
-                    <td className="px-6 py-4 text-center font-black text-gray-900 tracking-tighter italic underline decoration-emerald-500/20">{order.summary.totalAmount.toLocaleString("vi-VN")}₫</td>
+                    <td className="px-6 py-4 text-center font-black text-gray-900 tracking-tighter italic underline decoration-emerald-500/20">
+                      {order.summary.totalAmount.toLocaleString("vi-VN")}₫
+                    </td>
                     <td className="px-6 py-4 text-center">
                       <div className="flex items-center justify-center gap-2">
-                        <button 
+                        <button
                           disabled={order.orderStatus !== "PROCESSING"}
                           onClick={() => handlePrintInvoice(order)}
                           className={`p-2 rounded-xl shadow-sm transition-all active:scale-90 border ${order.orderStatus === "PROCESSING" ? "text-blue-600 bg-blue-50 border-blue-100 hover:bg-blue-600 hover:text-white" : "text-gray-300 bg-gray-50 border-gray-100 cursor-not-allowed"}`}
@@ -366,7 +467,16 @@ const AdminOrderPage = () => {
                         >
                           <Printer size={18} />
                         </button>
-                        <button onClick={() => { setSelectedOrder(order); setIsDetailOpen(true); }} className="p-2 text-emerald-600 bg-emerald-50 hover:bg-emerald-600 hover:text-white rounded-xl shadow-sm transition-all active:scale-90 border border-emerald-100" title="Xem chi tiết"><Eye size={18} /></button>
+                        <button
+                          onClick={() => {
+                            setSelectedOrder(order);
+                            setIsDetailOpen(true);
+                          }}
+                          className="p-2 text-emerald-600 bg-emerald-50 hover:bg-emerald-600 hover:text-white rounded-xl shadow-sm transition-all active:scale-90 border border-emerald-100"
+                          title="Xem chi tiết"
+                        >
+                          <Eye size={18} />
+                        </button>
                       </div>
                     </td>
                   </tr>
@@ -378,13 +488,33 @@ const AdminOrderPage = () => {
           {/* PHÂN TRANG */}
           {totalPages > 1 && (
             <div className="flex justify-center items-center gap-4 pb-12">
-              <button disabled={currentPage === 1} onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} className="p-2.5 rounded-full bg-white border hover:bg-emerald-50 disabled:opacity-30 transition-all shadow-sm"><ChevronLeft size={20} /></button>
+              <button
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                className="p-2.5 rounded-full bg-white border hover:bg-emerald-50 disabled:opacity-30 transition-all shadow-sm"
+              >
+                <ChevronLeft size={20} />
+              </button>
               <div className="flex gap-2">
                 {Array.from({ length: totalPages }).map((_, i) => (
-                  <button key={i} onClick={() => setCurrentPage(i + 1)} className={`w-10 h-10 rounded-xl font-bold transition-all ${currentPage === i + 1 ? "bg-emerald-600 text-white shadow-md scale-110" : "bg-white border text-gray-500 hover:bg-gray-50 shadow-sm"}`}>{i + 1}</button>
+                  <button
+                    key={i}
+                    onClick={() => setCurrentPage(i + 1)}
+                    className={`w-10 h-10 rounded-xl font-bold transition-all ${currentPage === i + 1 ? "bg-emerald-600 text-white shadow-md scale-110" : "bg-white border text-gray-500 hover:bg-gray-50 shadow-sm"}`}
+                  >
+                    {i + 1}
+                  </button>
                 ))}
               </div>
-              <button disabled={currentPage === totalPages} onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} className="p-2.5 rounded-full bg-white border hover:bg-emerald-50 disabled:opacity-30 transition-all shadow-sm"><ChevronRight size={20} /></button>
+              <button
+                disabled={currentPage === totalPages}
+                onClick={() =>
+                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                }
+                className="p-2.5 rounded-full bg-white border hover:bg-emerald-50 disabled:opacity-30 transition-all shadow-sm"
+              >
+                <ChevronRight size={20} />
+              </button>
             </div>
           )}
         </>
@@ -396,8 +526,14 @@ const AdminOrderPage = () => {
       </div>
 
       {/* MODAL */}
-      <AdminOrderDetailModal isOpen={isDetailOpen} onClose={() => setIsDetailOpen(false)} order={selectedOrder} onEdit={() => { setIsDetailOpen(false); }} />
-
+      <AdminOrderDetailModal
+        isOpen={isDetailOpen}
+        onClose={() => setIsDetailOpen(false)}
+        order={selectedOrder}
+        onEdit={() => {
+          setIsDetailOpen(false);
+        }}
+      />
     </div>
   );
 };

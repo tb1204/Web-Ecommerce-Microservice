@@ -5,7 +5,9 @@ spring:
     mongodb:
       uri: mongodb://localhost:27017/artisano
       database: artisano
-
+order:
+  service:
+    url: ${ORDER_SERVICE_URL:http://localhost:8084}
 server:
   port: 8085
 

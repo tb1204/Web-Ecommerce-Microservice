@@ -1,3 +1,141 @@
+# version: "3.8"
+
+# services:
+#   redis:
+#     image: redis:7-alpine
+#     container_name: redis
+#     ports:
+#       - "6379:6379"
+#     networks:
+#       - mattress-network
+
+#   # ── Discovery Server (Eureka) ────────────────────────────────────
+#   discoveryserver:
+#     build: ./backend/discoveryserver
+#     container_name: discoveryserver
+#     ports:
+#       - "8761:8761"
+#     networks:
+#       - mattress-network
+
+#   # ── API Gateway ──────────────────────────────────────────────────
+#   apigateway:
+#     build: ./backend/apigateway
+#     container_name: apigateway
+#     ports:
+#       - "8080:8080"
+#     depends_on:
+#       - discoveryserver
+#       - redis
+#     environment:
+#       - SPRING_DATA_REDIS_HOST=redis
+#       - SPRING_DATA_REDIS_PORT=6379
+#       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discoveryserver:8761/eureka
+#     networks:
+#       - mattress-network
+
+#   # ── User Service ─────────────────────────────────────────────────
+#   user-service:
+#     build: ./backend/userservice
+#     container_name: user-service
+#     ports:
+#       - "8081:8081"
+#     depends_on:
+#       - discoveryserver
+#     environment:
+#       - SPRING_DATA_MONGODB_URI=mongodb://host.docker.internal:27017/artisano
+#       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discoveryserver:8761/eureka
+#     networks:
+#       - mattress-network
+
+#   # ── Product Service ──────────────────────────────────────────────
+#   product-service:
+#     build: ./backend/productservice
+#     container_name: product-service
+#     ports:
+#       - "8082:8082"
+#     depends_on:
+#       - discoveryserver
+#     environment:
+#       - SPRING_DATA_MONGODB_URI=mongodb://host.docker.internal:27017/artisano
+#       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discoveryserver:8761/eureka
+#     networks:
+#       - mattress-network
+
+#   # ── Cart Service ─────────────────────────────────────────────────
+#   cart-service:
+#     build: ./backend/cartservice
+#     container_name: cart-service
+#     ports:
+#       - "8083:8083"
+#     depends_on:
+#       - discoveryserver
+#     environment:
+#       - SPRING_DATA_MONGODB_URI=mongodb://host.docker.internal:27017/artisano
+#       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discoveryserver:8761/eureka
+
+#     networks:
+#       - mattress-network
+
+#   payment-service:
+#     build: ./backend/paymentservice
+#     container_name: payment-service
+#     ports:
+#       - "8085:8085"
+#     depends_on:
+#       - discoveryserver
+#     environment:
+#       - SPRING_DATA_MONGODB_URI=mongodb://host.docker.internal:27017/artisano
+#       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discoveryserver:8761/eureka
+#     networks:
+#       - mattress-network
+
+#   # ── Order Service ─────────────────────────────────────────────────
+#   order-service:
+#     build: ./backend/orderservice
+#     container_name: order-service
+#     ports:
+#       - "8084:8084"
+#     depends_on:
+#       - discoveryserver
+#     environment:
+#       - SPRING_DATA_MONGODB_URI=mongodb://host.docker.internal:27017/artisano
+#       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discoveryserver:8761/eureka
+#     networks:
+#       - mattress-network
+
+#   # ── Voucher Service ───────────────────────────────────────────────
+#   voucher-service:
+#     build: ./backend/voucherservice
+#     container_name: voucher-service
+#     ports:
+#       - "8086:8086"
+#     depends_on:
+#       - discoveryserver
+#     environment:
+#       - SPRING_DATA_MONGODB_URI=mongodb://host.docker.internal:27017/artisano
+#       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discoveryserver:8761/eureka
+#     networks:
+#       - mattress-network
+
+#   # ── Notification Service ──────────────────────────────────────────
+#   notification-service:
+#     build: ./backend/notificationservice
+#     container_name: notification-service
+#     ports:
+#       - "8087:8087"
+#     depends_on:
+#       - discoveryserver
+#     environment:
+#       - SPRING_DATA_MONGODB_URI=mongodb://host.docker.internal:27017/artisano
+#       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discoveryserver:8761/eureka
+#     networks:
+#       - mattress-network
+
+# networks:
+#   mattress-network:
+#     driver: bridge
+
 version: "3.8"
 
 services:
@@ -34,7 +172,7 @@ services:
     networks:
       - mattress-network
 
-  # ── User Service ─────────────────────────────────────────────────
+  # ── Identity/User Service ─────────────────────────────────────────
   user-service:
     build: ./backend/userservice
     container_name: user-service
@@ -73,15 +211,87 @@ services:
     environment:
       - SPRING_DATA_MONGODB_URI=mongodb://host.docker.internal:27017/artisano
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discoveryserver:8761/eureka
-
     networks:
       - mattress-network
 
+  # ── Order Service ─────────────────────────────────────────────────
+  order-service:
+    build: ./backend/orderservice
+    container_name: order-service
+    ports:
+      - "8084:8084"
+    depends_on:
+      - discoveryserver
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://host.docker.internal:27017/artisano
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discoveryserver:8761/eureka
+    networks:
+      - mattress-network
+
+  # ── Payment Service ───────────────────────────────────────────────
   payment-service:
     build: ./backend/paymentservice
     container_name: payment-service
     ports:
       - "8085:8085"
+    depends_on:
+      - discoveryserver
+      - order-service
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://host.docker.internal:27017/artisano
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discoveryserver:8761/eureka
+      - ORDER_SERVICE_URL=http://order-service:8084
+    networks:
+      - mattress-network
+
+  # ── Chat Service ──────────────────────────────────────────────────
+  chat-service:
+    build: ./backend/chatservice
+    container_name: chat-service
+    ports:
+      - "8086:8086"
+    depends_on:
+      - discoveryserver
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://host.docker.internal:27017/artisano
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discoveryserver:8761/eureka
+    networks:
+      - mattress-network
+
+  # ── Notification Service ──────────────────────────────────────────
+  notification-service:
+    build: ./backend/notificationservice
+    container_name: notification-service
+    ports:
+      - "8087:8087"
+    depends_on:
+      - discoveryserver
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://host.docker.internal:27017/artisano
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discoveryserver:8761/eureka
+    networks:
+      - mattress-network
+
+  # ── Review Service ────────────────────────────────────────────────
+  review-service:
+    build: ./backend/reviewservice
+    container_name: review-service
+    ports:
+      - "8088:8088"
+    depends_on:
+      - discoveryserver
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://host.docker.internal:27017/artisano
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discoveryserver:8761/eureka
+    networks:
+      - mattress-network
+
+  # ── Voucher Service ───────────────────────────────────────────────
+  voucher-service:
+    build: ./backend/voucherservice
+    container_name: voucher-service
+    ports:
+      - "8089:8089"
     depends_on:
       - discoveryserver
     environment:

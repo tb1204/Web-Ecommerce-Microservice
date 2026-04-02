@@ -1,7 +1,11 @@
-#test
 spring:
   application:
     name: review-service
+
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/artisano
+      database: artisano
 
   security:
     oauth2:
@@ -9,6 +13,18 @@ spring:
         jwt:
           jwk-set-uri: ${clerk.jwks-url}
           issuer-uri: ${clerk.issuer}
+
+  #test
+  # spring:
+  #   application:
+  #     name: review-service
+
+  #   security:
+  #     oauth2:
+  #       resourceserver:
+  #         jwt:
+  #           jwk-set-uri: ${clerk.jwks-url}
+  #           issuer-uri: ${clerk.issuer}
 
   # servlet:
   #   multipart:

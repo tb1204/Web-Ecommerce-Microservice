@@ -23,22 +23,6 @@ public class MessageService {
     private final MessageRepository messageRepository;
 
     // code thật
-//     public MessageResponse sendTextMessage(
-//             String conversationId,
-//             String senderId,
-//             String senderRole,
-//             String content) {
-//         Message message = Message.builder()
-//                 .conversationId(conversationId)
-//                 .senderId(senderId)
-//                 .senderRole(SenderRole.valueOf(senderRole))
-//                 .type(MessageType.TEXT)
-//                 .content(content)
-//                 .metadata(MessageMetadata.builder().build())
-//                 .build();
-//         return toResponse(messageRepository.save(message));
-//     }
-//code test
     public MessageResponse sendTextMessage(
             String conversationId,
             String senderId,
@@ -64,30 +48,6 @@ public class MessageService {
     }
 
     // ── Gửi MEDIA (ảnh/video) ────────────────────────── code thật
-//     public MessageResponse sendMediaMessage(
-//             String conversationId,
-//             String senderId,
-//             String senderRole,
-//             SendMessageRequest req) {
-//         if (req.getMediaUrl() == null || req.getMediaUrl().isBlank()) {
-//             throw new AppException(ErrorCode.MESSAGE_TYPE_NOT_SUPPORTED,
-//                     "mediaUrl không được để trống");
-//         }
-//         Message message = Message.builder()
-//                 .conversationId(conversationId)
-//                 .senderId(senderId)
-//                 .senderRole(SenderRole.valueOf(senderRole))
-//                 .type(req.getType())
-//                 .mediaUrl(req.getMediaUrl())
-//                 .thumbnailUrl(req.getThumbnailUrl())
-//                 .mimeType(req.getMimeType())
-//                 .mediaSize(req.getMediaSize())
-//                 .duration(req.getDuration())
-//                 .metadata(MessageMetadata.builder().build())
-//                 .build();
-//         return toResponse(messageRepository.save(message));
-//     }
-//code test
     public MessageResponse sendMediaMessage(
             String conversationId,
             String senderId,
