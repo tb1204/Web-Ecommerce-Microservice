@@ -6,10 +6,26 @@ import {
   Trash2,
   PlusCircle,
   Eye,
-  XCircle,
   CheckCircle,
   ChevronDown,
   Users,
+  UserCircle,
+  UserPlus,
+  Contact,
+  Key,
+  // XCircle,
+} from "lucide-react";
+import {
+  X,
+  Mail,
+  Phone,
+  User,
+  Calendar,
+  Shield,
+  MapPin,
+  CheckCircle2,
+  AlertCircle,
+  Award,
 } from "lucide-react";
 import { useAuth } from "@clerk/clerk-react";
 
@@ -253,7 +269,7 @@ const AdminUsersPage = () => {
         }
         // console.log(formData);
         const clerkRes = await axios.post(
-          "${BASE_URL}/api/admin/users/create-clerk-user",
+          `${BASE_URL}/api/admin/users/create-clerk-user`,
           {
             email: formData.email,
             password,
@@ -443,13 +459,11 @@ const AdminUsersPage = () => {
           Thêm người dùng
         </button>
       </div>
-
       {error && (
         <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg">
           {error}
         </div>
       )}
-
       {loading ? (
         <div className="flex flex-col items-center justify-center py-20">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
@@ -536,7 +550,7 @@ const AdminUsersPage = () => {
 
                   {/* Role - Select option */}
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="relative w-40">
+                    <div className="relative w-30">
                       <select
                         value={user.roles.includes("ADMIN") ? "ADMIN" : "USER"}
                         onChange={(e) =>
@@ -545,13 +559,13 @@ const AdminUsersPage = () => {
                             e.target.value as "USER" | "ADMIN",
                           )
                         }
-                        className={`w-full px-3 py-1.5 pr-8 text-sm font-medium rounded-lg border appearance-none cursor-pointer focus:outline-none focus:ring-2 transition ${
+                        className={`w-full px-3 py-2 pr-10 text-sm font-medium rounded-lg border appearance-none cursor-pointer focus:outline-none focus:ring-2 transition ${
                           user.roles.includes("ADMIN")
                             ? "bg-red-50 border-red-300 text-red-800 focus:ring-red-500"
                             : "bg-blue-50 border-blue-300 text-blue-800 focus:ring-blue-500"
                         }`}
                       >
-                        <option value="USER">Khách hàng</option>
+                        <option value="USER">Khách hàng </option>
                         <option value="ADMIN">Quản trị viên</option>
                       </select>
 
@@ -689,22 +703,50 @@ const AdminUsersPage = () => {
           </div>
         </div>
       )}
+      {/* Modal tạo mới */}
 
-      {/* Modal tạo mới / chỉnh sửa */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-[999] p-4">
-          <div className="bg-white rounded-xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6">
-                {modalMode === "create"
-                  ? "Tạo người dùng mới"
-                  : "Chỉnh sửa người dùng"}
-              </h2>
-
-              <form onSubmit={handleSubmit} className="space-y-5">
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-[999] p-4 transition-all animate-in fade-in duration-300">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full max-h-[95vh] overflow-hidden flex flex-col border border-slate-200">
+            {/* Header với Icon và Background nhẹ */}
+            <div className="p-6 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
+              <div className="flex items-center gap-3">
+                <div
+                  className={`p-2.5 rounded-xl ${modalMode === "create" ? "bg-indigo-100 text-indigo-600" : "bg-amber-100 text-amber-600"}`}
+                >
+                  {modalMode === "create" ? (
+                    <UserPlus size={22} />
+                  ) : (
+                    <UserCircle size={22} />
+                  )}
+                </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Email *
+                  <h2 className="text-xl font-bold text-slate-800 leading-tight">
+                    {modalMode === "create"
+                      ? "Tạo người dùng mới"
+                      : "Chỉnh sửa người dùng"}
+                  </h2>
+                  <p className="text-xs text-slate-500 font-medium">
+                    Vui lòng điền đầy đủ các thông tin bắt buộc (*)
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={handleCloseModal}
+                className="p-2 hover:bg-slate-200/50 text-slate-400 hover:text-slate-600 rounded-full transition-colors"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Form Content */}
+            <div className="flex-1 overflow-y-auto p-6 custom-scrollbar">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Email Section */}
+                <div className="space-y-1.5">
+                  <label className="flex items-center gap-2 text-xs font-bold text-slate-600 uppercase tracking-wider">
+                    <Mail size={14} className="text-slate-400" /> Email{" "}
+                    <span className="text-rose-500">*</span>
                   </label>
                   <input
                     type="email"
@@ -713,28 +755,32 @@ const AdminUsersPage = () => {
                     onChange={handleInputChange}
                     disabled={modalMode === "edit"}
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all disabled:bg-slate-100 disabled:text-slate-500 placeholder:text-slate-400 text-sm font-medium"
                     placeholder="example@gmail.com"
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Username
+                {/* Username Section */}
+                <div className="space-y-1.5">
+                  <label className="flex items-center gap-2 text-xs font-bold text-slate-600 uppercase tracking-wider">
+                    <Contact size={14} className="text-slate-400" /> Tên người
+                    dùng (Username)
                   </label>
                   <input
                     type="text"
                     name="username"
                     value={formData.username || ""}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-sm font-medium"
+                    placeholder="VD: vana_dev"
                   />
                 </div>
 
+                {/* Họ và Tên */}
                 <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Họ *
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-slate-600 uppercase tracking-wider block">
+                      Họ <span className="text-rose-500">*</span>
                     </label>
                     <input
                       type="text"
@@ -742,12 +788,12 @@ const AdminUsersPage = () => {
                       value={formData.firstName || ""}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                      className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-sm font-medium"
                     />
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Tên *
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-slate-600 uppercase tracking-wider block">
+                      Tên <span className="text-rose-500">*</span>
                     </label>
                     <input
                       type="text"
@@ -755,354 +801,362 @@ const AdminUsersPage = () => {
                       value={formData.lastName || ""}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                      className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-sm font-medium"
                     />
                   </div>
                 </div>
 
+                {/* Password Section (Chỉ hiện khi Create) */}
                 {modalMode === "create" && (
-                  <>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Mật khẩu *
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-indigo-50/50 rounded-2xl border border-indigo-100">
+                    <div className="space-y-1.5">
+                      <label className="flex items-center gap-2 text-xs font-bold text-indigo-700 uppercase tracking-wider">
+                        <Key size={14} /> Mật khẩu *
                       </label>
                       <input
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                        placeholder="Nhập mật khẩu"
+                        className="w-full px-4 py-2 bg-white border border-indigo-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-sm font-medium"
                       />
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Xác nhận mật khẩu *
+                    <div className="space-y-1.5">
+                      <label className="flex items-center gap-2 text-xs font-bold text-indigo-700 uppercase tracking-wider">
+                        <Key size={14} /> Xác nhận *
                       </label>
                       <input
                         type="password"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         required
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                        placeholder="Nhập lại mật khẩu"
+                        className="w-full px-4 py-2 bg-white border border-indigo-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-sm font-medium"
                       />
                     </div>
-                  </>
+                  </div>
                 )}
 
-                {/* <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Giới tính
-                  </label>
-                  <select
-                    name="gender"
-                    value={formData.gender || ""}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                  >
-                    <option value="">Chọn giới tính</option>
-                    <option value="male">Nam</option>
-                    <option value="female">Nữ</option>
-                    <option value="other">Khác</option>
-                  </select>
-                </div>
+                {/* Giới tính, Vai trò, Hạng */}
+                <div className="space-y-5">
+                  <div className="space-y-1.5">
+                    <label className="flex items-center gap-2 text-xs font-bold text-slate-600 uppercase tracking-wider">
+                      Giới tính
+                    </label>
+                    <div className="relative group">
+                      <select
+                        name="gender"
+                        value={formData.gender || ""}
+                        onChange={handleInputChange}
+                        className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-sm font-medium"
+                      >
+                        <option value="">Chọn giới tính</option>
+                        <option value="male">Nam</option>
+                        <option value="female">Nữ</option>
+                        <option value="other">Khác</option>
+                      </select>
+                      <ChevronDown
+                        size={16}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-500 pointer-events-none transition-colors"
+                      />
+                    </div>
+                  </div>
 
-                {/* <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Vai trò
-                  </label>
-                  <select
-                    multiple
-                    value={formData.roles || []}
-                    onChange={handleRolesChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 h-24"
-                  >
-                    <option value="USER">Khách hàng</option>
-                    <option value="ADMIN">Quản trị viên</option>
-                  </select>
-                </div> */}
-                {/* <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Vai trò
-                  </label>
-                  <div className="flex gap-3">
-                    {[
-                      { value: "USER", label: "Khách hàng" },
-                      { value: "ADMIN", label: "Quản trị viên" },
-                    ].map((role) => {
-                      const checked = (formData.roles || []).includes(
-                        role.value,
-                      );
-                      return (
-                        <label
-                          key={role.value}
-                          className={`flex items-center gap-2 px-3 py-1.5 rounded-full border cursor-pointer text-sm font-medium transition ${
-                            checked
-                              ? role.value === "ADMIN"
-                                ? "bg-red-50 border-red-300 text-red-700"
-                                : "bg-blue-50 border-blue-300 text-blue-700"
-                              : "bg-gray-50 border-gray-200 text-gray-500"
-                          }`}
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label className="flex items-center gap-2 text-xs font-bold text-slate-600 uppercase tracking-wider">
+                        <Shield size={14} className="text-slate-400" /> Vai trò
+                      </label>
+                      <div className="relative">
+                        <select
+                          value={
+                            formData.roles?.includes("ADMIN") ? "ADMIN" : "USER"
+                          }
+                          onChange={handleRolesChange}
+                          className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-sm font-medium"
                         >
-                          <input
-                            type="checkbox"
-                            value={role.value}
-                            checked={checked}
-                            onChange={handleRolesChange}
-                            className="hidden"
-                          />
-                          <span
-                            className={`w-2 h-2 rounded-full ${
-                              checked
-                                ? role.value === "ADMIN"
-                                  ? "bg-red-400"
-                                  : "bg-blue-400"
-                                : "bg-gray-300"
-                            }`}
-                          />
-                          {role.label}
-                        </label>
-                      );
-                    })}
+                          <option value="USER">Khách hàng</option>
+                          <option value="ADMIN">Quản trị viên</option>
+                        </select>
+                        <ChevronDown
+                          size={16}
+                          className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="flex items-center gap-2 text-xs font-bold text-slate-600 uppercase tracking-wider">
+                        <Award size={14} className="text-slate-400" /> Hạng
+                      </label>
+                      <div className="relative">
+                        <select
+                          value={normalizeTierName(formData.membership)}
+                          onChange={handleMembershipChange}
+                          className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-sm font-bold text-indigo-600"
+                        >
+                          <option value="member">Thành viên</option>
+                          <option value="silver">Bạc</option>
+                          <option value="gold">Vàng</option>
+                          <option value="diamond">Kim cương</option>
+                        </select>
+                        <ChevronDown
+                          size={16}
+                          className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
+                        />
+                      </div>
+                    </div>
                   </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Cấp bậc thành viên
-                  </label>
-                  <select
-                    value={formData.membership?.tierName || ""}
-                    onChange={handleMembershipChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                  >
-                    <option value="Member">Thành viên</option>
-                    <option value="Silver">Bạc</option>
-                    <option value="Gold">Vàng</option>
-                    <option value="Diamond">Kim cương</option>
-                  </select>
-                </div>  */}
-
-                {/* Giới tính */}
-                {/* Giới tính */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Giới tính
-                  </label>
-                  <div className="relative">
-                    <select
-                      name="gender"
-                      value={formData.gender || ""}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 pr-8 border border-gray-300 rounded-md appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-green-500 bg-white"
-                    >
-                      <option value="">Chọn giới tính</option>
-                      <option value="male">Nam</option>
-                      <option value="female">Nữ</option>
-                      <option value="other">Khác</option>
-                    </select>
-                    <ChevronDown
-                      size={15}
-                      className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
-                    />
-                  </div>
-                </div>
-
-                {/* Vai trò */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Vai trò
-                  </label>
-                  <div className="relative">
-                    <select
-                      value={
-                        formData.roles?.includes("ADMIN") ? "ADMIN" : "USER"
-                      }
-                      onChange={handleRolesChange}
-                      className="w-full px-3 py-2 pr-8 border border-gray-300 rounded-md appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-green-500 bg-white"
-                    >
-                      <option value="USER">Khách hàng</option>
-                      <option value="ADMIN">Quản trị viên</option>
-                    </select>
-                    <ChevronDown
-                      size={15}
-                      className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
-                    />
-                  </div>
-                </div>
-
-                {/* Cấp bậc thành viên */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Cấp bậc thành viên
-                  </label>
-                  <div className="relative">
-                    <select
-                      value={normalizeTierName(formData.membership)}
-                      onChange={handleMembershipChange}
-                      className="w-full px-3 py-2 pr-8 border border-gray-300 rounded-md appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-green-500 bg-white"
-                    >
-                      <option value="Member">Thành viên</option>
-                      <option value="Silver">Bạc</option>
-                      <option value="Gold">Vàng</option>
-                      <option value="Diamond">Kim cương</option>
-                    </select>
-                    <ChevronDown
-                      size={15}
-                      className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
-                    />
-                  </div>
-                </div>
-
-                <div className="mt-8 flex justify-end gap-4">
-                  <button
-                    type="button"
-                    onClick={handleCloseModal}
-                    className="px-5 py-2.5 border border-gray-300 rounded-lg hover:bg-gray-50 transition"
-                  >
-                    Hủy
-                  </button>
-                  <button
-                    type="submit"
-                    className="px-5 py-2.5 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
-                  >
-                    {modalMode === "create" ? "Tạo mới" : "Lưu thay đổi"}
-                  </button>
                 </div>
               </form>
+            </div>
+
+            {/* Footer Buttons */}
+            <div className="p-6 bg-slate-50 border-t border-slate-100 flex justify-end gap-3">
+              <button
+                type="button"
+                onClick={handleCloseModal}
+                className="px-6 py-2.5 border border-slate-200 text-slate-600 rounded-xl font-bold text-sm hover:bg-slate-200/50 transition-all"
+              >
+                Hủy bỏ
+              </button>
+              <button
+                type="submit"
+                onClick={handleSubmit}
+                className={`px-8 py-2.5 text-white rounded-xl font-bold text-sm shadow-lg shadow-indigo-200 transition-all active:scale-95 ${modalMode === "create" ? "bg-indigo-600 hover:bg-indigo-700 shadow-indigo-200" : "bg-amber-600 hover:bg-amber-700 shadow-amber-200"}`}
+              >
+                {modalMode === "create" ? "Tạo người dùng" : "Lưu thay đổi"}
+              </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Modal chi tiết */}
+      {/* chi tiết người dùng */}
       {isDetailModalOpen && selectedUser && (
-        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-[999] p-4">
-          <div className="bg-white rounded-xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6">
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold text-gray-800">
-                  Chi tiết người dùng: {selectedUser.email}
-                </h2>
-                <button
-                  onClick={handleCloseDetailModal}
-                  className="text-gray-500 hover:text-gray-700"
-                >
-                  <XCircle size={24} />
-                </button>
-              </div>
+        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center z-[999] p-4 transition-all">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden flex flex-col border border-white/20">
+            {/* Header with Gradient Background */}
+            <div className="relative h-32 bg-gradient-to-r from-cyan-900 via-blue-900 to-indigo-900 p-6 overflow-hidden">
+              <button
+                onClick={handleCloseDetailModal}
+                className="absolute top-4 right-4 p-2 bg-black/20 hover:bg-black/30 text-white rounded-full transition-colors z-50"
+              >
+                <X size={20} />
+              </button>
 
-              <div className="flex items-center gap-6 mb-8">
-                <img
-                  src={
-                    selectedUser.avatarUrl ||
-                    `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                      selectedUser.firstName + " " + selectedUser.lastName,
-                    )}&size=128`
-                  }
-                  alt="Avatar"
-                  className="w-24 h-24 rounded-full object-cover border-4 border-gray-200"
-                />
-                <div>
-                  <h3 className="text-xl font-semibold">
-                    {selectedUser.firstName} {selectedUser.lastName}
-                  </h3>
-                  <p className="text-gray-600">{selectedUser.email}</p>
-                  <p className="text-sm text-gray-500">
-                    Username: {selectedUser.username || "—"}
-                  </p>
-                </div>
-              </div>
+              <div className="absolute inset-0 flex items-center px-8">
+                <div className="flex items-center gap-5 w-full">
+                  <div className="relative flex-shrink-0">
+                    <img
+                      src={
+                        selectedUser.avatarUrl ||
+                        `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                          selectedUser.firstName + " " + selectedUser.lastName,
+                        )}&size=128&background=random&color=fff`
+                      }
+                      alt="Avatar"
+                      className="w-28 h-28 rounded-2xl object-cover border-4 border-white shadow-lg bg-white"
+                    />
+                    <div
+                      className={`absolute -bottom-1 -right-1 w-6 h-6 rounded-full border-4 border-white shadow-sm ${selectedUser.isActive ? "bg-green-500" : "bg-red-500"}`}
+                    ></div>
+                  </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">
-                    Số điện thoại
-                  </p>
-                  <p className="text-gray-900">{selectedUser.phone || "—"}</p>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Giới tính</p>
-                  <p className="text-gray-900">
-                    {selectedUser.gender
-                      ? selectedUser.gender === "male"
-                        ? "Nam"
-                        : selectedUser.gender === "female"
-                          ? "Nữ"
-                          : "Khác"
-                      : "—"}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-600">
-                    Hạng thành viên
-                  </p>
-                  <p className="text-gray-900">
-                    {TIER_LABEL[normalizeTierName(selectedUser.membership)] ||
-                      "Thành viên"}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Vai trò</p>
-                  <p className="text-gray-900">
-                    {selectedUser.roles.includes("ADMIN")
-                      ? "Quản trị viên"
-                      : "Khách hàng"}
-                  </p>
-                </div>
-
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Ngày tạo</p>
-                  <p className="text-gray-900">
-                    {formatOnlyDate(selectedUser.createdAt)}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-600">
-                    Ngày cập nhật
-                  </p>
-                  <p className="text-gray-900">
-                    {formatOnlyDate(selectedUser.updatedAt)}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-600">
-                    Trạng thái
-                  </p>
-                  <p className="text-gray-900">
-                    {selectedUser.isActive ? (
-                      <span className="text-green-600 font-medium">
-                        Hoạt động
+                  {/* Phần chữ */}
+                  <div>
+                    <h2 className="text-2xl font-bold text-white drop-shadow-md">
+                      {selectedUser.firstName} {selectedUser.lastName}
+                    </h2>
+                    <p className="flex items-center gap-1 text-white/95 text-sm font-medium drop-shadow-sm mt-0.5">
+                      @{selectedUser.username || "user"}
+                      <span className="text-white/70">•</span>
+                      <span className="font-semibold">
+                        {selectedUser.roles.includes("ADMIN")
+                          ? "Quản trị viên"
+                          : "Khách hàng"}
                       </span>
-                    ) : (
-                      <span className="text-red-600 font-medium">Bị chặn</span>
-                    )}
-                  </p>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Scrollable Content */}
+            <div className="flex-1 overflow-y-auto pt-16 pb-8 px-8 custom-scrollbar">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Info Card 1: Contact */}
+                <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100 space-y-4">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2.5 bg-blue-100 text-blue-600 rounded-xl">
+                      <Mail size={19} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-[10px] uppercase tracking-wider font-bold text-slate-500">
+                        Email
+                      </p>
+                      <p className="text-sm font-semibold text-slate-800 truncate">
+                        {selectedUser.email}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <div className="p-2.5 bg-green-100 text-green-600 rounded-xl">
+                      <Phone size={19} />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-[10px] uppercase tracking-wider font-bold text-slate-500">
+                        Số điện thoại
+                      </p>
+                      <p className="text-sm font-semibold text-slate-800">
+                        {selectedUser.phone || "—"}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Info Card 2: Personal */}
+                <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100 space-y-4">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2.5 bg-purple-100 text-purple-600 rounded-xl">
+                      <User size={19} />
+                    </div>
+                    <div>
+                      <p className="text-[10px] uppercase tracking-wider font-bold text-slate-500">
+                        Giới tính
+                      </p>
+                      <p className="text-sm font-semibold text-slate-800">
+                        {selectedUser.gender === "male"
+                          ? "Nam"
+                          : selectedUser.gender === "female"
+                            ? "Nữ"
+                            : "-"}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <div className="p-2.5 bg-amber-100 text-amber-600 rounded-xl">
+                      <Award size={19} />
+                    </div>
+                    <div>
+                      <p className="text-[10px] uppercase tracking-wider font-bold text-slate-500">
+                        Hạng thành viên
+                      </p>
+                      <p className="text-sm font-semibold text-slate-800 uppercase tracking-tight">
+                        {TIER_LABEL[
+                          normalizeTierName(selectedUser.membership)
+                        ] || "Thành viên"}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Metadata Cards */}
+                <div className="col-span-full grid grid-cols-3 gap-3">
+                  <div className="p-4 text-center rounded-2xl bg-white border border-slate-100 shadow-sm">
+                    <Shield
+                      size={17}
+                      className="mx-auto mb-1.5 text-slate-400"
+                    />
+                    <p className="text-[10px] uppercase font-bold text-slate-500 mb-1">
+                      Trạng thái
+                    </p>
+                    <div className="flex justify-center items-center gap-1">
+                      {selectedUser.isActive ? (
+                        <span className="flex items-center text-sm font-semibold text-green-700">
+                          <CheckCircle2 size={15} className="mr-1" /> Hoạt động
+                        </span>
+                      ) : (
+                        <span className="flex items-center text-sm font-semibold text-red-700">
+                          <AlertCircle size={15} className="mr-1" /> Bị chặn
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="p-4 text-center rounded-2xl bg-white border border-slate-100 shadow-sm">
+                    <Calendar
+                      size={17}
+                      className="mx-auto mb-1.5 text-slate-400"
+                    />
+                    <p className="text-[10px] uppercase font-bold text-slate-500 mb-1">
+                      Ngày tạo
+                    </p>
+                    <p className="text-sm font-semibold text-slate-700">
+                      {formatOnlyDate(selectedUser.createdAt)}
+                    </p>
+                  </div>
+
+                  <div className="p-4 text-center rounded-2xl bg-white border border-slate-100 shadow-sm">
+                    <Calendar
+                      size={17}
+                      className="mx-auto mb-1.5 text-slate-400"
+                    />
+                    <p className="text-[10px] uppercase font-bold text-slate-500 mb-1">
+                      Cập nhật
+                    </p>
+                    <p className="text-sm font-semibold text-slate-700">
+                      {formatOnlyDate(selectedUser.updatedAt)}
+                    </p>
+                  </div>
                 </div>
               </div>
 
+              {/* Address Section */}
               {selectedUser.addresses && selectedUser.addresses.length > 0 && (
                 <div className="mt-8">
-                  <h3 className="text-lg font-semibold mb-3">Địa chỉ</h3>
-                  <div className="space-y-4">
+                  <div className="flex items-center gap-2 mb-4">
+                    <MapPin size={19} className="text-rose-500" />
+                    <h3 className="text-lg font-bold text-slate-800">
+                      Sổ địa chỉ
+                    </h3>
+                    <span className="px-2.5 py-0.5 bg-slate-100 text-slate-600 text-xs font-bold rounded-full border border-slate-200">
+                      {selectedUser.addresses.length}
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-3">
                     {selectedUser.addresses.map((addr, index) => (
                       <div
                         key={index}
-                        className="p-4 bg-gray-50 rounded-lg border"
+                        className={`p-5 rounded-2xl border transition-all hover:shadow-md ${
+                          addr.is_default
+                            ? "bg-indigo-50 border-indigo-200"
+                            : "bg-white border-slate-200"
+                        }`}
                       >
-                        <p className="font-medium">
-                          {addr.address_name} {addr.is_default && "(Mặc định)"}
-                        </p>
-                        <p>{addr.fullAddress}</p>
-                        <p className="text-sm text-gray-600">
-                          SĐT: {addr.phone}
+                        <div className="flex justify-between items-start mb-2">
+                          <p className="font-bold text-slate-800 flex items-center gap-2">
+                            {addr.address_name}
+                            {addr.is_default && (
+                              <span className="text-[10px] bg-indigo-600 text-white px-2 py-0.5 rounded font-medium">
+                                Mặc định
+                              </span>
+                            )}
+                          </p>
+                          <span className="text-sm text-slate-500 font-medium">
+                            {addr.phone}
+                          </span>
+                        </div>
+                        <p className="text-slate-600 leading-relaxed">
+                          "{addr.fullAddress}"
                         </p>
                       </div>
                     ))}
                   </div>
                 </div>
               )}
+            </div>
+
+            {/* Footer */}
+            <div className="p-5 bg-slate-50 border-t border-slate-100 flex justify-end">
+              <button
+                onClick={handleCloseDetailModal}
+                className="px-6 py-2.5 bg-white border border-slate-200 text-slate-700 rounded-xl font-semibold text-sm hover:bg-slate-100 transition-all shadow-sm"
+              >
+                Đóng chi tiết
+              </button>
             </div>
           </div>
         </div>
