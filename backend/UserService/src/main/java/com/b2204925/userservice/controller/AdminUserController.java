@@ -5,6 +5,7 @@ import com.b2204925.userservice.dto.CreateClerkUserRequest;
 import com.b2204925.userservice.entity.User;
 import com.b2204925.userservice.repository.UserRepository;
 import com.b2204925.userservice.service.AdminUserService;
+import com.b2204925.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +31,8 @@ public class AdminUserController {
     private static final Logger logger = LoggerFactory.getLogger(AdminUserController.class);
 
     private final AdminUserService adminUserService;
-    private final UserRepository userRepository; // ← THÊM DÒNG NÀY
+    private final UserRepository userRepository;
+    private UserService userService;
 
     // GET /api/admin/users
     @GetMapping
@@ -111,4 +114,6 @@ public class AdminUserController {
         logger.info("Admin created user: {}", saved.getClerkId());
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
+
+
 }

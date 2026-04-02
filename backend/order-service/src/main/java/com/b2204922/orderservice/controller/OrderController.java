@@ -4,14 +4,19 @@ import com.b2204922.orderservice.dto.request.OrderRequest;
 import com.b2204922.orderservice.dto.response.OrderResponse;
 import com.b2204922.orderservice.service.IOrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/orders")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:5173")
 @RequiredArgsConstructor
 public class OrderController {
     private final IOrderService orderService;
@@ -47,5 +52,45 @@ public class OrderController {
         // Gọi qua orderService thay vì orderRepository
         boolean result = orderService.hasPurchased(userId, productId);
         return ResponseEntity.ok(result);
+    }
+
+    //Tong doanh thu
+    @GetMapping("/statistics/total-revenue")
+    public ResponseEntity<Double> getTotalRevenue() {
+        return ResponseEntity.ok(orderService.getTotalRevenue());
+    }
+    //Tinh so luong don hang
+    @GetMapping("/statistics/order-counts")
+    public ResponseEntity<Map<String, Long>> getOrderCounts() {
+        Map<String, Long> counts = new HashMap<>();
+        counts.put("total", orderService.getTotalOrdersCount());
+        counts.put("pending", orderService.getOrdersCountByStatus("PENDING"));
+        counts.put("cancelled", orderService.getOrdersCountByStatus("CANCELLED"));
+        counts.put("delivered", orderService.getOrdersCountByStatus("DELIVERED"));
+        counts.put("shipping", orderService.getOrdersCountByStatus("SHIPPING"));
+        counts.put("processing", orderService.getOrdersCountByStatus("PROCESSING"));
+        return ResponseEntity.ok(counts);
+    }
+
+    @GetMapping("/statistics/revenue-by-category")
+    public ResponseEntity<List<Map<String, Object>>> getRevenueByCategory() {
+        return ResponseEntity.ok(orderService.getRevenueByCategory());
+    }
+
+    @GetMapping("/statistics/top-selling")
+    public ResponseEntity<List<Map<String, Object>>> getTopSelling() {
+        return ResponseEntity.ok(orderService.getTopSellingProducts());
+    }
+
+    @GetMapping("/statistics/most-cancelled")
+    public ResponseEntity<List<Map<String, Object>>> getMostCancelled() {
+        return ResponseEntity.ok(orderService.getMostCancelledProducts());
+    }
+    //area chart
+    @GetMapping("/statistics/revenue-growth")
+    public ResponseEntity<List<Map<String, Object>>> getRevenueGrowth(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
+        return ResponseEntity.ok(orderService.getRevenueByRange(start, end));
     }
 }

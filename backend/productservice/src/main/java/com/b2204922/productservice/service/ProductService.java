@@ -6,6 +6,7 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.core.io.InputStreamSource;
@@ -32,6 +33,10 @@ public class ProductService {
         log.info("🔍 Đang tìm sản phẩm có ID: {}", id);
         return productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm với ID: " + id));
+    }
+
+    public Product findById(String id) {
+        return productRepository.findById(id).orElse(null);
     }
 
     //Ham them san pham moi
@@ -266,5 +271,33 @@ public class ProductService {
 
     public List<Product> findProductsByIds(List<String> ids) {
         return productRepository.findAllById(ids);
+    }
+
+    public List<Map<String, Object>> getHighStockProducts() {
+        // 1. Sắp xếp theo 'stockQuantity' (phải khớp 100% với tên biến trong Entity)
+        return productRepository.findAll(Sort.by(Sort.Direction.DESC, "stockQuantity"))
+                .stream()
+                .limit(5)
+                .map(p -> {
+                    Map<String, Object> m = new HashMap<>();
+                    m.put("name", p.getName());
+                    m.put("sub", p.getCategory() != null ? p.getCategory().getName() : "");
+                    m.put("value", p.getStockQuantity() + " sản phẩm");
+                    return m;
+                }).collect(Collectors.toList());
+    }
+
+    public List<Map<String, Object>> getLowStockProducts() {
+        return productRepository.findAll(Sort.by(Sort.Direction.ASC, "stockQuantity"))
+                .stream()
+                .limit(5)
+                .map(p -> {
+                    Map<String, Object> m = new HashMap<>();
+                    m.put("name", p.getName());
+                    m.put("sub", "Cần nhập gấp");
+                    m.put("value", "Còn " + p.getStockQuantity());
+                    m.put("isAlert", true);
+                    return m;
+                }).collect(Collectors.toList());
     }
 }

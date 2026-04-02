@@ -15,9 +15,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -368,5 +372,155 @@ public class OrderServiceImpl implements IOrderService {
         } catch (Exception e) {
             log.error("Lỗi truyền tin  RabbitMQ: {}", e.getMessage());
         }
+    }
+
+    //Tinh tong doanh thu
+    @Override
+    public Double getTotalRevenue() {
+        // Chỉ tính doanh thu từ những đơn hàng đã giao thành công (DELIVERED)
+        List<Order> successfulOrders = orderRepository.findByOrderStatus("DELIVERED");
+        return successfulOrders.stream()
+                .mapToDouble(order -> order.getSummary().getTotalAmount())
+                .sum();
+    }
+    //Tong don hang
+    @Override
+    public long getTotalOrdersCount() {
+        return orderRepository.count();
+    }
+    //So don hang dang xu ly hoac da huy
+    @Override
+    public long getOrdersCountByStatus(String status) {
+        return orderRepository.countByOrderStatus(status);
+    }
+
+    //Ham tinh toan doanh thu theo doanh muc
+    public List<Map<String, Object>> getRevenueByCategory() {
+        //Lấy tất cả đơn hàng đã giao thành công
+        List<Order> orders = orderRepository.findByOrderStatus("DELIVERED");
+
+        //Lấy danh sách tất cả Product ID duy nhất từ các đơn hàng đó
+        List<String> productIds = orders.stream()
+                .flatMap(o -> o.getItems().stream())
+                .map(OrderItem::getProductId)
+                .distinct()
+                .collect(Collectors.toList());
+
+        //Gọi sang Product Service để lấy Map (ID -> Category)
+        String productServiceUrl = "http://localhost:8082/api/products/get-category-map";
+        Map<String, String> idToCategoryMap = restTemplate.postForObject(productServiceUrl, productIds, Map.class);
+
+        //Tính toán tổng hợp
+        Map<String, Double> revenueMap = new HashMap<>();
+
+        for (Order order : orders) {
+            for (OrderItem item : order.getItems()) {
+                // Dựa vào ID sản phẩm để tìm tên danh mục từ Map vừa lấy về
+                String catName = (idToCategoryMap != null) ? idToCategoryMap.get(item.getProductId()) : "Khác";
+                if (catName == null) catName = "Chưa phân loại";
+
+                double lineTotal = item.getLineTotal();
+                revenueMap.put(catName, revenueMap.getOrDefault(catName, 0.0) + lineTotal);
+            }
+        }
+
+        //Chuyển sang định dạng List<Map> cho Frontend dễ đọc
+        return revenueMap.entrySet().stream()
+                .map(entry -> {
+                    Map<String, Object> res = new HashMap<>();
+                    res.put("name", entry.getKey());
+                    res.put("giaTri", entry.getValue());
+                    return res;
+                })
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Map<String, Object>> getTopSellingProducts() {
+        // Chỉ lấy từ đơn hàng thành công
+        List<Order> orders = orderRepository.findByOrderStatus("DELIVERED");
+
+        Map<String, Double> productRevenue = new HashMap<>();
+        Map<String, Integer> productQuantity = new HashMap<>();
+        Map<String, String> productNameMap = new HashMap<>();
+
+        for (Order order : orders) {
+            for (OrderItem item : order.getItems()) {
+                String pid = item.getProductId();
+                productRevenue.put(pid, productRevenue.getOrDefault(pid, 0.0) + item.getLineTotal());
+                productQuantity.put(pid, productQuantity.getOrDefault(pid, 0) + item.getQuantity());
+                productNameMap.put(pid, item.getProductName());
+            }
+        }
+
+        // Sắp xếp và lấy top 5
+        return productRevenue.entrySet().stream()
+                .sorted(Map.Entry.<String, Double>comparingByValue().reversed())
+                .limit(5)
+                .map(e -> {
+                    Map<String, Object> m = new HashMap<>();
+                    m.put("name", productNameMap.get(e.getKey()));
+                    m.put("sub", productQuantity.get(e.getKey()) + " sản phẩm đã bán");
+                    m.put("value", String.format("%.1fM VNĐ", e.getValue() / 1000000));
+                    return m;
+                }).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Map<String, Object>> getMostCancelledProducts() {
+        // Chỉ lấy từ đơn hàng bị hủy
+        List<Order> orders = orderRepository.findByOrderStatus("CANCELLED");
+
+        Map<String, Integer> cancelCounts = new HashMap<>();
+        Map<String, String> productNameMap = new HashMap<>();
+
+        for (Order order : orders) {
+            for (OrderItem item : order.getItems()) {
+                String pid = item.getProductId();
+                cancelCounts.put(pid, cancelCounts.getOrDefault(pid, 0) + 1);
+                productNameMap.put(pid, item.getProductName());
+            }
+        }
+
+        return cancelCounts.entrySet().stream()
+                .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
+                .limit(5)
+                .map(e -> {
+                    Map<String, Object> m = new HashMap<>();
+                    m.put("name", productNameMap.get(e.getKey()));
+                    m.put("sub", "Hủy " + e.getValue() + " lần");
+                    m.put("value", "Kiểm tra");
+                    return m;
+                }).collect(Collectors.toList());
+    }
+
+    //area chart
+    public List<Map<String, Object>> getRevenueByRange(LocalDate start, LocalDate end) {
+        // 1. Chuyển LocalDate sang LocalDateTime để so sánh chính xác từ 00:00:00 đến 23:59:59
+        LocalDateTime startDateTime = start.atStartOfDay();
+        LocalDateTime endDateTime = end.atTime(LocalTime.MAX);
+
+        // 2. Lấy đơn hàng trong khoảng ngày và đã DELIVERED
+        List<Order> orders = orderRepository.findByCreatedAtBetweenAndOrderStatus(
+                startDateTime, endDateTime, "DELIVERED");
+
+        Map<String, Double> stats = new LinkedHashMap<>();
+        // Format nhãn theo ngày dd/MM để biểu đồ dễ nhìn
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM");
+
+        // 3. Gom dữ liệu
+        for (Order order : orders) {
+            String label = order.getCreatedAt().format(formatter);
+            Double amount = order.getSummary().getTotalAmount();
+            stats.put(label, stats.getOrDefault(label, 0.0) + (amount != null ? amount : 0.0));
+        }
+
+        return stats.entrySet().stream()
+                .map(e -> {
+                    Map<String, Object> m = new HashMap<>();
+                    m.put("name", e.getKey());
+                    m.put("doanhThu", e.getValue());
+                    return m;
+                }).collect(Collectors.toList());
     }
 }

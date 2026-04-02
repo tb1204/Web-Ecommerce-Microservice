@@ -5,6 +5,7 @@ import com.b2204925.userservice.entity.User;
 import com.b2204925.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -65,4 +66,16 @@ public ResponseEntity<List<String>> removeFromWishlist(
     public ResponseEntity<String> logout() {
         return ResponseEntity.ok("Logout thành công từ phía client.");
     }
+
+    //Tong khach hang
+    @GetMapping("/statistics/user-counts")
+    public ResponseEntity<Map<String, Long>> getUserStats() {
+        Map<String, Long> stats = new HashMap<>();
+        stats.put("totalUsers", userService.getTotalUsers());
+        stats.put("newUsers", userService.getNewUsersCount());
+        return ResponseEntity.ok(stats);
+    }
+
 }
+
+

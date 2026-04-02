@@ -10,12 +10,14 @@ import org.springframework.web.multipart.MultipartFile;
 import com.b2204922.productservice.repository.ProductRepository;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/products")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
+@CrossOrigin(origins = "http://localhost:5173")
 public class ProductController {
 
     private final ProductService productService; // Kết nối với Service
@@ -71,5 +73,27 @@ public class ProductController {
         // Logic: tìm product theo id, lấy stock hiện tại + quantity (quantity âm là trừ, dương là cộng)
         productService.updateStock(productId, quantity);
         return ResponseEntity.ok("Cập nhật kho thành công");
+    }
+
+    @PostMapping("/get-category-map")
+    public ResponseEntity<Map<String, String>> getCategoryMap(@RequestBody List<String> productIds) {
+        Map<String, String> resultMap = new HashMap<>();
+        for (String id : productIds) {
+            Product p = productService.findById(id);
+            if (p != null) {
+                resultMap.put(id, p.getCategory().getName());
+            }
+        }
+        return ResponseEntity.ok(resultMap);
+    }
+
+    @GetMapping("/statistics/high-stock")
+    public ResponseEntity<List<Map<String, Object>>> getHighStock() {
+        return ResponseEntity.ok(productService.getHighStockProducts());
+    }
+
+    @GetMapping("/statistics/low-stock")
+    public ResponseEntity<List<Map<String, Object>>> getLowStock() {
+        return ResponseEntity.ok(productService.getLowStockProducts());
     }
 }
