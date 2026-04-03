@@ -69,25 +69,6 @@ const AdminProductPage = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      setLoading(true);
-
-      try {
-        const response = await axios.get(`${PRODUCT_API_URL}/api/products/all`);
-        if (response.status === 200) {
-          setProducts(response.data);
-        }
-      } catch (error) {
-        console.error("Lỗi lấy dữ liệu từ Backend:", error);
-        toast.error("Không thể tải danh sách nệm từ Server!");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProducts();
-  }, []);
-
   // LOGIC LỌC DỮ LIỆU (QUAN TRỌNG)
   // const filteredProducts = products.filter((p) => {
   //   const matchesName =
@@ -174,34 +155,38 @@ const AdminProductPage = () => {
     mainFile: File | null,
     galleryFiles: File[],
   ) => {
+    const originalProduct = products.find((p) => p.id === updatedProduct.id);
+
     try {
-      // Tạo preview URL từ file mới nếu có
-      const newMainUrl = mainFile
-        ? URL.createObjectURL(mainFile)
-        : updatedProduct.images?.find((img) => img.isPrimary)?.url || "";
-
-      const newGalleryUrls = galleryFiles.map((f) => ({
-        url: URL.createObjectURL(f),
-        isPrimary: false,
-      }));
-
-      // Optimistic update — hiển thị ảnh mới ngay
+      // Optimistic: chỉ update ảnh nếu có file mới, không thì giữ nguyên ảnh cũ
       const optimisticImages =
         mainFile || galleryFiles.length > 0
-          ? [{ url: newMainUrl, isPrimary: true }, ...newGalleryUrls]
-          : updatedProduct.images || [];
+          ? [
+              {
+                url: mainFile
+                  ? URL.createObjectURL(mainFile)
+                  : updatedProduct.images?.find((img) => img.isPrimary)?.url ||
+                    "",
+                isPrimary: true,
+              },
+              ...galleryFiles.map((f) => ({
+                url: URL.createObjectURL(f),
+                isPrimary: false,
+              })),
+            ]
+          : updatedProduct.images || []; // Giữ nguyên ảnh cũ nếu không có file mới
 
       setProducts((prev) =>
-        prev.map((p) =>
-          p.id === updatedProduct.id
-            ? { ...updatedProduct, images: optimisticImages }
-            : p,
+        prev.map(
+          (p) =>
+            p.id === updatedProduct.id
+              ? { ...updatedProduct, images: optimisticImages }
+              : p, // Các product khác KHÔNG bị ảnh hưởng
         ),
       );
       setIsEditOpen(false);
       toast.success("Đang cập nhật...");
 
-      // Gọi API trong nền
       const formData = new FormData();
       const productPayload = {
         name: updatedProduct.name,
@@ -232,7 +217,6 @@ const AdminProductPage = () => {
       );
 
       if (response.status === 200) {
-        // Thay bằng URL Cloudinary thật
         setProducts((prev) =>
           prev.map((p) => (p.id === updatedProduct.id ? response.data : p)),
         );
@@ -240,9 +224,11 @@ const AdminProductPage = () => {
       }
     } catch (error: any) {
       console.error("Lỗi:", error.response?.data || error);
-      // Rollback nếu lỗi
+      // Rollback về ảnh gốc
       setProducts((prev) =>
-        prev.map((p) => (p.id === updatedProduct.id ? updatedProduct : p)),
+        prev.map((p) =>
+          p.id === updatedProduct.id ? originalProduct || updatedProduct : p,
+        ),
       );
       toast.error("Cập nhật thất bại!");
     }

@@ -85,8 +85,46 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
   }, [isOpen]);
 
   // Khởi tạo dữ liệu khi mở Modal
+  // useEffect(() => {
+  //   if (product && isOpen) {
+  //     const primaryImg =
+  //       product.images?.find((img) => img.isPrimary === true)?.url || "";
+  //     const subImages =
+  //       product.images
+  //         ?.filter((img) => img.isPrimary !== true)
+  //         ?.map((img) => img.url) || [];
+
+  //     setFormData({
+  //       ...product,
+  //       category: {
+  //         name: product.category?.name || "",
+  //         code: product.category?.code || "",
+  //         parentCode: product.category?.parentCode || "",
+  //         parentName: product.category?.parentName || "",
+  //       },
+  //       specifications: product.specifications || {
+  //         material: "",
+  //         weight: "",
+  //         firmness: "",
+  //         design: "",
+  //         certificationNumber: "",
+  //       },
+  //       tags: Array.isArray(product.tags) ? product.tags.join(", ") : "",
+  //       images: subImages,
+  //       url: primaryImg,
+  //       variants: product.variants || [],
+  //     });
+  //   }
+  // }, [product, isOpen]);
+
+  //test
+  // Thêm reset state khi đóng modal hoặc mở product mới
   useEffect(() => {
     if (product && isOpen) {
+      // Reset file states mỗi lần mở modal
+      setMainImageFile(null);
+      setGalleryFiles([]);
+
       const primaryImg =
         product.images?.find((img) => img.isPrimary === true)?.url || "";
       const subImages =
@@ -234,8 +272,27 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
     });
     e.target.value = "";
   };
+  // const removeGalleryImage = (index: number) => {
+  //   if (!formData) return;
+  //   const newImages = formData.images.filter((_, i) => i !== index);
+  //   setFormData({ ...formData, images: newImages });
+  // };
+
+  //test
   const removeGalleryImage = (index: number) => {
     if (!formData) return;
+
+    // Đếm xem có bao nhiêu ảnh là từ Cloudinary (URL cũ)
+    const cloudinaryCount = formData.images.filter(
+      (img) => img.startsWith("http") && img.includes("cloudinary.com"),
+    ).length;
+
+    // Nếu index nằm trong vùng ảnh mới upload → xóa cả file thật
+    if (index >= cloudinaryCount) {
+      const fileIndex = index - cloudinaryCount;
+      setGalleryFiles((prev) => prev.filter((_, i) => i !== fileIndex));
+    }
+
     const newImages = formData.images.filter((_, i) => i !== index);
     setFormData({ ...formData, images: newImages });
   };
