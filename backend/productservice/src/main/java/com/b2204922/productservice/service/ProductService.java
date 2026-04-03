@@ -60,7 +60,6 @@ public class ProductService {
         product.setProductCode(newCode);
 
         // 4. XỬ LÝ BIẾN THỂ (VARIANTS)
-
         if (product.getVariants() != null && !product.getVariants().isEmpty()) {
             int totalStock = 0;
             Double minPrice = Double.MAX_VALUE;
@@ -82,7 +81,9 @@ public class ProductService {
                     minPrice = variant.getPrice();
                 }
                 // Mặc định trạng thái biến thể
-                if (variant.getStatus() == null) variant.setStatus("ACTIVE");
+                if (variant.getStatus() == null) {
+                    variant.setStatus("ACTIVE");
+                }
             }
 
             product.setTotalStockQuantity(totalStock);
@@ -90,7 +91,9 @@ public class ProductService {
         } else {
             product.setTotalStockQuantity(0);
             // Đảm bảo không bị null price ở lớp ngoài
-            if (product.getPrice() == null) product.setPrice(0.0);
+            if (product.getPrice() == null) {
+                product.setPrice(0.0);
+            }
         }
 
         // 5. Thiết lập trạng thái và thời gian
@@ -113,44 +116,96 @@ public class ProductService {
      * Hàm phụ trợ để chuẩn hóa dữ liệu đầu vào
      */
     private void trimProductData(Product product) {
-        if (product.getName() != null) product.setName(product.getName().trim());
-        if (product.getBrand() != null) product.setBrand(product.getBrand().trim());
-        if (product.getOrigin() != null) product.setOrigin(product.getOrigin().trim()); // Thêm origin
-
+        if (product.getName() != null) {
+            product.setName(product.getName().trim());
+        }
+        if (product.getBrand() != null) {
+            product.setBrand(product.getBrand().trim());
+        }
+        if (product.getOrigin() != null) {
+            product.setOrigin(product.getOrigin().trim()); // Thêm origin
+        }
         if (product.getCategory() != null) {
-            if (product.getCategory().getName() != null)
+            if (product.getCategory().getName() != null) {
                 product.getCategory().setName(product.getCategory().getName().trim());
-            if (product.getCategory().getCode() != null)
+            }
+            if (product.getCategory().getCode() != null) {
                 product.getCategory().setCode(product.getCategory().getCode().trim());
-            if (product.getCategory().getParentCode() != null)
+            }
+            if (product.getCategory().getParentCode() != null) {
                 product.getCategory().setParentCode(product.getCategory().getParentCode().trim());
-            if (product.getCategory().getParentName() != null)
+            }
+            if (product.getCategory().getParentName() != null) {
                 product.getCategory().setParentName(product.getCategory().getParentName().trim());
+            }
         }
 
         if (product.getSpecifications() != null) {
             var spec = product.getSpecifications();
-            if (spec.getMaterial() != null) spec.setMaterial(spec.getMaterial().trim());
-            if (spec.getFirmness() != null) spec.setFirmness(spec.getFirmness().trim());
-            if (spec.getDesign() != null) spec.setDesign(spec.getDesign().trim());
-            if (spec.getWeight() != null) spec.setWeight(spec.getWeight().trim());
-            if (spec.getCertificationNumber() != null) spec.setCertificationNumber(spec.getCertificationNumber().trim());
+            if (spec.getMaterial() != null) {
+                spec.setMaterial(spec.getMaterial().trim());
+            }
+            if (spec.getFirmness() != null) {
+                spec.setFirmness(spec.getFirmness().trim());
+            }
+            if (spec.getDesign() != null) {
+                spec.setDesign(spec.getDesign().trim());
+            }
+            if (spec.getWeight() != null) {
+                spec.setWeight(spec.getWeight().trim());
+            }
+            if (spec.getCertificationNumber() != null) {
+                spec.setCertificationNumber(spec.getCertificationNumber().trim());
+            }
         }
     }
 
     /**
      * Hàm phụ trợ xử lý upload ảnh
      */
+    // private void handleImageUploads(Product product, List<MultipartFile> imageFiles) {
+    //     if (imageFiles != null && !imageFiles.isEmpty()) {
+    //         List<Product.ProductImage> productImages = new ArrayList<>();
+    //         try {
+    //             for (int i = 0; i < imageFiles.size(); i++) {
+    //                 Map uploadResult = cloudinary.uploader().upload(imageFiles.get(i).getBytes(),
+    //                         ObjectUtils.asMap("folder", "artisano/products"));
+    //                 Product.ProductImage img = new Product.ProductImage();
+    //                 // img.setUrl(uploadResult.get("url").toString());
+    //                 // Thay đổi ở cả 2 hàm trong ProductService.java
+    //                 img.setUrl(uploadResult.get("secure_url").toString()); // đổi "url" -> "secure_url"
+    //                 img.setIsPrimary(i == 0);
+    //                 productImages.add(img);
+    //             }
+    //             product.setImages(productImages);
+    //         } catch (IOException e) {
+    //             log.error("Lỗi upload ảnh Cloudinary: {}", e.getMessage());
+    //             throw new RuntimeException("Lỗi dịch vụ hình ảnh, vui lòng thử lại!");
+    //         }
+    //     }
+    // }
+    //test
     private void handleImageUploads(Product product, List<MultipartFile> imageFiles) {
         if (imageFiles != null && !imageFiles.isEmpty()) {
             List<Product.ProductImage> productImages = new ArrayList<>();
             try {
                 for (int i = 0; i < imageFiles.size(); i++) {
-                    Map uploadResult = cloudinary.uploader().upload(imageFiles.get(i).getBytes(),
-                            ObjectUtils.asMap("folder", "artisano/products"));
+                    // Chỉ upload thuần túy, không transformation
+                    Map uploadResult = cloudinary.uploader().upload(
+                            imageFiles.get(i).getBytes(),
+                            ObjectUtils.asMap("folder", "artisano/products")
+                    );
+
+                    String rawUrl = uploadResult.get("secure_url").toString();
+
+                    // Tạo optimized URL bằng cách chèn vào URL như chat-service làm
+                    String optimizedUrl = rawUrl.replace(
+                            "/upload/",
+                            "/upload/w_800,q_auto,f_auto/"
+                    );
 
                     Product.ProductImage img = new Product.ProductImage();
-                    img.setUrl(uploadResult.get("url").toString());
+                    img.setUrl(optimizedUrl);
                     img.setIsPrimary(i == 0);
                     productImages.add(img);
                 }
@@ -161,7 +216,6 @@ public class ProductService {
             }
         }
     }
-
 
     //Ham xoa san pham
     public void deleteProduct(String id) {
@@ -252,9 +306,15 @@ public class ProductService {
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm để cập nhật"));
 
         // 2. Cập nhật thông tin cơ bản (Bỏ setOriginalPrice ở đây vì đã đưa vào Variant)
-        if (updatedProduct.getName() != null) existingProduct.setName(updatedProduct.getName().trim());
-        if (updatedProduct.getBrand() != null) existingProduct.setBrand(updatedProduct.getBrand().trim());
-        if (updatedProduct.getOrigin() != null) existingProduct.setOrigin(updatedProduct.getOrigin().trim());
+        if (updatedProduct.getName() != null) {
+            existingProduct.setName(updatedProduct.getName().trim());
+        }
+        if (updatedProduct.getBrand() != null) {
+            existingProduct.setBrand(updatedProduct.getBrand().trim());
+        }
+        if (updatedProduct.getOrigin() != null) {
+            existingProduct.setOrigin(updatedProduct.getOrigin().trim());
+        }
 
         existingProduct.setDescription(updatedProduct.getDescription() != null ? updatedProduct.getDescription().trim() : null);
         existingProduct.setStatus(updatedProduct.getStatus());
@@ -300,41 +360,41 @@ public class ProductService {
 
         return productRepository.save(existingProduct);
     }
+
     /**
      * Hàm phụ trợ xử lý xóa ảnh cũ và upload ảnh mới lên Cloudinary
      */
-    private void updateProductImagesOnCloudinary(Product existingProduct, List<MultipartFile> newImages) {
-        // Xóa ảnh cũ trên Cloudinary
-        if (existingProduct.getImages() != null) {
-            for (var img : existingProduct.getImages()) {
-                try {
-                    String url = img.getUrl();
-                    String publicId = "artisano/products/" + url.substring(url.lastIndexOf("/") + 1, url.lastIndexOf("."));
-                    cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
-                } catch (Exception e) {
-                    log.error("Lỗi xóa ảnh cũ trên Cloudinary: {}", e.getMessage());
-                }
-            }
-        }
-
-        // Upload ảnh mới
-        List<Product.ProductImage> productImages = new ArrayList<>();
-        try {
-            for (int i = 0; i < newImages.size(); i++) {
-                Map uploadResult = cloudinary.uploader().upload(newImages.get(i).getBytes(),
-                        ObjectUtils.asMap("folder", "artisano/products"));
-
-                Product.ProductImage img = new Product.ProductImage();
-                img.setUrl(uploadResult.get("url").toString());
-                img.setIsPrimary(i == 0);
-                productImages.add(img);
-            }
-            existingProduct.setImages(productImages);
-        } catch (IOException e) {
-            throw new RuntimeException("Lỗi upload ảnh mới lên Cloudinary!");
-        }
-    }
-
+    // private void updateProductImagesOnCloudinary(Product existingProduct, List<MultipartFile> newImages) {
+    //     // Xóa ảnh cũ trên Cloudinary
+    //     if (existingProduct.getImages() != null) {
+    //         for (var img : existingProduct.getImages()) {
+    //             try {
+    //                 String url = img.getUrl();
+    //                 String publicId = "artisano/products/" + url.substring(url.lastIndexOf("/") + 1, url.lastIndexOf("."));
+    //                 cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
+    //             } catch (Exception e) {
+    //                 log.error("Lỗi xóa ảnh cũ trên Cloudinary: {}", e.getMessage());
+    //             }
+    //         }
+    //     }
+    //     // Upload ảnh mới
+    //     List<Product.ProductImage> productImages = new ArrayList<>();
+    //     try {
+    //         for (int i = 0; i < newImages.size(); i++) {
+    //             Map uploadResult = cloudinary.uploader().upload(newImages.get(i).getBytes(),
+    //                     ObjectUtils.asMap("folder", "artisano/products"));
+    //             Product.ProductImage img = new Product.ProductImage();
+    //             // img.setUrl(uploadResult.get("url").toString());
+    //             // Thay đổi ở cả 2 hàm trong ProductService.java
+    //             img.setUrl(uploadResult.get("secure_url").toString()); // đổi "url" -> "secure_url"
+    //             img.setIsPrimary(i == 0);
+    //             productImages.add(img);
+    //         }
+    //         existingProduct.setImages(productImages);
+    //     } catch (IOException e) {
+    //         throw new RuntimeException("Lỗi upload ảnh mới lên Cloudinary!");
+    //     }
+    // }
 //    public void updateStock(String productId, int quantity) {
 //        Product product = productRepository.findById(productId)
 //                .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm ID: " + productId));
@@ -348,6 +408,39 @@ public class ProductService {
 //        product.setStockQuantity(newStock);
 //        productRepository.save(product);
 //    }
+//test
+    private void updateProductImagesOnCloudinary(Product existingProduct, List<MultipartFile> newImages) {
+        if (existingProduct.getImages() != null) {
+            for (var img : existingProduct.getImages()) {
+                try {
+                    String url = img.getUrl();
+                    String publicId = "artisano/products/" + url.substring(url.lastIndexOf("/") + 1, url.lastIndexOf("."));
+                    cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
+                } catch (Exception e) {
+                    log.error("Lỗi xóa ảnh cũ trên Cloudinary: {}", e.getMessage());
+                }
+            }
+        }
+        List<Product.ProductImage> productImages = new ArrayList<>();
+        try {
+            for (int i = 0; i < newImages.size(); i++) {
+                Map uploadResult = cloudinary.uploader().upload(
+                        newImages.get(i).getBytes(),
+                        ObjectUtils.asMap("folder", "artisano/products")
+                );
+                Product.ProductImage img = new Product.ProductImage();
+                String rawUrl = uploadResult.get("secure_url").toString();
+                String optimizedUrl = rawUrl.replace("/upload/", "/upload/w_800,q_auto,f_auto/");
+                img.setUrl(optimizedUrl);
+                img.setIsPrimary(i == 0);
+                productImages.add(img);
+            }
+            existingProduct.setImages(productImages);
+        } catch (IOException e) {
+            throw new RuntimeException("Lỗi upload ảnh mới lên Cloudinary!");
+        }
+    }
+
     public void updateVariantStock(String productId, String variantId, int quantityChange) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm ID: " + productId));
@@ -357,7 +450,9 @@ public class ProductService {
             for (Product.ProductVariant v : product.getVariants()) {
                 if (v.getVariantId().equals(variantId)) {
                     int newStock = (v.getStockQuantity() != null ? v.getStockQuantity() : 0) + quantityChange;
-                    if (newStock < 0) throw new RuntimeException("Sản phẩm biến thể này đã hết hàng!");
+                    if (newStock < 0) {
+                        throw new RuntimeException("Sản phẩm biến thể này đã hết hàng!");
+                    }
                     v.setStockQuantity(newStock);
                     variantFound = true;
                     break;
@@ -365,7 +460,9 @@ public class ProductService {
             }
         }
 
-        if (!variantFound) throw new RuntimeException("Không tìm thấy biến thể tương ứng trong sản phẩm!");
+        if (!variantFound) {
+            throw new RuntimeException("Không tìm thấy biến thể tương ứng trong sản phẩm!");
+        }
 
         // Sau khi trừ kho biến thể, tính lại tổng kho cho toàn bộ Product để đồng bộ Dashboard
         int total = product.getVariants().stream()
@@ -408,6 +505,7 @@ public class ProductService {
                     return m;
                 }).collect(Collectors.toList());
     }
+
     // Lấy sản phẩm theo mã danh mục con
     public List<Product> getProductsBySubCategory(String subCode) {
         return productRepository.findByCategory_Code(subCode);

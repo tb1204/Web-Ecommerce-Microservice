@@ -38,12 +38,14 @@ const AdminProductPage = () => {
   // logic chia trang
   const [currentPage, setCurrentPage] = useState(1);
   const productPerPage = 8;
-  const [categories, setCategories] = useState<{ 
-    name: string; 
-    code: string; 
-    parentCode?: string | null; 
-    parentName?: string | null 
-  }[]>([]);
+  const [categories, setCategories] = useState<
+    {
+      name: string;
+      code: string;
+      parentCode?: string | null;
+      parentName?: string | null;
+    }[]
+  >([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -138,57 +140,190 @@ const AdminProductPage = () => {
     setIsDetailOpen(true);
   };
 
-  const handleSaveProduct = async (updatedProduct: Product) => {
+  // const handleSaveProduct = async (updatedProduct: Product) => {
+  //   try {
+  //     const data = new FormData();
+  //     data.append(
+  //       "product",
+  //       new Blob([JSON.stringify(updatedProduct)], {
+  //         type: "application/json",
+  //       }),
+  //     );
+  //     const response = await axios.put(
+  //       `${PRODUCT_API_URL}/api/products/update/${updatedProduct.id}`,
+  //       data,
+  //       { headers: { "Content-Type": "multipart/form-data" } },
+  //     );
+
+  //     if (response.status === 200) {
+  //       setProducts((prev) =>
+  //         prev.map((p) => (p.id === updatedProduct.id ? response.data : p)),
+  //       );
+  //       toast.success("Cập nhật nệm Artisano thành công rực rỡ!");
+  //       setIsEditOpen(false);
+  //     }
+  //   } catch (error) {
+  //     console.error("Lỗi cập nhật:", error);
+  //     toast.error("Server vẫn từ chối, Bằng kiểm tra lại tab Network nhé!");
+  //   }
+  // };
+
+  //code test
+  const handleSaveProduct = async (
+    updatedProduct: Product,
+    mainFile: File | null,
+    galleryFiles: File[],
+  ) => {
     try {
-      const data = new FormData();
-      data.append(
+      // Tạo preview URL từ file mới nếu có
+      const newMainUrl = mainFile
+        ? URL.createObjectURL(mainFile)
+        : updatedProduct.images?.find((img) => img.isPrimary)?.url || "";
+
+      const newGalleryUrls = galleryFiles.map((f) => ({
+        url: URL.createObjectURL(f),
+        isPrimary: false,
+      }));
+
+      // Optimistic update — hiển thị ảnh mới ngay
+      const optimisticImages =
+        mainFile || galleryFiles.length > 0
+          ? [{ url: newMainUrl, isPrimary: true }, ...newGalleryUrls]
+          : updatedProduct.images || [];
+
+      setProducts((prev) =>
+        prev.map((p) =>
+          p.id === updatedProduct.id
+            ? { ...updatedProduct, images: optimisticImages }
+            : p,
+        ),
+      );
+      setIsEditOpen(false);
+      toast.success("Đang cập nhật...");
+
+      // Gọi API trong nền
+      const formData = new FormData();
+      const productPayload = {
+        name: updatedProduct.name,
+        brand: updatedProduct.brand || "",
+        origin: updatedProduct.origin || "",
+        category: updatedProduct.category,
+        specifications: updatedProduct.specifications,
+        variants: updatedProduct.variants || [],
+        status: updatedProduct.status,
+        description: updatedProduct.description || "",
+        tags: Array.isArray(updatedProduct.tags) ? updatedProduct.tags : [],
+      };
+
+      formData.append(
         "product",
-        new Blob([JSON.stringify(updatedProduct)], {
+        new Blob([JSON.stringify(productPayload)], {
           type: "application/json",
         }),
       );
+
+      if (mainFile) formData.append("imageFiles", mainFile);
+      galleryFiles.forEach((f) => formData.append("imageFiles", f));
+
       const response = await axios.put(
         `${PRODUCT_API_URL}/api/products/update/${updatedProduct.id}`,
-        data,
+        formData,
         { headers: { "Content-Type": "multipart/form-data" } },
       );
 
       if (response.status === 200) {
+        // Thay bằng URL Cloudinary thật
         setProducts((prev) =>
           prev.map((p) => (p.id === updatedProduct.id ? response.data : p)),
         );
-        toast.success("Cập nhật nệm Artisano thành công rực rỡ!");
-        setIsEditOpen(false);
+        toast.success("Cập nhật thành công!");
       }
-    } catch (error) {
-      console.error("Lỗi cập nhật:", error);
-      toast.error("Server vẫn từ chối, Bằng kiểm tra lại tab Network nhé!");
+    } catch (error: any) {
+      console.error("Lỗi:", error.response?.data || error);
+      // Rollback nếu lỗi
+      setProducts((prev) =>
+        prev.map((p) => (p.id === updatedProduct.id ? updatedProduct : p)),
+      );
+      toast.error("Cập nhật thất bại!");
     }
   };
-
   // const handleAddProduct = (newProduct: Product) => {
   //   setProducts(prev => [newProduct, ...prev]);
   // };
+  // const handleAddProduct = async (formData: FormData) => {
+  //   try {
+  //     const response = await axios.post(
+  //       `${PRODUCT_API_URL}/api/products/add`,
+  //       formData,
+  //     );
+  //     if (response.status >= 200 && response.status < 300) {
+  //       toast.success("Thêm nệm Artisano thành công rực rỡ!");
+
+  //       const refresh = await axios.get(`${PRODUCT_API_URL}/api/products/all`);
+  //       setProducts(refresh.data);
+
+  //       setIsAddOpen(false);
+  //     }
+  //   } catch (error: any) {
+  //     console.error("Lỗi thực sự:", error.response?.data || error.message);
+  //     toast.error("Server đã lưu nhưng có lỗi hiển thị, Bằng hãy F5 thử xem!");
+  //   }
+  // };
+
+  //resize img
   const handleAddProduct = async (formData: FormData) => {
     try {
+      // Lấy preview ảnh đầu tiên để hiển thị ngay
+      const imageFile = formData.getAll("imageFiles")[0] as File;
+      const previewUrl = imageFile ? URL.createObjectURL(imageFile) : "";
+
+      // Tạo sản phẩm tạm để hiển thị ngay lên UI
+      const productBlob = formData.get("product") as Blob;
+      const productInfo = JSON.parse(await productBlob.text());
+
+      const optimisticProduct = {
+        ...productInfo,
+        id: `temp_${Date.now()}`,
+        images: previewUrl ? [{ url: previewUrl, isPrimary: true }] : [],
+        totalStockQuantity:
+          productInfo.variants?.reduce(
+            (sum: number, v: any) => sum + Number(v.stockQuantity),
+            0,
+          ) || 0,
+        price:
+          productInfo.variants?.reduce(
+            (min: number, v: any) => Math.min(min, Number(v.price)),
+            Infinity,
+          ) || 0,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+
+      // Hiển thị lên UI NGAY mà không cần chờ backend
+      setProducts((prev) => [optimisticProduct, ...prev]);
+      setIsAddOpen(false);
+      toast.success("Đang lưu sản phẩm...");
+
+      // Gọi API trong nền
       const response = await axios.post(
         `${PRODUCT_API_URL}/api/products/add`,
         formData,
       );
+
       if (response.status >= 200 && response.status < 300) {
-        toast.success("Thêm nệm Artisano thành công rực rỡ!");
-
-        const refresh = await axios.get(`${PRODUCT_API_URL}/api/products/all`);
-        setProducts(refresh.data);
-
-        setIsAddOpen(false);
+        // Thay thế sản phẩm tạm bằng dữ liệu thật từ backend
+        setProducts((prev) =>
+          prev.map((p) => (p.id === optimisticProduct.id ? response.data : p)),
+        );
+        toast.success("Thêm sản phẩm thành công!");
       }
     } catch (error: any) {
-      console.error("Lỗi thực sự:", error.response?.data || error.message);
-      toast.error("Server đã lưu nhưng có lỗi hiển thị, Bằng hãy F5 thử xem!");
+      console.error("Lỗi:", error.response?.data || error.message);
+      // Xóa sản phẩm tạm nếu lỗi
+      setProducts((prev) => prev.filter((p) => !p.id?.startsWith("temp_")));
+      toast.error("Thêm sản phẩm thất bại!");
     }
   };
-
   return (
     <>
       <div className="p-6 bg-gray-50 min-h-screen">
@@ -239,14 +374,20 @@ const AdminProductPage = () => {
               }}
             >
               <option value="all">Tất cả danh mục</option>
-              
-              {categories.filter(c => !c.parentCode).map((parent) => (
-                <optgroup key={parent.code} label={parent.name}>
-                  {categories.filter(sub => sub.parentCode === parent.code).map(sub => (
-                    <option key={sub.code} value={sub.code}>{sub.name}</option>
-                  ))}
-                </optgroup>
-              ))}
+
+              {categories
+                .filter((c) => !c.parentCode)
+                .map((parent) => (
+                  <optgroup key={parent.code} label={parent.name}>
+                    {categories
+                      .filter((sub) => sub.parentCode === parent.code)
+                      .map((sub) => (
+                        <option key={sub.code} value={sub.code}>
+                          {sub.name}
+                        </option>
+                      ))}
+                  </optgroup>
+                ))}
             </select>
           </div>
         </div>
@@ -326,7 +467,9 @@ const AdminProductPage = () => {
                       <td className="px-4 py-4 text-center text-sm font-medium text-emerald-700">
                         <span className="bg-emerald-50 px-2 py-1 rounded-md">
                           {/* {product.category?.name} */}
-                          {product.category?.parentName ? `${product.category.parentName} > ` : ''} 
+                          {product.category?.parentName
+                            ? `${product.category.parentName} > `
+                            : ""}
                           {product.category?.name}
                         </span>
                       </td>
