@@ -26,7 +26,8 @@ interface ProductFormState {
   productCode: string;
   brand: string;
   origin: string;
-  category: { name: string; code: string };
+  // Giữ đúng 4 trường như Entity mới
+  category: { name: string; code: string; parentCode: string; parentName: string }; 
   specifications: {
     material: string;
     weight: string;
@@ -41,17 +42,6 @@ interface ProductFormState {
   imageObjects: { file: File; preview: string }[];
 }
 
-const generateCategoryCode = (name: string) => {
-  return name
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/đ/g, "d")
-    .replace(/Đ/g, "D")
-    .toUpperCase()
-    .trim()
-    .replace(/\s+/g, "-")
-    .replace(/[^\w-]/g, "");
-};
 
 const ProductAddModal: React.FC<ProductAddModalProps> = ({
   isOpen,
@@ -60,12 +50,10 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({
 }) => {
   const initialFormState: ProductFormState = {
     name: "",
-
     productCode: "Hệ thống tự tạo...",
-
     brand: "",
     origin: "",
-    category: { name: "", code: "" },
+    category: { name: "", code: "", parentName: "", parentCode: "" },
     specifications: {
       material: "",
       weight: "",
@@ -81,10 +69,7 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({
   };
   const PRODUCT_API_URL = "http://localhost:8082";
   const [formData, setFormData] = useState<ProductFormState>(initialFormState);
-  const [categories, setCategories] = useState<
-    { name: string; code: string }[]
-  >([]);
-  const [isNewCategory, setIsNewCategory] = useState(false);
+  const [categories, setCategories] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchCats = async () => {
@@ -181,19 +166,8 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({
       return;
     }
     if (formData.variants.length === 0) {
-      toast.error("Vui lòng thêm ít nhất 1 biến thể!");
+      toast.error("Vui lòng thêm ít nhất 1 kích thước!");
       return;
-    }
-
-    if (isNewCategory && formData.category.name) {
-      try {
-        await axios.post(`${PRODUCT_API_URL}/api/categories/add`, {
-          name: formData.category.name,
-          code: formData.category.code,
-        });
-      } catch (err) {
-        console.error(err);
-      }
     }
 
     const processedTags = formData.tags
@@ -201,7 +175,6 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({
       .map((t) => t.trim())
       .filter((t) => t !== "");
 
-    // Đóng gói JSON - Backend sẽ tự sinh productCode và SKU nên không cần gửi 2 trường này
     const productInfo = {
       name: formData.name,
       brand: formData.brand,
@@ -222,7 +195,6 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({
     };
 
     const data = new FormData();
-
     data.append(
       "product",
       new Blob([JSON.stringify(productInfo)], { type: "application/json" }),
@@ -234,7 +206,6 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({
     onAdd(data);
     toast.success("Đang thêm sản phẩm...");
     setFormData(initialFormState);
-
     onClose();
   };
 
@@ -245,8 +216,6 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({
         autoComplete="off"
         className="bg-white w-full max-w-6xl rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[95vh] animate-in zoom-in-95 duration-300 border"
       >
-        {/* Header */}
-
         <div className="p-5 border-b flex justify-between items-center bg-emerald-600 text-white flex-shrink-0">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-white/20 rounded-lg">
@@ -257,7 +226,7 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({
                 Thêm sản phẩm mới
               </h2>
               <p className="text-[11px] text-emerald-100 mt-1 uppercase tracking-widest font-medium italic">
-                Artisano Mattress System
+                Artisano 
               </p>
             </div>
           </div>
@@ -271,7 +240,6 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({
         </div>
 
         <div className="p-8 overflow-y-auto space-y-8 scrollbar-hide bg-gray-50/20">
-          {/* QUẢN LÝ HÌNH ẢNH */}
           <section className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
             <h3 className="text-sm font-black text-emerald-700 uppercase tracking-widest mb-4 flex items-center gap-2">
               <ImageIcon size={16} /> Quản lý hình ảnh
@@ -333,128 +301,99 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({
             </div>
           </section>
 
-          {/* ĐỊNH DANH & PHÂN LOẠI */}
           <section className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm space-y-6">
             <h3 className="text-sm font-black text-emerald-700 uppercase tracking-widest flex items-center gap-2">
               <Fingerprint size={16} /> Định danh & Phân loại
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               <InputGroup
-                label="Tên sản phẩm (*)"
+                label="Tên sản phẩm "
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
                 required
               />
 
-              {/* Ô Mã dòng sản phẩm */}
-              <div className="space-y-1.5 font-mono">
-                <label className="text-xs text-gray-500 ml-1 italic font-black flex items-center gap-1 uppercase tracking-tighter">
-                  <Fingerprint size={12} /> Mã dòng sản phẩm
+              <div className="space-y-1.5">
+                <label className="text-xs text-gray-500 ml-1 uppercase font-black tracking-tighter flex items-center gap-1">
+                  Mã dòng sản phẩm
                 </label>
                 <input
                   type="text"
                   value="Hệ thống tự tạo..."
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-100 bg-gray-50 text-gray-400 text-sm italic font-medium h-[42px]"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-100 bg-gray-50 text-gray-400 text-sm font-medium h-[42px]"
                   disabled
                 />
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs text-gray-500 font-black uppercase italic">
-                  Danh mục
+                <label className="text-xs text-gray-500 ml-1 uppercase font-black tracking-tighter flex items-center gap-1">
+                  Danh mục (Cha)
                 </label>
-                {!isNewCategory ? (
-                  <select
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm font-medium bg-white h-[42px] focus:border-emerald-500 outline-none"
-                    value={formData.category.name}
-                    onChange={(e) => {
-                      const val = e.target.value;
-                      if (val === "ADD_NEW") {
-                        setIsNewCategory(true);
-                        setFormData((prev) => ({
-                          ...prev,
-                          category: { name: "", code: "" },
-                        }));
-                      } else {
-                        const selected = categories.find((c) => c.name === val);
-                        setFormData((prev) => ({
-                          ...prev,
-                          category: selected || { name: val, code: "" },
-                        }));
-                      }
-                    }}
-                  >
-                    <option value="">-- Chọn danh mục --</option>
-                    {categories.map((cat) => (
-                      <option key={cat.code} value={cat.name}>
-                        {cat.name}
-                      </option>
-                    ))}
-                    <option
-                      value="ADD_NEW"
-                      className="text-emerald-600 font-bold"
-                    >
-                      + THÊM DANH MỤC MỚI
-                    </option>
-                  </select>
-                ) : (
-                  <div className="relative">
-                    <input
-                      type="text"
-                      className="w-full px-4 py-2.5 rounded-xl border-2 border-emerald-500 bg-white text-sm font-medium outline-none"
-                      placeholder="Tên danh mục mới"
-                      value={formData.category.name}
-                      onChange={(e) => {
-                        const newName = e.target.value;
-                        setFormData((prev) => ({
-                          ...prev,
-                          category: {
-                            name: newName,
-                            code: generateCategoryCode(newName),
-                          },
-                        }));
-                      }}
-                      autoFocus
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setIsNewCategory(false)}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-red-500 font-bold hover:underline"
-                    >
-                      Hủy
-                    </button>
-                  </div>
-                )}
+                <select
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm font-medium bg-white h-[42px] focus:border-emerald-500 outline-none transition-all"
+                  value={formData.category.parentCode || ""}
+                  onChange={(e) => {
+                    const pCode = e.target.value;
+                    const parentObj = categories.find(c => c.code === pCode && !c.parentCode);
+                    setFormData({
+                      ...formData,
+                      category: { name: "", code: "", parentCode: pCode, parentName: parentObj ? parentObj.name : "" }
+                    });
+                  }}
+                >
+                  <option value="">-- Chọn danh mục --</option>
+                  {categories.filter(c => !c.parentCode).map((cat) => (
+                    <option key={cat.code} value={cat.code}>{cat.name}</option>
+                  ))}
+                </select>
               </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs text-gray-500 ml-1 uppercase font-black tracking-tighter flex items-center gap-1">
+                  Loại sản phẩm (Con)
+                </label>
+                <select
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm font-medium bg-white h-[42px] focus:border-emerald-500 outline-none disabled:bg-gray-50 disabled:cursor-not-allowed transition-all"
+                  disabled={!formData.category.parentCode}
+                  value={formData.category.code || ""}
+                  onChange={(e) => {
+                    const subCode = e.target.value;
+                    const subObj = categories.find(c => c.code === subCode);
+                    if (subObj) {
+                      setFormData({
+                        ...formData,
+                        category: { ...formData.category, name: subObj.name, code: subObj.code }
+                      });
+                    }
+                  }}
+                >
+                  <option value="">-- Chọn loại cụ thể --</option>
+                  {categories
+                    .filter(c => c.parentCode === formData.category.parentCode)
+                    .map((sub) => (
+                      <option key={sub.code} value={sub.code}>{sub.name}</option>
+                    ))}
+                </select>
+              </div>
+
               <InputGroup
                 label="Thương hiệu"
                 name="brand"
                 value={formData.brand}
                 onChange={handleChange}
               />
+
               <InputGroup
                 label="Xuất xứ"
                 name="origin"
                 value={formData.origin}
                 onChange={handleChange}
               />
-              <div className="space-y-1.5">
-                <label className="text-xs text-gray-500 font-black uppercase italic">
-                  Danh mục (Code)
-                </label>
-                <input
-                  type="text"
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-100 bg-gray-100 text-gray-500 text-sm font-medium h-[42px]"
-                  value={formData.category.code}
-                  readOnly
-                  placeholder="Mã tự động"
-                />
-              </div>
+
             </div>
           </section>
 
-          {/* SECTION BIẾN THỂ */}
           <section className="bg-white p-6 rounded-3xl border border-emerald-100 shadow-sm space-y-6">
             <div className="flex justify-between items-center border-b border-emerald-50 pb-4">
               <h3 className="text-sm font-black text-emerald-700 uppercase tracking-widest flex items-center gap-2">
@@ -505,7 +444,7 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({
                     />
                   </div>
                   <div>
-                    <label className="text-[9px] font-black text-emerald-600 uppercase ml-1">
+                    <label className="text-[9px] font-black text-gray-400 uppercase ml-1">
                       Giá bán (₫)
                     </label>
                     <input
@@ -540,9 +479,8 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({
                     />
                   </div>
 
-                  {/* Ô SKU trong Variant - KHÓA NHẬP TAY */}
                   <div>
-                    <label className="text-[9px] font-black text-blue-400 uppercase ml-1 italic tracking-tighter">
+                    <label className="text-[9px] font-black text-gray-400 uppercase ml-1">
                       Mã SKU
                     </label>
                     <input
@@ -585,7 +523,6 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({
             </div>
           </section>
 
-          {/* THÔNG SỐ CHI TIẾT */}
           <section className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm space-y-6">
             <h3 className="text-sm font-black text-emerald-700 uppercase tracking-widest flex items-center gap-2">
               <Award size={16} /> Thông số chi tiết
@@ -632,14 +569,12 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({
                   className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-emerald-500 outline-none text-sm font-medium bg-white h-[42px]"
                 >
                   <option value="AVAILABLE">Sẵn sàng bán</option>
-
                   <option value="stopselling">Ngừng bán</option>
                 </select>
               </div>
             </div>
           </section>
 
-          {/* TAGS & MÔ TẢ */}
           <section className="grid grid-cols-1 md:grid-cols-2 gap-8 pb-6">
             <div className="space-y-5 bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
               <InputGroup
@@ -655,7 +590,7 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({
                   !
                 </div>
                 <div className="text-[10px] text-emerald-800 uppercase italic font-black leading-tight">
-                  Mã dòng sản phẩm và SKU sẽ được Backend tự động tạo dựa trên
+                  Mã dòng sản phẩm và SKU sẽ được hệ thống tự động tạo dựa trên
                   danh mục và kích thước.
                 </div>
               </div>

@@ -95,4 +95,16 @@ public class ProductController {
     public ResponseEntity<List<Map<String, Object>>> getLowStock() {
         return ResponseEntity.ok(productService.getLowStockProducts());
     }
+
+    // Lấy sản phẩm theo danh mục con (Ga lẻ, Mền...)
+    @GetMapping("/category/{code}")
+    public ResponseEntity<List<Product>> getBySubCategory(@PathVariable String code) {
+        return ResponseEntity.ok(productService.getProductsBySubCategory(code));
+    }
+
+    // Lấy sản phẩm theo danh mục cha (Nệm, Chăn ga...)
+    @GetMapping("/parent-category/{parentCode}")
+    public ResponseEntity<List<Product>> getByParentCategory(@PathVariable String parentCode) {
+        return ResponseEntity.ok(productService.getProductsByParentCategory(parentCode));
+    }
 }

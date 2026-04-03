@@ -40,136 +40,6 @@ public class ProductService {
     }
 
     //Ham them san pham moi
-//    public Product addProduct(Product product, List<MultipartFile> imageFiles) {
-//
-//        if (imageFiles != null) {
-//            System.out.println("Số lượng ảnh nhận được: " + imageFiles.size());
-//        } else {
-//            System.out.println("imageFiles đang bị NULL!");
-//        }
-//
-//        //Kiem tra danh muc
-//        if (product.getCategory() == null || product.getCategory().getName() == null) {
-//            throw new RuntimeException("Lỗi: Vui lòng chọn danh mục cho sản phẩm");
-//        }
-//
-//        //xoa khoang trang thua
-//        if (product.getName() != null) {
-//            product.setName(product.getName().trim());
-//        }
-//        if (product.getBrand() != null) {
-//            product.setBrand(product.getBrand().trim());
-//        }
-//        if (product.getOrigin() != null) {
-//            product.setOrigin(product.getOrigin().trim());
-//        }
-//        if (product.getCategory() != null) {
-//            if (product.getCategory().getName() != null) {
-//                product.getCategory().setName(product.getCategory().getName().trim());
-//            }
-//            if (product.getCategory().getCode() != null) {
-//                product.getCategory().setCode(product.getCategory().getCode().trim());
-//            }
-//        }
-//        if (product.getSpecifications() != null) {
-//            var spec = product.getSpecifications();
-//            if (spec.getMaterial() != null) {
-//                spec.setMaterial(spec.getMaterial().trim());
-//            }
-//            if (spec.getSize() != null) {
-//                spec.setSize(spec.getSize().trim());
-//            }
-//            if (spec.getThickness() != null) {
-//                spec.setThickness(spec.getThickness().trim());
-//            }
-//            if (spec.getFirmness() != null) {
-//                spec.setFirmness(spec.getFirmness().trim());
-//            }
-//            if (spec.getWeight() != null) {
-//                spec.setWeight(spec.getWeight().trim());
-//            }
-//            if (spec.getDesign() != null) {
-//                spec.setDesign(spec.getDesign().trim());
-//            }
-//            if (spec.getCertificationNumber() != null) {
-//                spec.setCertificationNumber(spec.getCertificationNumber().trim());
-//            }
-//
-//        }
-//        if (product.getStockQuantity() == null || product.getStockQuantity() < 0) {
-//            product.setStockQuantity(0); // Khong cho phep am
-//        }
-//        if (product.getTags() != null && !product.getTags().isEmpty()) {
-//            List<String> cleanTags = product.getTags().stream()
-//                    .map(String::trim)
-//                    .filter(tag -> !tag.isEmpty()) // loai bo rong
-//                    .distinct() // loai bo trung nhau
-//                    .collect(Collectors.toList());
-//            product.setTags(cleanTags);
-//        }
-//        if (product.getDescription() != null) {
-//            product.setDescription(product.getDescription().trim());
-//        }
-//
-//        //Kiem tra hoac tu dong sinh ma Sku
-//        if (product.getSku() != null && !product.getSku().isEmpty()) {
-//            String skuClean = product.getSku().trim().toUpperCase();
-//            if (productRepository.existsBySku(skuClean)) {
-//                throw new RuntimeException("Lỗi: Mã Sku '" + product.getSku() + "'đã tồn tại. Có thể bỏ trống để tự động thêm!");
-//            }
-//            product.setSku(skuClean);
-//        } else {
-//            String skuPrefix = "ART";
-//            if (product.getCategory() != null && product.getCategory().getName() != null) {
-//                skuPrefix += "-" + product.getCategory().getName().substring(0, 1).toUpperCase();
-//            }
-//            long totalCount = productRepository.count() + 1;
-//            product.setSku(skuPrefix + "-" + String.format("%03d", totalCount));
-//        }
-//
-//        //Tu dong sinh product code luu vao database
-//        String prefix = product.getCategory().getName().substring(0, 1).toUpperCase(); //Sinh ma sp tu dong
-//        long count = productRepository.count();
-//        String newCode = prefix + String.format("%03d", count + 1);
-//        product.setProductCode(newCode);
-//
-//        //gia tri mac dinh
-//        if (product.getStockQuantity() == null) {
-//            product.setStockQuantity(0);
-//        }
-//        if (product.getStatus() == null || product.getStatus().isEmpty()) {
-//            product.setStatus("AVAILABLE");
-//        }
-//
-//        //Thiet lap thoi gian
-//        product.setCreatedAt(LocalDateTime.now());
-//        product.setUpdatedAt(LocalDateTime.now());
-//
-//        //Xu ly hinh anh
-//        if (imageFiles != null && !imageFiles.isEmpty()) {
-//            List<Product.ProductImage> productImages = new ArrayList<>();
-//            try {
-//                for (int i = 0; i < imageFiles.size(); i++) {
-//                    Map uploadResult = cloudinary.uploader().upload(imageFiles.get(i).getBytes(),
-//                            ObjectUtils.asMap("folder", "artisano/products"));
-//
-//                    String imageUrl = uploadResult.get("url").toString();
-//
-//                    Product.ProductImage img = new Product.ProductImage();
-//                    img.setUrl(imageUrl);
-//                    img.setIsPrimary(i == 0); // Ép ảnh đầu tiên làm ảnh chính
-//                    productImages.add(img);
-//                }
-//                product.setImages(productImages);
-//            } catch (IOException e) {
-////                log.error("Lỗi upload ảnh: {}", e.getMessage());
-//                log.error("Lỗi upload ảnh: " + e.getMessage());
-//                throw new RuntimeException("Không thể upload ảnh lên Cloudinary!");
-//            }
-//        }
-//        log.info("Luu san pham thanh cong: SKU={}, code={}", product.getSku(), newCode);
-//        return productRepository.save(product); //luu vao mongodb
-//    }
     public Product addProduct(Product product, List<MultipartFile> imageFiles) {
         // 1. Kiểm tra logic cơ bản
         if (product.getCategory() == null || product.getCategory().getName() == null) {
@@ -180,7 +50,11 @@ public class ProductService {
         trimProductData(product);
 
         // 3. Tự động sinh Product Code (VD: N001, G002)
-        String prefix = product.getCategory().getName().substring(0, 1).toUpperCase();
+        String categoryForPrefix = (product.getCategory().getParentName() != null && !product.getCategory().getParentName().isEmpty())
+                ? product.getCategory().getParentName()
+                : product.getCategory().getName();
+
+        String prefix = categoryForPrefix.substring(0, 1).toUpperCase();
         long count = productRepository.count();
         String newCode = prefix + String.format("%03d", count + 1);
         product.setProductCode(newCode);
@@ -241,15 +115,26 @@ public class ProductService {
     private void trimProductData(Product product) {
         if (product.getName() != null) product.setName(product.getName().trim());
         if (product.getBrand() != null) product.setBrand(product.getBrand().trim());
+        if (product.getOrigin() != null) product.setOrigin(product.getOrigin().trim()); // Thêm origin
+
         if (product.getCategory() != null) {
-            product.getCategory().setName(product.getCategory().getName().trim());
-            product.getCategory().setCode(product.getCategory().getCode().trim());
+            if (product.getCategory().getName() != null)
+                product.getCategory().setName(product.getCategory().getName().trim());
+            if (product.getCategory().getCode() != null)
+                product.getCategory().setCode(product.getCategory().getCode().trim());
+            if (product.getCategory().getParentCode() != null)
+                product.getCategory().setParentCode(product.getCategory().getParentCode().trim());
+            if (product.getCategory().getParentName() != null)
+                product.getCategory().setParentName(product.getCategory().getParentName().trim());
         }
+
         if (product.getSpecifications() != null) {
             var spec = product.getSpecifications();
             if (spec.getMaterial() != null) spec.setMaterial(spec.getMaterial().trim());
             if (spec.getFirmness() != null) spec.setFirmness(spec.getFirmness().trim());
             if (spec.getDesign() != null) spec.setDesign(spec.getDesign().trim());
+            if (spec.getWeight() != null) spec.setWeight(spec.getWeight().trim());
+            if (spec.getCertificationNumber() != null) spec.setCertificationNumber(spec.getCertificationNumber().trim());
         }
     }
 
@@ -522,5 +407,14 @@ public class ProductService {
                     m.put("isAlert", true);
                     return m;
                 }).collect(Collectors.toList());
+    }
+    // Lấy sản phẩm theo mã danh mục con
+    public List<Product> getProductsBySubCategory(String subCode) {
+        return productRepository.findByCategory_Code(subCode);
+    }
+
+    // Lấy toàn bộ sản phẩm thuộc danh mục cha
+    public List<Product> getProductsByParentCategory(String parentCode) {
+        return productRepository.findByCategory_ParentCode(parentCode);
     }
 }

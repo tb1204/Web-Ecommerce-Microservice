@@ -37,10 +37,13 @@ const AdminProductPage = () => {
 
   // logic chia trang
   const [currentPage, setCurrentPage] = useState(1);
-  const productPerPage = 3;
-  const [categories, setCategories] = useState<
-    { name: string; code: string }[]
-  >([]);
+  const productPerPage = 8;
+  const [categories, setCategories] = useState<{ 
+    name: string; 
+    code: string; 
+    parentCode?: string | null; 
+    parentName?: string | null 
+  }[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -228,19 +231,21 @@ const AdminProductPage = () => {
               size={18}
             />
             <select
-              className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all shadow-sm appearance-none cursor-pointer"
+              className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl focus:border-emerald-500 outline-none shadow-sm appearance-none cursor-pointer"
               value={selectedCategory}
               onChange={(e) => {
                 setSelectedCategory(e.target.value);
-                setCurrentPage(1); // Reset về trang 1 khi lọc
+                setCurrentPage(1);
               }}
             >
               <option value="all">Tất cả danh mục</option>
-
-              {categories.map((cat) => (
-                <option key={cat.code} value={cat.code}>
-                  {cat.name}
-                </option>
+              
+              {categories.filter(c => !c.parentCode).map((parent) => (
+                <optgroup key={parent.code} label={parent.name}>
+                  {categories.filter(sub => sub.parentCode === parent.code).map(sub => (
+                    <option key={sub.code} value={sub.code}>{sub.name}</option>
+                  ))}
+                </optgroup>
               ))}
             </select>
           </div>
@@ -320,6 +325,8 @@ const AdminProductPage = () => {
                       </td>
                       <td className="px-4 py-4 text-center text-sm font-medium text-emerald-700">
                         <span className="bg-emerald-50 px-2 py-1 rounded-md">
+                          {/* {product.category?.name} */}
+                          {product.category?.parentName ? `${product.category.parentName} > ` : ''} 
                           {product.category?.name}
                         </span>
                       </td>

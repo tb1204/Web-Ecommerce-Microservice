@@ -44,7 +44,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ isOpen, onClose
             <div>
               <h2 className="font-bold text-lg leading-none">Thông tin chi tiết sản phẩm</h2>
               <p className="text-[11px] text-emerald-100 mt-1 uppercase tracking-widest font-medium italic">
-                Mã dòng sản phẩm: {product.productCode || "CHƯA CÓ MÃ"}
+                Mã dòng sản phẩm: {product.productCode} | Loại: {product.category?.code}
               </p>
             </div>
           </div>
@@ -85,8 +85,10 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ isOpen, onClose
               <div>
                 <h3 className="text-3xl font-black text-gray-900 leading-tight mb-4">{product.name}</h3>
                 <div className="flex flex-wrap gap-2">
-                  <span className="px-3 py-1.5 bg-emerald-50 text-emerald-700 text-[11px] font-bold rounded-xl border border-emerald-100 uppercase">
-                    <Layers size={14} className="inline mr-1"/> {product.category?.name}
+                  <span className="px-3 py-1.5 bg-emerald-50 text-emerald-700 text-[11px] font-bold rounded-xl border border-emerald-100 uppercase flex items-center gap-1.5">
+                    <Layers size={14} /> 
+                    {product.category?.parentName ? `${product.category.parentName} > ` : ''} 
+                    {product.category?.name}
                   </span>
                   <span className="px-3 py-1.5 bg-blue-50 text-blue-700 text-[11px] font-bold rounded-xl border border-blue-100 flex items-center gap-1.5"><MapPin size={14}/> {product.origin}</span>
                   <span className="px-3 py-1.5 bg-gray-100 text-gray-600 text-[11px] font-bold rounded-xl border flex items-center gap-1.5">Hãng: {product.brand}</span>

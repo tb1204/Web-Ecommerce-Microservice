@@ -1,6 +1,9 @@
 package com.b2204922.productservice.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,4 +14,6 @@ public class Category {
     private String id;
     private String name;
     private String code;
+    private String parentCode;
+    private String parentName;
 }
