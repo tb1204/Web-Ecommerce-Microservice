@@ -37,4 +37,8 @@ public interface ProductRepository extends MongoRepository<Product, String> {
 
     //Kiem tra trung sku
 //    boolean existsBySku(String sku);
+    List<Product> findByCategory_Code(String code);
+
+    // Tương tự cho ParentCode để dùng cho hàm phía dưới của bạn
+    List<Product> findByCategory_ParentCode(String parentCode);
 }

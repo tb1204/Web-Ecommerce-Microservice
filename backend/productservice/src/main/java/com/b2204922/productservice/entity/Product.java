@@ -59,9 +59,10 @@ public class Product {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Category {
-
         private String name;
         private String code;
+        private String parentCode;
+        private String parentName;
     }
 
     @Data

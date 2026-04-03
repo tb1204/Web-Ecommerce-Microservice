@@ -13,6 +13,13 @@ export interface ProductVariant {
   stockQuantity: number;
   status: string;
 }
+export interface Category {
+  id?: string;
+  name: string;
+  code: string;
+  parentName: string | null;
+  parentCode: string | null;
+}
 export interface Product {
   id: string;
   name: string;
@@ -23,20 +30,16 @@ export interface Product {
   totalStockQuantity: number; 
   variants: ProductVariant[];
   images: ProductImage[];
-<<<<<<< HEAD
-  status:
-    | "selling"
-    | "stopselling"
-    | "AVAILABLE"
-    | "UNAVAILABLE"
-    | "OUT_OF_STOCK";
-=======
   status: "AVAILABLE" | "OUT_OF_STOCK" | "selling" | "stopselling"; 
->>>>>>> af0095bb6f3b5393467dfca637e6aca43c0f5811
   rating?: number;
   reviewCount?: number;
   colors?: string[]; // Thêm mảng màu sắc để hỗ trợ chăn ga, gối
-  category?: { name: string; code: string };
+  category?: { 
+    name: string; 
+    code: string; 
+    parentName: string | null; 
+    parentCode: string | null; 
+  };
   specifications?: {
     material: string;
     weight: string;
@@ -120,11 +123,7 @@ export interface Order {
   updatedAt: string;
 }
 
-export interface Category {
-  id?: string;
-  name: string;
-  code: string;
-}
+
 //interface cho voucher
 export interface UsageLimit {
   total: number;
