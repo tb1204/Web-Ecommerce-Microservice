@@ -1,0 +1,74 @@
+{
+  "_id": "661d8f9a123abc",
+  "code": "SPRING10",
+  "name": "Giảm 10% mùa xuân",
+  "voucherType": "PRODUCT_DISCOUNT",
+  "discountType": "PERCENTAGE",
+  "discountValue": 10,
+  "maxDiscountAmount": 50000,
+  "minOrderAmount": 200000,
+  "usageLimit": {
+    "total": 100,
+    "perUser": 1,
+    "used": 25
+  },
+  "validity": {
+    "start": "2026-04-01T00:00:00Z",
+    "end": "2026-04-30T23:59:59Z"
+  },
+  "status": "ACTIVE",
+  "isStackable": false,
+  "userUsedList": ["user_123", "user_456"],
+  "createdAt": "2026-04-01T10:00:00Z",
+  "updatedAt": "2026-04-02T12:00:00Z"
+}
+
+{
+  "_id": "661d8f9a999xyz",
+  "code": "FREESHIP50",
+  "name": "Giảm 50k phí ship",
+  "voucherType": "SHIPPING_DISCOUNT",
+  "discountType": "FIXED_AMOUNT",
+  "discountValue": 50000,
+  "maxDiscountAmount": 50000,
+  "minOrderAmount": 0,
+  "usageLimit": {
+    "total": 500,
+    "perUser": 2,
+    "used": 100
+  },
+  "validity": {
+    "start": "2026-04-01T00:00:00Z",
+    "end": "2026-06-01T00:00:00Z"
+  },
+  "status": "ACTIVE",
+  "isStackable": true,
+  "userUsedList": [],
+  "createdAt": "2026-04-01T10:00:00Z",
+  "updatedAt": "2026-04-01T10:00:00Z"
+}
+
+{
+  "_id": "661expired123",
+  "code": "OLD10",
+  "name": "Voucher cũ",
+  "voucherType": "PRODUCT_DISCOUNT",
+  "discountType": "PERCENTAGE",
+  "discountValue": 10,
+  "maxDiscountAmount": 30000,
+  "minOrderAmount": 100000,
+  "usageLimit": {
+    "total": 50,
+    "perUser": 1,
+    "used": 50
+  },
+  "validity": {
+    "start": "2025-01-01T00:00:00Z",
+    "end": "2025-12-31T23:59:59Z"
+  },
+  "status": "EXPIRED",
+  "isStackable": false,
+  "userUsedList": ["user_1", "user_2"],
+  "createdAt": "2025-01-01T00:00:00Z",
+  "updatedAt": "2025-12-31T23:59:59Z"
+}

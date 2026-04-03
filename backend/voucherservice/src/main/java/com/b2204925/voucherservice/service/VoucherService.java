@@ -27,7 +27,7 @@ public class VoucherService {
 
     // ── ADMIN: Lấy tất cả voucher ────────────────────────────────
     public List<VoucherResponse> getAllVouchers() {
-        return voucherRepository.findAllByOrderByCreatedAtDesc()
+        return voucherRepository.findAllByOrderByCreatedAtDesc() //sắp xếp giảm dần,mới nhất lên đầu 
                 .stream().map(this::toResponse).collect(Collectors.toList());
     }
 
@@ -192,7 +192,7 @@ public class VoucherService {
             throw new AppException(ErrorCode.VOUCHER_EXPIRED);
         }
         if (now.isBefore(voucher.getValidity().getStart())) {
-            throw new AppException(ErrorCode.VOUCHER_NOT_STARTED);
+            throw new AppException(ErrorCode.VOUCHER_NOT_STARTED);//chưa đến hạn sử dụng
         }
 
         // 3. Kiểm tra giới hạn tổng

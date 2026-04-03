@@ -15,6 +15,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import org.springframework.http.HttpMethod;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,7 +34,7 @@ public class SecurityConfig {
 
     @Bean
     public JwtDecoder jwtDecoder() {
-        return NimbusJwtDecoder.withJwkSetUri(jwksUrl).build();
+        return NimbusJwtDecoder.withJwkSetUri(jwksUrl).build();//verify và decode  
     }
 
     @Bean
@@ -57,8 +59,8 @@ public class SecurityConfig {
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                 // Cho phép GET danh sách ACTIVE và validate không cần đăng nhập
-                .requestMatchers("GET", "/api/vouchers").permitAll()
-                .requestMatchers("GET", "/api/vouchers/validate").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/vouchers").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/vouchers/validate").permitAll()
                 // Tất cả còn lại phải authenticated
                 .anyRequest().authenticated()
                 )

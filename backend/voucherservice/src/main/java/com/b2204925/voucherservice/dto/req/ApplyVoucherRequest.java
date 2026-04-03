@@ -13,7 +13,7 @@ public class ApplyVoucherRequest {
     private String code;
 
     @NotNull
-    @Min(value = 0)
+    @Min(value = 0) //đơn tối thiểu
     private Double orderAmount;
     // Tổng tiền đơn hàng (trước khi giảm)
 }
