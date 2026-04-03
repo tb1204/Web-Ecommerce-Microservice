@@ -43,7 +43,8 @@ public class ProductController {
     public ResponseEntity<Product> updateProduct(
             @PathVariable String id,
             @RequestPart("product") Product product,
-            @RequestPart(value = "imageFiles", required = false) List<MultipartFile> imageFiles
+            @RequestPart(value = "primaryImage", required = false) MultipartFile primaryImage, // Ghế riêng cho ảnh đại diện
+            @RequestPart(value = "imageFiles", required = false) List<MultipartFile> imageFiles // Chỉ dành cho ảnh phụ
     ) {
         Product updated = productService.updateProduct(id, product, imageFiles);
         return ResponseEntity.ok(updated);
