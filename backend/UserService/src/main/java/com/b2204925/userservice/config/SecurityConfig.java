@@ -71,6 +71,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/banners/flashsale").permitAll()
                 .requestMatchers("/api/admin/sliders/list").permitAll()
                 .requestMatchers("/api/admin/sliders/banners/**").permitAll()
+                                .requestMatchers("/api/users/statistics/**").permitAll()
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 )

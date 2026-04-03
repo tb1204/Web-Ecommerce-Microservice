@@ -17,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 
 import org.springframework.http.HttpMethod;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -217,5 +218,15 @@ public class UserService {
             userRepository.save(user);
         }
         return user.getWishlist() != null ? user.getWishlist() : new ArrayList<>();
+    }
+
+    public long getTotalUsers() {
+        return userRepository.count();
+    }
+
+    public long getNewUsersCount() {
+        // Tính khách mới trong vòng 7 ngày qua
+        LocalDateTime thirtyDaysAgo = LocalDateTime.now().minusDays(7);
+        return userRepository.countByCreatedAtAfter(thirtyDaysAgo);
     }
 }

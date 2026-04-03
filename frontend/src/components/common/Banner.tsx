@@ -45,8 +45,8 @@ function Banner() {
           id: r.public_id,
           image: r.secure_url,
           title:
-            r.context?.title || // ✅ ĐÚNG với JSON bạn gửi
-            r.context?.custom?.title || // fallback nếu sau này dùng custom
+            r.context?.title || 
+            r.context?.custom?.title || 
             r.metadata?.title ||
             "",
         }));

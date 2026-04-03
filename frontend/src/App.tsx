@@ -89,10 +89,7 @@ function App() {
               </Route>
 
               {/* GROUP 2: CÁC TRANG DÀNH CHO ADMIN (QUẢN TRỊ) */}
-              {/* <Route
-              path="/admin"
-              element={<AdminLayout />}
-            > */}
+
               <Route
                 path="/admin"
                 element={

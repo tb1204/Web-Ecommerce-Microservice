@@ -67,12 +67,6 @@ const AdminProductPage = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       setLoading(true);
-      /* LOGIC CŨ 
-    setTimeout(() => {
-      setProducts(mockProducts);
-      setLoading(false);
-    }, 500);
-    */
 
       try {
         const response = await axios.get(`${PRODUCT_API_URL}/api/products/all`);
@@ -90,13 +84,22 @@ const AdminProductPage = () => {
   }, []);
 
   // LOGIC LỌC DỮ LIỆU (QUAN TRỌNG)
+  // const filteredProducts = products.filter((p) => {
+  //   const matchesName =
+  //     p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //     p.sku?.toLowerCase().includes(searchTerm.toLowerCase());
+  //   const matchesCategory =
+  //     selectedCategory === "all" || p.category?.code === selectedCategory;
+  //   return matchesName && matchesCategory;
+  // });
   const filteredProducts = products.filter((p) => {
-    const matchesName =
-      p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      p.sku?.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesName = p.name.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSku = p.variants?.some((v) =>
+      v.sku.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
     const matchesCategory =
       selectedCategory === "all" || p.category?.code === selectedCategory;
-    return matchesName && matchesCategory;
+    return (matchesName || matchesSku) && matchesCategory;
   });
 
   // Tính toán chia trang dựa trên danh sách ĐÃ LỌC
@@ -119,6 +122,7 @@ const AdminProductPage = () => {
       await axios.delete(`${PRODUCT_API_URL}/api/products/delete/${id}`);
 
       setProducts(products.filter((p) => p.id !== id));
+
       toast.success("Xóa thành công!");
     } catch (error) {
       console.error("Lỗi xóa:", error);
@@ -209,7 +213,7 @@ const AdminProductPage = () => {
             />
             <input
               type="text"
-              placeholder="Tìm theo tên sản phẩm hoặc mã SKU..."
+              placeholder="Tìm theo tên sản phẩm ..."
               className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all shadow-sm"
               value={searchTerm}
               onChange={(e) => {
@@ -309,7 +313,7 @@ const AdminProductPage = () => {
                               {product.name}
                             </p>
                             <p className="text-[10px] text-gray-400 uppercase font-bold">
-                              {product.sku}
+                              {product.productCode || "Chưa có mã"}
                             </p>
                           </div>
                         </div>
@@ -322,9 +326,9 @@ const AdminProductPage = () => {
                       <td className="px-4 py-4 text-center text-sm font-black text-gray-900">
                         {product.price.toLocaleString("vi-VN")}₫
                         <p
-                          className={`text-[11px] mt-1 font-bold ${product.stockQuantity > 10 ? "text-blue-500" : "text-red-500"}`}
+                          className={`text-[11px] mt-1 font-bold ${product.totalStockQuantity > 10 ? "text-blue-500" : "text-red-500"}`}
                         >
-                          Kho: {product.stockQuantity}
+                          Kho: {product.totalStockQuantity}
                         </p>
                       </td>
                       <td className="px-4 py-4 text-center">

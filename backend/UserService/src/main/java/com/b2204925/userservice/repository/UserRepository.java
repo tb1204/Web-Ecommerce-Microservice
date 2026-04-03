@@ -3,6 +3,7 @@ package com.b2204925.userservice.repository;
 import com.b2204925.userservice.entity.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 public interface UserRepository extends MongoRepository<User, String> {
@@ -16,4 +17,10 @@ public interface UserRepository extends MongoRepository<User, String> {
     boolean existsByClerkId(String clerkId);
 
     void deleteByClerkId(String clerkId);
+
+    //Đếm tổng tất cả khách hàng
+    long count();
+
+    //Đếm khách mới đăng ký từ một thời điểm nào đó
+    long countByCreatedAtAfter(LocalDateTime dateTime);
 }
