@@ -1,106 +1,73 @@
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
-interface User {
-  name: string;
-}
-
-interface Order {
-  _id: string;
-  user: User;
-  totalPrice: number;
-  status: "Processing" | "Shipped" | "Delivered" | "Cancelled";
-  createdAt: string;
-}
-
-interface Product {
-  _id: string;
-  name: string;
-  sold: number;
-}
+import axios from "axios";
+import type { Order } from "../components/Products/InterfaceItem";
 
 const AdminHomePage: React.FC = () => {
-  const getStatusText = (status: Order["status"]) => {
+
+  const [stats, setStats] = useState({
+    totalSales: 0,
+    totalOrders: 0,
+    totalProducts: 0,
+    recentOrders: [] as Order[],
+    topProducts: [] as any[],
+  });
+  const [loading, setLoading] = useState(true);
+
+
+  const getStatusText = (status: string) => {
     switch (status) {
-      case "Processing":
-        return "Đang xử lý";
-      case "Shipped":
-        return "Đã gửi";
-      case "Delivered":
-        return "Đã giao";
-      case "Cancelled":
-        return "Đã hủy";
-      default:
-        return status;
+      case "PENDING": return "Chờ xử lý";
+      case "PROCESSING": return "Đang xử lý";
+      case "SHIPPING": return "Đang giao";
+      case "DELIVERED": return "Đã giao";
+      case "CANCELLED": return "Đã hủy";
+      default: return status;
     }
   };
-  const getStatusStyle = (status: Order["status"]) => {
+
+  const getStatusStyle = (status: string) => {
     switch (status) {
-      case "Processing":
-        return "bg-yellow-100 text-yellow-700";
-      case "Shipped":
-        return "bg-blue-100 text-blue-700";
-      case "Delivered":
-        return "bg-green-100 text-green-700";
-      case "Cancelled":
-        return "bg-red-100 text-red-700";
-      default:
-        return "bg-gray-100 text-gray-600";
+      case "PENDING": return "bg-yellow-100 text-yellow-700";
+      case "PROCESSING": return "bg-blue-100 text-blue-700";
+      case "DELIVERED": return "bg-green-100 text-green-700";
+      case "CANCELLED": return "bg-red-100 text-red-700";
+      default: return "bg-gray-100 text-gray-600";
     }
   };
-  const products: Product[] = [
-    { _id: "p1", name: "Nệm cao su thiên nhiên 1m8", sold: 120 },
-    { _id: "p2", name: "Chăn ga gối cotton 4 món", sold: 85 },
-    { _id: "p3", name: "Gối ôm lông vũ", sold: 70 },
-    { _id: "p4", name: "Nệm lò xo Dunlopillo", sold: 200 },
-    { _id: "p5", name: "Ruột chăn đông ấm", sold: 95 },
-    { _id: "p6", name: "Phụ kiện gối kê cổ", sold: 2 },
-  ];
 
-  const orders: Order[] = [
-    {
-      _id: "ORD001",
-      user: { name: "Nguyễn Văn A" },
-      totalPrice: 2500000,
-      status: "Processing",
-      createdAt: "2025-02-20",
-    },
-    {
-      _id: "ORD002",
-      user: { name: "Trần Thị B" },
-      totalPrice: 4500000,
-      status: "Shipped",
-      createdAt: "2025-02-19",
-    },
-    {
-      _id: "ORD003",
-      user: { name: "Lê Văn C" },
-      totalPrice: 1800000,
-      status: "Delivered",
-      createdAt: "2025-02-18",
-    },
+  // 3. Gọi API đổ dữ liệu
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        setLoading(true);
+        const [revRes, countRes, topRes, ordersRes, prodRes] = await Promise.all([
+          axios.get("http://localhost:8084/api/orders/statistics/total-revenue"),
+          axios.get("http://localhost:8084/api/orders/statistics/order-counts"),
+          axios.get("http://localhost:8084/api/orders/statistics/top-selling-dashboard"), 
+          axios.get("http://localhost:8084/api/orders/all"),
+          axios.get("http://localhost:8082/api/products/all"),
+        ]);
 
-    {
-      _id: "ORD004",
-      user: { name: "Phạm Văn E" },
-      totalPrice: 2200000,
-      status: "Cancelled",
-      createdAt: "2025-02-16",
-    },
-  ];
+        setStats({
+          totalSales: revRes.data || 0,
+          totalOrders: countRes.data?.total || 0,
+          totalProducts: prodRes.data?.length || 0,
+          topProducts: topRes.data || [],
+          recentOrders: (ordersRes.data || [])
+            .sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+            .slice(0, 5), 
+        });
+      } catch (err) {
+        console.error("Lỗi lấy dữ liệu dashboard:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadData();
+  }, []);
 
-  // ===== Logic =====
-  const topProducts = [...products].sort((a, b) => b.sold - a.sold).slice(0, 5);
-
-  const recentOrders = [...orders]
-    .sort(
-      (a, b) =>
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-    )
-    .slice(0, 4);
-
-  const totalSales = 8700000;
-  const totalOrders = orders.length;
-  const totalProducts = products.length;
+  if (loading) return <div className="p-10 text-center font-bold">Đang tải dữ liệu...</div>;
 
   return (
     <div className="max-w-7xl mx-auto p-6">
@@ -108,39 +75,27 @@ const AdminHomePage: React.FC = () => {
         Admin Dashboard
       </h1>
 
-      {/* KPI SECTION */}
+      
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
         <div className="p-6 shadow-md rounded-xl bg-gradient-to-br from-emerald-50 to-emerald-100 border border-emerald-200 transition-all duration-300 hover:shadow-2xl hover:-translate-y-0.5">
           <h2 className="text-lg font-semibold text-emerald-800">Doanh thu</h2>
           <p className="text-3xl font-bold text-emerald-700 mt-2">
-            {totalSales.toLocaleString("vi-VN")} ₫
+            {stats.totalSales.toLocaleString("vi-VN")} ₫
           </p>
         </div>
 
         <div className="p-6 shadow-md rounded-xl bg-gradient-to-br from-sky-50 to-sky-100 border border-sky-200 transition-all duration-300 hover:shadow-2xl hover:-translate-y-0.5">
-          <h2 className="text-lg font-semibold text-sky-800">
-            Tổng số đơn hàng
-          </h2>
-          <p className="text-3xl font-bold text-sky-700 mt-2">{totalOrders}</p>
-          <Link
-            to="/admin/orders"
-            className="text-sky-600 hover:underline text-sm mt-3 inline-block"
-          >
+          <h2 className="text-lg font-semibold text-sky-800"> Tổng số đơn hàng </h2>
+          <p className="text-3xl font-bold text-sky-700 mt-2">{stats.totalOrders}</p>
+          <Link to="/admin/orders" className="text-sky-600 hover:underline text-sm mt-3 inline-block">
             Quản lý đơn hàng
           </Link>
         </div>
 
         <div className="p-6 shadow-md rounded-xl bg-gradient-to-br from-amber-50 to-amber-100 border border-amber-200 transition-all duration-300 hover:shadow-2xl hover:-translate-y-0.5">
-          <h2 className="text-lg font-semibold text-amber-800">
-            Tổng số sản phẩm
-          </h2>
-          <p className="text-3xl font-bold text-amber-700 mt-2">
-            {totalProducts}
-          </p>
-          <Link
-            to="/admin/product"
-            className="text-amber-600 hover:underline text-sm mt-3 inline-block"
-          >
+          <h2 className="text-lg font-semibold text-amber-800"> Tổng số sản phẩm </h2>
+          <p className="text-3xl font-bold text-amber-700 mt-2"> {stats.totalProducts} </p>
+          <Link to="/admin/product" className="text-amber-600 hover:underline text-sm mt-3 inline-block">
             Quản lý sản phẩm
           </Link>
         </div>
@@ -158,34 +113,23 @@ const AdminHomePage: React.FC = () => {
             <table className="min-w-full text-left text-sm">
               <thead className="bg-gray-50 dark:bg-gray-700 text-xs uppercase">
                 <tr>
-                  <th className="py-3 px-6">Order ID</th>
-                  <th className="py-3 px-6">Ngày</th>
+                  <th className="py-3 px-6">Mã Đơn</th>
+                  <th className="py-3 px-6">Ngày đặt</th>
                   <th className="py-3 px-6">Người đặt</th>
                   <th className="py-3 px-6">Tổng tiền</th>
                   <th className="py-3 px-6">Trạng thái</th>
                 </tr>
               </thead>
               <tbody>
-                {recentOrders.map((order) => (
-                  <tr
-                    key={order._id}
-                    className="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50"
-                  >
-                    <td className="py-4 px-6 font-medium">{order._id}</td>
+                {stats.recentOrders.map((order) => (
+                  <tr key={order.id} className="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                    <td className="py-4 px-6 font-medium font-mono text-blue-600">#{order.orderNumber}</td>
+                    <td className="py-4 px-6">{new Date(order.createdAt).toLocaleDateString("vi-VN")}</td>
+                    <td className="py-4 px-6">{order.customerInfo.name}</td>
+                    <td className="py-4 px-6 font-medium">{order.summary.totalAmount.toLocaleString("vi-VN")} ₫</td>
                     <td className="py-4 px-6">
-                      {new Date(order.createdAt).toLocaleDateString("vi-VN")}
-                    </td>
-                    <td className="py-4 px-6">{order.user.name}</td>
-                    <td className="py-4 px-6 font-medium">
-                      {order.totalPrice.toLocaleString("vi-VN")} ₫
-                    </td>
-                    <td className="py-4 px-6">
-                      <span
-                        className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${getStatusStyle(
-                          order.status,
-                        )}`}
-                      >
-                        {getStatusText(order.status)}
+                      <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${getStatusStyle(order.orderStatus)}`}>
+                        {getStatusText(order.orderStatus)}
                       </span>
                     </td>
                   </tr>
@@ -198,27 +142,18 @@ const AdminHomePage: React.FC = () => {
         {/* TOP 5 BÁN CHẠY */}
         <div className="bg-white dark:bg-gray-800 shadow-md rounded-xl border border-gray-200 dark:border-gray-700 flex flex-col">
           <div className="p-6 border-b dark:border-gray-700">
-            <h2 className="text-xl font-bold text-orange-600">
-              Top 5 Bán Chạy
-            </h2>
+            <h2 className="text-xl font-bold text-orange-600"> Top 5 Bán Chạy </h2>
           </div>
 
           <div className="p-6 space-y-4 flex-1">
-            {topProducts.map((p, index) => (
-              <div
-                key={p._id}
-                className="flex items-center justify-between border-b last:border-0 pb-3"
-              >
+            {stats.topProducts.map((p, index) => (
+              <div key={index} className="flex items-center justify-between border-b last:border-0 pb-3">
                 <div className="flex items-center gap-3">
-                  <span className="font-bold text-gray-400 w-6 text-center">
-                    #{index + 1}
-                  </span>
-                  <span className="text-sm font-medium truncate max-w-[180px]">
-                    {p.name}
-                  </span>
+                  <span className="font-bold text-gray-400 w-6 text-center"> #{index + 1} </span>
+                  <span className="text-sm font-medium truncate max-w-[180px]"> {p.name} </span>
                 </div>
                 <span className="text-xs bg-orange-100 text-orange-800 px-3 py-1 rounded-full font-medium">
-                  {p.sold} lượt
+                  {p.value}
                 </span>
               </div>
             ))}

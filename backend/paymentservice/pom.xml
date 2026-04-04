@@ -74,6 +74,7 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
     <!-- Cần thiết cho Spring Cloud (Eureka) -->

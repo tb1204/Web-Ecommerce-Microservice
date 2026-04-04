@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor //Tao ham xay dung day du tham so
 public class OrderItem {
     private String productId;
+    private String variantId;
     private String productName;
     private Integer quantity;
     private Double price;

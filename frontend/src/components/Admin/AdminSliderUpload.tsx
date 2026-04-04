@@ -716,8 +716,10 @@ function AdminSliderUpload() {
 
               {loadingImages ? (
                 <div className="flex flex-col items-center justify-center py-20 text-gray-400">
-                  <Loader2 className="animate-spin mb-2" size={32} />
-                  <p className="text-sm">Đang tải dữ liệu...</p>
+                  <div className="w-10 h-10 animate-spin rounded-full border-b-2 border-emerald-600 mx-auto mb-2"></div>
+                  <p className="mt-4 text-gray-400 text-[10px] font-black uppercase tracking-[3px]">
+                    Đang tải ...
+                  </p>
                 </div>
               ) : images.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-20 text-gray-400 border-2 border-dashed border-gray-100 rounded-2xl">

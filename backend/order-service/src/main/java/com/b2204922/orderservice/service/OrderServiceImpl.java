@@ -76,6 +76,7 @@ public class OrderServiceImpl implements IOrderService {
 
                         return OrderItem.builder()
                                 .productId(itemReq.getProductId())
+                                .variantId(itemReq.getVariantId())
                                 .productName(name)
                                 .price(price)
                                 .quantity(itemReq.getQuantity())
@@ -118,8 +119,12 @@ public class OrderServiceImpl implements IOrderService {
 
         Order savedOrder = orderRepository.save(order);
 
+//        savedOrder.getItems().forEach(item -> {
+//            callProductServiceToUpdateStock(item.getProductId(), -item.getQuantity());
+//        });
         savedOrder.getItems().forEach(item -> {
-            callProductServiceToUpdateStock(item.getProductId(), -item.getQuantity());
+            // Truyền thêm item.getVariantId() vào tham số thứ 2
+            callProductServiceToUpdateStock(item.getProductId(), item.getVariantId(), -item.getQuantity());
         });
 
         try {
@@ -229,7 +234,7 @@ public class OrderServiceImpl implements IOrderService {
         // Kiem tra tru kho
         if ("PENDING".equals(status) && !"PENDING".equals(oldStatus)) {
             order.getItems().forEach(item -> {
-                callProductServiceToUpdateStock(item.getProductId(), -item.getQuantity());
+                callProductServiceToUpdateStock(item.getProductId(),item.getVariantId() ,-item.getQuantity());
             });
         }
 
@@ -294,32 +299,37 @@ public class OrderServiceImpl implements IOrderService {
 
         String oldStatus = order.getOrderStatus();
         // Kiểm tra trạng thái trước khi cho hủy
-        if (!"PENDING".equals(order.getOrderStatus())) {
-            throw new IllegalStateException("Chỉ có thể hủy khi đơn hàng đang chờ xác nhận!");
+        if (!"PENDING".equals(order.getOrderStatus()) && !"PROCESSING".equals(order.getOrderStatus())) {
+            throw new IllegalStateException("Đơn hàng đang giao hoặc đã hoàn tất, không thể hủy!");
         }
 
-        //Kiem tra hoan tien
+        // Kiểm tra và thực hiện hoàn tiền nếu đã thanh toán
         if (order.getPayment() != null && "PAID".equals(order.getPayment().getStatus())) {
-            String txId = order.getPayment().getTransactionId();
+            // Lấy ID đơn hàng và số tiền cần hoàn
+            String orderId = order.getId();
             Double amount = order.getSummary().getTotalAmount();
-
-            if (txId != null) {
-                boolean isRefunded = paymentService.refund(txId, amount);
-                if (!isRefunded) {
-                    throw new RuntimeException("Lỗi hoàn tiền! Không thể hủy đơn hàng lúc này.");
-                }
-                order.getPayment().setStatus("REFUNDED"); // Cập nhật trạng thái tiền
-                log.info("Đã hoàn tiền thành công cho đơn hàng {}", order.getOrderNumber());
+            log.info("Đang yêu cầu hoàn tiền cho đơn hàng: {}", order.getOrderNumber());
+            // Gọi sang PaymentServiceImpl
+            boolean isRefunded = paymentService.refund(orderId, amount);
+            if (!isRefunded) {
+                // Nếu bên Payment Service báo lỗi (ví dụ VNPay từ chối) thì không cho hủy đơn
+                throw new RuntimeException("Lỗi hệ thống thanh toán: Không thể hoàn tiền. Vui lòng thử lại sau!");
             }
+            // Cập nhật trạng thái Payment trong Object Order để lưu vào DB của Order-Service
+            order.getPayment().setStatus("REFUNDED");
+            log.info("Đã xác nhận hoàn tiền thành công cho đơn hàng: {}", order.getOrderNumber());
         }
 
-        /// //
         order.setOrderStatus("CANCELLED");
         order.setCancelReason(reason);
         order.setCancelledAt(LocalDateTime.now());
         order.setUpdatedAt(LocalDateTime.now());
+//        order.getItems().forEach(item -> {
+//            callProductServiceToUpdateStock(item.getProductId(), item.getQuantity());
+//        });
         order.getItems().forEach(item -> {
-            callProductServiceToUpdateStock(item.getProductId(), item.getQuantity());
+            // Truyền thêm item.getVariantId() vào tham số thứ 2
+            callProductServiceToUpdateStock(item.getProductId(), item.getVariantId(), item.getQuantity());
         });
 
         Order savedOrder = orderRepository.save(order);
@@ -346,15 +356,35 @@ public class OrderServiceImpl implements IOrderService {
         return convertToOrderResponse(savedOrder);
     }
 
-    private void callProductServiceToUpdateStock(String productId, int quantity) {
-        // quantity âm nếu là trừ kho (khi giao hàng/đặt hàng)
-        // quantity dương nếu là cộng lại kho (khi hủy)
-        String url = "http://localhost:8082/api/products/updateStock?productId=" + productId + "&quantity=" + quantity;
+//    private void callProductServiceToUpdateStock(String productId, int quantity) {
+//        // quantity âm nếu là trừ kho (khi giao hàng/đặt hàng)
+//        // quantity dương nếu là cộng lại kho (khi hủy)
+//        String url = "http://localhost:8082/api/products/updateStock?productId=" + productId + "&quantity=" + quantity;
+//        try {
+//            restTemplate.put(url, null);
+//            log.info("Đã cập nhật kho cho sản phẩm {} với số lượng {}", productId, quantity);
+//        } catch (Exception e) {
+//            log.error("Lỗi khi cập nhật kho tại Product Service: {}", e.getMessage());
+//        }
+//    }
+        private void callProductServiceToUpdateStock(String productId, String variantId, int quantity) {
+
+        String url = "http://localhost:8082/api/products/updateStock?productId=" + productId
+                + "&variantId=" + variantId
+                + "&quantity=" + quantity;
+
         try {
-            restTemplate.put(url, null);
-            log.info("Đã cập nhật kho cho sản phẩm {} với số lượng {}", productId, quantity);
+            log.info(" Đang trả hàng về kho: {} (SL: {})", productId, quantity);
+
+            org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
+            headers.setContentType(org.springframework.http.MediaType.APPLICATION_JSON);
+            org.springframework.http.HttpEntity<String> entity = new org.springframework.http.HttpEntity<>(headers);
+
+            restTemplate.exchange(url, org.springframework.http.HttpMethod.PUT, entity, Void.class);
+
+            log.info(" Kho đã cập nhật xong!");
         } catch (Exception e) {
-            log.error("Lỗi khi cập nhật kho tại Product Service: {}", e.getMessage());
+            log.error(" Lỗi Product Service: {}", e.getMessage());
         }
     }
 
@@ -522,5 +552,35 @@ public class OrderServiceImpl implements IOrderService {
                     m.put("doanhThu", e.getValue());
                     return m;
                 }).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Map<String, Object>> getTopSellingDashboard() {
+        // 1. Lấy tất cả đơn hàng đã giao thành công
+        List<Order> orders = orderRepository.findByOrderStatus("DELIVERED");
+
+        // 2. Map để cộng dồn số lượng theo ID sản phẩm
+        Map<String, Integer> productQtyMap = new HashMap<>();
+        Map<String, String> productNameMap = new HashMap<>();
+
+        for (Order order : orders) {
+            for (OrderItem item : order.getItems()) {
+                String pid = item.getProductId();
+                productQtyMap.put(pid, productQtyMap.getOrDefault(pid, 0) + item.getQuantity());
+                productNameMap.put(pid, item.getProductName());
+            }
+        }
+
+        // 3. Xử lý stream để lấy top 5 và format dữ liệu cho Dashboard
+        return productQtyMap.entrySet().stream()
+                .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
+                .limit(5)
+                .map(e -> {
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("name", productNameMap.get(e.getKey()));
+                    map.put("value", e.getValue() + " lượt");
+                    return map;
+                })
+                .collect(Collectors.toList());
     }
 }

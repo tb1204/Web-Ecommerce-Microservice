@@ -13,6 +13,7 @@ import {
   EyeOff,
   Edit2,
   X,
+  ChevronLeft, ChevronRight
 } from "lucide-react";
 
 // --- INTERFACE ---
@@ -228,16 +229,14 @@ const AdminCommentPage = () => {
   const [filterStatus, setFilterStatus] = useState<
     "all" | "approved" | "rejected"
   >("all");
-  const [filterCategory, setFilterCategory] = useState<
-    "all" | "Nệm" | "Chăn ga" | "Phụ kiện" | "Gối"
-  >("all");
+  const [filterCategory, setFilterCategory] = useState<string>("all");
   const [filterProduct, setFilterProduct] = useState<string>("all");
   const [searchTerm, setSearchTerm] = useState("");
   const [replyingId, setReplyingId] = useState<string | null>(null);
   const [tempReply, setTempReply] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const itemsPerPage = 5;
+  const itemsPerPage = 2;
 
   // --- [MỚI] HÀM LẤY DỮ LIỆU THẬT ---
   const fetchData = async () => {
@@ -354,9 +353,7 @@ const AdminCommentPage = () => {
       // So khớp mã danh mục của sản phẩm với giá trị đang chọn ở menu lọc
       const matchCategory =
         filterCategory === "all" ||
-        (productInfo &&
-          (productInfo.category?.code === filterCategory ||
-            productInfo.category?.name === filterCategory));
+        (productInfo && productInfo.category?.code === filterCategory);
 
       // 5. Lọc theo Sản phẩm cụ thể
       const matchProduct =
@@ -415,7 +412,7 @@ const AdminCommentPage = () => {
             Quản lý Bình luận & Đánh giá
           </h1>
 
-          {/* Bộ lọc - Giữ nguyên grid 4 cột của Bằng */}
+          {/* Bộ lọc */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-3 bg-white p-4 rounded-lg border border-gray-200">
             <div className="relative">
               <select
@@ -424,8 +421,8 @@ const AdminCommentPage = () => {
                 onChange={(e) => setFilterStatus(e.target.value as any)}
               >
                 <option value="all">Tất cả trạng thái</option>
-                <option value="approved">✅ Hoạt động</option>
-                <option value="rejected">🚫 Đã ẩn</option>
+                <option value="approved"> Hoạt động</option>
+                <option value="rejected">Đã ẩn</option>
               </select>
               <ChevronDown
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
@@ -435,16 +432,27 @@ const AdminCommentPage = () => {
 
             <div className="relative">
               <select
-                className="w-full appearance-none pl-4 pr-10 py-2.5 border border-gray-300 rounded-xl bg-white font-medium text-gray-700 outline-none shadow-sm cursor-pointer"
+                className="w-full appearance-none pl-4 pr-10 py-2.5 border border-gray-300 rounded-xl bg-white font-medium text-gray-700 outline-none shadow-sm cursor-pointer focus:border-emerald-500 transition-all"
                 value={filterCategory}
-                onChange={(e) => setFilterCategory(e.target.value as any)}
+                onChange={(e) => {
+                  setFilterCategory(e.target.value as any);
+                  setCurrentPage(1); 
+                }}
               >
                 <option value="all">Tất cả danh mục</option>
-                {categories.map((cat) => (
-                  <option key={cat.id || cat.code} value={cat.code || cat.name}>
-                    {cat.name}
-                  </option>
-                ))}
+                {categories
+                  .filter((c) => !c.parentCode) 
+                  .map((parent) => (
+                    <optgroup key={parent.code} label={parent.name}>
+                      {categories
+                        .filter((sub) => sub.parentCode === parent.code) 
+                        .map((sub) => (
+                          <option key={sub.code} value={sub.code}>
+                            {sub.name}
+                          </option>
+                        ))}
+                    </optgroup>
+                  ))}
               </select>
               <ChevronDown
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
@@ -486,12 +494,15 @@ const AdminCommentPage = () => {
           </div>
         </header>
 
-        {/* Danh sách bình luận - Giữ nguyên toàn bộ ClassName của Bằng */}
+        {/* Danh sách bình luận  */}
         <div className="space-y-4">
           {loading ? (
-            <div className="text-center py-10 font-black text-emerald-600">
-              ĐANG TẢI...
-            </div>
+            <div className="flex flex-col items-center justify-center py-20 text-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600"></div>
+                <p className="mt-4 text-gray-400 text-[10px] font-black uppercase tracking-[3px]">
+                  Đang tải dữ liệu...
+                </p>
+              </div>
           ) : (
             paginatedComments.map((comment) => (
               <div
@@ -537,7 +548,7 @@ const AdminCommentPage = () => {
                       </div>
                     )}
 
-                    {/* KHUNG TRẢ LỜI ADMIN - GIỮ NGUYÊN MÀU XANH CỦA BẰNG */}
+                    {/* KHUNG TRẢ LỜI ADMIN  */}
                     {comment.adminReplyContent && (
                       <div className="bg-[#f0f7ff] p-3 rounded border-l-2 border-blue-400 mb-4 relative group">
                         <div className="flex justify-between items-center mb-1">
@@ -688,25 +699,42 @@ const AdminCommentPage = () => {
           )}
         </div>
 
-        {/* Phân trang - Giữ nguyên của Bằng */}
+        {/* Phân trang  */}
         {totalPages > 1 && (
-          <div className="mt-6 flex justify-center gap-2 pb-10">
-            <button
-              disabled={currentPage === 1}
-              onClick={() => setCurrentPage((p) => p - 1)}
-              className="px-3 py-1 border rounded text-sm disabled:opacity-50"
+          <div className="flex justify-center items-center gap-4 mt-8 pb-10">
+            {/* Nút lùi lại */}
+            <button 
+              disabled={currentPage === 1} 
+              onClick={() => setCurrentPage(prev => prev - 1)} 
+              className="p-2 rounded-full bg-white border hover:bg-emerald-50 disabled:opacity-30 transition-all shadow-sm"
             >
-              Trước
+              <ChevronLeft size={20} className="text-gray-600" />
             </button>
-            <span className="px-3 py-1 text-sm font-medium">
-              Trang {currentPage} / {totalPages}
-            </span>
-            <button
-              disabled={currentPage === totalPages}
-              onClick={() => setCurrentPage((p) => p + 1)}
-              className="px-3 py-1 border rounded text-sm disabled:opacity-50"
+
+            {/* Các nút số trang */}
+            <div className="flex gap-2">
+              {Array.from({ length: totalPages }).map((_, i) => (
+                <button 
+                  key={i} 
+                  onClick={() => setCurrentPage(i + 1)} 
+                  className={`w-10 h-10 rounded-xl font-bold transition-all shadow-sm ${
+                    currentPage === i + 1 
+                      ? "bg-emerald-600 text-white shadow-md" 
+                      : "bg-white border text-gray-500 hover:border-emerald-400 hover:text-emerald-600"
+                  }`}
+                >
+                  {i + 1}
+                </button>
+              ))}
+            </div>
+
+            {/* Nút tiến tới */}
+            <button 
+              disabled={currentPage === totalPages} 
+              onClick={() => setCurrentPage(prev => prev + 1)} 
+              className="p-2 rounded-full bg-white border hover:bg-emerald-50 disabled:opacity-30 transition-all shadow-sm"
             >
-              Sau
+              <ChevronRight size={20} className="text-gray-600" />
             </button>
           </div>
         )}

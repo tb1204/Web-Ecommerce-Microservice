@@ -33,4 +33,5 @@ public interface IOrderService {
     public List<Map<String, Object>> getTopSellingProducts();
     public List<Map<String, Object>> getMostCancelledProducts();
     public List<Map<String, Object>> getRevenueByRange(LocalDate start, LocalDate end);
+    List<Map<String, Object>> getTopSellingDashboard();
 }

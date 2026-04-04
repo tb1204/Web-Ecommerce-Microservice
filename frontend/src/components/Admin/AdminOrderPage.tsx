@@ -46,87 +46,13 @@ const AdminOrderPage = () => {
   const [endDate, setEndDate] = useState(""); // Lọc đến ngày
 
   const [currentPage, setCurrentPage] = useState(1);
-  const ordersPerPage = 3;
+  const ordersPerPage = 6;
 
-  // Dữ liệu mẫu them truong cancelReason vao
-  // const mockOrders: Order[] = [
-  //   {
-  //     id: "65de1234567890abcdef0001",
-  //     orderNumber: "ORD-2026-001",
-  //     userId: "user-001",
-  //     customerInfo: { name: "Trần Công Bằng", phone: "0901234567", email: "bang@example.com", shippingAddress: "Cần Thơ" },
-  //     items: [{ orderDetailId: "det-01", productId: "prod-01", productName: "Nệm Artisano Cao Cấp", quantity: 1, price: 1629000, lineTotal: 1629000 }],
-  //     summary: { totalAmount: 1629000, shippingFee: 0, totalQty: 1 },
-  //     payment: { method: "VNPAY", status: "PAID", transactionId: "VNP-999888" },
-  //     orderStatus: "SHIPPING",
-  //     createdAt: "2026-01-21T12:40:00.000Z",
-  //     updatedAt: "2026-01-21T15:00:00.000Z"
-  //   },
-  //   {
-  //     id: "65de1234567890abcdef0002",
-  //     orderNumber: "ORD-2026-002",
-  //     userId: "user-002",
-  //     customerInfo: { name: "Lê Văn Tám", phone: "090888777", email: "tam@ex.com", shippingAddress: "Hồ Chí Minh" },
-  //     items: [],
-  //     summary: { totalAmount: 500000, shippingFee: 30000, totalQty: 1 },
-  //     payment: { method: "CASH", status: "UNPAID" },
-  //     orderStatus: "CANCELLED",
-  //     createdAt: "2026-01-22T08:20:00.000Z",
-  //     updatedAt: "2026-01-22T09:00:00.000Z"
-  //   },
-  //   {
-  //     id: "65de1234567890abcdef0003",
-  //     orderNumber: "ORD-2026-003",
-  //     userId: "user-003",
-  //     customerInfo: { name: "Nguyễn Thị Bưởi", phone: "0901234567", email: "buoi@example.com", shippingAddress: "Vĩnh Long" },
-  //     items: [],
-  //     summary: { totalAmount: 1629000, shippingFee: 0, totalQty: 3 },
-  //     payment: { method: "VNPAY", status: "PAID" },
-  //     orderStatus: "PROCESSING",
-  //     createdAt: "2026-01-23T12:40:00.000Z",
-  //     updatedAt: "2026-01-23T15:00:00.000Z"
-  //   },
-  //   {
-  //     id: "65de1234567890abcdef0004",
-  //     orderNumber: "ORD-2026-003",
-  //     userId: "user-003",
-  //     customerInfo: { name: "Nguyễn Thị Bưởi", phone: "0901234567", email: "buoi@example.com", shippingAddress: "Vĩnh Long" },
-  //     items: [],
-  //     summary: { totalAmount: 1629000, shippingFee: 0, totalQty: 3 },
-  //     payment: { method: "VNPAY", status: "PAID" },
-  //     orderStatus: "PROCESSING",
-  //     createdAt: "2026-01-23T12:40:00.000Z",
-  //     updatedAt: "2026-01-23T15:00:00.000Z"
-  //   },
-  //   {
-  //     id: "65de1234567890abcdef0005",
-  //     orderNumber: "ORD-2026-003",
-  //     userId: "user-003",
-  //     customerInfo: { name: "Nguyễn Thị Bưởi", phone: "0901234567", email: "buoi@example.com", shippingAddress: "Vĩnh Long" },
-  //     items: [],
-  //     summary: { totalAmount: 1629000, shippingFee: 0, totalQty: 3 },
-  //     payment: { method: "VNPAY", status: "PAID" },
-  //     orderStatus: "PROCESSING",
-  //     createdAt: "2026-01-23T12:40:00.000Z",
-  //     updatedAt: "2026-01-23T15:00:00.000Z"
-  //   },
-
-  // ];
-
-  // useEffect(() => {
-  //   const fetchOrders = async () => {
-  //     setLoading(true);
-  //     setTimeout(() => {
-  //       setOrders(mockOrders);
-  //       setLoading(false);
-  //     }, 600);
-  //   };
-  //   fetchOrders();
-  // }, []);
+  
   const fetchOrders = async () => {
     setLoading(true);
     try {
-      // Gọi API cổng 9002 của Order Service
+
       const response = await axios.get(`${ORDER_API_URL}/api/orders/all`);
       if (response.status === 200) {
         setOrders(response.data);
@@ -143,31 +69,47 @@ const AdminOrderPage = () => {
     fetchOrders();
   }, []);
 
-  // const handleStatusChange = (id: string, newStatus: Order["orderStatus"]) => {
-  //   setOrders((prev) =>
-  //     prev.map((o) => (o.id === id ? { ...o, orderStatus: newStatus } : o))
-  //   );
-  //   toast.success(`Trạng thái đơn hàng đã đổi sang: ${newStatus}`);
-  // };
-  const handleStatusChange = async (id: string, newStatus: string) => {
-    try {
-      // Khớp với @PatchMapping("/status/{id}") @RequestParam String status ở Backend
-      const response = await axios.patch(
-        `${ORDER_API_URL}/api/orders/status/${id}?status=${newStatus}`,
-      );
+  
+  // const handleStatusChange = async (id: string, newStatus: string) => {
+  //   try {
+  //     // Khớp với @PatchMapping("/status/{id}") @RequestParam String status ở Backend
+  //     const response = await axios.patch(
+  //       `${ORDER_API_URL}/api/orders/status/${id}?status=${newStatus}`,
+  //     );
 
-      if (response.status === 200) {
-        setOrders((prev) => prev.map((o) => (o.id === id ? response.data : o)));
-        toast.success(`Đã cập nhật đơn hàng sang: ${newStatus}`);
-      }
-    } catch (error: any) {
-      // Bắt lỗi "Đơn hàng đã hủy không thể đổi trạng thái" từ Backend trả về
-      const errorMsg =
-        error.response?.data?.message || "Lỗi server từ chối cập nhật!";
-      toast.error(errorMsg);
-      console.error("Lỗi update status:", error);
+  //     if (response.status === 200) {
+  //       setOrders((prev) => prev.map((o) => (o.id === id ? response.data : o)));
+  //       toast.success(`Đã cập nhật đơn hàng sang: ${newStatus}`);
+  //     }
+  //   } catch (error: any) {
+  //     // Bắt lỗi "Đơn hàng đã hủy không thể đổi trạng thái" từ Backend trả về
+  //     const errorMsg =
+  //       error.response?.data?.message || "Lỗi server từ chối cập nhật!";
+  //     toast.error(errorMsg);
+  //     console.error("Lỗi update status:", error);
+  //   }
+  // };
+
+  const handleStatusChange = async (id: string, newStatus: string) => {
+  let reason = "";
+  if (newStatus === "CANCELLED") {
+    reason = window.prompt("Vui lòng nhập lý do hủy đơn hàng:", "Khách hàng đổi ý") || "";
+    if (reason === null) return; // Nếu không nhập lý do thì không cho hủy
+  }
+
+  try {
+    if (newStatus === "CANCELLED") {
+        await axios.put(`${ORDER_API_URL}/api/orders/cancel/${id}`, { cancelReason: reason });
+    } else {
+        await axios.patch(`${ORDER_API_URL}/api/orders/status/${id}?status=${newStatus}`);
     }
-  };
+    
+    fetchOrders();
+    toast.success(`Cập nhật thành công!`);
+  } catch (error: any) {
+    toast.error(error.response?.data?.message || "Thao tác thất bại");
+  }
+};
 
   const handlePrintInvoice = (order: Order) => {
     setItemsToPrint([order]);
@@ -197,6 +139,18 @@ const AdminOrderPage = () => {
     setStartDate("");
     setEndDate("");
     setCurrentPage(1);
+  };
+
+  const handleConfirmPayment = async (orderNumber: string) => {
+    if (!window.confirm("Xác nhận khách hàng đã trả tiền mặt cho đơn này?")) return;
+    try {
+      // Gọi sang Payment Service (Cổng 8085 của bạn ông)
+      await axios.patch(`http://localhost:8085/api/payments/order/${orderNumber}/confirm-cod`);
+      toast.success("Đã cập nhật trạng thái: Đã thu tiền!");
+      fetchOrders(); // Load lại danh sách
+    } catch (error) {
+      toast.error("Không thể cập nhật trạng thái thanh toán!");
+    }
   };
 
   // --- LOGIC LỌC TỔNG HỢP ---
@@ -423,7 +377,7 @@ const AdminOrderPage = () => {
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-center">
+                    {/* <td className="px-6 py-4 text-center">
                       <span
                         className={`px-3 py-1 rounded-lg text-[10px] font-black border-2 uppercase ${order.payment.status === "PAID" ? "bg-blue-50 text-blue-600 border-blue-100" : "bg-red-50 text-red-600 border-red-100"}`}
                       >
@@ -431,6 +385,32 @@ const AdminOrderPage = () => {
                           ? "Đã trả"
                           : "Chưa trả"}
                       </span>
+                    </td> */}
+                    <td className="px-6 py-4 text-center">
+                      <div className="flex flex-col items-center gap-1">
+                        <span
+                          className={`px-3 py-1 rounded-lg text-[10px] font-black border-2 uppercase ${
+                            order.payment.status === "PAID" 
+                              ? "bg-blue-50 text-blue-600 border-blue-100" 
+                              : order.payment.status === "REFUNDED"
+                              ? "bg-pink-50 text-pink-600 border-pink-100" 
+                              : "bg-red-50 text-red-600 border-red-100"
+                          }`}
+                        >
+                          {order.payment.status === "PAID" ? "Đã thanh toán" : 
+                          order.payment.status === "REFUNDED" ? "Đã hoàn tiền" : "Chưa trả"}
+                        </span>
+                        
+                        {/* HIỆN NÚT XÁC NHẬN COD: Nếu là COD và chưa trả tiền */}
+                        {order.payment.method === "CASH" && order.payment.status === "UNPAID" && order.orderStatus === "DELIVERED" && (
+                          <button 
+                            onClick={() => handleConfirmPayment(order.orderNumber)}
+                            className="text-[9px] font-bold text-emerald-600 hover:underline"
+                          >
+                            [Xác nhận đã thu tiền]
+                          </button>
+                        )}
+                      </div>
                     </td>
                     <td className="px-6 py-4 text-center">
                       <select

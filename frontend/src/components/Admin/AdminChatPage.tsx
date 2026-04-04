@@ -614,11 +614,17 @@ const AdminChatPage: React.FC = () => {
           {/* Danh sách cuộc trò chuyện */}
           <div className="w-full lg:w-96 border-r border-gray-200 overflow-y-auto bg-gray-50">
             {loadingConvs ? (
-              <div className="flex items-center justify-center h-full text-gray-500">
-                <div className="text-center">
-                  <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-2" />
-                  <p className="text-sm">Đang tải...</p>
-                </div>
+              // <div className="flex items-center justify-center h-full text-gray-500">
+              //   <div className="text-center">
+              //     <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+              //     <p className="text-sm">Đang tải...</p>
+              //   </div>
+              // </div>
+              <div className="flex flex-col items-center justify-center h-full text-center">
+                <div className="w-10 h-10 animate-spin rounded-full border-b-2 border-emerald-600 mx-auto mb-2"></div>
+                <p className="mt-4 text-gray-400 text-[10px] font-black uppercase tracking-[3px]">
+                  Đang tải ...
+                </p>
               </div>
             ) : filteredSummaries.length === 0 ? (
               <div className="flex items-center justify-center h-full text-gray-500">

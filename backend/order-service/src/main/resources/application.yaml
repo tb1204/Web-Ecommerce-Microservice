@@ -32,21 +32,13 @@ spring:
   #   multipart:
   #     max-file-size: 10MB
   #     max-request-size: 10MB
-<<<<<<< HEAD
-  # mongodb:
-  #   database: artisano
-  #   uri: mongodb://localhost:27017/artisano
-=======
-  data:
-    mongodb:
-      uri: mongodb://localhost:27017/artisano
 
   rabbitmq:
     host: localhost
     port: 5672
     username: guest
     password: guest
->>>>>>> af0095bb6f3b5393467dfca637e6aca43c0f5811
+
 
 server:
   port: 8084
