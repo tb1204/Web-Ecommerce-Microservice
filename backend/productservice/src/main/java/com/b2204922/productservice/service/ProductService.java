@@ -127,6 +127,13 @@ public class ProductService {
             if (product.getCategory().getParentName() != null)
                 product.getCategory().setParentName(product.getCategory().getParentName().trim());
         }
+        if (product.getVariants() != null) {
+            for (Product.ProductVariant variant : product.getVariants()) {
+                if (variant.getSize() != null) variant.setSize(variant.getSize().trim());
+                if (variant.getThickness() != null) variant.setThickness(variant.getThickness().trim());
+                if (variant.getColor() != null) variant.setColor(variant.getColor().trim()); // <-- TRIM MÀU SẮC
+            }
+        }
 
         if (product.getSpecifications() != null) {
             var spec = product.getSpecifications();

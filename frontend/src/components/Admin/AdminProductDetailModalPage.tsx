@@ -105,6 +105,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ isOpen, onClose
                     <thead className="bg-gray-50">
                       <tr>
                         <th className="px-4 py-3 text-left text-[10px] font-black text-gray-500 uppercase">SKU / Kích thước</th>
+                        <th className="px-4 py-3 text-center text-[10px] font-black text-gray-500 uppercase">Màu sắc</th>
                         <th className="px-4 py-3 text-center text-[10px] font-black text-gray-500 uppercase">Giá bán</th>
                         <th className="px-4 py-3 text-center text-[10px] font-black text-gray-500 uppercase">Kho</th>
                         <th className="px-4 py-3 text-center text-[10px] font-black text-gray-500 uppercase">Trạng thái</th>
@@ -117,8 +118,17 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ isOpen, onClose
                             <p className="text-xs font-bold text-gray-800">{v.size} - {v.thickness}</p>
                             <p className="text-[9px] text-gray-400 font-mono uppercase">{v.sku}</p>
                           </td>
+                          <td className="px-4 py-3 text-center text-xs font-bold text-gray-600">
+                            {v.color ? (
+                              <span >
+                                {v.color}
+                              </span>
+                            ) : (
+                              <span className="text-gray-300 italic text-[10px]">--</span>
+                            )}
+                          </td>
                           <td className="px-4 py-3 text-center">
-                            <p className="text-xs font-black text-emerald-600">{v.price.toLocaleString("vi-VN")}₫</p>
+                            <p className="px-4 py-3 text-center text-xs font-bold text-gray-600">{v.price.toLocaleString("vi-VN")}₫</p>
                             {v.originalPrice > v.price && (
                               <p className="text-[9px] text-gray-300 line-through">{v.originalPrice.toLocaleString("vi-VN")}₫</p>
                             )}

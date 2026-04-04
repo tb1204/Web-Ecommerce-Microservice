@@ -11,6 +11,7 @@ import {
  Trash2,
  Box,
  MapPin,
+ Tag
 
 } from "lucide-react";
 
@@ -94,7 +95,11 @@ const [newGalleryFiles, setNewGalleryFiles] = useState<File[]>([]);
     tags: Array.isArray(product.tags) ? product.tags.join(", ") : "",
     images: subImages,
     url: primaryImg,
-    variants: product.variants || [],
+    // variants: product.variants || [],
+    variants: product.variants?.map((v) => ({
+          ...v,
+          color: v.color || "" 
+        })) || [],
    });
   }
  }, [product, isOpen]);
@@ -135,6 +140,7 @@ const [newGalleryFiles, setNewGalleryFiles] = useState<File[]>([]);
    sku: "Tự tạo...",
    size: "",
    thickness: "",
+   color: "",
    price: 0,
    originalPrice: 0,
    stockQuantity: 0,
@@ -195,6 +201,16 @@ const handleSubmit = async (e: React.FormEvent) => {
     ...formData,
     id: product?.id,
     images: remainingOldImages, 
+    variants: formData.variants?.map((v) => ({
+        ...v,
+        price: Number(v.price),
+        originalPrice: Number(v.originalPrice),
+        stockQuantity: Number(v.stockQuantity),
+        color: v.color?.trim() || "", 
+      })) || [],
+    colors: Array.from(
+        new Set(formData.variants?.map((v) => v.color?.trim()).filter(Boolean))
+      ),
     tags: formData.tags.split(",").map((t) => t.trim()).filter(Boolean),
     price: formData.variants?.reduce((min, v) => Math.min(min, v.price), Infinity) || 0,
     totalStockQuantity: formData.variants?.reduce((sum, v) => sum + Number(v.stockQuantity), 0) || 0,
@@ -409,12 +425,22 @@ const handleSubmit = async (e: React.FormEvent) => {
           <input type="text" value={v.thickness} onChange={(e) => handleVariantChange(index, "thickness", e.target.value)} className="w-full px-3 py-2 rounded-xl border text-xs outline-none focus:border-emerald-500" placeholder="10cm" />
          </div>
          <div>
-          <label className="text-[9px] font-black text-emerald-600 uppercase ml-1">Giá bán (₫)</label>
-          <input type="number" value={v.price} onChange={(e) => handleVariantChange(index, "price", Number(e.target.value))} className="w-full px-3 py-2 rounded-xl border-emerald-100 text-xs font-bold outline-none h-[34px]" />
+          <label className="text-[9px] font-black text-gray-400 uppercase ml-1">Màu sắc</label>
+          <input 
+            type="text" 
+            value={v.color || ""} 
+            onChange={(e) => handleVariantChange(index, "color", e.target.value)} 
+            className="w-full px-3 py-2 rounded-xl border text-xs outline-none focus:border-emerald-500" 
+            placeholder="White, Blue..." 
+          />
+         </div>
+         <div>
+          <label className="text-[9px] font-black text-gray-400 uppercase ml-1">Giá bán (₫)</label>
+          <input type="number" value={v.price} onChange={(e) => handleVariantChange(index, "price", Number(e.target.value))} className="w-full px-3 py-2 rounded-xl border text-xs outline-none focus:border-emerald-500" />
          </div>
          <div>
           <label className="text-[9px] font-black text-gray-400 uppercase ml-1">Giá gốc (₫)</label>
-          <input type="number" value={v.originalPrice} onChange={(e) => handleVariantChange(index, "originalPrice", Number(e.target.value))} className="w-full px-3 py-2 rounded-xl border text-xs h-[34px]" />
+          <input type="number" value={v.originalPrice} onChange={(e) => handleVariantChange(index, "originalPrice", Number(e.target.value))} className="w-full px-3 py-2 rounded-xl border text-xs outline-none focus:border-emerald-500" />
          </div>
          <div>
           <label className="text-[9px] font-black text-blue-400 uppercase ml-1 italic tracking-tighter">Mã SKU</label>
@@ -423,7 +449,7 @@ const handleSubmit = async (e: React.FormEvent) => {
          <div className="flex items-center gap-2">
           <div className="flex-1">
            <label className="text-[9px] font-black text-gray-400 uppercase ml-1">Kho</label>
-           <input type="number" value={v.stockQuantity} onChange={(e) => handleVariantChange(index, "stockQuantity", Number(e.target.value))} className="w-full px-2 py-2 rounded-xl border text-xs outline-none h-[34px]" />
+           <input type="number" value={v.stockQuantity} onChange={(e) => handleVariantChange(index, "stockQuantity", Number(e.target.value))} className="w-full px-3 py-2 rounded-xl border text-xs outline-none focus:border-emerald-500" />
           </div>
           <button type="button" onClick={() => removeVariant(index)} className="p-2 text-red-400 hover:text-red-600 transition-colors">
            <Trash2 size={18} />
@@ -445,6 +471,21 @@ const handleSubmit = async (e: React.FormEvent) => {
        <InputGroup label="Thiết kế" name="specifications.design" value={formData.specifications?.design || ""} onChange={handleChange} />
        <InputGroup label="Trọng lượng" name="specifications.weight" value={formData.specifications?.weight || ""} onChange={handleChange} />
        <InputGroup label="Số chứng nhận" name="specifications.certificationNumber" value={formData.specifications?.certificationNumber || ""} onChange={handleChange} />
+       <div className="space-y-1.5">
+                <label className="text-xs text-gray-500 ml-1 uppercase font-black tracking-tighter">
+                  Trạng thái bán
+                </label>
+                <select
+                  name="status"
+                  value={formData.status}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-emerald-500 outline-none text-sm font-medium bg-white h-[42px]"
+                >
+                  <option value="AVAILABLE">Sẵn sàng bán</option>
+                  <option value="stopselling">Ngừng bán</option>
+                  <option value="OUT_OF_STOCK">Hết hàng</option>
+                </select>
+              </div>
       </div>
      </section>
 
@@ -455,12 +496,20 @@ const handleSubmit = async (e: React.FormEvent) => {
        <textarea name="description" value={formData.description || ""} onChange={handleChange} rows={4} className="w-full px-5 py-4 rounded-2xl border border-gray-100 focus:border-emerald-500 outline-none text-sm leading-relaxed" />
       </div>
       <div className="space-y-3">
-       <label className="text-xs text-gray-500 ml-1 uppercase font-black tracking-tighter">Trạng thái bán</label>
+       {/* <label className="text-xs text-gray-500 ml-1 uppercase font-black tracking-tighter">Trạng thái bán</label>
        <select name="status" value={formData.status} onChange={handleChange} className="w-full px-4 py-3 rounded-2xl border border-gray-200 focus:border-emerald-500 outline-none text-sm font-medium bg-white cursor-pointer shadow-sm">
         <option value="AVAILABLE">Đang bán</option>
         <option value="OUT_OF_STOCK">Hết hàng</option>
         <option value="stopselling">Ngừng kinh doanh</option>
-       </select>
+       </select> */}
+       <InputGroup 
+          label="Thẻ Tags " 
+          name="tags" 
+          value={formData.tags} 
+          onChange={handleChange} 
+          placeholder="cao_cap, em_ai, khuyen_mai..." 
+          icon={<Tag size={12} />} 
+        />
        <div className="p-5 mt-4 bg-emerald-50 rounded-2xl border border-emerald-100 flex items-center gap-4">
         <div className="p-3 bg-white rounded-xl shadow-sm text-emerald-600"><History size={24} /></div>
         <div className="text-[10px] text-emerald-800 uppercase italic font-black leading-tight">
