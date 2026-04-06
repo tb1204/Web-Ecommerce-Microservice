@@ -154,11 +154,6 @@ public class OrderServiceImpl implements IOrderService {
 
         Order savedOrder = orderRepository.save(order);
 
-<<<<<<< HEAD
-        savedOrder.getItems().forEach(item
-                -> callProductServiceToUpdateStock(item.getProductId(), -item.getQuantity())
-        );
-=======
 //        savedOrder.getItems().forEach(item -> {
 //            callProductServiceToUpdateStock(item.getProductId(), -item.getQuantity());
 //        });
@@ -166,7 +161,6 @@ public class OrderServiceImpl implements IOrderService {
             // Truyền thêm item.getVariantId() vào tham số thứ 2
             callProductServiceToUpdateStock(item.getProductId(), item.getVariantId(), -item.getQuantity());
         });
->>>>>>> 74a4862881035814147d4c42b376ca3aaeb01812
 
         try {
             NotificationDTO dto = NotificationDTO.builder()
@@ -418,7 +412,7 @@ public class OrderServiceImpl implements IOrderService {
         // Kiem tra tru kho
         if ("PENDING".equals(status) && !"PENDING".equals(oldStatus)) {
             order.getItems().forEach(item -> {
-                callProductServiceToUpdateStock(item.getProductId(),item.getVariantId() ,-item.getQuantity());
+                callProductServiceToUpdateStock(item.getProductId(), item.getVariantId(), -item.getQuantity());
             });
         }
 
@@ -551,7 +545,7 @@ public class OrderServiceImpl implements IOrderService {
 //            log.error("Lỗi khi cập nhật kho tại Product Service: {}", e.getMessage());
 //        }
 //    }
-        private void callProductServiceToUpdateStock(String productId, String variantId, int quantity) {
+    private void callProductServiceToUpdateStock(String productId, String variantId, int quantity) {
 
         String url = "http://localhost:8082/api/products/updateStock?productId=" + productId
                 + "&variantId=" + variantId

@@ -146,7 +146,6 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-50">
                       <tr>
-<<<<<<< HEAD
                         <th className="px-4 py-3 text-left text-[10px] font-black text-gray-500 uppercase">
                           SKU / Kích thước
                         </th>
@@ -162,13 +161,6 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                         <th className="px-4 py-3 text-center text-[10px] font-black text-gray-500 uppercase">
                           Trạng thái
                         </th>
-=======
-                        <th className="px-4 py-3 text-left text-[10px] font-black text-gray-500 uppercase">SKU / Kích thước</th>
-                        <th className="px-4 py-3 text-center text-[10px] font-black text-gray-500 uppercase">Màu sắc</th>
-                        <th className="px-4 py-3 text-center text-[10px] font-black text-gray-500 uppercase">Giá bán</th>
-                        <th className="px-4 py-3 text-center text-[10px] font-black text-gray-500 uppercase">Kho</th>
-                        <th className="px-4 py-3 text-center text-[10px] font-black text-gray-500 uppercase">Trạng thái</th>
->>>>>>> 74a4862881035814147d4c42b376ca3aaeb01812
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100 bg-white">
@@ -187,25 +179,21 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                           </td>
                           <td className="px-4 py-3 text-center text-xs font-bold text-gray-600">
                             {v.color ? (
-<<<<<<< HEAD
                               <span>{v.color}</span>
                             ) : (
                               <span className="text-gray-300 italic text-[10px]">
                                 --
                               </span>
-=======
-                              <span >
-                                {v.color}
-                              </span>
-                            ) : (
-                              <span className="text-gray-300 italic text-[10px]">--</span>
                             )}
                           </td>
                           <td className="px-4 py-3 text-center">
-                            <p className="px-4 py-3 text-center text-xs font-bold text-gray-600">{v.price.toLocaleString("vi-VN")}₫</p>
+                            <p className="px-4 py-3 text-center text-xs font-bold text-gray-600">
+                              {v.price.toLocaleString("vi-VN")}₫
+                            </p>
                             {v.originalPrice > v.price && (
-                              <p className="text-[9px] text-gray-300 line-through">{v.originalPrice.toLocaleString("vi-VN")}₫</p>
->>>>>>> 74a4862881035814147d4c42b376ca3aaeb01812
+                              <p className="text-[9px] text-gray-300 line-through">
+                                {v.originalPrice.toLocaleString("vi-VN")}₫
+                              </p>
                             )}
                           </td>
                           <td className="px-4 py-3 text-center">
