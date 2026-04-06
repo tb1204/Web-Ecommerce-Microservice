@@ -82,7 +82,7 @@ function App() {
                 <Route path="checkout" element={<CheckoutPage />} />
                 <Route path="my-orders" element={<MyOrdersPage />} />
                 <Route path="order/:id" element={<OrderDetailsPage />} />
-                {/* <Route path="wishlist" element={<WishlistPage />} /> */}
+                <Route path="wishlist" element={<WishlistPage />} />
                 <Route path="profile" element={<CustomProfile />} />
                 <Route path="/auth-redirect" element={<AuthRedirect />} />
                 <Route path="*" element={<NotFound />} />
@@ -93,9 +93,9 @@ function App() {
               <Route
                 path="/admin"
                 element={
-                  // <ProtectedRoute role="admin">
+                  <ProtectedRoute role="admin">
                     <AdminLayout />
-                  // </ProtectedRoute>
+                  </ProtectedRoute>
                 }
               >
                 <Route index element={<AdminHomePage />} />

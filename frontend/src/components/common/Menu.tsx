@@ -3,13 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { ChevronDown, Zap, Menu as MenuIcon, X } from "lucide-react";
 import MegaMenu from "../layouts/MegaMenu";
 
-
 import nemIcon from "../../assets/icon-mega-menu/nệm.webp";
 import changaIcon from "../../assets/icon-mega-menu/chăn ga.svg";
 import phukienIcon from "../../assets/icon-mega-menu/phụ kiện 1.webp";
-import noithatIcon from "../../assets/icon-mega-menu/nội thất.svg";
+// import noithatIcon from "../../assets/icon-mega-menu/nội thất.svg";
 import goiIcon from "../../assets/icon-mega-menu/gối.svg";
-import khuyenmaiIcon from "../../assets/icon-mega-menu/khuyến mãi.svg";
+// import khuyenmaiIcon from "../../assets/icon-mega-menu/khuyến mãi.svg";
 
 interface NavItem {
   label: string;
@@ -116,23 +115,12 @@ function Menu() {
         { title: "Khác", items: ["Tinh dầu", "Xịt thơm"] },
       ],
     },
-    {
-      name: "Nội thất",
-      icon: noithatIcon,
-      hasSub: true,
-      subCategories: [{ title: "Giường", items: ["Giường gỗ", "Giường da"] }],
-    },
+
     {
       name: "Gối",
       icon: goiIcon,
       hasSub: true,
       subCategories: [{ title: "Loại gối", items: ["Gối cao su", "Gối foam"] }],
-    },
-    {
-      name: "Khuyến mãi",
-      icon: khuyenmaiIcon,
-      hasSub: false,
-      subCategories: [],
     },
   ];
 

@@ -1,7 +1,7 @@
+//fix lỗi chọn 1sp nhưng bị click nhiều sản phẩm cùng tên
 import { RiDeleteBin3Line } from "react-icons/ri";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 
-// Interface cho sản phẩm (giữ nguyên từ CartDrawer)
 export interface CartProduct {
   productId: string;
   variantId?: string;
@@ -12,7 +12,6 @@ export interface CartProduct {
   size?: string;
   thickness?: string;
   color?: string;
-  type: "nem_phukien" | "boga"; // thêm type để dễ kiểm tra nếu cần
 }
 
 export interface Cart {
@@ -22,8 +21,8 @@ export interface Cart {
 
 interface CartContentsProps {
   cart: Cart;
-  selectedItems: string[]; // Danh sách productId được chọn
-  onToggleSelect: (productId: string) => void; // Hàm toggle checkbox
+  selectedItems: string[]; // ✅ ĐỔI: dùng "productId::variantId" thay vì chỉ productId
+  onToggleSelect: (key: string) => void;
   onUpdateQuantity: (
     productId: string,
     variantId: string | undefined,
@@ -32,6 +31,10 @@ interface CartContentsProps {
   onRemoveItem: (productId: string, variantId: string | undefined) => void;
 }
 
+// Helper tạo unique key cho mỗi cart item
+const getItemKey = (productId: string, variantId?: string) =>
+  `${productId}::${variantId ?? ""}`;
+
 const CartContents = ({
   cart,
   selectedItems,
@@ -39,20 +42,15 @@ const CartContents = ({
   onUpdateQuantity,
   onRemoveItem,
 }: CartContentsProps) => {
-  // Hàm hiển thị thông số sản phẩm (độ dày hoặc màu sắc tùy loại)
   const renderProductSpecs = (product: CartProduct) => {
-    const isBeddingSet =
-      product.name.toLowerCase().includes("ga") ||
-      product.name.toLowerCase().includes("set") ||
-      product.type === "boga";
-
     return (
       <div className="text-xs text-gray-500 mt-1 space-y-0.5">
         {product.size && <p>Kích thước: {product.size}</p>}
-
-        {isBeddingSet
-          ? product.color && <p>Màu sắc: {product.color}</p>
-          : product.thickness && <p>Độ dày: {product.thickness}</p>}
+        {product.color ? (
+          <p>Màu sắc: {product.color}</p>
+        ) : (
+          product.thickness && <p>Độ dày: {product.thickness}</p>
+        )}
       </div>
     );
   };
@@ -61,32 +59,30 @@ const CartContents = ({
     <div className="space-y-4">
       {cart.products && cart.products.length > 0 ? (
         cart.products.map((product, index) => {
-          const isSelected = selectedItems.includes(product.productId);
-          const key = `${product.productId}-${product.variantId || index}`;
+          // ✅ SỬA: dùng composite key
+          const itemKey = getItemKey(product.productId, product.variantId);
+          const isSelected = selectedItems.includes(itemKey);
 
           return (
             <div
-              key={key}
+              key={itemKey}
               className="bg-white dark:bg-transparent flex items-start gap-4 py-5 border-b dark:border-gray-800 last:border-0"
             >
-              {/* Checkbox chọn sản phẩm */}
               <div className="pt-2">
                 <input
                   type="checkbox"
                   checked={isSelected}
-                  onChange={() => onToggleSelect(product.productId)}
+                  onChange={() => onToggleSelect(itemKey)} // ✅ SỬA
                   className="w-5 h-5 accent-[#05472a] cursor-pointer rounded"
                 />
               </div>
 
-              {/* Ảnh sản phẩm */}
               <img
                 src={product.image}
                 alt={product.name}
                 className="w-24 h-24 object-cover rounded-xl shadow-sm border dark:border-gray-700"
               />
 
-              {/* Thông tin sản phẩm */}
               <div className="flex-1 flex flex-col justify-between self-stretch">
                 <div>
                   <div className="flex justify-between items-start gap-2">
@@ -104,18 +100,14 @@ const CartContents = ({
                     </button>
                   </div>
 
-                  {/* Thông số: size + thickness/color */}
                   {renderProductSpecs(product)}
 
-                  {/* Giá sản phẩm */}
                   <p className="font-bold text-red-600 dark:text-red-400 text-lg mt-2">
                     {product.price.toLocaleString("vi-VN")} đ
                   </p>
                 </div>
 
-                {/* Số lượng + Thành tiền */}
                 <div className="flex items-center justify-between mt-3">
-                  {/* Bộ điều khiển số lượng */}
                   <div className="flex items-center border border-gray-300 dark:border-gray-700 rounded-lg overflow-hidden h-8">
                     <button
                       onClick={() =>
@@ -147,7 +139,6 @@ const CartContents = ({
                     </button>
                   </div>
 
-                  {/* Thành tiền */}
                   <div className="text-right">
                     <span className="text-[10px] text-gray-400 uppercase block leading-none">
                       Thành tiền

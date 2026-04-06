@@ -6,6 +6,7 @@ import com.b2204922.orderservice.entity.Order;
 import com.b2204922.orderservice.entity.OrderItem;
 import com.b2204922.orderservice.exception.ResourceNotFoundException;
 import com.b2204922.orderservice.dto.request.OrderRequest;
+import com.b2204922.orderservice.dto.response.OrderItemResponse;
 import com.b2204922.orderservice.dto.response.OrderResponse;
 import com.b2204922.orderservice.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -31,6 +32,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 public class OrderServiceImpl implements IOrderService {
+
     private final OrderRepository orderRepository;
     private final RestTemplate restTemplate;
 
@@ -41,68 +43,101 @@ public class OrderServiceImpl implements IOrderService {
     @Value("${product.service.url:http://localhost:8082}") // Cổng của product-service bạn đang dùng
     private String productServiceUrl;
 
-//    @Value("${payment.service.url:http://localhost:9004}")
-//    private String paymentServiceUrl;
-
-
     @Override
     public OrderResponse createOrder(OrderRequest request) {
-        //Sinh max don hang
         String orderNumber = "ORD" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
 
-        //Duyet ds items tu request va goi product service de lay thong tin
         List<OrderItem> entityItems = request.getItems().stream()
                 .map(itemReq -> {
-                    //Dung eureka
-//                    String url = "http://product-service/api/products/" + itemReq.getProductId();
-                    //Goi truc tiep (test local khong dung eureka)
                     String url = "http://localhost:8082/api/products/detail/" + itemReq.getProductId();
                     try {
-                        @SuppressWarnings("unchecked") //tat canh bao Map
+                        @SuppressWarnings("unchecked")
                         Map<String, Object> product = restTemplate.getForObject(url, Map.class);
 
-                        if(product == null){
-                            throw new ResourceNotFoundException("Không tìm thấy sản phẩm ID: "+itemReq.getProductId());
+                        if (product == null) {
+                            throw new ResourceNotFoundException("Không tìm thấy sản phẩm ID: " + itemReq.getProductId());
                         }
 
-                        //check so luong kho hang
-                        int stock = Integer.parseInt(product.get("stockQuantity").toString());
-                        String name = product.get("name").toString();
+                        String name = product.getOrDefault("name", "Sản phẩm").toString();
+
+                        Object stockObj = product.get("totalStockQuantity");
+                        int stock = stockObj != null ? Integer.parseInt(stockObj.toString()) : 0;
+
+                        Object priceObj = product.get("price");
+                        if (priceObj == null) {
+                            throw new RuntimeException("Sản phẩm '" + name + "' không có giá!");
+                        }
                         if (itemReq.getQuantity() > stock) {
-                            throw new RuntimeException("Sản phẩm '" + name + "' chỉ còn " + stock + " sản phẩm trong kho. Vui lòng giảm số lượng!");
+                            throw new RuntimeException("Sản phẩm '" + name + "' chỉ còn " + stock + " sản phẩm trong kho!");
                         }
 
-                        double price = Double.parseDouble(product.get("price").toString());
+                        double price = Double.parseDouble(priceObj.toString());
+
+                        // ✅ Lấy size/thickness/color từ variant khớp variantId
+                        String size = null, thickness = null, color = null, image = null;
+
+                        @SuppressWarnings("unchecked")
+                        List<Map<String, Object>> variants
+                                = (List<Map<String, Object>>) product.get("variants");
+
+                        if (variants != null && itemReq.getVariantId() != null) {
+                            Map<String, Object> matchedVariant = variants.stream()
+                                    .filter(v -> itemReq.getVariantId().equals(v.get("variantId")))
+                                    .findFirst()
+                                    .orElse(null);
+                            if (matchedVariant != null) {
+                                size = (String) matchedVariant.get("size");
+                                thickness = (String) matchedVariant.get("thickness");
+                                color = (String) matchedVariant.get("color");
+                                // ✅ Ưu tiên lấy price từ variant nếu có
+                                Object variantPrice = matchedVariant.get("price");
+                                if (variantPrice != null) {
+                                    price = Double.parseDouble(variantPrice.toString());
+                                }
+                            }
+                        }
+
+                        // ✅ Lấy ảnh primary
+                        @SuppressWarnings("unchecked")
+                        List<Map<String, Object>> images
+                                = (List<Map<String, Object>>) product.get("images");
+                        if (images != null && !images.isEmpty()) {
+                            Map<String, Object> primaryImg = images.stream()
+                                    .filter(img -> Boolean.TRUE.equals(img.get("isPrimary")))
+                                    .findFirst()
+                                    .orElse(images.get(0));
+                            image = (String) primaryImg.get("url");
+                        }
 
                         return OrderItem.builder()
                                 .productId(itemReq.getProductId())
                                 .productName(name)
+                                .productImage(image) // ✅
                                 .price(price)
                                 .quantity(itemReq.getQuantity())
-                                .lineTotal(price*itemReq.getQuantity())
+                                .lineTotal(price * itemReq.getQuantity())
+                                .size(size) // ✅
+                                .thickness(thickness) // ✅
+                                .color(color) // ✅
                                 .build();
-                    } catch(Exception e){
+
+                    } catch (Exception e) {
                         log.error("Lỗi kết nối Service: {}", e.getMessage());
                         throw new RuntimeException("Lỗi gọi Product Service: " + e.getMessage());
                     }
                 })
-                .collect(Collectors.toList());;
+                .collect(Collectors.toList());
 
-        //Tinh toan summary
         double subTotal = entityItems.stream().mapToDouble(OrderItem::getLineTotal).sum();
         int totalQty = entityItems.stream().mapToInt(OrderItem::getQuantity).sum();
-        double shippingFee = 30000.0; //phi ship mac dinh
-        Order.Summary summary = new Order.Summary(subTotal+shippingFee, shippingFee, totalQty);
+        double shippingFee = subTotal >= 3_000_000 ? 0.0 : 30_000.0; // ✅ khớp với frontend
+        Order.Summary summary = new Order.Summary(subTotal + shippingFee, shippingFee, totalQty);
 
-        //Cac thong tin khac
         Order.CustomerInfo customerInfo = new Order.CustomerInfo(
                 request.getName(), request.getPhone(), request.getEmail(), request.getShippingAddress()
         );
         Order.Payment payment = new Order.Payment(request.getPaymentMethod(), "UNPAID", "");
 
-
-
-        //build va save
         Order order = Order.builder()
                 .orderNumber(orderNumber)
                 .userId(request.getUserId())
@@ -118,9 +153,9 @@ public class OrderServiceImpl implements IOrderService {
 
         Order savedOrder = orderRepository.save(order);
 
-        savedOrder.getItems().forEach(item -> {
-            callProductServiceToUpdateStock(item.getProductId(), -item.getQuantity());
-        });
+        savedOrder.getItems().forEach(item
+                -> callProductServiceToUpdateStock(item.getProductId(), -item.getQuantity())
+        );
 
         try {
             NotificationDTO dto = NotificationDTO.builder()
@@ -135,9 +170,7 @@ public class OrderServiceImpl implements IOrderService {
                     .newStatus("PENDING")
                     .build();
 
-            rabbitTemplate.convertAndSend(
-                    RabbitMQConfig.EXCHANGE,
-                    RabbitMQConfig.ROUTING_KEY, dto);
+            rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE, RabbitMQConfig.ROUTING_KEY, dto);
             log.info("Đã bắn tin RabbitMQ: Đặt hàng thành công {}", savedOrder.getOrderNumber());
         } catch (Exception e) {
             log.error("Lỗi gửi thông báo RabbitMQ: {}", e.getMessage());
@@ -145,9 +178,138 @@ public class OrderServiceImpl implements IOrderService {
 
         return convertToOrderResponse(savedOrder);
     }
+//    @Value("${payment.service.url:http://localhost:9004}")
+//    private String paymentServiceUrl;
+//     @Override
+//     public OrderResponse createOrder(OrderRequest request) {
+//         //Sinh max don hang
+//         String orderNumber = "ORD" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+//         //Duyet ds items tu request va goi product service de lay thong tin
+//         List<OrderItem> entityItems = request.getItems().stream()
+//                 .map(itemReq -> {
+//                     //Dung eureka
+// //                    String url = "http://product-service/api/products/" + itemReq.getProductId();
+//                     //Goi truc tiep (test local khong dung eureka)
+//                     String url = "http://localhost:8082/api/products/detail/" + itemReq.getProductId();
+//                     try {
+//                         @SuppressWarnings("unchecked") //tat canh bao Map
+//                         Map<String, Object> product = restTemplate.getForObject(url, Map.class);
+//                         if (product == null) {
+//                             throw new ResourceNotFoundException("Không tìm thấy sản phẩm ID: " + itemReq.getProductId());
+//                         }
+//                         //check so luong kho hang
+//                         // int stock = Integer.parseInt(product.get("stockQuantity").toString());
+//                         // String name = product.get("name").toString();
+//                         String name = product.getOrDefault("name", "Sản phẩm").toString();
+// // totalStockQuantity là field đúng trong Product entity
+//                         Object stockObj = product.get("totalStockQuantity");
+//                         int stock = stockObj != null ? Integer.parseInt(stockObj.toString()) : 0;
+//                         Object priceObj = product.get("price");
+//                         if (priceObj == null) {
+//                             throw new RuntimeException("Sản phẩm '" + name + "' không có giá!");
+//                         }
+//                         if (itemReq.getQuantity() > stock) {
+//                             throw new RuntimeException("Sản phẩm '" + name + "' chỉ còn " + stock + " sản phẩm trong kho. Vui lòng giảm số lượng!");
+//                         }
+//                         // double price = Double.parseDouble(product.get("price").toString());
+//                         double price = Double.parseDouble(priceObj.toString());
+//                         return OrderItem.builder()
+//                                 .productId(itemReq.getProductId())
+//                                 .productName(name)
+//                                 .price(price)
+//                                 .quantity(itemReq.getQuantity())
+//                                 .lineTotal(price * itemReq.getQuantity())
+//                                 .build();
+//                     } catch (Exception e) {
+//                         log.error("Lỗi kết nối Service: {}", e.getMessage());
+//                         throw new RuntimeException("Lỗi gọi Product Service: " + e.getMessage());
+//                     }
+//                 })
+//                 .collect(Collectors.toList());;
+//         //Tinh toan summary
+//         double subTotal = entityItems.stream().mapToDouble(OrderItem::getLineTotal).sum();
+//         int totalQty = entityItems.stream().mapToInt(OrderItem::getQuantity).sum();
+//         double shippingFee = 30000.0; //phi ship mac dinh
+//         Order.Summary summary = new Order.Summary(subTotal + shippingFee, shippingFee, totalQty);
+//         //Cac thong tin khac
+//         Order.CustomerInfo customerInfo = new Order.CustomerInfo(
+//                 request.getName(), request.getPhone(), request.getEmail(), request.getShippingAddress()
+//         );
+//         Order.Payment payment = new Order.Payment(request.getPaymentMethod(), "UNPAID", "");
+//         //build va save
+//         Order order = Order.builder()
+//                 .orderNumber(orderNumber)
+//                 .userId(request.getUserId())
+//                 .customerInfo(customerInfo)
+//                 .summary(summary)
+//                 .payment(payment)
+//                 .items(entityItems)
+//                 .orderStatus("PENDING")
+//                 .cancelReason("")
+//                 .createdAt(LocalDateTime.now())
+//                 .updatedAt(LocalDateTime.now())
+//                 .build();
+//         Order savedOrder = orderRepository.save(order);
+//         savedOrder.getItems().forEach(item -> {
+//             callProductServiceToUpdateStock(item.getProductId(), -item.getQuantity());
+//         });
+//         try {
+//             NotificationDTO dto = NotificationDTO.builder()
+//                     .userId(savedOrder.getUserId())
+//                     .orderId(savedOrder.getId())
+//                     .orderNumber(savedOrder.getOrderNumber())
+//                     .customerName(savedOrder.getCustomerInfo().getName())
+//                     .customerEmail(savedOrder.getCustomerInfo().getEmail())
+//                     .title("Đặt hàng thành công")
+//                     .message("Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.")
+//                     .type("ORDER_STATUS")
+//                     .newStatus("PENDING")
+//                     .build();
+//             rabbitTemplate.convertAndSend(
+//                     RabbitMQConfig.EXCHANGE,
+//                     RabbitMQConfig.ROUTING_KEY, dto);
+//             log.info("Đã bắn tin RabbitMQ: Đặt hàng thành công {}", savedOrder.getOrderNumber());
+//         } catch (Exception e) {
+//             log.error("Lỗi gửi thông báo RabbitMQ: {}", e.getMessage());
+//         }
+//         return convertToOrderResponse(savedOrder);
+//     }
+    // private OrderResponse convertToOrderResponse(Order order) {
+    //     //Map CustomerInfo
+    //     OrderResponse.CustomerInfoResponse customerInfo = OrderResponse.CustomerInfoResponse.builder()
+    //             .name(order.getCustomerInfo().getName())
+    //             .phone(order.getCustomerInfo().getPhone())
+    //             .email(order.getCustomerInfo().getEmail())
+    //             .shippingAddress(order.getCustomerInfo().getShippingAddress())
+    //             .build();
+    //     //Map Summary
+    //     OrderResponse.SummaryResponse summary = OrderResponse.SummaryResponse.builder()
+    //             .totalAmount(order.getSummary().getTotalAmount())
+    //             .shippingFee(order.getSummary().getShippingFee())
+    //             .totalQty(order.getSummary().getTotalQty())
+    //             .build();
+    //     //Map Payment
+    //     OrderResponse.PaymentResponse payment = OrderResponse.PaymentResponse.builder()
+    //             .method(order.getPayment().getMethod())
+    //             .status(order.getPayment().getStatus())
+    //             .transactionId(order.getPayment().getTransactionId())
+    //             .build();
+    //     return OrderResponse.builder()
+    //             .id(order.getId())
+    //             .orderNumber(order.getOrderNumber())
+    //             .userId(order.getUserId())
+    //             .orderStatus(order.getOrderStatus())
+    //             .cancelReason(order.getCancelReason())
+    //             .customerInfo(customerInfo)
+    //             .summary(summary)
+    //             .payment(payment)
+    //             .createdAt(order.getCreatedAt())
+    //             .updatedAt(order.getUpdatedAt())
+    //             .build();
+    // }
+    //test fix lỗi không có items
 
     private OrderResponse convertToOrderResponse(Order order) {
-        //Map CustomerInfo
         OrderResponse.CustomerInfoResponse customerInfo = OrderResponse.CustomerInfoResponse.builder()
                 .name(order.getCustomerInfo().getName())
                 .phone(order.getCustomerInfo().getPhone())
@@ -155,19 +317,34 @@ public class OrderServiceImpl implements IOrderService {
                 .shippingAddress(order.getCustomerInfo().getShippingAddress())
                 .build();
 
-        //Map Summary
         OrderResponse.SummaryResponse summary = OrderResponse.SummaryResponse.builder()
                 .totalAmount(order.getSummary().getTotalAmount())
                 .shippingFee(order.getSummary().getShippingFee())
                 .totalQty(order.getSummary().getTotalQty())
                 .build();
 
-        //Map Payment
         OrderResponse.PaymentResponse payment = OrderResponse.PaymentResponse.builder()
                 .method(order.getPayment().getMethod())
                 .status(order.getPayment().getStatus())
                 .transactionId(order.getPayment().getTransactionId())
                 .build();
+
+        // ✅ THÊM: map items đầy đủ
+        List<OrderItemResponse> items = order.getItems() != null
+                ? order.getItems().stream()
+                        .map(item -> OrderItemResponse.builder()
+                        .productId(item.getProductId())
+                        .productName(item.getProductName())
+                        .productImage(item.getProductImage()) // ✅
+                        .quantity(item.getQuantity())
+                        .price(item.getPrice())
+                        .lineTotal(item.getLineTotal())
+                        .size(item.getSize()) // ✅
+                        .thickness(item.getThickness()) // ✅
+                        .color(item.getColor()) // ✅
+                        .build())
+                        .collect(Collectors.toList())
+                : new ArrayList<>();
 
         return OrderResponse.builder()
                 .id(order.getId())
@@ -178,6 +355,7 @@ public class OrderServiceImpl implements IOrderService {
                 .customerInfo(customerInfo)
                 .summary(summary)
                 .payment(payment)
+                .items(items) // ✅ THÊM
                 .createdAt(order.getCreatedAt())
                 .updatedAt(order.getUpdatedAt())
                 .build();
@@ -185,7 +363,7 @@ public class OrderServiceImpl implements IOrderService {
 
     @Override
     public OrderResponse getOrderById(String id) {
-        Order order = orderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy đơn hàng với ID: "+id));
+        Order order = orderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy đơn hàng với ID: " + id));
         return convertToOrderResponse(order);
     }
 
@@ -383,11 +561,13 @@ public class OrderServiceImpl implements IOrderService {
                 .mapToDouble(order -> order.getSummary().getTotalAmount())
                 .sum();
     }
+
     //Tong don hang
     @Override
     public long getTotalOrdersCount() {
         return orderRepository.count();
     }
+
     //So don hang dang xu ly hoac da huy
     @Override
     public long getOrdersCountByStatus(String status) {
@@ -417,7 +597,9 @@ public class OrderServiceImpl implements IOrderService {
             for (OrderItem item : order.getItems()) {
                 // Dựa vào ID sản phẩm để tìm tên danh mục từ Map vừa lấy về
                 String catName = (idToCategoryMap != null) ? idToCategoryMap.get(item.getProductId()) : "Khác";
-                if (catName == null) catName = "Chưa phân loại";
+                if (catName == null) {
+                    catName = "Chưa phân loại";
+                }
 
                 double lineTotal = item.getLineTotal();
                 revenueMap.put(catName, revenueMap.getOrDefault(catName, 0.0) + lineTotal);

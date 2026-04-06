@@ -10,38 +10,20 @@ import {
   RefreshCw,
   Trash2,
   Box,
+  MapPin,
+  Tag,
 } from "lucide-react";
 
 import { toast } from "sonner";
-import type {
-  Product,
-  ProductImage,
-  ProductVariant,
-} from "../Products/InterfaceItem";
+import type { Product, ProductVariant } from "../Products/InterfaceItem";
 
 import axios from "axios";
 
-// interface ProductEditModalProps {
-//   isOpen: boolean;
-//   onClose: () => void;
-//   product: Product | null;
-//   onSave: (updatedProduct: Product) => void;
-// }
-// Sửa interface
-//code test
 interface ProductEditModalProps {
   isOpen: boolean;
   onClose: () => void;
   product: Product | null;
-  onSave: (
-    updatedProduct: Product,
-    mainFile: File | null,
-    galleryFiles: File[],
-  ) => void;
-}
-interface InputGroupProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label: string;
-  icon?: React.ReactNode;
+  onSave: (updatedProduct: Product) => void;
 }
 
 interface ProductFormState extends Omit<
@@ -68,9 +50,11 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
   const [formData, setFormData] = useState<ProductFormState | null>(null);
   const [categories, setCategories] = useState<any[]>([]);
   const PRODUCT_API_URL = "http://localhost:8082";
-  // Thêm state lưu file thật
-  const [mainImageFile, setMainImageFile] = useState<File | null>(null);
-  const [galleryFiles, setGalleryFiles] = useState<File[]>([]);
+  // State lưu File ảnh đại diện mới
+  const [primaryFile, setPrimaryFile] = useState<File | null>(null);
+  // State lưu danh sách các File ảnh phụ mới (chỉ chứa những ảnh mới thêm vào)
+  const [newGalleryFiles, setNewGalleryFiles] = useState<File[]>([]);
+
   // Lấy danh mục từ DB
   useEffect(() => {
     const fetchCats = async () => {
@@ -85,46 +69,8 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
   }, [isOpen]);
 
   // Khởi tạo dữ liệu khi mở Modal
-  // useEffect(() => {
-  //   if (product && isOpen) {
-  //     const primaryImg =
-  //       product.images?.find((img) => img.isPrimary === true)?.url || "";
-  //     const subImages =
-  //       product.images
-  //         ?.filter((img) => img.isPrimary !== true)
-  //         ?.map((img) => img.url) || [];
-
-  //     setFormData({
-  //       ...product,
-  //       category: {
-  //         name: product.category?.name || "",
-  //         code: product.category?.code || "",
-  //         parentCode: product.category?.parentCode || "",
-  //         parentName: product.category?.parentName || "",
-  //       },
-  //       specifications: product.specifications || {
-  //         material: "",
-  //         weight: "",
-  //         firmness: "",
-  //         design: "",
-  //         certificationNumber: "",
-  //       },
-  //       tags: Array.isArray(product.tags) ? product.tags.join(", ") : "",
-  //       images: subImages,
-  //       url: primaryImg,
-  //       variants: product.variants || [],
-  //     });
-  //   }
-  // }, [product, isOpen]);
-
-  //test
-  // Thêm reset state khi đóng modal hoặc mở product mới
   useEffect(() => {
     if (product && isOpen) {
-      // Reset file states mỗi lần mở modal
-      setMainImageFile(null);
-      setGalleryFiles([]);
-
       const primaryImg =
         product.images?.find((img) => img.isPrimary === true)?.url || "";
       const subImages =
@@ -150,7 +96,12 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
         tags: Array.isArray(product.tags) ? product.tags.join(", ") : "",
         images: subImages,
         url: primaryImg,
-        variants: product.variants || [],
+        // variants: product.variants || [],
+        variants:
+          product.variants?.map((v) => ({
+            ...v,
+            color: v.color || "",
+          })) || [],
       });
     }
   }, [product, isOpen]);
@@ -199,6 +150,7 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
       sku: "Tự tạo...",
       size: "",
       thickness: "",
+      color: "",
       price: 0,
       originalPrice: 0,
       stockQuantity: 0,
@@ -216,122 +168,119 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
     setFormData({ ...formData, variants: newVariants });
   };
 
-  // --- FILE HANDLERS ---
-  // const handleMainFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const file = e.target.files?.[0];
-  //   if (!file) return;
-  //   const reader = new FileReader();
-  //   reader.onloadend = () => {
-  //     setFormData((prev) => prev ? { ...prev, url: reader.result as string } : null);
-  //   };
-  //   reader.readAsDataURL(file);
-  // };
-
-  //code test
   const handleMainFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    setMainImageFile(file); // lưu file thật
+
+    setPrimaryFile(file);
     setFormData((prev) =>
       prev ? { ...prev, url: URL.createObjectURL(file) } : null,
     );
+    e.target.value = "";
   };
-  // const handleGalleryFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const files = e.target.files;
-  //   if (!files) return;
-  //   Array.from(files).forEach((file) => {
-  //     const reader = new FileReader();
-  //     reader.onloadend = () => {
-  //       setFormData((prev) =>
-  //         prev
-  //           ? { ...prev, images: [...prev.images, reader.result as string] }
-  //           : null,
-  //       );
-  //     };
-  //     reader.readAsDataURL(file);
-  //   });
-  //   e.target.value = "";
-  // };
 
-  //code test
-  // Sửa handler ảnh phụ
+  // Khi thêm ảnh phụ
   const handleGalleryFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
-    const newFiles = Array.from(files);
-    setGalleryFiles((prev) => [...prev, ...newFiles]); // lưu file thật
-    newFiles.forEach((file) => {
-      setFormData((prev) =>
-        prev
-          ? {
-              ...prev,
-              images: [...prev.images, URL.createObjectURL(file)],
-            }
-          : null,
-      );
-    });
+
+    const fileArray = Array.from(files);
+    setNewGalleryFiles((prev) => [...prev, ...fileArray]);
+
+    const newPreviews = fileArray.map((file) => URL.createObjectURL(file));
+    setFormData((prev) =>
+      prev ? { ...prev, images: [...prev.images, ...newPreviews] } : null,
+    );
     e.target.value = "";
   };
-  // const removeGalleryImage = (index: number) => {
-  //   if (!formData) return;
-  //   const newImages = formData.images.filter((_, i) => i !== index);
-  //   setFormData({ ...formData, images: newImages });
-  // };
 
-  //test
   const removeGalleryImage = (index: number) => {
     if (!formData) return;
-
-    // Đếm xem có bao nhiêu ảnh là từ Cloudinary (URL cũ)
-    const cloudinaryCount = formData.images.filter(
-      (img) => img.startsWith("http") && img.includes("cloudinary.com"),
-    ).length;
-
-    // Nếu index nằm trong vùng ảnh mới upload → xóa cả file thật
-    if (index >= cloudinaryCount) {
-      const fileIndex = index - cloudinaryCount;
-      setGalleryFiles((prev) => prev.filter((_, i) => i !== fileIndex));
-    }
-
     const newImages = formData.images.filter((_, i) => i !== index);
     setFormData({ ...formData, images: newImages });
   };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData) return;
 
-    const updatedImages: ProductImage[] = [
-      { url: formData.url, isPrimary: true },
-      ...formData.images.map((url) => ({ url, isPrimary: false })),
-    ];
+    const toastId = toast.loading("Đang chuẩn bị dữ liệu...");
+    try {
+      //  toast.loading("Đang chuẩn bị dữ liệu...");
+      const data = new FormData();
+      const remainingOldImages = formData.images
+        .filter((img) => !img.startsWith("blob:"))
+        .map((url) => ({ url, isPrimary: false }));
+      if (!formData.url.startsWith("blob:")) {
+        remainingOldImages.unshift({ url: formData.url, isPrimary: true });
+      }
 
-    const finalTags = formData.tags
-      .split(",")
-      .map((t) => t.trim())
-      .filter(Boolean);
+      const productInfo = {
+        ...formData,
+        id: product?.id,
+        images: remainingOldImages,
+        variants:
+          formData.variants?.map((v) => ({
+            ...v,
+            price: Number(v.price),
+            originalPrice: Number(v.originalPrice),
+            stockQuantity: Number(v.stockQuantity),
+            color: v.color?.trim() || "",
+          })) || [],
+        colors: Array.from(
+          new Set(
+            formData.variants?.map((v) => v.color?.trim()).filter(Boolean),
+          ),
+        ),
+        tags: formData.tags
+          .split(",")
+          .map((t) => t.trim())
+          .filter(Boolean),
+        price:
+          formData.variants?.reduce(
+            (min, v) => Math.min(min, v.price),
+            Infinity,
+          ) || 0,
+        totalStockQuantity:
+          formData.variants?.reduce(
+            (sum, v) => sum + Number(v.stockQuantity),
+            0,
+          ) || 0,
+      };
 
-    const totalStock =
-      formData.variants?.reduce((sum, v) => sum + Number(v.stockQuantity), 0) ||
-      0;
-    const minPrice =
-      formData.variants?.reduce((min, v) => Math.min(min, v.price), Infinity) ||
-      0;
+      data.append(
+        "product",
+        new Blob([JSON.stringify(productInfo)], { type: "application/json" }),
+      );
 
-    const finalData: Product = {
-      ...formData,
-      id: product?.id,
-      price: minPrice === Infinity ? 0 : minPrice,
-      totalStockQuantity: totalStock,
-      tags: finalTags,
-      images: updatedImages,
-      updatedAt: new Date().toISOString(),
-    } as Product;
+      if (formData.url.startsWith("blob:")) {
+        const res = await fetch(formData.url);
+        const blob = await res.blob();
+        data.append(
+          "imageFiles",
+          new File([blob], "primary_image.png", { type: blob.type }),
+        );
+      }
 
-    // onSave(finalData);
-    onSave(finalData, mainImageFile, galleryFiles);
-    toast.success("Đã cập nhật thông tin sản phẩm!");
-    onClose();
+      const newSubImages = formData.images.filter((img) =>
+        img.startsWith("blob:"),
+      );
+      for (const [index, url] of newSubImages.entries()) {
+        const res = await fetch(url);
+        const blob = await res.blob();
+        data.append(
+          "imageFiles",
+          new File([blob], `sub_image_${index}.png`, { type: blob.type }),
+        );
+      }
+
+      toast.dismiss(toastId);
+      onSave(data);
+      onClose();
+    } catch (error) {
+      toast.dismiss();
+      console.error("Lỗi:", error);
+      toast.error("Gặp sự cố khi sắp xếp hình ảnh!");
+    }
   };
 
   return (
@@ -375,15 +324,16 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
               <div className="space-y-4">
                 <div className="flex justify-between items-center text-[11px] font-bold text-emerald-600 uppercase tracking-wider italic">
                   <span>Ảnh đại diện (*)</span>
+
                   <label
-                    htmlFor="main-image-edit"
-                    className="flex items-center gap-1 hover:underline cursor-pointer"
+                    htmlFor="edit-main-image"
+                    className="flex items-center gap-1 hover:underline cursor-pointer bg-emerald-50 px-2 py-1 rounded-lg"
                   >
                     <RefreshCw size={12} /> Thay đổi ảnh
                   </label>
                   <input
                     type="file"
-                    id="main-image-edit"
+                    id="edit-main-image"
                     accept="image/*"
                     className="hidden"
                     onChange={handleMainFileChange}
@@ -407,22 +357,23 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
                   <label className="text-[11px] font-bold text-gray-400 uppercase tracking-wider italic">
                     Ảnh phụ bổ trợ ({formData.images.length})
                   </label>
+
                   <label
-                    htmlFor="gallery-images-edit"
-                    className="flex items-center gap-1.5 py-1.5 px-4 bg-emerald-600 text-white rounded-full text-[11px] font-bold hover:bg-emerald-700 cursor-pointer"
+                    htmlFor="edit-gallery-images"
+                    className="flex items-center gap-1.5 py-1.5 px-4 bg-emerald-600 text-white rounded-full text-[11px] font-bold hover:bg-emerald-700 cursor-pointer shadow-md active:scale-95 transition-all"
                   >
                     <PlusCircle size={14} /> Thêm ảnh phụ
                   </label>
                   <input
                     type="file"
-                    id="gallery-images-edit"
+                    id="edit-gallery-images"
                     multiple
                     accept="image/*"
                     className="hidden"
                     onChange={handleGalleryFileChange}
                   />
                 </div>
-                <div className="grid grid-cols-4 gap-3 max-h-[160px] overflow-y-auto pr-2 bg-gray-50/50 p-3 rounded-2xl border border-gray-100">
+                <div className="grid grid-cols-4 md:grid-cols-5 gap-3 max-h-[160px] overflow-y-auto pr-2 custom-scrollbar content-start bg-gray-50/50 p-3 rounded-2xl border border-gray-100">
                   {formData.images.map((img, index) => (
                     <div
                       key={index}
@@ -436,12 +387,20 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
                       <button
                         type="button"
                         onClick={() => removeGalleryImage(index)}
-                        className="absolute -top-2 -right-2 p-1.5 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-all scale-75 group-hover:scale-100"
+                        className="absolute -top-2 -right-2 p-1.5 bg-red-500 text-white rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-all scale-75 group-hover:scale-100 z-10"
                       >
-                        <X size={12} />
+                        <X size={12} strokeWidth={3} />
                       </button>
                     </div>
                   ))}
+                  {formData.images.length === 0 && (
+                    <div className="col-span-full py-10 flex flex-col items-center justify-center text-gray-300">
+                      <ImageIcon size={32} className="mb-2 opacity-20" />
+                      <span className="text-[10px] font-black uppercase">
+                        Trống
+                      </span>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -461,7 +420,6 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
                 required
               />
 
-              {/* Mã dòng sản phẩm */}
               <div className="space-y-1.5">
                 <label className="text-xs text-gray-500 ml-1 uppercase font-black tracking-tighter flex items-center gap-1">
                   Mã dòng sản phẩm
@@ -476,7 +434,7 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
 
               <div className="space-y-1.5">
                 <label className="text-xs text-gray-500 ml-1 uppercase font-black tracking-tighter flex items-center gap-1">
-                  Ngành hàng (Cha)
+                  Danh mục (Cha)
                 </label>
                 <select
                   className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm font-medium bg-white h-[42px] focus:border-emerald-500 outline-none transition-all"
@@ -555,13 +513,14 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
                 name="origin"
                 value={formData.origin || ""}
                 onChange={handleChange}
+                icon={<MapPin size={12} />}
               />
             </div>
           </section>
 
           {/* SECTION BIẾN THỂ */}
           <section className="bg-white p-6 rounded-3xl border border-emerald-100 shadow-sm space-y-6">
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center border-b border-emerald-50 pb-4">
               <h3 className="text-sm font-black text-emerald-700 uppercase tracking-widest flex items-center gap-2">
                 <Box size={18} /> Danh sách kích thước & Giá
               </h3>
@@ -609,6 +568,20 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
                   </div>
                   <div>
                     <label className="text-[9px] font-black text-gray-400 uppercase ml-1">
+                      Màu sắc
+                    </label>
+                    <input
+                      type="text"
+                      value={v.color || ""}
+                      onChange={(e) =>
+                        handleVariantChange(index, "color", e.target.value)
+                      }
+                      className="w-full px-3 py-2 rounded-xl border text-xs outline-none focus:border-emerald-500"
+                      placeholder="White, Blue..."
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[9px] font-black text-gray-400 uppercase ml-1">
                       Giá bán (₫)
                     </label>
                     <input
@@ -621,7 +594,7 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
                           Number(e.target.value),
                         )
                       }
-                      className="w-full px-3 py-2 rounded-xl border-emerald-100 text-xs font-bold outline-none h-[34px]"
+                      className="w-full px-3 py-2 rounded-xl border text-xs outline-none focus:border-emerald-500"
                     />
                   </div>
                   <div>
@@ -638,11 +611,11 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
                           Number(e.target.value),
                         )
                       }
-                      className="w-full px-3 py-2 rounded-xl border text-xs h-[34px]"
+                      className="w-full px-3 py-2 rounded-xl border text-xs outline-none focus:border-emerald-500"
                     />
                   </div>
                   <div>
-                    <label className="text-[9px] font-black text-gray-400 uppercase ml-1">
+                    <label className="text-[9px] font-black text-blue-400 uppercase ml-1 italic tracking-tighter">
                       Mã SKU
                     </label>
                     <input
@@ -667,7 +640,7 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
                             Number(e.target.value),
                           )
                         }
-                        className="w-full px-2 py-2 rounded-xl border text-xs outline-none h-[34px]"
+                        className="w-full px-3 py-2 rounded-xl border text-xs outline-none focus:border-emerald-500"
                       />
                     </div>
                     <button
@@ -685,7 +658,7 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
 
           {/* THÔNG SỐ KỸ THUẬT */}
           <section className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm space-y-5">
-            <h3 className="text-sm text-gray-400 uppercase tracking-widest flex items-center gap-2 font-black">
+            <h3 className="text-sm font-black text-emerald-700 uppercase tracking-widest flex items-center gap-2">
               <Award size={16} className="text-emerald-500" /> Thông số kỹ thuật
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -719,6 +692,21 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
                 value={formData.specifications?.certificationNumber || ""}
                 onChange={handleChange}
               />
+              <div className="space-y-1.5">
+                <label className="text-xs text-gray-500 ml-1 uppercase font-black tracking-tighter">
+                  Trạng thái bán
+                </label>
+                <select
+                  name="status"
+                  value={formData.status}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-emerald-500 outline-none text-sm font-medium bg-white h-[42px]"
+                >
+                  <option value="AVAILABLE">Sẵn sàng bán</option>
+                  <option value="stopselling">Ngừng bán</option>
+                  <option value="OUT_OF_STOCK">Hết hàng</option>
+                </select>
+              </div>
             </div>
           </section>
 
@@ -733,23 +721,24 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
                 value={formData.description || ""}
                 onChange={handleChange}
                 rows={4}
-                className="w-full px-5 py-4 rounded-2xl border border-gray-200 focus:border-emerald-500 outline-none text-sm leading-relaxed"
+                className="w-full px-5 py-4 rounded-2xl border border-gray-100 focus:border-emerald-500 outline-none text-sm leading-relaxed"
               />
             </div>
             <div className="space-y-3">
-              <label className="text-xs text-gray-500 ml-1 uppercase font-black tracking-tighter">
-                Trạng thái bán
-              </label>
-              <select
-                name="status"
-                value={formData.status}
+              {/* <label className="text-xs text-gray-500 ml-1 uppercase font-black tracking-tighter">Trạng thái bán</label>
+       <select name="status" value={formData.status} onChange={handleChange} className="w-full px-4 py-3 rounded-2xl border border-gray-200 focus:border-emerald-500 outline-none text-sm font-medium bg-white cursor-pointer shadow-sm">
+        <option value="AVAILABLE">Đang bán</option>
+        <option value="OUT_OF_STOCK">Hết hàng</option>
+        <option value="stopselling">Ngừng kinh doanh</option>
+       </select> */}
+              <InputGroup
+                label="Thẻ Tags "
+                name="tags"
+                value={formData.tags}
                 onChange={handleChange}
-                className="w-full px-4 py-3 rounded-2xl border border-gray-200 focus:border-emerald-500 outline-none text-sm font-medium bg-white cursor-pointer shadow-sm"
-              >
-                <option value="AVAILABLE">Đang bán</option>
-                <option value="OUT_OF_STOCK">Hết hàng</option>
-                <option value="stopselling">Ngừng kinh doanh</option>
-              </select>
+                placeholder="cao_cap, em_ai, khuyen_mai..."
+                icon={<Tag size={12} />}
+              />
               <div className="p-5 mt-4 bg-emerald-50 rounded-2xl border border-emerald-100 flex items-center gap-4">
                 <div className="p-3 bg-white rounded-xl shadow-sm text-emerald-600">
                   <History size={24} />
@@ -784,7 +773,7 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
   );
 };
 
-const InputGroup = ({ label, icon, ...props }: InputGroupProps) => (
+const InputGroup = ({ label, icon, ...props }: any) => (
   <div className="space-y-1.5">
     <label className="text-xs text-gray-500 ml-1 uppercase font-black tracking-tighter flex items-center gap-1">
       {icon} {label}

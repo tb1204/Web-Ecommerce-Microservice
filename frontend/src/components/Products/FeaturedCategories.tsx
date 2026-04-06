@@ -6,11 +6,11 @@ import bochanga from "../../assets/chan-ga/bo-chan-ga.webp";
 import chanvavochan from "../../assets/chan-ga/chan-va-vo-chan-.webp";
 import gale from "../../assets/chan-ga/ga-le.webp";
 import vogoile from "../../assets/chan-ga/vo-goi-le.webp";
-import changagoitreem from "../../assets/chan-ga/chan-ga-goi-tre-em.webp";
+// import changagoitreem from "../../assets/chan-ga/chan-ga-goi-tre-em.webp";
 import bogachun from "../../assets/chan-ga/bo-ga-chun.webp";
 import bogaphu from "../../assets/chan-ga/bo-ga-phu.webp";
 import vochanle from "../../assets/chan-ga/vo-chan-le.webp";
-import chanle from "../../assets/chan-ga/chan-le.webp";
+// import chanle from "../../assets/chan-ga/chan-le.webp";
 import bogachunchan from "../../assets/chan-ga/bo-ga-chun-chan.webp";
 
 //goi
@@ -18,8 +18,8 @@ import goibong from "../../assets/goi/goi-bong.webp";
 import goifoam from "../../assets/goi/goi-foam.webp";
 import goicaosu from "../../assets/goi/goi-cao-su.webp";
 import goilongvu from "../../assets/goi/goi-long-vu.webp";
-import goilammat from "../../assets/goi/goi-lam-mat.webp";
-import goigiamdauvaigay from "../../assets/goi/goi-giam-dau-vai-gay.webp";
+// import goilammat from "../../assets/goi/goi-lam-mat.webp";
+// import goigiamdauvaigay from "../../assets/goi/goi-giam-dau-vai-gay.webp";
 
 //nem
 import nembongep from "../../assets/nem/nem-bong-ep.webp";
@@ -54,7 +54,7 @@ const FeaturedCategories = () => {
       },
       {
         id: 2,
-        name: "Chăn và vỏ chăn",
+        name: "Vỏ chăn",
         image: chanvavochan,
         path: "/collections/chan-va-vo-goi",
       },
@@ -70,12 +70,7 @@ const FeaturedCategories = () => {
         image: vogoile,
         path: "/collections/vo-goi-le",
       },
-      {
-        id: 5,
-        name: "Chăn ga gối trẻ em",
-        image: changagoitreem,
-        path: "/collections/chan-ga-goi-tre-em",
-      },
+
       {
         id: 6,
         name: "Bộ ga chun",
@@ -94,12 +89,7 @@ const FeaturedCategories = () => {
         image: vochanle,
         path: "/collections/vo-chan-le",
       },
-      {
-        id: 9,
-        name: "Chăn lẻ",
-        image: chanle,
-        path: "/collections/chan-le",
-      },
+
       {
         id: 10,
         name: "Bộ ga chun chần",
@@ -132,18 +122,18 @@ const FeaturedCategories = () => {
         image: goilongvu,
         path: "/collections/goi-long-vu",
       },
-      {
-        id: 15,
-        name: "Gối làm mát",
-        image: goilammat,
-        path: "/collections/goi-lam-mat",
-      },
-      {
-        id: 16,
-        name: "Gối giảm đau vai gáy",
-        image: goigiamdauvaigay,
-        path: "/collections/goi-giam-dau-vai-gay",
-      },
+      // {
+      //   id: 15,
+      //   name: "Gối làm mát",
+      //   image: goilammat,
+      //   path: "/collections/goi-lam-mat",
+      // },
+      // {
+      //   id: 16,
+      //   name: "Gối giảm đau vai gáy",
+      //   image: goigiamdauvaigay,
+      //   path: "/collections/goi-giam-dau-vai-gay",
+      // },
     ],
     Nệm: [
       {

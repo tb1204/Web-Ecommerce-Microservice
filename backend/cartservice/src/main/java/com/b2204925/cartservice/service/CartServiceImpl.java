@@ -113,8 +113,13 @@ public class CartServiceImpl implements CartService {
         // Gọi product-service qua Eureka
         Map<String, Object> product;
         try {
+            //gọi qua eruka
+            //     product = restTemplate.getForObject(
+            //             "http://productservice/api/products/" + req.getProductId(),
+            //             Map.class);
+            //gọi thẳng service
             product = restTemplate.getForObject(
-                    "http://productservice/api/products/" + req.getProductId(),
+                    "http://localhost:8082/api/products/detail/" + req.getProductId(),
                     Map.class);
         } catch (RestClientException e) {
             throw new AppException(ErrorCode.PRODUCT_SERVICE_ERROR);
@@ -126,7 +131,7 @@ public class CartServiceImpl implements CartService {
         List<Map<String, Object>> variants
                 = (List<Map<String, Object>>) product.get("variants");
         Map<String, Object> variant = variants.stream()
-                .filter(v -> req.getVariantId().equals(v.get("id")))
+                .filter(v -> req.getVariantId().equals(v.get("variantId")))
                 .findFirst()
                 .orElseThrow(() -> new AppException(ErrorCode.VARIANT_NOT_FOUND));
         Cart cart = getOrCreateCart(userId);

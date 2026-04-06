@@ -1,0 +1,1005 @@
+[
+  {
+    "name": "Nệm bông ép Everon EB001",
+    "productCode": "N005",
+    "category": {
+      "name": "Nệm bông ép",
+      "code": "NEM_BONG_EP",
+      "parentCode": "NEM",
+      "parentName": "Nệm"
+    },
+    "brand": "Everon",
+    "origin": "Việt Nam",
+    "price": 2450000,
+    "specifications": {
+      "material": "Bông ép PE cao cấp + cotton",
+      "weight": "16kg",
+      "firmness": "Medium",
+      "design": "2 mặt sử dụng",
+      "certificationNumber": "TCVN 6457:2018"
+    },
+    "variants": [
+      {
+        "variantId": "v5-160",
+        "sku": "N005-160X200",
+        "size": "1m6 x 2m",
+        "thickness": "12cm",
+        "price": 2450000,
+        "originalPrice": 3100000,
+        "stockQuantity": 32,
+        "status": "ACTIVE"
+      },
+      {
+        "variantId": "v5-180",
+        "sku": "N005-180X200",
+        "size": "1m8 x 2m",
+        "thickness": "12cm",
+        "price": 2790000,
+        "originalPrice": 3500000,
+        "stockQuantity": 24,
+        "status": "ACTIVE"
+      }
+    ],
+    "totalStockQuantity": 56,
+    "tags": ["everon", "bong-ep", "gia-re", "thoang-khi"],
+    "images": [
+      { "url": "https://everon.com.vn/wp-content/uploads/2023/05/nem-bong-ep-everon-eb001-1.jpg", "isPrimary": true },
+      { "url": "https://everon.com.vn/wp-content/uploads/2023/05/nem-bong-ep-everon-eb001-2.jpg", "isPrimary": false }
+    ],
+    "status": "AVAILABLE",
+    "description": "Nệm bông ép Everon EB001 mật độ cao, thoáng khí tốt, dễ gấp gọn, phù hợp phòng trọ, căn hộ và gia đình trẻ.",
+    "createdAt": "2026-04-03T10:00:00",
+    "updatedAt": "2026-04-03T10:00:00"
+  },
+  {
+    "name": "Nệm bông ép Hanvico Nano Silver",
+    "productCode": "N006",
+    "category": {
+      "name": "Nệm bông ép",
+      "code": "NEM_BONG_EP",
+      "parentCode": "NEM",
+      "parentName": "Nệm"
+    },
+    "brand": "Hanvico",
+    "origin": "Việt Nam",
+    "price": 2890000,
+    "specifications": {
+      "material": "Bông ép kháng khuẩn Nano Silver",
+      "weight": "18kg",
+      "firmness": "Medium",
+      "design": "2 mặt sử dụng",
+      "certificationNumber": "TCVN 6457:2018"
+    },
+    "variants": [
+      {
+        "variantId": "v6-160",
+        "sku": "N006-160X200",
+        "size": "1m6 x 2m",
+        "thickness": "12cm",
+        "price": 2890000,
+        "originalPrice": 3590000,
+        "stockQuantity": 28,
+        "status": "ACTIVE"
+      },
+      {
+        "variantId": "v6-180",
+        "sku": "N006-180X200",
+        "size": "1m8 x 2m",
+        "thickness": "12cm",
+        "price": 3250000,
+        "originalPrice": 3990000,
+        "stockQuantity": 20,
+        "status": "ACTIVE"
+      }
+    ],
+    "totalStockQuantity": 48,
+    "tags": ["hanvico", "nano-silver", "khang-khuan"],
+    "images": [
+      { "url": "https://hanvico.com.vn/wp-content/uploads/2024/06/nem-bong-ep-hanvico-nano.jpg", "isPrimary": true },
+      { "url": "https://hanvico.com.vn/wp-content/uploads/2024/06/nem-bong-ep-hanvico-detail.jpg", "isPrimary": false }
+    ],
+    "status": "AVAILABLE",
+    "description": "Nệm bông ép Hanvico Nano Silver kháng khuẩn vượt trội, êm ái, bền đẹp, phù hợp gia đình có trẻ nhỏ.",
+    "createdAt": "2026-04-03T10:00:00",
+    "updatedAt": "2026-04-03T10:00:00"
+  },
+  {
+    "name": "Nệm bông ép Vạn Thành Fantasy",
+    "productCode": "N007",
+    "category": {
+      "name": "Nệm bông ép",
+      "code": "NEM_BONG_EP",
+      "parentCode": "NEM",
+      "parentName": "Nệm"
+    },
+    "brand": "Vạn Thành",
+    "origin": "Việt Nam",
+    "price": 2190000,
+    "specifications": {
+      "material": "Bông ép cao cấp 3 lớp",
+      "weight": "15kg",
+      "firmness": "Medium",
+      "design": "2 mặt sử dụng",
+      "certificationNumber": "QCVN 3:2018"
+    },
+    "variants": [
+      {
+        "variantId": "v7-160",
+        "sku": "N007-160X200",
+        "size": "1m6 x 2m",
+        "thickness": "10cm",
+        "price": 2190000,
+        "originalPrice": 2790000,
+        "stockQuantity": 45,
+        "status": "ACTIVE"
+      },
+      {
+        "variantId": "v7-180",
+        "sku": "N007-180X200",
+        "size": "1m8 x 2m",
+        "thickness": "10cm",
+        "price": 2490000,
+        "originalPrice": 3090000,
+        "stockQuantity": 30,
+        "status": "ACTIVE"
+      }
+    ],
+    "totalStockQuantity": 75,
+    "tags": ["van-thanh", "gia-re", "fantasy"],
+    "images": [
+      { "url": "https://vanthanh.com.vn/wp-content/uploads/2023/05/nem-bong-ep-fantasy-main.jpg", "isPrimary": true }
+    ],
+    "status": "AVAILABLE",
+    "description": "Nệm bông ép Vạn Thành Fantasy giá tốt, êm ái, thoáng mát, rất được ưa chuộng trong phân khúc giá rẻ.",
+    "createdAt": "2026-04-03T10:00:00",
+    "updatedAt": "2026-04-03T10:00:00"
+  },
+  {
+    "name": "Nệm bông ép Edena Premium",
+    "productCode": "N008",
+    "category": {
+      "name": "Nệm bông ép",
+      "code": "NEM_BONG_EP",
+      "parentCode": "NEM",
+      "parentName": "Nệm"
+    },
+    "brand": "Edena",
+    "origin": "Việt Nam",
+    "price": 2650000,
+    "specifications": {
+      "material": "Bông ép Hàn Quốc cao cấp",
+      "weight": "17kg",
+      "firmness": "Medium",
+      "design": "2 mặt sử dụng",
+      "certificationNumber": "TCVN 6457:2018"
+    },
+    "variants": [
+      {
+        "variantId": "v8-160",
+        "sku": "N008-160X200",
+        "size": "1m6 x 2m",
+        "thickness": "12cm",
+        "price": 2650000,
+        "originalPrice": 3290000,
+        "stockQuantity": 35,
+        "status": "ACTIVE"
+      },
+      {
+        "variantId": "v8-180",
+        "sku": "N008-180X200",
+        "size": "1m8 x 2m",
+        "thickness": "12cm",
+        "price": 2990000,
+        "originalPrice": 3690000,
+        "stockQuantity": 22,
+        "status": "ACTIVE"
+      }
+    ],
+    "totalStockQuantity": 57,
+    "tags": ["edena", "premium", "bong-ep"],
+    "images": [
+      { "url": "https://edena.vn/wp-content/uploads/2024/02/nem-bong-ep-edena-premium.jpg", "isPrimary": true },
+      { "url": "https://edena.vn/wp-content/uploads/2024/02/nem-bong-ep-edena-detail.jpg", "isPrimary": false }
+    ],
+    "status": "AVAILABLE",
+    "description": "Nệm bông ép Edena Premium sử dụng bông Hàn Quốc, êm ái, bền đẹp, phù hợp mọi không gian sống.",
+    "createdAt": "2026-04-03T10:00:00",
+    "updatedAt": "2026-04-03T10:00:00"
+  }
+]
+
+GOIIIII
+
+
+
+
+
+[
+  {
+    "name": "Gối bông Everon EB001",
+    "productCode": "G001",
+    "category": {
+      "name": "Gối bông",
+      "code": "GOI_BONG",
+      "parentCode": "GOI",
+      "parentName": "Gối"
+    },
+    "brand": "Everon",
+    "origin": "Việt Nam",
+    "price": 450000,
+    "specifications": {
+      "material": "Bông Microfiber cao cấp",
+      "weight": "1.2kg",
+      "firmness": "Soft",
+      "design": "2 mặt sử dụng",
+      "certificationNumber": "TCVN 6457:2018"
+    },
+    "variants": [
+      {
+        "variantId": "g1-50x70",
+        "sku": "G001-50X70",
+        "size": "50x70cm",
+        "thickness": "15cm",
+        "price": 450000,
+        "originalPrice": 550000,
+        "stockQuantity": 120,
+        "status": "ACTIVE"
+      },
+      {
+        "variantId": "g1-60x80",
+        "sku": "G001-60X80",
+        "size": "60x80cm",
+        "thickness": "15cm",
+        "price": 520000,
+        "originalPrice": 650000,
+        "stockQuantity": 85,
+        "status": "ACTIVE"
+      }
+    ],
+    "totalStockQuantity": 205,
+    "tags": ["everon", "goi-bong", "mem-mai", "gia-re"],
+    "images": [
+      { "url": "https://example.com/images/goi-bong-everon-1.jpg", "isPrimary": true },
+      { "url": "https://example.com/images/goi-bong-everon-2.jpg", "isPrimary": false }
+    ],
+    "status": "AVAILABLE",
+    "description": "Gối bông Everon EB001 êm ái, thoáng khí, hỗ trợ đầu và cổ tốt, phù hợp cho giấc ngủ sâu.",
+    "createdAt": "2026-04-03T10:00:00",
+    "updatedAt": "2026-04-03T10:00:00"
+  },
+  {
+    "name": "Gối foam Memory Hanvico",
+    "productCode": "G002",
+    "category": {
+      "name": "Gối foam",
+      "code": "GOI_FOAM",
+      "parentCode": "GOI",
+      "parentName": "Gối"
+    },
+    "brand": "Hanvico",
+    "origin": "Việt Nam",
+    "price": 890000,
+    "specifications": {
+      "material": "Memory Foam cao cấp",
+      "weight": "1.4kg",
+      "firmness": "Medium",
+      "design": "Công thái học",
+      "certificationNumber": "TCVN 6457:2018"
+    },
+    "variants": [
+      {
+        "variantId": "g2-50x70",
+        "sku": "G002-50X70",
+        "size": "50x70cm",
+        "thickness": "12cm",
+        "price": 890000,
+        "originalPrice": 1090000,
+        "stockQuantity": 65,
+        "status": "ACTIVE"
+      }
+    ],
+    "totalStockQuantity": 65,
+    "tags": ["hanvico", "memory-foam", "cong-thai-hoc", "goi-foam"],
+    "images": [
+      { "url": "https://example.com/images/goi-foam-hanvico-1.jpg", "isPrimary": true }
+    ],
+    "status": "AVAILABLE",
+    "description": "Gối foam Memory Hanvico ôm sát đầu cổ, giảm đau vai gáy, đàn hồi tốt và thoáng khí.",
+    "createdAt": "2026-04-03T10:00:00",
+    "updatedAt": "2026-04-03T10:00:00"
+  },
+  {
+    "name": "Gối cao su thiên nhiên Vạn Thành",
+    "productCode": "G003",
+    "category": {
+      "name": "Gối cao su",
+      "code": "GOI_CAO_SU",
+      "parentCode": "GOI",
+      "parentName": "Gối"
+    },
+    "brand": "Vạn Thành",
+    "origin": "Việt Nam",
+    "price": 1250000,
+    "specifications": {
+      "material": "Cao su thiên nhiên 100%",
+      "weight": "1.8kg",
+      "firmness": "Medium-Firm",
+      "design": "Công thái học",
+      "certificationNumber": "QCVN 3:2018"
+    },
+    "variants": [
+      {
+        "variantId": "g3-50x70",
+        "sku": "G003-50X70",
+        "size": "50x70cm",
+        "thickness": "10cm",
+        "price": 1250000,
+        "originalPrice": 1490000,
+        "stockQuantity": 48,
+        "status": "ACTIVE"
+      },
+      {
+        "variantId": "g3-60x80",
+        "sku": "G003-60X80",
+        "size": "60x80cm",
+        "thickness": "10cm",
+        "price": 1390000,
+        "originalPrice": 1690000,
+        "stockQuantity": 35,
+        "status": "ACTIVE"
+      }
+    ],
+    "totalStockQuantity": 83,
+    "tags": ["van-thanh", "cao-su-thien-nhien", "ben-biet", "goi-cao-su"],
+    "images": [
+      { "url": "https://example.com/images/goi-caosu-vanthanh-1.jpg", "isPrimary": true },
+      { "url": "https://example.com/images/goi-caosu-vanthanh-2.jpg", "isPrimary": false }
+    ],
+    "status": "AVAILABLE",
+    "description": "Gối cao su thiên nhiên Vạn Thành đàn hồi vượt trội, thoáng khí, kháng khuẩn, hỗ trợ cột sống cổ tốt.",
+    "createdAt": "2026-04-03T10:00:00",
+    "updatedAt": "2026-04-03T10:00:00"
+  },
+  {
+    "name": "Gối lông vũ Edena Premium",
+    "productCode": "G004",
+    "category": {
+      "name": "Gối lông vũ",
+      "code": "GOI_LONG_VU",
+      "parentCode": "GOI",
+      "parentName": "Gối"
+    },
+    "brand": "Edena",
+    "origin": "Việt Nam",
+    "price": 1650000,
+    "specifications": {
+      "material": "Lông vũ ngỗng cao cấp",
+      "weight": "1.1kg",
+      "firmness": "Soft",
+      "design": "Êm ái tự nhiên",
+      "certificationNumber": "OEKO-TEX"
+    },
+    "variants": [
+      {
+        "variantId": "g4-50x70",
+        "sku": "G004-50X70",
+        "size": "50x70cm",
+        "thickness": "18cm",
+        "price": 1650000,
+        "originalPrice": 1990000,
+        "stockQuantity": 42,
+        "status": "ACTIVE"
+      }
+    ],
+    "totalStockQuantity": 42,
+    "tags": ["edena", "long-vu", "mem-mai", "cao-cap"],
+    "images": [
+      { "url": "https://example.com/images/goi-longvu-edena-1.jpg", "isPrimary": true }
+    ],
+    "status": "AVAILABLE",
+    "description": "Gối lông vũ Edena Premium siêu mềm, nhẹ, thoáng khí, mang lại cảm giác sang trọng và giấc ngủ sâu.",
+    "createdAt": "2026-04-03T10:00:00",
+    "updatedAt": "2026-04-03T10:00:00"
+  }
+]
+
+nệm cao su
+[
+  {
+    "name": "Nệm cao su thiên nhiên Gummi Classic thế hệ mới",
+    "productCode": "NCS001",
+    "category": {
+      "name": "Nệm cao su",
+      "code": "NEM_CAO_SU",
+      "parentCode": "NEM",
+      "parentName": "Nệm"
+    },
+    "brand": "Gummi",
+    "origin": "Việt Nam",
+    "price": 6712000,
+    "specifications": {
+      "material": "Cao su thiên nhiên 100%",
+      "weight": "25-35kg",
+      "firmness": "Medium",
+      "design": "Thoáng khí tối ưu, đàn hồi cao",
+      "certificationNumber": "TCVN 6457:2018"
+    },
+    "variants": [
+      {
+        "variantId": "ncs1-160",
+        "sku": "NCS001-160X200",
+        "size": "1m6 x 2m",
+        "thickness": "10cm",
+        "price": 6712000,
+        "originalPrice": 8390000,
+        "stockQuantity": 45,
+        "status": "ACTIVE"
+      },
+      {
+        "variantId": "ncs1-180",
+        "sku": "NCS001-180X200",
+        "size": "1m8 x 2m",
+        "thickness": "10cm",
+        "price": 7490000,
+        "originalPrice": 9390000,
+        "stockQuantity": 32,
+        "status": "ACTIVE"
+      }
+    ],
+    "totalStockQuantity": 77,
+    "tags": ["gummi", "cao-su-thien-nhien", "classic", "thoang-khi"],
+    "images": [
+      { "url": "https://vuanem.com/images/nem-cao-su-gummi-classic.jpg", "isPrimary": true },
+      { "url": "https://vuanem.com/images/nem-cao-su-gummi-classic-detail.jpg", "isPrimary": false }
+    ],
+    "status": "AVAILABLE",
+    "description": "Nệm cao su thiên nhiên Gummi Classic thế hệ mới với độ đàn hồi vượt trội, thoáng khí tối ưu, nâng đỡ đường cong cơ thể hoàn hảo. Bán chạy nhất với hơn 44.000 đơn hàng.",
+    "createdAt": "2026-04-03T10:00:00",
+    "updatedAt": "2026-04-03T10:00:00"
+  },
+  {
+    "name": "Nệm cao su thiên nhiên Gummi Premium Detox",
+    "productCode": "NCS002",
+    "category": {
+      "name": "Nệm cao su",
+      "code": "NEM_CAO_SU",
+      "parentCode": "NEM",
+      "parentName": "Nệm"
+    },
+    "brand": "Gummi",
+    "origin": "Việt Nam",
+    "price": 12460000,
+    "specifications": {
+      "material": "Cao su thiên nhiên kết hợp tinh chất than hoạt tính",
+      "weight": "28-38kg",
+      "firmness": "Medium",
+      "design": "Công nghệ detox giấc ngủ",
+      "certificationNumber": "TCVN 6457:2018"
+    },
+    "variants": [
+      {
+        "variantId": "ncs2-160",
+        "sku": "NCS002-160X200",
+        "size": "1m6 x 2m",
+        "thickness": "10cm",
+        "price": 12460000,
+        "originalPrice": 14460000,
+        "stockQuantity": 28,
+        "status": "ACTIVE"
+      },
+      {
+        "variantId": "ncs2-180",
+        "sku": "NCS002-180X200",
+        "size": "1m8 x 2m",
+        "thickness": "10cm",
+        "price": 13900000,
+        "originalPrice": 15900000,
+        "stockQuantity": 19,
+        "status": "ACTIVE"
+      }
+    ],
+    "totalStockQuantity": 47,
+    "tags": ["gummi", "premium", "detox", "cao-su-thien-nhien"],
+    "images": [
+      { "url": "https://vuanem.com/images/nem-cao-su-gummi-premium.jpg", "isPrimary": true }
+    ],
+    "status": "AVAILABLE",
+    "description": "Nệm cao su thiên nhiên Gummi Premium Detox giấc ngủ với tinh chất than hoạt tính, kháng khuẩn vượt trội, mang lại giấc ngủ sâu và sạch hơn.",
+    "createdAt": "2026-04-03T10:00:00",
+    "updatedAt": "2026-04-03T10:00:00"
+  },
+  {
+    "name": "Nệm cao su đa tầng Kim Cương Stella",
+    "productCode": "NCS003",
+    "category": {
+      "name": "Nệm cao su",
+      "code": "NEM_CAO_SU",
+      "parentCode": "NEM",
+      "parentName": "Nệm"
+    },
+    "brand": "Kim Cương",
+    "origin": "Việt Nam",
+    "price": 7693000,
+    "specifications": {
+      "material": "Cao su đa tầng cao cấp",
+      "weight": "30kg",
+      "firmness": "Medium-Firm",
+      "design": "Đa tầng nâng đỡ",
+      "certificationNumber": "QCVN 3:2018"
+    },
+    "variants": [
+      {
+        "variantId": "ncs3-160",
+        "sku": "NCS003-160X200",
+        "size": "1m6 x 2m",
+        "thickness": "15cm",
+        "price": 7693000,
+        "originalPrice": 10990000,
+        "stockQuantity": 38,
+        "status": "ACTIVE"
+      }
+    ],
+    "totalStockQuantity": 38,
+    "tags": ["kim-cuong", "da-tang", "cao-su", "ben-biet"],
+    "images": [
+      { "url": "https://vuanem.com/images/nem-cao-su-kim-cuong-stella.jpg", "isPrimary": true },
+      { "url": "https://vuanem.com/images/nem-cao-su-kim-cuong-stella-detail.jpg", "isPrimary": false }
+    ],
+    "status": "AVAILABLE",
+    "description": "Nệm cao su đa tầng Kim Cương Stella mang lại sự nâng đỡ chắc chắn, êm ái và bền bỉ theo thời gian.",
+    "createdAt": "2026-04-03T10:00:00",
+    "updatedAt": "2026-04-03T10:00:00"
+  },
+  {
+    "name": "Nệm cao su Gummi 7 Zones nhập khẩu",
+    "productCode": "NCS004",
+    "category": {
+      "name": "Nệm cao su",
+      "code": "NEM_CAO_SU",
+      "parentCode": "NEM",
+      "parentName": "Nệm"
+    },
+    "brand": "Gummi",
+    "origin": "Thái Lan",
+    "price": 16999000,
+    "specifications": {
+      "material": "Cao su thiên nhiên nhập khẩu",
+      "weight": "32-42kg",
+      "firmness": "Medium",
+      "design": "7 vùng hỗ trợ cơ thể",
+      "certificationNumber": "OEKO-TEX"
+    },
+    "variants": [
+      {
+        "variantId": "ncs4-160",
+        "sku": "NCS004-160X200",
+        "size": "1m6 x 2m",
+        "thickness": "12cm",
+        "price": 16999000,
+        "originalPrice": 19999000,
+        "stockQuantity": 22,
+        "status": "ACTIVE"
+      },
+      {
+        "variantId": "ncs4-180",
+        "sku": "NCS004-180X200",
+        "size": "1m8 x 2m",
+        "thickness": "12cm",
+        "price": 18999000,
+        "originalPrice": 22999000,
+        "stockQuantity": 15,
+        "status": "ACTIVE"
+      }
+    ],
+    "totalStockQuantity": 37,
+    "tags": ["gummi", "7-zones", "nhap-khau", "cao-cap"],
+    "images": [
+      { "url": "https://vuanem.com/images/nem-cao-su-gummi-7zones.jpg", "isPrimary": true }
+    ],
+    "status": "AVAILABLE",
+    "description": "Nệm cao su Gummi 7 Zones nhập khẩu với công nghệ phân vùng hỗ trợ 7 vùng cơ thể, mang lại tư thế nằm chuẩn và giấc ngủ chất lượng cao.",
+    "createdAt": "2026-04-03T10:00:00",
+    "updatedAt": "2026-04-03T10:00:00"
+  }
+]
+
+nệm foam
+[
+  {
+    "name": "Nệm foam Comfy Cloud 2.0 siêu đàn hồi",
+    "productCode": "NF001",
+    "category": {
+      "name": "Nệm foam",
+      "code": "NEM_FOAM",
+      "parentCode": "NEM",
+      "parentName": "Nệm"
+    },
+    "brand": "Comfy",
+    "origin": "Việt Nam",
+    "price": 8784000,
+    "specifications": {
+      "material": "Foam siêu đàn hồi cao cấp",
+      "weight": "18-28kg",
+      "firmness": "Medium",
+      "design": "Siêu đàn hồi, thoáng khí",
+      "certificationNumber": "TCVN 6457:2018"
+    },
+    "variants": [
+      {
+        "variantId": "nf1-160",
+        "sku": "NF001-160X200",
+        "size": "1m6 x 2m",
+        "thickness": "15cm",
+        "price": 8784000,
+        "originalPrice": 14640000,
+        "stockQuantity": 68,
+        "status": "ACTIVE"
+      },
+      {
+        "variantId": "nf1-180",
+        "sku": "NF001-180X200",
+        "size": "1m8 x 2m",
+        "thickness": "15cm",
+        "price": 9890000,
+        "originalPrice": 15900000,
+        "stockQuantity": 45,
+        "status": "ACTIVE"
+      }
+    ],
+    "totalStockQuantity": 113,
+    "tags": ["comfy", "cloud-2.0", "sieudanhoi", "nem-foam"],
+    "images": [
+      { "url": "https://vuanem.com/images/nem-foam-comfy-cloud-2.0.jpg", "isPrimary": true },
+      { "url": "https://vuanem.com/images/nem-foam-comfy-cloud-2.0-detail.jpg", "isPrimary": false }
+    ],
+    "status": "AVAILABLE",
+    "description": "Nệm foam Comfy Cloud 2.0 siêu đàn hồi dày 15cm, đã bán hơn 24.000 sản phẩm. Mang lại cảm giác êm ái, nâng đỡ tốt, thoáng khí và đàn hồi cao như nệm cao su.",
+    "createdAt": "2026-04-03T10:00:00",
+    "updatedAt": "2026-04-03T10:00:00"
+  },
+  {
+    "name": "Nệm foam Comfy Lux 1.0 làm mát kháng khuẩn",
+    "productCode": "NF002",
+    "category": {
+      "name": "Nệm foam",
+      "code": "NEM_FOAM",
+      "parentCode": "NEM",
+      "parentName": "Nệm"
+    },
+    "brand": "Comfy",
+    "origin": "Việt Nam",
+    "price": 13650000,
+    "specifications": {
+      "material": "Foam cao cấp 7 thành phần",
+      "weight": "22-32kg",
+      "firmness": "Medium",
+      "design": "Nâng đỡ 5 vùng, làm mát & kháng khuẩn",
+      "certificationNumber": "TCVN 6457:2018"
+    },
+    "variants": [
+      {
+        "variantId": "nf2-160",
+        "sku": "NF002-160X200",
+        "size": "1m6 x 2m",
+        "thickness": "18cm",
+        "price": 13650000,
+        "originalPrice": 19650000,
+        "stockQuantity": 52,
+        "status": "ACTIVE"
+      },
+      {
+        "variantId": "nf2-180",
+        "sku": "NF002-180X200",
+        "size": "1m8 x 2m",
+        "thickness": "18cm",
+        "price": 15200000,
+        "originalPrice": 21900000,
+        "stockQuantity": 38,
+        "status": "ACTIVE"
+      }
+    ],
+    "totalStockQuantity": 90,
+    "tags": ["comfy", "lux-1.0", "lam-mat", "khang-khuan", "nem-foam"],
+    "images": [
+      { "url": "https://vuanem.com/images/nem-foam-comfy-lux-1.0.jpg", "isPrimary": true }
+    ],
+    "status": "AVAILABLE",
+    "description": "Nệm foam Comfy Lux 1.0 cao cấp với công nghệ làm mát và kháng khuẩn kép, nâng đỡ 5 vùng cơ thể, mang lại giấc ngủ sâu và thoải mái suốt đêm.",
+    "createdAt": "2026-04-03T10:00:00",
+    "updatedAt": "2026-04-03T10:00:00"
+  },
+  {
+    "name": "Nệm foam iComfy Coolax Plus điều hòa thân nhiệt",
+    "productCode": "NF003",
+    "category": {
+      "name": "Nệm foam",
+      "code": "NEM_FOAM",
+      "parentCode": "NEM",
+      "parentName": "Nệm"
+    },
+    "brand": "iComfy",
+    "origin": "Việt Nam",
+    "price": 9699000,
+    "specifications": {
+      "material": "Foam rổ trứng cao cấp",
+      "weight": "20-30kg",
+      "firmness": "Medium",
+      "design": "Điều hòa thân nhiệt, thoáng khí",
+      "certificationNumber": "TCVN 6457:2018"
+    },
+    "variants": [
+      {
+        "variantId": "nf3-160",
+        "sku": "NF003-160X200",
+        "size": "1m6 x 2m",
+        "thickness": "20cm",
+        "price": 9699000,
+        "originalPrice": 11300000,
+        "stockQuantity": 55,
+        "status": "ACTIVE"
+      }
+    ],
+    "totalStockQuantity": 55,
+    "tags": ["icomfy", "coolax-plus", "dieu-hoa-nhiet", "nem-foam"],
+    "images": [
+      { "url": "https://vuanem.com/images/nem-foam-icomfy-coolax-plus.jpg", "isPrimary": true },
+      { "url": "https://vuanem.com/images/nem-foam-icomfy-coolax-plus-detail.jpg", "isPrimary": false }
+    ],
+    "status": "AVAILABLE",
+    "description": "Nệm foam iComfy Coolax Plus nâng cấp công nghệ điều hòa thân nhiệt, giúp giữ mát mẻ vào mùa hè và ấm áp vào mùa đông, rất phù hợp khí hậu Việt Nam.",
+    "createdAt": "2026-04-03T10:00:00",
+    "updatedAt": "2026-04-03T10:00:00"
+  },
+  {
+    "name": "Nệm foam Goodnight Active Hybrid công nghệ Đức",
+    "productCode": "NF004",
+    "category": {
+      "name": "Nệm foam",
+      "code": "NEM_FOAM",
+      "parentCode": "NEM",
+      "parentName": "Nệm"
+    },
+    "brand": "Goodnight",
+    "origin": "Việt Nam",
+    "price": 6499000,
+    "specifications": {
+      "material": "Foam công nghệ Đức Hybrid",
+      "weight": "19-29kg",
+      "firmness": "Medium",
+      "design": "Hybrid đàn hồi cao",
+      "certificationNumber": "TCVN 6457:2018"
+    },
+    "variants": [
+      {
+        "variantId": "nf4-160",
+        "sku": "NF004-160X200",
+        "size": "1m6 x 2m",
+        "thickness": "20cm",
+        "price": 6499000,
+        "originalPrice": 11900000,
+        "stockQuantity": 72,
+        "status": "ACTIVE"
+      },
+      {
+        "variantId": "nf4-180",
+        "sku": "NF004-180X200",
+        "size": "1m8 x 2m",
+        "thickness": "20cm",
+        "price": 7290000,
+        "originalPrice": 13500000,
+        "stockQuantity": 48,
+        "status": "ACTIVE"
+      }
+    ],
+    "totalStockQuantity": 120,
+    "tags": ["goodnight", "active-hybrid", "cong-nghe-duc", "nem-foam"],
+    "images": [
+      { "url": "https://vuanem.com/images/nem-foam-goodnight-active-hybrid.jpg", "isPrimary": true }
+    ],
+    "status": "AVAILABLE",
+    "description": "Nệm foam Goodnight Active Hybrid công nghệ Đức dày 20cm, kết hợp ưu điểm của foam và hybrid, đàn hồi tốt, thoáng khí và hỗ trợ cột sống hiệu quả.",
+    "createdAt": "2026-04-03T10:00:00",
+    "updatedAt": "2026-04-03T10:00:00"
+  }
+]
+
+nệm lò xo 
+
+[
+  {
+    "name": "Nệm lò xo túi độc lập Amando Elite Original dày 23cm",
+    "productCode": "NLX001",
+    "category": {
+      "name": "Nệm lò xo",
+      "code": "NEM_LO_XO",
+      "parentCode": "NEM",
+      "parentName": "Nệm"
+    },
+    "brand": "Amando",
+    "origin": "Việt Nam",
+    "price": 4850000,
+    "specifications": {
+      "material": "Lò xo túi độc lập cao cấp + foam và vải kháng khuẩn",
+      "weight": "25-35kg",
+      "firmness": "Medium",
+      "design": "Túi độc lập tiêu chuẩn khách sạn 5 sao",
+      "certificationNumber": "TCVN 6457:2018"
+    },
+    "variants": [
+      {
+        "variantId": "nlx1-160",
+        "sku": "NLX001-160X200",
+        "size": "1m6 x 2m",
+        "thickness": "23cm",
+        "price": 4850000,
+        "originalPrice": 9700000,
+        "stockQuantity": 85,
+        "status": "ACTIVE"
+      },
+      {
+        "variantId": "nlx1-180",
+        "sku": "NLX001-180X200",
+        "size": "1m8 x 2m",
+        "thickness": "23cm",
+        "price": 5490000,
+        "originalPrice": 10900000,
+        "stockQuantity": 62,
+        "status": "ACTIVE"
+      }
+    ],
+    "totalStockQuantity": 147,
+    "tags": ["amando", "elite-original", "tui-doc-lap", "khach-san-5-sao", "nem-lo-xo"],
+    "images": [
+      { "url": "https://vuanem.com/images/nem-lo-xo-amando-elite-original.jpg", "isPrimary": true },
+      { "url": "https://vuanem.com/images/nem-lo-xo-amando-elite-original-detail.jpg", "isPrimary": false }
+    ],
+    "status": "AVAILABLE",
+    "description": "Nệm lò xo Amando Elite Original túi độc lập tiêu chuẩn khách sạn 5 sao, hạn chế rung lắc, không gây tiếng ồn, thoáng khí tốt. Best seller với hơn 37.000 đơn hàng, phù hợp cho cặp đôi và gia đình.",
+    "createdAt": "2026-04-03T10:00:00",
+    "updatedAt": "2026-04-03T10:00:00"
+  },
+  {
+    "name": "Nệm lò xo túi độc lập Amando Elite Plus giảm tiếng ồn dày 25cm",
+    "productCode": "NLX002",
+    "category": {
+      "name": "Nệm lò xo",
+      "code": "NEM_LO_XO",
+      "parentCode": "NEM",
+      "parentName": "Nệm"
+    },
+    "brand": "Amando",
+    "origin": "Việt Nam",
+    "price": 9110000,
+    "specifications": {
+      "material": "Lò xo túi độc lập cao cấp + foam kháng khuẩn",
+      "weight": "28-38kg",
+      "firmness": "Medium",
+      "design": "Giảm tiếng ồn tối đa",
+      "certificationNumber": "TCVN 6457:2018"
+    },
+    "variants": [
+      {
+        "variantId": "nlx2-160",
+        "sku": "NLX002-160X200",
+        "size": "1m6 x 2m",
+        "thickness": "25cm",
+        "price": 9110000,
+        "originalPrice": 16110000,
+        "stockQuantity": 48,
+        "status": "ACTIVE"
+      },
+      {
+        "variantId": "nlx2-180",
+        "sku": "NLX002-180X200",
+        "size": "1m8 x 2m",
+        "thickness": "25cm",
+        "price": 10290000,
+        "originalPrice": 17900000,
+        "stockQuantity": 35,
+        "status": "ACTIVE"
+      }
+    ],
+    "totalStockQuantity": 83,
+    "tags": ["amando", "elite-plus", "giam-tieng-on", "nem-lo-xo", "cao-cap"],
+    "images": [
+      { "url": "https://vuanem.com/images/nem-lo-xo-amando-elite-plus.jpg", "isPrimary": true }
+    ],
+    "status": "AVAILABLE",
+    "description": "Nệm lò xo Amando Elite Plus túi độc lập cao cấp dày 25cm, công nghệ giảm tiếng ồn vượt trội, nâng đỡ đa vùng, phù hợp cho gia đình cần sự yên tĩnh và êm ái.",
+    "createdAt": "2026-04-03T10:00:00",
+    "updatedAt": "2026-04-03T10:00:00"
+  },
+  {
+    "name": "Nệm lò xo Goodnight SleepWave Hybrid dày 20cm",
+    "productCode": "NLX003",
+    "category": {
+      "name": "Nệm lò xo",
+      "code": "NEM_LO_XO",
+      "parentCode": "NEM",
+      "parentName": "Nệm"
+    },
+    "brand": "Goodnight",
+    "origin": "Việt Nam",
+    "price": 3549000,
+    "specifications": {
+      "material": "Lò xo túi độc lập Hybrid",
+      "weight": "22-32kg",
+      "firmness": "Medium",
+      "design": "Giảm tiếng ồn, nâng đỡ cơ thể",
+      "certificationNumber": "TCVN 6457:2018"
+    },
+    "variants": [
+      {
+        "variantId": "nlx3-160",
+        "sku": "NLX003-160X200",
+        "size": "1m6 x 2m",
+        "thickness": "20cm",
+        "price": 3549000,
+        "originalPrice": 6900000,
+        "stockQuantity": 95,
+        "status": "ACTIVE"
+      }
+    ],
+    "totalStockQuantity": 95,
+    "tags": ["goodnight", "sleepwave", "hybrid", "gia-re", "nem-lo-xo"],
+    "images": [
+      { "url": "https://vuanem.com/images/nem-lo-xo-goodnight-sleepwave.jpg", "isPrimary": true },
+      { "url": "https://vuanem.com/images/nem-lo-xo-goodnight-sleepwave-detail.jpg", "isPrimary": false }
+    ],
+    "status": "AVAILABLE",
+    "description": "Nệm lò xo Goodnight SleepWave Hybrid dày 20cm, công nghệ túi độc lập giảm tiếng ồn, giá tốt, phù hợp cho gia đình trẻ và người mới bắt đầu dùng nệm lò xo.",
+    "createdAt": "2026-04-03T10:00:00",
+    "updatedAt": "2026-04-03T10:00:00"
+  },
+  {
+    "name": "Nệm lò xo Dunlopillo de.Stress Energy cách ly chuyển động",
+    "productCode": "NLX004",
+    "category": {
+      "name": "Nệm lò xo",
+      "code": "NEM_LO_XO",
+      "parentCode": "NEM",
+      "parentName": "Nệm"
+    },
+    "brand": "Dunlopillo",
+    "origin": "Việt Nam",
+    "price": 28544000,
+    "specifications": {
+      "material": "Lò xo túi độc lập cao cấp công nghệ châu Âu",
+      "weight": "30-40kg",
+      "firmness": "Medium",
+      "design": "Cách ly chuyển động độc quyền",
+      "certificationNumber": "OEKO-TEX"
+    },
+    "variants": [
+      {
+        "variantId": "nlx4-160",
+        "sku": "NLX004-160X200",
+        "size": "1m6 x 2m",
+        "thickness": "25cm",
+        "price": 28544000,
+        "originalPrice": 35680000,
+        "stockQuantity": 25,
+        "status": "ACTIVE"
+      },
+      {
+        "variantId": "nlx4-180",
+        "sku": "NLX004-180X200",
+        "size": "1m8 x 2m",
+        "thickness": "25cm",
+        "price": 31900000,
+        "originalPrice": 39900000,
+        "stockQuantity": 18,
+        "status": "ACTIVE"
+      }
+    ],
+    "totalStockQuantity": 43,
+    "tags": ["dunlopillo", "de-stress-energy", "cach-ly-chuyen-dong", "cao-cap", "nem-lo-xo"],
+    "images": [
+      { "url": "https://vuanem.com/images/nem-lo-xo-dunlopillo-de-stress-energy.jpg", "isPrimary": true }
+    ],
+    "status": "AVAILABLE",
+    "description": "Nệm lò xo Dunlopillo de.Stress Energy cao cấp với công nghệ cách ly chuyển động độc quyền, nâng đỡ chuyên sâu, mang lại giấc ngủ sang trọng và yên tĩnh tuyệt đối.",
+    "createdAt": "2026-04-03T10:00:00",
+    "updatedAt": "2026-04-03T10:00:00"
+  }
+]

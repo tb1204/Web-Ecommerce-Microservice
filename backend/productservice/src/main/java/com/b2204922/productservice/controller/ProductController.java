@@ -43,7 +43,8 @@ public class ProductController {
     public ResponseEntity<Product> updateProduct(
             @PathVariable String id,
             @RequestPart("product") Product product,
-            @RequestPart(value = "imageFiles", required = false) List<MultipartFile> imageFiles
+            @RequestPart(value = "primaryImage", required = false) MultipartFile primaryImage, // Ghế riêng cho ảnh đại diện
+            @RequestPart(value = "imageFiles", required = false) List<MultipartFile> imageFiles // Chỉ dành cho ảnh phụ
     ) {
         Product updated = productService.updateProduct(id, product, imageFiles);
         return ResponseEntity.ok(updated);
@@ -54,7 +55,7 @@ public class ProductController {
         List<Product> products = productService.findProductsByIds(ids);
         return ResponseEntity.ok(products);
     }
-    
+
     @GetMapping("/all")
     public ResponseEntity<List<Product>> getAllProducts() {
 
@@ -106,5 +107,11 @@ public class ProductController {
     @GetMapping("/parent-category/{parentCode}")
     public ResponseEntity<List<Product>> getByParentCategory(@PathVariable String parentCode) {
         return ResponseEntity.ok(productService.getProductsByParentCategory(parentCode));
+    }
+
+    @GetMapping("/discount")
+    public ResponseEntity<List<Product>> getDiscountProducts() {
+        List<Product> discountProducts = productService.getDiscountProducts();
+        return ResponseEntity.ok(discountProducts);
     }
 }

@@ -27,7 +27,12 @@ interface ProductFormState {
   brand: string;
   origin: string;
   // Giữ đúng 4 trường như Entity mới
-  category: { name: string; code: string; parentCode: string; parentName: string }; 
+  category: {
+    name: string;
+    code: string;
+    parentCode: string;
+    parentName: string;
+  };
   specifications: {
     material: string;
     weight: string;
@@ -41,7 +46,6 @@ interface ProductFormState {
   description: string;
   imageObjects: { file: File; preview: string }[];
 }
-
 
 const ProductAddModal: React.FC<ProductAddModalProps> = ({
   isOpen,
@@ -112,6 +116,7 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({
       sku: "Hệ thống tự tạo...",
       size: "",
       thickness: "",
+      color: "",
       price: 0,
       originalPrice: 0,
       stockQuantity: 0,
@@ -183,11 +188,15 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({
       variants: formData.variants.map((v) => ({
         size: v.size,
         thickness: v.thickness,
+        color: v.color,
         price: Number(v.price),
         originalPrice: Number(v.originalPrice),
         stockQuantity: Number(v.stockQuantity),
         status: "ACTIVE",
       })),
+      colors: Array.from(
+        new Set(formData.variants.map((v) => v.color).filter(Boolean)),
+      ),
       specifications: formData.specifications,
       status: formData.status === "stopselling" ? "stopselling" : "AVAILABLE",
       tags: processedTags,
@@ -226,7 +235,7 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({
                 Thêm sản phẩm mới
               </h2>
               <p className="text-[11px] text-emerald-100 mt-1 uppercase tracking-widest font-medium italic">
-                Artisano 
+                Artisano
               </p>
             </div>
           </div>
@@ -335,17 +344,28 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({
                   value={formData.category.parentCode || ""}
                   onChange={(e) => {
                     const pCode = e.target.value;
-                    const parentObj = categories.find(c => c.code === pCode && !c.parentCode);
+                    const parentObj = categories.find(
+                      (c) => c.code === pCode && !c.parentCode,
+                    );
                     setFormData({
                       ...formData,
-                      category: { name: "", code: "", parentCode: pCode, parentName: parentObj ? parentObj.name : "" }
+                      category: {
+                        name: "",
+                        code: "",
+                        parentCode: pCode,
+                        parentName: parentObj ? parentObj.name : "",
+                      },
                     });
                   }}
                 >
                   <option value="">-- Chọn danh mục --</option>
-                  {categories.filter(c => !c.parentCode).map((cat) => (
-                    <option key={cat.code} value={cat.code}>{cat.name}</option>
-                  ))}
+                  {categories
+                    .filter((c) => !c.parentCode)
+                    .map((cat) => (
+                      <option key={cat.code} value={cat.code}>
+                        {cat.name}
+                      </option>
+                    ))}
                 </select>
               </div>
 
@@ -359,20 +379,28 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({
                   value={formData.category.code || ""}
                   onChange={(e) => {
                     const subCode = e.target.value;
-                    const subObj = categories.find(c => c.code === subCode);
+                    const subObj = categories.find((c) => c.code === subCode);
                     if (subObj) {
                       setFormData({
                         ...formData,
-                        category: { ...formData.category, name: subObj.name, code: subObj.code }
+                        category: {
+                          ...formData.category,
+                          name: subObj.name,
+                          code: subObj.code,
+                        },
                       });
                     }
                   }}
                 >
                   <option value="">-- Chọn loại cụ thể --</option>
                   {categories
-                    .filter(c => c.parentCode === formData.category.parentCode)
+                    .filter(
+                      (c) => c.parentCode === formData.category.parentCode,
+                    )
                     .map((sub) => (
-                      <option key={sub.code} value={sub.code}>{sub.name}</option>
+                      <option key={sub.code} value={sub.code}>
+                        {sub.name}
+                      </option>
                     ))}
                 </select>
               </div>
@@ -390,7 +418,6 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({
                 value={formData.origin}
                 onChange={handleChange}
               />
-
             </div>
           </section>
 
@@ -445,6 +472,20 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({
                   </div>
                   <div>
                     <label className="text-[9px] font-black text-gray-400 uppercase ml-1">
+                      Màu sắc
+                    </label>
+                    <input
+                      type="text"
+                      value={v.color || ""}
+                      onChange={(e) =>
+                        handleVariantChange(index, "color", e.target.value)
+                      }
+                      className="w-full px-3 py-2 rounded-xl border text-xs outline-none focus:border-emerald-500"
+                      placeholder="blue, white..."
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[9px] font-black text-gray-400 uppercase ml-1">
                       Giá bán (₫)
                     </label>
                     <input
@@ -457,7 +498,7 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({
                           Number(e.target.value),
                         )
                       }
-                      className="w-full px-3 py-2 rounded-xl border-emerald-100 text-xs font-bold outline-none h-[34px]"
+                      className="w-full px-3 py-2 rounded-xl border text-xs outline-none focus:border-emerald-500"
                       required
                     />
                   </div>
@@ -475,7 +516,7 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({
                           Number(e.target.value),
                         )
                       }
-                      className="w-full px-3 py-2 rounded-xl border text-xs outline-none h-[34px]"
+                      className="w-full px-3 py-2 rounded-xl border text-xs outline-none focus:border-emerald-500"
                     />
                   </div>
 
@@ -578,7 +619,7 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({
           <section className="grid grid-cols-1 md:grid-cols-2 gap-8 pb-6">
             <div className="space-y-5 bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
               <InputGroup
-                label="Thẻ Tags (Dấu phẩy)"
+                label="Thẻ Tags "
                 name="tags"
                 value={formData.tags}
                 onChange={handleChange}

@@ -1,12 +1,3 @@
-/**
- * SELECTORS - Các hàm lấy state đã được tính toán sẵn
- * Dùng với useAppSelector để truy cập state dễ dàng hơn.
- *
- * Cách dùng:
- *   import { selectFilteredProducts } from "@/store/selectors";
- *   const filtered = useAppSelector(selectFilteredProducts);
- */
-
 import type { RootState } from "./index";
 
 /** Danh sách sản phẩm đã lọc theo searchTerm + selectedCategory */
@@ -48,19 +39,22 @@ export const selectProductLoading = (state: RootState) => state.product.loading;
 export const selectCart = (state: RootState) => state.cart.cart;
 
 /** Danh sách sản phẩm trong giỏ */
-export const selectCartItems = (state: RootState) => state.cart.cart.products;
+export const selectCartItems = (state: RootState) =>
+  state.cart?.cart?.products ?? [];
 
 /** Tổng số sản phẩm (count badges) */
-export const selectCartItemCount = (state: RootState) =>
-  state.cart.cart.products.reduce((sum, item) => sum + item.quantity, 0);
-
+// export const selectCartItemCount = (state: RootState) =>
+//   state.cart.cart.products.reduce((sum, item) => sum + item.quantity, 0);
+export const selectCartItemCount = (state: RootState) => {
+  const products = state.cart?.cart?.products ?? [];
+  return products.reduce((sum, item) => sum + (item.quantity || 0), 0);
+};
 /** Tổng tiền giỏ hàng */
 export const selectCartTotalPrice = (state: RootState) =>
-  state.cart.cart.products.reduce(
+  (state.cart?.cart?.products ?? []).reduce(
     (sum, item) => sum + item.price * item.quantity,
     0,
   );
-
 /** Danh sách productId được chọn để thanh toán */
 export const selectSelectedItems = (state: RootState) =>
   state.cart.selectedItems;

@@ -10,6 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderRequest {
+
     private String userId; // ID của người mua
 
     // Thông tin người nhận
@@ -17,7 +18,8 @@ public class OrderRequest {
     private String phone;
     private String email;
     private String shippingAddress;
-
+// OrderItemRequest.java — thêm field
+    private String variantId; // ✅ THÊM
     private List<OrderItemRequest> items;
 
     private String paymentMethod;

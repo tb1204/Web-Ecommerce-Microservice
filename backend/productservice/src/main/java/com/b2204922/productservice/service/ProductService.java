@@ -139,6 +139,19 @@ public class ProductService {
                 product.getCategory().setParentName(product.getCategory().getParentName().trim());
             }
         }
+        if (product.getVariants() != null) {
+            for (Product.ProductVariant variant : product.getVariants()) {
+                if (variant.getSize() != null) {
+                    variant.setSize(variant.getSize().trim());
+                }
+                if (variant.getThickness() != null) {
+                    variant.setThickness(variant.getThickness().trim());
+                }
+                if (variant.getColor() != null) {
+                    variant.setColor(variant.getColor().trim()); // <-- TRIM MÀU SẮC
+
+                            }}
+        }
 
         if (product.getSpecifications() != null) {
             var spec = product.getSpecifications();
@@ -163,49 +176,16 @@ public class ProductService {
     /**
      * Hàm phụ trợ xử lý upload ảnh
      */
-    // private void handleImageUploads(Product product, List<MultipartFile> imageFiles) {
-    //     if (imageFiles != null && !imageFiles.isEmpty()) {
-    //         List<Product.ProductImage> productImages = new ArrayList<>();
-    //         try {
-    //             for (int i = 0; i < imageFiles.size(); i++) {
-    //                 Map uploadResult = cloudinary.uploader().upload(imageFiles.get(i).getBytes(),
-    //                         ObjectUtils.asMap("folder", "artisano/products"));
-    //                 Product.ProductImage img = new Product.ProductImage();
-    //                 // img.setUrl(uploadResult.get("url").toString());
-    //                 // Thay đổi ở cả 2 hàm trong ProductService.java
-    //                 img.setUrl(uploadResult.get("secure_url").toString()); // đổi "url" -> "secure_url"
-    //                 img.setIsPrimary(i == 0);
-    //                 productImages.add(img);
-    //             }
-    //             product.setImages(productImages);
-    //         } catch (IOException e) {
-    //             log.error("Lỗi upload ảnh Cloudinary: {}", e.getMessage());
-    //             throw new RuntimeException("Lỗi dịch vụ hình ảnh, vui lòng thử lại!");
-    //         }
-    //     }
-    // }
-    //test
     private void handleImageUploads(Product product, List<MultipartFile> imageFiles) {
         if (imageFiles != null && !imageFiles.isEmpty()) {
             List<Product.ProductImage> productImages = new ArrayList<>();
             try {
                 for (int i = 0; i < imageFiles.size(); i++) {
-                    // Chỉ upload thuần túy, không transformation
-                    Map uploadResult = cloudinary.uploader().upload(
-                            imageFiles.get(i).getBytes(),
-                            ObjectUtils.asMap("folder", "artisano/products")
-                    );
-
-                    String rawUrl = uploadResult.get("secure_url").toString();
-
-                    // Tạo optimized URL bằng cách chèn vào URL như chat-service làm
-                    String optimizedUrl = rawUrl.replace(
-                            "/upload/",
-                            "/upload/w_800,q_auto,f_auto/"
-                    );
+                    Map uploadResult = cloudinary.uploader().upload(imageFiles.get(i).getBytes(),
+                            ObjectUtils.asMap("folder", "artisano/products"));
 
                     Product.ProductImage img = new Product.ProductImage();
-                    img.setUrl(optimizedUrl);
+                    img.setUrl(uploadResult.get("url").toString());
                     img.setIsPrimary(i == 0);
                     productImages.add(img);
                 }
@@ -240,72 +220,12 @@ public class ProductService {
     }
 
     //Ham update san pham
-//    public Product updateProduct(String id, Product updatedProduct, List<MultipartFile> newImages) {
-//        Product existingProduct = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Khong tim thay san pham de cap nhat"));
-//
-//        //Lay cac thong tin cap nhat
-//        if (updatedProduct.getName() != null) {
-//            existingProduct.setName(updatedProduct.getName().trim());
-//        }
-//        if (updatedProduct.getSku() != null) {
-//            existingProduct.setSku(updatedProduct.getSku().trim().toUpperCase());
-//        }
-//        if (updatedProduct.getBrand() != null) {
-//            existingProduct.setBrand(updatedProduct.getBrand().trim());
-//        }
-//        if (updatedProduct.getOrigin() != null) {
-//            existingProduct.setOrigin(updatedProduct.getOrigin().trim());
-//        }
-//        existingProduct.setPrice(updatedProduct.getPrice());
-//        existingProduct.setOriginalPrice(updatedProduct.getOriginalPrice());
-//        existingProduct.setStockQuantity(updatedProduct.getStockQuantity());
-//        existingProduct.setStatus(updatedProduct.getStatus());
-//        existingProduct.setDescription(updatedProduct.getDescription() != null ? updatedProduct.getDescription().trim() : null);
-//        if (updatedProduct.getCategory() != null) {
-//            existingProduct.setCategory(updatedProduct.getCategory());
-//        }
-//        if (updatedProduct.getSpecifications() != null) {
-//            existingProduct.setSpecifications(updatedProduct.getSpecifications());
-//        }
-//        existingProduct.setTags(updatedProduct.getTags());
-//        existingProduct.setUpdatedAt(LocalDateTime.now());
-//
-//        //Xu ly hinh anh moi (neu co thay doi)
-//        if (newImages != null && !newImages.isEmpty()) {
-//            //xoa anh cu tren cloudinary
-//            for (var img : existingProduct.getImages()) {
-//                try {
-//                    String url = img.getUrl();
-//                    String publicId = "artisano/products/" + url.substring(url.lastIndexOf("/") + 1, url.lastIndexOf("."));
-//                    cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
-//                } catch (Exception e) {
-//                    log.error("Lỗi xóa ảnh cũ: {}", e.getMessage());
-//                }
-//            }
-//
-//            //upload anh moi len cloudinary
-//            List<Product.ProductImage> productImages = new ArrayList<>();
-//            try {
-//                for (int i = 0; i < newImages.size(); i++) {
-//                    Map uploadResult = cloudinary.uploader().upload(newImages.get(i).getBytes(), ObjectUtils.asMap("folder", "artisano/products"));
-//                    Product.ProductImage img = new Product.ProductImage();
-//                    img.setUrl(uploadResult.get("url").toString());
-//                    img.setIsPrimary(i == 0);
-//                    productImages.add(img);
-//                }
-//                existingProduct.setImages(productImages);
-//            } catch (Exception e) {
-//                throw new RuntimeException("Lỗi upload ảnh mới!");
-//            }
-//        }
-//        return productRepository.save(existingProduct);
-//    }
     public Product updateProduct(String id, Product updatedProduct, List<MultipartFile> newImages) {
         // 1. Tìm sản phẩm cũ trong DB
         Product existingProduct = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm để cập nhật"));
 
-        // 2. Cập nhật thông tin cơ bản (Bỏ setOriginalPrice ở đây vì đã đưa vào Variant)
+        // 2. Cập nhật thông tin cơ bản
         if (updatedProduct.getName() != null) {
             existingProduct.setName(updatedProduct.getName().trim());
         }
@@ -315,132 +235,126 @@ public class ProductService {
         if (updatedProduct.getOrigin() != null) {
             existingProduct.setOrigin(updatedProduct.getOrigin().trim());
         }
-
-        existingProduct.setDescription(updatedProduct.getDescription() != null ? updatedProduct.getDescription().trim() : null);
+        existingProduct.setDescription(updatedProduct.getDescription());
         existingProduct.setStatus(updatedProduct.getStatus());
         existingProduct.setCategory(updatedProduct.getCategory());
         existingProduct.setSpecifications(updatedProduct.getSpecifications());
         existingProduct.setTags(updatedProduct.getTags());
 
-        // 3. XỬ LÝ CẬP NHẬT BIẾN THỂ (VARIANTS)
+        // 3. Cập nhật biến thể (Variants) và tính toán lại Giá/Kho
         if (updatedProduct.getVariants() != null && !updatedProduct.getVariants().isEmpty()) {
             int totalStock = 0;
             Double minPrice = Double.MAX_VALUE;
 
             for (Product.ProductVariant v : updatedProduct.getVariants()) {
-                // Đảm bảo mỗi biến thể luôn có ID để định danh
                 if (v.getVariantId() == null || v.getVariantId().isEmpty()) {
                     v.setVariantId(UUID.randomUUID().toString());
                 }
-
-                // Cộng dồn tồn kho từ các biến thể mới gửi lên
                 totalStock += (v.getStockQuantity() != null) ? v.getStockQuantity() : 0;
-
-                // Tìm giá bán thấp nhất để làm giá hiển thị đại diện cho Product
                 if (v.getPrice() != null && v.getPrice() < minPrice) {
                     minPrice = v.getPrice();
                 }
             }
-
-            // Cập nhật danh sách biến thể mới vào sản phẩm hiện tại
             existingProduct.setVariants(updatedProduct.getVariants());
             existingProduct.setTotalStockQuantity(totalStock);
             existingProduct.setPrice(minPrice);
         }
 
-        existingProduct.setUpdatedAt(LocalDateTime.now());
+        // 4. XỬ LÝ HÌNH ẢNH
+        List<Product.ProductImage> oldImagesFromDb = existingProduct.getImages();
+        List<Product.ProductImage> keptImagesFromFrontend = updatedProduct.getImages();
+        List<Product.ProductImage> finalImages = new ArrayList<>();
 
-        // 4. Xử lý hình ảnh (Nếu có upload ảnh mới - gọi hàm Helper của Bằng)
-        if (newImages != null && !newImages.isEmpty()) {
-            updateProductImagesOnCloudinary(existingProduct, newImages);
+        if (oldImagesFromDb != null && keptImagesFromFrontend != null) {
+            Set<String> keptUrls = keptImagesFromFrontend.stream()
+                    .map(Product.ProductImage::getUrl)
+                    .collect(Collectors.toSet());
+
+            for (Product.ProductImage oldImg : oldImagesFromDb) {
+                if (!keptUrls.contains(oldImg.getUrl())) {
+                    deleteImageFromCloudinary(oldImg.getUrl());
+                }
+            }
         }
 
-        log.info("Cập nhật thành công sản phẩm: {}, Tổng kho mới: {}",
+        boolean isUpdatingPrimary = false;
+        if (keptImagesFromFrontend != null && !keptImagesFromFrontend.isEmpty()) {
+            String firstUrl = keptImagesFromFrontend.get(0).getUrl();
+            if (firstUrl != null && firstUrl.startsWith("blob:")) {
+                isUpdatingPrimary = true;
+                keptImagesFromFrontend.remove(0);
+            }
+        }
+
+        if (newImages != null && !newImages.isEmpty()) {
+            try {
+                for (int i = 0; i < newImages.size(); i++) {
+                    Map uploadResult = cloudinary.uploader().upload(newImages.get(i).getBytes(),
+                            ObjectUtils.asMap("folder", "artisano/products"));
+
+                    Product.ProductImage newImg = new Product.ProductImage();
+                    newImg.setUrl(uploadResult.get("url").toString());
+
+                    if (isUpdatingPrimary && i == 0) {
+                        newImg.setIsPrimary(true);
+                        finalImages.add(0, newImg);
+                    } else {
+                        newImg.setIsPrimary(false);
+                        finalImages.add(newImg);
+                    }
+                }
+            } catch (IOException e) {
+                log.error("Lỗi upload: {}", e.getMessage());
+                throw new RuntimeException("Lỗi upload ảnh mới lên Cloudinary!");
+            }
+        }
+
+        if (keptImagesFromFrontend != null) {
+            for (Product.ProductImage img : keptImagesFromFrontend) {
+                if (finalImages.stream().anyMatch(Product.ProductImage::getIsPrimary)) {
+                    img.setIsPrimary(false);
+                }
+                finalImages.add(img);
+            }
+        }
+
+        if (!finalImages.isEmpty()) {
+            boolean hasPrimary = finalImages.stream().anyMatch(Product.ProductImage::getIsPrimary);
+            if (!hasPrimary) {
+                finalImages.get(0).setIsPrimary(true);
+            }
+        }
+        if (finalImages != null && !finalImages.isEmpty()) {
+            finalImages.sort((img1, img2) -> Boolean.compare(img2.getIsPrimary(), img1.getIsPrimary()));
+        }
+
+        existingProduct.setImages(finalImages);
+        existingProduct.setUpdatedAt(LocalDateTime.now());
+
+        log.info("Cập nhật thành công sản phẩm: {}, Tổng kho: {}",
                 existingProduct.getName(), existingProduct.getTotalStockQuantity());
 
         return productRepository.save(existingProduct);
     }
 
     /**
-     * Hàm phụ trợ xử lý xóa ảnh cũ và upload ảnh mới lên Cloudinary
+     * Hàm phụ trợ để xóa file vật lý trên Cloudinary từ URL
      */
-    // private void updateProductImagesOnCloudinary(Product existingProduct, List<MultipartFile> newImages) {
-    //     // Xóa ảnh cũ trên Cloudinary
-    //     if (existingProduct.getImages() != null) {
-    //         for (var img : existingProduct.getImages()) {
-    //             try {
-    //                 String url = img.getUrl();
-    //                 String publicId = "artisano/products/" + url.substring(url.lastIndexOf("/") + 1, url.lastIndexOf("."));
-    //                 cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
-    //             } catch (Exception e) {
-    //                 log.error("Lỗi xóa ảnh cũ trên Cloudinary: {}", e.getMessage());
-    //             }
-    //         }
-    //     }
-    //     // Upload ảnh mới
-    //     List<Product.ProductImage> productImages = new ArrayList<>();
-    //     try {
-    //         for (int i = 0; i < newImages.size(); i++) {
-    //             Map uploadResult = cloudinary.uploader().upload(newImages.get(i).getBytes(),
-    //                     ObjectUtils.asMap("folder", "artisano/products"));
-    //             Product.ProductImage img = new Product.ProductImage();
-    //             // img.setUrl(uploadResult.get("url").toString());
-    //             // Thay đổi ở cả 2 hàm trong ProductService.java
-    //             img.setUrl(uploadResult.get("secure_url").toString()); // đổi "url" -> "secure_url"
-    //             img.setIsPrimary(i == 0);
-    //             productImages.add(img);
-    //         }
-    //         existingProduct.setImages(productImages);
-    //     } catch (IOException e) {
-    //         throw new RuntimeException("Lỗi upload ảnh mới lên Cloudinary!");
-    //     }
-    // }
-//    public void updateStock(String productId, int quantity) {
-//        Product product = productRepository.findById(productId)
-//                .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm ID: " + productId));
-//
-//        int currentStock = product.getStockQuantity();
-//        int newStock = currentStock + quantity;
-//        if (newStock < 0) {
-//            throw new RuntimeException("Số lượng trong kho không đủ để thực hiện giao dịch!");
-//        }
-//
-//        product.setStockQuantity(newStock);
-//        productRepository.save(product);
-//    }
-//test
-    private void updateProductImagesOnCloudinary(Product existingProduct, List<MultipartFile> newImages) {
-        if (existingProduct.getImages() != null) {
-            for (var img : existingProduct.getImages()) {
-                try {
-                    String url = img.getUrl();
-                    String publicId = "artisano/products/" + url.substring(url.lastIndexOf("/") + 1, url.lastIndexOf("."));
-                    cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
-                } catch (Exception e) {
-                    log.error("Lỗi xóa ảnh cũ trên Cloudinary: {}", e.getMessage());
-                }
-            }
-        }
-        List<Product.ProductImage> productImages = new ArrayList<>();
+    private void deleteImageFromCloudinary(String url) {
         try {
-            for (int i = 0; i < newImages.size(); i++) {
-                Map uploadResult = cloudinary.uploader().upload(
-                        newImages.get(i).getBytes(),
-                        ObjectUtils.asMap("folder", "artisano/products")
-                );
-                Product.ProductImage img = new Product.ProductImage();
-                String rawUrl = uploadResult.get("secure_url").toString();
-                String optimizedUrl = rawUrl.replace("/upload/", "/upload/w_800,q_auto,f_auto/");
-                img.setUrl(optimizedUrl);
-                img.setIsPrimary(i == 0);
-                productImages.add(img);
-            }
-            existingProduct.setImages(productImages);
-        } catch (IOException e) {
-            throw new RuntimeException("Lỗi upload ảnh mới lên Cloudinary!");
+            // Trích xuất publicId từ URL Cloudinary
+            // Ví dụ: .../artisano/products/abcde.jpg -> publicId là "artisano/products/abcde"
+            String publicId = "artisano/products/" + url.substring(url.lastIndexOf("/") + 1, url.lastIndexOf("."));
+            cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
+            log.info(" Đã xóa vĩnh viễn trên Cloudinary: {}", publicId);
+        } catch (Exception e) {
+            log.error("Lỗi khi xóa ảnh trên Cloudinary: {}", e.getMessage());
         }
     }
 
+    /**
+     * Hàm phụ trợ xử lý xóa ảnh cũ và upload ảnh mới lên Cloudinary
+     */
     public void updateVariantStock(String productId, String variantId, int quantityChange) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm ID: " + productId));
@@ -514,5 +428,32 @@ public class ProductService {
     // Lấy toàn bộ sản phẩm thuộc danh mục cha
     public List<Product> getProductsByParentCategory(String parentCode) {
         return productRepository.findByCategory_ParentCode(parentCode);
+    }
+
+    /**
+     * Lấy tất cả sản phẩm đang có giảm giá (dùng cho Flash Sale)
+     */
+    public List<Product> getDiscountProducts() {
+        return productRepository.findAll().stream()
+                .filter(this::hasAnyDiscount)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Kiểm tra sản phẩm có ít nhất 1 biến thể đang giảm giá hay không
+     */
+    private boolean hasAnyDiscount(Product p) {
+        // Hầu hết sản phẩm đều có Variants → kiểm tra trong Variants
+        if (p.getVariants() != null && !p.getVariants().isEmpty()) {
+            return p.getVariants().stream().anyMatch(variant
+                    -> variant.getOriginalPrice() != null
+                    && variant.getPrice() != null
+                    && variant.getOriginalPrice() > variant.getPrice()
+            );
+        }
+
+        // Trường hợp không có variant (rất hiếm)
+        // Chúng ta bỏ qua hoặc trả về false vì Product không có originalPrice trực tiếp
+        return false;
     }
 }

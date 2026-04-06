@@ -12,7 +12,6 @@ export interface CartProduct {
   size?: string;
   thickness?: string;
   color?: string;
-  type?: "nem_phukien" | "boga";
 }
 
 export interface Cart {
@@ -22,7 +21,7 @@ export interface Cart {
 
 interface CartState {
   cart: Cart;
-  selectedItems: string[]; // productId của các item được chọn để thanh toán
+  selectedItems: string[];
   loading: boolean;
   error: string | null;
 }
@@ -37,24 +36,38 @@ const initialState: CartState = {
   loading: false,
   error: null,
 };
+
 const BASE_URL = "http://localhost:8083";
 
 // ==================== HELPER ====================
 const calcTotal = (products: CartProduct[]) =>
   products.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
+// ✅ THÊM: map response từ backend (items/summary) → Cart (products/totalPrice)
+const mapCartResponse = (res: any): Cart => ({
+  products: (res.items ?? []).map((item: any) => ({
+    productId: item.productId,
+    variantId: item.variantId,
+    name: item.name,
+    price: item.price,
+    quantity: item.quantity,
+    image: item.image,
+    size: item.size,
+    thickness: item.thickness,
+    color: item.color,
+  })),
+  totalPrice: res.summary?.subtotal ?? 0,
+});
+
 // ==================== ASYNC THUNKS ====================
 
-/** Lấy giỏ hàng của user từ cart-service */
 export const fetchCart = createAsyncThunk(
   "cart/fetchCart",
   async (token: string | null, { rejectWithValue }) => {
     try {
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
-      const res = await axios.get(`${BASE_URL}/api/cart`, {
-        headers,
-      });
-      return res.data as Cart;
+      const res = await axios.get(`${BASE_URL}/api/cart`, { headers });
+      return res.data;
     } catch (err: any) {
       return rejectWithValue(
         err.response?.data?.message || "Không thể tải giỏ hàng",
@@ -63,7 +76,6 @@ export const fetchCart = createAsyncThunk(
   },
 );
 
-/** Thêm sản phẩm vào giỏ hàng */
 export const addToCart = createAsyncThunk(
   "cart/addToCart",
   async (
@@ -75,10 +87,10 @@ export const addToCart = createAsyncThunk(
   ) => {
     try {
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
-      const res = await axios.post(`${BASE_URL}/api/cart/add`, product, {
+      const res = await axios.post(`${BASE_URL}/api/cart/items`, product, {
         headers,
       });
-      return res.data as Cart;
+      return res.data;
     } catch (err: any) {
       return rejectWithValue(
         err.response?.data?.message || "Thêm vào giỏ hàng thất bại",
@@ -87,7 +99,6 @@ export const addToCart = createAsyncThunk(
   },
 );
 
-/** Cập nhật số lượng sản phẩm */
 export const updateCartQuantity = createAsyncThunk(
   "cart/updateQuantity",
   async (
@@ -106,12 +117,12 @@ export const updateCartQuantity = createAsyncThunk(
   ) => {
     try {
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
-      const res = await axios.put(
-        `${BASE_URL}/api/cart/update`,
+      const res = await axios.patch(
+        `${BASE_URL}/api/cart/items`,
         { productId, variantId, quantity: newQty },
         { headers },
       );
-      return res.data as Cart;
+      return res.data;
     } catch (err: any) {
       return rejectWithValue(
         err.response?.data?.message || "Cập nhật số lượng thất bại",
@@ -120,7 +131,6 @@ export const updateCartQuantity = createAsyncThunk(
   },
 );
 
-/** Xóa sản phẩm khỏi giỏ hàng */
 export const removeFromCart = createAsyncThunk(
   "cart/removeItem",
   async (
@@ -133,10 +143,10 @@ export const removeFromCart = createAsyncThunk(
   ) => {
     try {
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
-      await axios.delete(`${BASE_URL}/api/cart/remove`, {
-        headers,
-        data: { productId, variantId },
-      });
+      await axios.delete(
+        `${BASE_URL}/api/cart/items/${productId}/${variantId}`,
+        { headers },
+      );
       return { productId, variantId };
     } catch (err: any) {
       return rejectWithValue(
@@ -146,7 +156,6 @@ export const removeFromCart = createAsyncThunk(
   },
 );
 
-/** Xóa toàn bộ giỏ hàng */
 export const clearCartApi = createAsyncThunk(
   "cart/clearCartApi",
   async (token: string | null, { rejectWithValue }) => {
@@ -167,7 +176,6 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    /** Thêm hoặc tăng số lượng sản phẩm ngay trên client (offline/guest mode) */
     addItemLocal(state, action: { payload: CartProduct }) {
       const existing = state.cart.products.find(
         (p) =>
@@ -182,7 +190,6 @@ const cartSlice = createSlice({
       state.cart.totalPrice = calcTotal(state.cart.products);
     },
 
-    /** Cập nhật số lượng ngay trên client */
     updateQuantityLocal(
       state,
       action: {
@@ -200,7 +207,6 @@ const cartSlice = createSlice({
       state.cart.totalPrice = calcTotal(state.cart.products);
     },
 
-    /** Xóa sản phẩm ngay trên client */
     removeItemLocal(
       state,
       action: { payload: { productId: string; variantId?: string } },
@@ -215,13 +221,11 @@ const cartSlice = createSlice({
       state.cart.totalPrice = calcTotal(state.cart.products);
     },
 
-    /** Xóa toàn bộ giỏ hàng (client) */
     clearCartLocal(state) {
       state.cart = { products: [], totalPrice: 0 };
       state.selectedItems = [];
     },
 
-    /** Toggle chọn/bỏ chọn item để thanh toán */
     toggleSelectItem(state, action: { payload: string }) {
       const id = action.payload;
       if (state.selectedItems.includes(id)) {
@@ -231,12 +235,10 @@ const cartSlice = createSlice({
       }
     },
 
-    /** Chọn tất cả */
     selectAllItems(state) {
       state.selectedItems = state.cart.products.map((p) => p.productId);
     },
 
-    /** Bỏ chọn tất cả */
     deselectAllItems(state) {
       state.selectedItems = [];
     },
@@ -254,7 +256,7 @@ const cartSlice = createSlice({
       })
       .addCase(fetchCart.fulfilled, (state, action) => {
         state.loading = false;
-        state.cart = action.payload;
+        state.cart = mapCartResponse(action.payload); // ✅ SỬA
       })
       .addCase(fetchCart.rejected, (state, action) => {
         state.loading = false;
@@ -268,7 +270,7 @@ const cartSlice = createSlice({
       })
       .addCase(addToCart.fulfilled, (state, action) => {
         state.loading = false;
-        state.cart = action.payload;
+        state.cart = mapCartResponse(action.payload); // ✅ SỬA
       })
       .addCase(addToCart.rejected, (state, action) => {
         state.loading = false;
@@ -278,7 +280,7 @@ const cartSlice = createSlice({
     // updateCartQuantity
     builder
       .addCase(updateCartQuantity.fulfilled, (state, action) => {
-        state.cart = action.payload;
+        state.cart = mapCartResponse(action.payload); // ✅ SỬA
       })
       .addCase(updateCartQuantity.rejected, (state, action) => {
         state.error = action.payload as string;

@@ -38,6 +38,12 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getOrdersByUserId(userId));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<OrderResponse> getOrderById(@PathVariable String id) {
+        OrderResponse order = orderService.getOrderById(id);
+        return ResponseEntity.ok(order);
+    }
+
     @PatchMapping("/status/{id}")
     public ResponseEntity<OrderResponse> updateStatus(@PathVariable String id, @RequestParam String status) {
         return ResponseEntity.ok(orderService.updateOrderStatus(id, status));
@@ -54,24 +60,13 @@ public class OrderController {
         boolean result = orderService.hasPurchased(userId, productId);
         return ResponseEntity.ok(result);
     }
-<<<<<<< HEAD
-    // Trong OrderController
-
-    @PatchMapping("/payment-status/{orderNumber}")
-    public ResponseEntity<OrderResponse> updatePaymentStatus(
-            @PathVariable String orderNumber,
-            @RequestParam String status,
-            @RequestParam(required = false) String transactionId) {
-        return ResponseEntity.ok(
-                orderService.updatePaymentStatus(orderNumber, status, transactionId)
-        );
-=======
 
     //Tong doanh thu
     @GetMapping("/statistics/total-revenue")
     public ResponseEntity<Double> getTotalRevenue() {
         return ResponseEntity.ok(orderService.getTotalRevenue());
     }
+
     //Tinh so luong don hang
     @GetMapping("/statistics/order-counts")
     public ResponseEntity<Map<String, Long>> getOrderCounts() {
@@ -99,12 +94,13 @@ public class OrderController {
     public ResponseEntity<List<Map<String, Object>>> getMostCancelled() {
         return ResponseEntity.ok(orderService.getMostCancelledProducts());
     }
+
     //area chart
     @GetMapping("/statistics/revenue-growth")
     public ResponseEntity<List<Map<String, Object>>> getRevenueGrowth(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
         return ResponseEntity.ok(orderService.getRevenueByRange(start, end));
->>>>>>> af0095bb6f3b5393467dfca637e6aca43c0f5811
+
     }
 }

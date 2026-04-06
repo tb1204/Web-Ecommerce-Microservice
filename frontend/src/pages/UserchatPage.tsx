@@ -631,7 +631,7 @@ const UserChatPage: React.FC = () => {
                     >
                       {!isUser && showAvatar && (
                         <span className="text-[11px] text-gray-400 ml-1 mb-1">
-                          {isBot ? "Trợ lý AI" : "Nhân viên hỗ trợ"}
+                          {isBot ? "Trợ lý AI" : "Shop"}
                         </span>
                       )}
 
