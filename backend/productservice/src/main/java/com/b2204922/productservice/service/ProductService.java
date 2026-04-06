@@ -60,6 +60,7 @@ public class ProductService {
         product.setProductCode(newCode);
 
         // 4. XỬ LÝ BIẾN THỂ (VARIANTS)
+
         if (product.getVariants() != null && !product.getVariants().isEmpty()) {
             int totalStock = 0;
             Double minPrice = Double.MAX_VALUE;
@@ -81,9 +82,7 @@ public class ProductService {
                     minPrice = variant.getPrice();
                 }
                 // Mặc định trạng thái biến thể
-                if (variant.getStatus() == null) {
-                    variant.setStatus("ACTIVE");
-                }
+                if (variant.getStatus() == null) variant.setStatus("ACTIVE");
             }
 
             product.setTotalStockQuantity(totalStock);
@@ -91,9 +90,7 @@ public class ProductService {
         } else {
             product.setTotalStockQuantity(0);
             // Đảm bảo không bị null price ở lớp ngoài
-            if (product.getPrice() == null) {
-                product.setPrice(0.0);
-            }
+            if (product.getPrice() == null) product.setPrice(0.0);
         }
 
         // 5. Thiết lập trạng thái và thời gian
@@ -116,27 +113,25 @@ public class ProductService {
      * Hàm phụ trợ để chuẩn hóa dữ liệu đầu vào
      */
     private void trimProductData(Product product) {
-        if (product.getName() != null) {
-            product.setName(product.getName().trim());
-        }
-        if (product.getBrand() != null) {
-            product.setBrand(product.getBrand().trim());
-        }
-        if (product.getOrigin() != null) {
-            product.setOrigin(product.getOrigin().trim()); // Thêm origin
-        }
+        if (product.getName() != null) product.setName(product.getName().trim());
+        if (product.getBrand() != null) product.setBrand(product.getBrand().trim());
+        if (product.getOrigin() != null) product.setOrigin(product.getOrigin().trim()); // Thêm origin
+
         if (product.getCategory() != null) {
-            if (product.getCategory().getName() != null) {
+            if (product.getCategory().getName() != null)
                 product.getCategory().setName(product.getCategory().getName().trim());
-            }
-            if (product.getCategory().getCode() != null) {
+            if (product.getCategory().getCode() != null)
                 product.getCategory().setCode(product.getCategory().getCode().trim());
-            }
-            if (product.getCategory().getParentCode() != null) {
+            if (product.getCategory().getParentCode() != null)
                 product.getCategory().setParentCode(product.getCategory().getParentCode().trim());
-            }
-            if (product.getCategory().getParentName() != null) {
+            if (product.getCategory().getParentName() != null)
                 product.getCategory().setParentName(product.getCategory().getParentName().trim());
+        }
+        if (product.getVariants() != null) {
+            for (Product.ProductVariant variant : product.getVariants()) {
+                if (variant.getSize() != null) variant.setSize(variant.getSize().trim());
+                if (variant.getThickness() != null) variant.setThickness(variant.getThickness().trim());
+                if (variant.getColor() != null) variant.setColor(variant.getColor().trim()); // <-- TRIM MÀU SẮC
             }
         }
         if (product.getVariants() != null) {
@@ -155,21 +150,11 @@ public class ProductService {
 
         if (product.getSpecifications() != null) {
             var spec = product.getSpecifications();
-            if (spec.getMaterial() != null) {
-                spec.setMaterial(spec.getMaterial().trim());
-            }
-            if (spec.getFirmness() != null) {
-                spec.setFirmness(spec.getFirmness().trim());
-            }
-            if (spec.getDesign() != null) {
-                spec.setDesign(spec.getDesign().trim());
-            }
-            if (spec.getWeight() != null) {
-                spec.setWeight(spec.getWeight().trim());
-            }
-            if (spec.getCertificationNumber() != null) {
-                spec.setCertificationNumber(spec.getCertificationNumber().trim());
-            }
+            if (spec.getMaterial() != null) spec.setMaterial(spec.getMaterial().trim());
+            if (spec.getFirmness() != null) spec.setFirmness(spec.getFirmness().trim());
+            if (spec.getDesign() != null) spec.setDesign(spec.getDesign().trim());
+            if (spec.getWeight() != null) spec.setWeight(spec.getWeight().trim());
+            if (spec.getCertificationNumber() != null) spec.setCertificationNumber(spec.getCertificationNumber().trim());
         }
     }
 
@@ -197,6 +182,7 @@ public class ProductService {
         }
     }
 
+
     //Ham xoa san pham
     public void deleteProduct(String id) {
         Product product = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Khong tim thay san pham de xoa"));
@@ -220,12 +206,17 @@ public class ProductService {
     }
 
     //Ham update san pham
+<<<<<<< HEAD
+=======
+
+>>>>>>> 74a4862881035814147d4c42b376ca3aaeb01812
     public Product updateProduct(String id, Product updatedProduct, List<MultipartFile> newImages) {
         // 1. Tìm sản phẩm cũ trong DB
         Product existingProduct = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm để cập nhật"));
 
         // 2. Cập nhật thông tin cơ bản
+<<<<<<< HEAD
         if (updatedProduct.getName() != null) {
             existingProduct.setName(updatedProduct.getName().trim());
         }
@@ -235,6 +226,11 @@ public class ProductService {
         if (updatedProduct.getOrigin() != null) {
             existingProduct.setOrigin(updatedProduct.getOrigin().trim());
         }
+=======
+        if (updatedProduct.getName() != null) existingProduct.setName(updatedProduct.getName().trim());
+        if (updatedProduct.getBrand() != null) existingProduct.setBrand(updatedProduct.getBrand().trim());
+        if (updatedProduct.getOrigin() != null) existingProduct.setOrigin(updatedProduct.getOrigin().trim());
+>>>>>>> 74a4862881035814147d4c42b376ca3aaeb01812
         existingProduct.setDescription(updatedProduct.getDescription());
         existingProduct.setStatus(updatedProduct.getStatus());
         existingProduct.setCategory(updatedProduct.getCategory());
@@ -277,6 +273,10 @@ public class ProductService {
             }
         }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 74a4862881035814147d4c42b376ca3aaeb01812
         boolean isUpdatingPrimary = false;
         if (keptImagesFromFrontend != null && !keptImagesFromFrontend.isEmpty()) {
             String firstUrl = keptImagesFromFrontend.get(0).getUrl();
@@ -295,6 +295,10 @@ public class ProductService {
                     Product.ProductImage newImg = new Product.ProductImage();
                     newImg.setUrl(uploadResult.get("url").toString());
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 74a4862881035814147d4c42b376ca3aaeb01812
                     if (isUpdatingPrimary && i == 0) {
                         newImg.setIsPrimary(true);
                         finalImages.add(0, newImg);
@@ -351,6 +355,9 @@ public class ProductService {
             log.error("Lỗi khi xóa ảnh trên Cloudinary: {}", e.getMessage());
         }
     }
+    /**
+     * Hàm phụ trợ xử lý xóa ảnh cũ và upload ảnh mới lên Cloudinary
+     */
 
     /**
      * Hàm phụ trợ xử lý xóa ảnh cũ và upload ảnh mới lên Cloudinary
@@ -364,9 +371,7 @@ public class ProductService {
             for (Product.ProductVariant v : product.getVariants()) {
                 if (v.getVariantId().equals(variantId)) {
                     int newStock = (v.getStockQuantity() != null ? v.getStockQuantity() : 0) + quantityChange;
-                    if (newStock < 0) {
-                        throw new RuntimeException("Sản phẩm biến thể này đã hết hàng!");
-                    }
+                    if (newStock < 0) throw new RuntimeException("Sản phẩm biến thể này đã hết hàng!");
                     v.setStockQuantity(newStock);
                     variantFound = true;
                     break;
@@ -374,9 +379,7 @@ public class ProductService {
             }
         }
 
-        if (!variantFound) {
-            throw new RuntimeException("Không tìm thấy biến thể tương ứng trong sản phẩm!");
-        }
+        if (!variantFound) throw new RuntimeException("Không tìm thấy biến thể tương ứng trong sản phẩm!");
 
         // Sau khi trừ kho biến thể, tính lại tổng kho cho toàn bộ Product để đồng bộ Dashboard
         int total = product.getVariants().stream()
@@ -419,7 +422,6 @@ public class ProductService {
                     return m;
                 }).collect(Collectors.toList());
     }
-
     // Lấy sản phẩm theo mã danh mục con
     public List<Product> getProductsBySubCategory(String subCode) {
         return productRepository.findByCategory_Code(subCode);

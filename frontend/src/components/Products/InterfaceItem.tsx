@@ -111,7 +111,7 @@ export interface Order {
   };
   payment: {
     method: "VNPAY" | "CASH" | "MOMO";
-    status: "PAID" | "UNPAID";
+    status: "PAID" | "UNPAID" | "REFUNDED";
     transactionId?: string;
   };
   orderStatus:

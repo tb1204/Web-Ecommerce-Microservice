@@ -33,6 +33,7 @@ spring:
   #     max-file-size: 10MB
   #     max-request-size: 10MB
 
+<<<<<<< HEAD
   # data:
   #   mongodb:
   #     uri: mongodb://localhost:27017/artisano
@@ -42,6 +43,14 @@ spring:
   #   port: 5672
   #   username: guest
   #   password: guest
+=======
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+>>>>>>> 74a4862881035814147d4c42b376ca3aaeb01812
 
 server:
   port: 8084

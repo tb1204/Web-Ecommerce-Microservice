@@ -30,9 +30,6 @@ spring:
   #   multipart:
   #     max-file-size: 10MB
   #     max-request-size: 10MB
-  data:
-    mongodb:
-      uri: mongodb://localhost:27017/artisano
 
   rabbitmq:
     host: localhost

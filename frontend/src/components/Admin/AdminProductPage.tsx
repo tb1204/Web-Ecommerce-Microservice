@@ -64,6 +64,7 @@ const AdminProductPage = () => {
 
   // LOGIC LỌC DỮ LIỆU
   const filteredProducts = products.filter((p) => {
+<<<<<<< HEAD
     const matchesName = p.name
       ? p.name.toLowerCase().includes(searchTerm.toLowerCase())
       : false;
@@ -76,6 +77,13 @@ const AdminProductPage = () => {
       ) || false;
     const matchesCategory =
       selectedCategory === "all" || p.category?.code === selectedCategory;
+=======
+    const matchesName = p.name ? p.name.toLowerCase().includes(searchTerm.toLowerCase()) : false;
+    const matchesSku = p.variants?.some((v) =>
+      v.sku && typeof v.sku === 'string' && v.sku.toLowerCase().includes(searchTerm.toLowerCase())
+    ) || false;
+    const matchesCategory = selectedCategory === "all" || p.category?.code === selectedCategory;
+>>>>>>> 74a4862881035814147d4c42b376ca3aaeb01812
 
     return (matchesName || matchesSku) && matchesCategory;
   });
@@ -84,10 +92,7 @@ const AdminProductPage = () => {
   const totalPages = Math.ceil(filteredProducts.length / productPerPage);
   const indexOfLastProduct = currentPage * productPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productPerPage;
-  const currentProducts = filteredProducts.slice(
-    indexOfFirstProduct,
-    indexOfLastProduct,
-  );
+  const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
 
   const handleDelete = async (id: string) => {
     if (!window.confirm("Bạn có chắc muốn xóa sản phẩm này không?")) return;
@@ -110,6 +115,7 @@ const AdminProductPage = () => {
       const response = await axios.put(
         `${PRODUCT_API_URL}/api/products/update/${productId}`,
         formDataPayload,
+<<<<<<< HEAD
         { headers: { "Content-Type": "multipart/form-data" } },
       );
 
@@ -117,6 +123,13 @@ const AdminProductPage = () => {
         setProducts((prev) =>
           prev.map((p) => (p.id === productId ? response.data : p)),
         );
+=======
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
+
+      if (response.status === 200) {
+        setProducts(prev => prev.map(p => p.id === productId ? response.data : p));
+>>>>>>> 74a4862881035814147d4c42b376ca3aaeb01812
         toast.success("Cập nhật sản phẩm thành công!");
         setIsEditOpen(false);
       }
@@ -126,13 +139,21 @@ const AdminProductPage = () => {
     }
   };
 
+<<<<<<< HEAD
   // --- HÀM THÊM MỚI (ADD) - KHỚP VỚI MODAL ADD ---
+=======
+ 
+>>>>>>> 74a4862881035814147d4c42b376ca3aaeb01812
   const handleAddProduct = async (formData: FormData) => {
     try {
       const response = await axios.post(
         `${PRODUCT_API_URL}/api/products/add`,
         formData,
+<<<<<<< HEAD
         { headers: { "Content-Type": "multipart/form-data" } },
+=======
+        { headers: { "Content-Type": "multipart/form-data" } }
+>>>>>>> 74a4862881035814147d4c42b376ca3aaeb01812
       );
 
       if (response.status >= 200 && response.status < 300) {
@@ -164,6 +185,7 @@ const AdminProductPage = () => {
       {/* BỘ LỌC */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div className="md:col-span-2 relative">
+<<<<<<< HEAD
           <Search
             className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
             size={18}
@@ -171,6 +193,12 @@ const AdminProductPage = () => {
           <input
             type="text"
             placeholder="Tìm theo tên hoặc SKU..."
+=======
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+          <input
+            type="text"
+            placeholder="Tìm theo tên ..."
+>>>>>>> 74a4862881035814147d4c42b376ca3aaeb01812
             className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl focus:border-emerald-500 outline-none transition-all shadow-sm"
             value={searchTerm}
             onChange={(e) => {
@@ -180,10 +208,14 @@ const AdminProductPage = () => {
           />
         </div>
         <div className="relative">
+<<<<<<< HEAD
           <Filter
             className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
             size={18}
           />
+=======
+          <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+>>>>>>> 74a4862881035814147d4c42b376ca3aaeb01812
           <select
             className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl focus:border-emerald-500 outline-none shadow-sm appearance-none cursor-pointer"
             value={selectedCategory}
@@ -193,6 +225,7 @@ const AdminProductPage = () => {
             }}
           >
             <option value="all">Tất cả danh mục</option>
+<<<<<<< HEAD
             {categories
               .filter((c) => !c.parentCode)
               .map((parent) => (
@@ -206,6 +239,15 @@ const AdminProductPage = () => {
                     ))}
                 </optgroup>
               ))}
+=======
+            {categories.filter(c => !c.parentCode).map(parent => (
+              <optgroup key={parent.code} label={parent.name}>
+                {categories.filter(sub => sub.parentCode === parent.code).map(sub => (
+                  <option key={sub.code} value={sub.code}>{sub.name}</option>
+                ))}
+              </optgroup>
+            ))}
+>>>>>>> 74a4862881035814147d4c42b376ca3aaeb01812
           </select>
         </div>
       </div>
@@ -214,6 +256,7 @@ const AdminProductPage = () => {
       {loading ? (
         <div className="flex flex-col items-center justify-center py-20 text-gray-400">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mb-4"></div>
+<<<<<<< HEAD
           <p className="font-bold tracking-widest uppercase text-xs">
             Đang tải dữ liệu...
           </p>
@@ -232,6 +275,14 @@ const AdminProductPage = () => {
           >
             Xóa bộ lọc
           </button>
+=======
+          <p className="font-bold tracking-widest uppercase text-xs">Đang tải dữ liệu...</p>
+        </div>
+      ) : filteredProducts.length === 0 ? (
+        <div className="bg-white rounded-2xl border border-dashed border-gray-300 py-20 text-center">
+          <p className="text-gray-400 font-medium">Không tìm thấy sản phẩm nào khớp với bộ lọc.</p>
+          <button onClick={() => { setSearchTerm(""); setSelectedCategory("all"); }} className="text-emerald-600 font-bold mt-2 hover:underline">Xóa bộ lọc</button>
+>>>>>>> 74a4862881035814147d4c42b376ca3aaeb01812
         </div>
       ) : (
         <>
@@ -239,6 +290,7 @@ const AdminProductPage = () => {
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
+<<<<<<< HEAD
                   <th className="px-4 py-4 text-center text-xs font-bold text-gray-500 uppercase w-16">
                     STT
                   </th>
@@ -254,10 +306,18 @@ const AdminProductPage = () => {
                   <th className="px-4 py-4 text-center text-xs font-bold text-gray-500 uppercase">
                     Hành động
                   </th>
+=======
+                  <th className="px-4 py-4 text-center text-xs font-bold text-gray-500 uppercase w-16">STT</th>
+                  <th className="px-4 py-4 text-left text-xs font-bold text-gray-500 uppercase">Sản phẩm</th>
+                  <th className="px-4 py-4 text-center text-xs font-bold text-gray-500 uppercase">Danh mục</th>
+                  <th className="px-4 py-4 text-center text-xs font-bold text-gray-500 uppercase">Giá & Kho</th>
+                  <th className="px-4 py-4 text-center text-xs font-bold text-gray-500 uppercase">Hành động</th>
+>>>>>>> 74a4862881035814147d4c42b376ca3aaeb01812
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100 bg-white">
                 {currentProducts.map((product, index) => (
+<<<<<<< HEAD
                   <tr
                     key={product.id}
                     className="hover:bg-gray-50 transition-colors"
@@ -282,19 +342,34 @@ const AdminProductPage = () => {
                           <p className="text-[10px] text-gray-400 uppercase font-bold">
                             {product.productCode}
                           </p>
+=======
+                  <tr key={product.id} className="hover:bg-gray-50 transition-colors">
+                    <td className="px-4 py-4 text-center text-sm font-bold text-gray-400">{indexOfFirstProduct + index + 1}</td>
+                    <td className="px-4 py-4">
+                      <div className="flex items-center gap-4">
+                        <img src={product.images?.find(img => img.isPrimary)?.url || product.images?.[0]?.url} className="w-12 h-12 rounded-lg object-cover border" alt="" />
+                        <div className="max-w-[250px]">
+                          <p className="text-sm font-bold text-gray-900 truncate">{product.name}</p>
+                          <p className="text-[10px] text-gray-400 uppercase font-bold">{product.productCode}</p>
+>>>>>>> 74a4862881035814147d4c42b376ca3aaeb01812
                         </div>
                       </div>
                     </td>
                     <td className="px-4 py-4 text-center text-sm font-medium text-emerald-700">
                       <span className="bg-emerald-50 px-2 py-1 rounded-md text-xs">
+<<<<<<< HEAD
                         {product.category?.parentName
                           ? `${product.category.parentName} > `
                           : ""}
                         {product.category?.name}
+=======
+                        {product.category?.parentName ? `${product.category.parentName} > ` : ""}{product.category?.name}
+>>>>>>> 74a4862881035814147d4c42b376ca3aaeb01812
                       </span>
                     </td>
                     <td className="px-4 py-4 text-center text-sm font-black text-gray-900">
                       {product.price?.toLocaleString("vi-VN")}₫
+<<<<<<< HEAD
                       <p
                         className={`text-[10px] mt-1 font-bold ${product.totalStockQuantity > 10 ? "text-blue-500" : "text-red-500"}`}
                       >
@@ -327,6 +402,15 @@ const AdminProductPage = () => {
                         >
                           <Trash2 size={16} />
                         </button>
+=======
+                      <p className={`text-[10px] mt-1 font-bold ${product.totalStockQuantity > 10 ? "text-blue-500" : "text-red-500"}`}>Kho: {product.totalStockQuantity}</p>
+                    </td>
+                    <td className="px-4 py-4 text-center">
+                      <div className="flex justify-center gap-2">
+                        <button onClick={() => { setSelectedProduct(product); setIsDetailOpen(true); }} className="p-1.5 text-blue-500 hover:bg-blue-50 rounded-lg"><Eye size={16} /></button>
+                        <button onClick={() => { setSelectedProduct(product); setIsEditOpen(true); }} className="p-1.5 text-indigo-500 hover:bg-indigo-50 rounded-lg"><Edit size={16} /></button>
+                        <button onClick={() => handleDelete(product.id)} className="p-1.5 text-red-500 hover:bg-red-50 rounded-lg"><Trash2 size={16} /></button>
+>>>>>>> 74a4862881035814147d4c42b376ca3aaeb01812
                       </div>
                     </td>
                   </tr>
@@ -338,6 +422,7 @@ const AdminProductPage = () => {
           {/* PHÂN TRANG */}
           {totalPages > 1 && (
             <div className="flex justify-center items-center gap-4 pb-10">
+<<<<<<< HEAD
               <button
                 disabled={currentPage === 1}
                 onClick={() => setCurrentPage((prev) => prev - 1)}
@@ -363,12 +448,22 @@ const AdminProductPage = () => {
               >
                 <ChevronRight size={20} />
               </button>
+=======
+              <button disabled={currentPage === 1} onClick={() => setCurrentPage(prev => prev - 1)} className="p-2 rounded-full bg-white border hover:bg-emerald-50 disabled:opacity-30"><ChevronLeft size={20} /></button>
+              <div className="flex gap-2">
+                {Array.from({ length: totalPages }).map((_, i) => (
+                  <button key={i} onClick={() => setCurrentPage(i + 1)} className={`w-10 h-10 rounded-xl font-bold transition-all ${currentPage === i + 1 ? "bg-emerald-600 text-white shadow-md" : "bg-white border text-gray-500"}`}>{i + 1}</button>
+                ))}
+              </div>
+              <button disabled={currentPage === totalPages} onClick={() => setCurrentPage(prev => prev + 1)} className="p-2 rounded-full bg-white border hover:bg-emerald-50 disabled:opacity-30"><ChevronRight size={20} /></button>
+>>>>>>> 74a4862881035814147d4c42b376ca3aaeb01812
             </div>
           )}
         </>
       )}
 
       {/* MODALS */}
+<<<<<<< HEAD
       <ProductDetailModal
         isOpen={isDetailOpen}
         onClose={() => setIsDetailOpen(false)}
@@ -389,6 +484,11 @@ const AdminProductPage = () => {
         onClose={() => setIsAddOpen(false)}
         onAdd={handleAddProduct}
       />
+=======
+      <ProductDetailModal isOpen={isDetailOpen} onClose={() => setIsDetailOpen(false)} product={selectedProduct} onEdit={() => { setIsDetailOpen(false); setIsEditOpen(true); }} />
+      <ProductEditModal isOpen={isEditOpen} onClose={() => setIsEditOpen(false)} product={selectedProduct} onSave={handleSaveProduct} />
+      <ProductAddModal isOpen={isAddOpen} onClose={() => setIsAddOpen(false)} onAdd={handleAddProduct} />
+>>>>>>> 74a4862881035814147d4c42b376ca3aaeb01812
     </div>
   );
 };

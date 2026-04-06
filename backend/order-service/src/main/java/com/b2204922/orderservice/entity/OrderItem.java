@@ -28,6 +28,7 @@ import lombok.NoArgsConstructor;
 public class OrderItem {
 
     private String productId;
+    private String variantId;
     private String productName;
     private String productImage;
     private Integer quantity;

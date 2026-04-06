@@ -60,6 +60,21 @@ public class OrderController {
         boolean result = orderService.hasPurchased(userId, productId);
         return ResponseEntity.ok(result);
     }
+<<<<<<< HEAD
+=======
+
+    // Trong OrderController
+
+    @PatchMapping("/payment-status/{orderNumber}")
+    public ResponseEntity<OrderResponse> updatePaymentStatus(
+            @PathVariable String orderNumber,
+            @RequestParam String status,
+            @RequestParam(required = false) String transactionId) {
+        return ResponseEntity.ok(
+                orderService.updatePaymentStatus(orderNumber, status, transactionId)
+        );
+    }
+>>>>>>> 74a4862881035814147d4c42b376ca3aaeb01812
 
     //Tong doanh thu
     @GetMapping("/statistics/total-revenue")
@@ -101,6 +116,14 @@ public class OrderController {
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
         return ResponseEntity.ok(orderService.getRevenueByRange(start, end));
+<<<<<<< HEAD
 
+=======
+    }
+
+    @GetMapping("/statistics/top-selling-dashboard")
+    public ResponseEntity<List<Map<String, Object>>> getTopSellingDashboard() {
+        return ResponseEntity.ok(orderService.getTopSellingDashboard());
+>>>>>>> 74a4862881035814147d4c42b376ca3aaeb01812
     }
 }

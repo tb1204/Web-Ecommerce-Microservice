@@ -194,9 +194,13 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({
         stockQuantity: Number(v.stockQuantity),
         status: "ACTIVE",
       })),
+<<<<<<< HEAD
       colors: Array.from(
         new Set(formData.variants.map((v) => v.color).filter(Boolean)),
       ),
+=======
+      colors: Array.from(new Set(formData.variants.map(v => v.color).filter(Boolean))),
+>>>>>>> 74a4862881035814147d4c42b376ca3aaeb01812
       specifications: formData.specifications,
       status: formData.status === "stopselling" ? "stopselling" : "AVAILABLE",
       tags: processedTags,
@@ -477,9 +481,13 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({
                     <input
                       type="text"
                       value={v.color || ""}
+<<<<<<< HEAD
                       onChange={(e) =>
                         handleVariantChange(index, "color", e.target.value)
                       }
+=======
+                      onChange={(e) => handleVariantChange(index, "color", e.target.value)}
+>>>>>>> 74a4862881035814147d4c42b376ca3aaeb01812
                       className="w-full px-3 py-2 rounded-xl border text-xs outline-none focus:border-emerald-500"
                       placeholder="blue, white..."
                     />

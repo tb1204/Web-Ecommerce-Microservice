@@ -474,39 +474,32 @@ const AdminStatisticalPage: React.FC = () => {
   );
 };
 
-// --- SUB-COMPONENTS CẬP NHẬT CHỮ (+2PX) ---
 
-// THẺ CHỈ SỐ - Tăng 2px chữ cho Title và Value
+// THẺ CHỈ SỐ 
 const StatCard: React.FC<{ title: string; value: string; icon: React.ReactNode; color: string }> = ({ title, value, icon, color }) => (
   <div className="bg-white p-5 rounded-3xl border border-gray-100 shadow-sm hover:border-emerald-200 transition-all">
     <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-3 bg-${color}-50 text-${color}-600`}>
       {icon}
     </div>
-    {/* Tăng từ text-[9px] lên text-[11px] */}
     <p className="text-[11px] font-black text-gray-400 uppercase tracking-widest leading-none mb-1">{title}</p>
-    {/* Tăng từ text-md (16px) lên text-lg (18px) */}
     <h3 className="text-lg font-black text-gray-800 leading-none truncate italic tracking-tighter">{value}</h3>
   </div>
 );
 
-// DANH SÁCH SẢN PHẨM - Tăng 2px chữ cho tất cả các nhãn
+// DANH SÁCH SẢN PHẨM 
 const ProductListCard: React.FC<{ title: string; icon: React.ReactNode; items: ProductStat[] }> = ({ title, icon, items }) => (
   <div className="bg-white p-6 rounded-[32px] shadow-sm border border-gray-100 hover:shadow-md transition-all h-full">
     <div className="flex items-center gap-2 mb-6">
       <div className="p-2 bg-gray-50 rounded-lg">{icon}</div>
-      {/* Tăng từ text-[11px] lên text-[13px] */}
       <h3 className="text-[13px] font-black text-gray-800 uppercase tracking-widest italic leading-none">{title}</h3>
     </div>
     <div className="space-y-4">
       {items.map((item, idx) => (
         <div key={idx} className="flex justify-between items-center">
           <div className="max-w-[70%]">
-            {/* Tăng từ text-[11px] lên text-[13px] */}
             <p className="text-[13px] font-black text-gray-700 leading-none truncate italic">{item.name}</p>
-            {/* Tăng từ text-[9px] lên text-[11px] */}
             <p className="text-[11px] text-gray-400 font-bold mt-1.5 uppercase italic tracking-tighter leading-none">{item.sub}</p>
           </div>
-          {/* Tăng từ text-[9px] lên text-[11px] */}
           <span className={`text-[11px] font-black px-2.5 py-1 rounded-md ${item.isAlert ? "bg-red-50 text-red-600 animate-pulse" : "bg-emerald-50 text-emerald-600"}`}>
             {item.value}
           </span>

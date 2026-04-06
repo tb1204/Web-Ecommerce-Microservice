@@ -21,12 +21,15 @@ vnpay:
   url: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
   return-url: http://localhost:8085/api/payments/vnpay/return
 
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://discoveryserver:8761/eureka
+#    register-with-eureka: true
+#    fetch-registry: true
 eureka:
   client:
-    service-url:
-      defaultZone: http://discoveryserver:8761/eureka
-    register-with-eureka: true
-    fetch-registry: true
+    enabled: false
 
 logging:
   level:
