@@ -23,6 +23,7 @@ public class Order {
     private String orderNumber;
     private String userId;
 
+    private String note;
     private CustomerInfo customerInfo;
     private Summary summary;
     private Payment payment;

@@ -23,9 +23,16 @@ public class ReviewController {
     private Cloudinary cloudinary;
 
     //  ENDPOINTS CHO user
-    @PostMapping("/add")
-    public ResponseEntity<ReviewResponse> createReview(@RequestBody ReviewRequest request) {
-        return ResponseEntity.ok(reviewService.createReview(request));
+//    @PostMapping("/add")
+//    public ResponseEntity<ReviewResponse> createReview(@RequestBody ReviewRequest request) {
+//        return ResponseEntity.ok(reviewService.createReview(request));
+//    }
+    @PostMapping(value = "/add", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ReviewResponse> createReview(
+            @RequestPart("review") ReviewRequest request,
+            @RequestPart(value = "images", required = false) List<MultipartFile> images
+    ) {
+        return ResponseEntity.ok(reviewService.createReviewWithImages(request, images));
     }
 
     @GetMapping("/product/{productId}")
@@ -82,5 +89,37 @@ public class ReviewController {
         } catch (IOException e) {
             return ResponseEntity.status(500).body("Lỗi upload Cloudinary: " + e.getMessage());
         }
+    }
+
+    @DeleteMapping("/delete-image")
+    public ResponseEntity<?> deleteImage(@RequestParam("url") String imageUrl) {
+        try {
+
+            String publicIdWithExtension = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
+            String publicId = "reviews/" + publicIdWithExtension.substring(0, publicIdWithExtension.lastIndexOf("."));
+
+            Map result = cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
+
+            return ResponseEntity.ok(result);
+        } catch (IOException e) {
+            return ResponseEntity.status(500).body("Lỗi xóa ảnh: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/ratings/batch")
+    public ResponseEntity<Map<String, Map<String, Object>>> getBatchRatings(@RequestBody List<String> productIds) {
+        Map<String, Map<String, Object>> result = new HashMap<>();
+
+        for (String pid : productIds) {
+            double avg = reviewService.getAverageRating(pid);
+            long count = reviewService.countApprovedReviews(pid);
+
+            Map<String, Object> data = new HashMap<>();
+            data.put("rating", avg);
+            data.put("reviewCount", count);
+
+            result.put(pid, data);
+        }
+        return ResponseEntity.ok(result);
     }
 }

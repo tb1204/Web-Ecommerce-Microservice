@@ -13,6 +13,7 @@ public class OrderResponse {
     private String orderNumber;
     private String userId;
 
+    private String note;
     private CustomerInfoResponse customerInfo;
     private SummaryResponse summary;
     private PaymentResponse payment;

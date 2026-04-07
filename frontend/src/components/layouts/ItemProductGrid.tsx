@@ -223,24 +223,38 @@ const ItemProductGrid = () => {
       {/* 2 Banner phía trên */}
       <div className="flex flex-col md:flex-row gap-4 mb-10">
         <div className="flex-1 overflow-hidden rounded-xl h-[200px] md:h-[280px]">
-          <img
+          {/* <img
             src={banner_phu_1}
             alt="Khuyến mãi nệm"
             className="w-full h-full object-cover transition-transform duration-700 cursor-pointer hover:scale-105"
-          />
+          /> */}
+          <Link to="/collections/all" className="flex-1 overflow-hidden rounded-xl h-[200px] md:h-[280px] group">
+            <img
+              src={banner_phu_1}
+              alt="Khuyến mãi nệm"
+              className="w-full h-full object-cover transition-transform duration-700 cursor-pointer group-hover:scale-105"
+            />
+          </Link>
         </div>
         <div className="flex-1 overflow-hidden rounded-xl h-[200px] md:h-[280px]">
-          <img
+          {/* <img
             src={banner_phu_2}
             alt="Gối cao su thiên nhiên"
             className="w-full h-full object-cover transition-transform duration-700 cursor-pointer hover:scale-105"
-          />
+          /> */}
+          <Link to="/collections/all" className="flex-1 overflow-hidden rounded-xl h-[200px] md:h-[280px] group">
+            <img
+              src={banner_phu_2}
+              alt="Gối cao su thiên nhiên"
+              className="w-full h-full object-cover transition-transform duration-700 cursor-pointer group-hover:scale-105"
+            />
+          </Link>
         </div>
       </div>
 
       {/* Header tiêu đề và Link danh mục */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 border-b border-gray-100 pb-4">
-        <Link to="/danh-muc-nem" className="group">
+        <Link to="/collections/all?category=nem" className="group">
           <h2 className="text-3xl md:text-5xl font-serif font-bold text-gray-900 dark:text-gray-100 mb-6 md:mb-0 max-w-lg leading-tight group-hover:text-[#1a4d32] dark:group-hover:text-green-400 transition-colors duration-300">
             Nệm êm giá đẹp
           </h2>
@@ -248,22 +262,32 @@ const ItemProductGrid = () => {
 
         <div className="flex items-center gap-4 md:gap-8 text-sm md:text-base font-medium text-gray-600">
           <Link
-            to="/nem-bong-ep"
+            // to="/nem-bong-ep"
+            to="/collections/all?category=nem&type=Nệm bông ép"
             className="hover:text-[#1a4d32] text-gray-600 dark:text-gray-300 hover:underline underline-offset-8 transition-all"
           >
             Nệm bông ép
           </Link>
           <Link
-            to="/nem-cao-su"
+            // to="/nem-cao-su"
+            to="/collections/all?category=nem&type=Nệm cao su"
             className="hover:text-[#1a4d32] text-gray-600 dark:text-gray-300 hover:underline underline-offset-8 transition-all"
           >
             Nệm cao su
           </Link>
           <Link
-            to="/nem-lo-xo"
+            // to="/nem-lo-xo"
+            to="/collections/all?category=nem&type=Nệm lò xo"
             className="hover:text-[#1a4d32] text-gray-600 dark:text-gray-300 hover:underline underline-offset-8 transition-all"
           >
             Nệm lò xo
+          </Link>
+          <Link
+            // to="/nem-lo-xo"
+            to="/collections/all?category=nem&type=Nệm Foam"
+            className="hover:text-[#1a4d32] text-gray-600 dark:text-gray-300 hover:underline underline-offset-8 transition-all"
+          >
+            Nệm Foam
           </Link>
         </div>
       </div>

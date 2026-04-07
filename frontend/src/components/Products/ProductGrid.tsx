@@ -610,6 +610,10 @@ import { useAuth } from "@clerk/clerk-react";
 import { addToCart } from "../../store/slices/cartSlice";
 import { openCartDrawer } from "../../store/slices/uiSlice";
 
+//Them sao
+import { useState, useEffect } from "react";
+import axios from "axios";
+
 interface ProductCardProps {
   products?: Product[];
   loading?: boolean;
@@ -631,6 +635,45 @@ const ProductGrid: React.FC<ProductCardProps> = ({
   const { addToWishlist, isInWishlist } = useWishlist();
   const dispatch = useAppDispatch();
   const { getToken } = useAuth();
+
+  //Them sao
+  //  State để quản lý danh sách sản phẩm kèm Rating thực tế
+  const [displayProducts, setDisplayProducts] = useState<Product[]>(products);
+
+  //  Effect lấy Rating từ ReviewService (Port 8088)
+  useEffect(() => {
+    if (!products || products.length === 0) {
+      setDisplayProducts([]);
+      return;
+    }
+
+    const fetchRatings = async () => {
+      try {
+        const productIds = products.map((p) => p.id || (p as any)._id);
+        
+        // Gọi tới API Batch vừa viết ở Backend
+        const response = await axios.post("http://localhost:8088/api/reviews/ratings/batch", productIds);
+        const ratingMap = response.data;
+
+        // Trộn dữ liệu Rating vào danh sách sản phẩm hiện tại
+        const updated = products.map((p) => {
+          const pid = p.id || (p as any)._id;
+          return {
+            ...p,
+            rating: ratingMap[pid]?.rating ?? 0,
+            reviewCount: ratingMap[pid]?.reviewCount ?? 0,
+          };
+        });
+
+        setDisplayProducts(updated);
+      } catch (err) {
+        console.error("Lỗi lấy rating từ ReviewService:", err);
+        setDisplayProducts(products); // Lỗi thì hiện dữ liệu gốc
+      }
+    };
+
+    fetchRatings();
+  }, [products]); //HetThemsao///////////////
 
   const handleAddToCart = async (product: Product) => {
     // Lấy variant đầu tiên có hàng — bỏ check status vì có thể null
@@ -723,7 +766,7 @@ const ProductGrid: React.FC<ProductCardProps> = ({
             }`
       }
     >
-      {products.map((product) => {
+      {displayProducts.map((product) => {
         const productId = product.id || (product as any)._id;
 
         const availableStock =

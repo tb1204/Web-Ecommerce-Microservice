@@ -147,7 +147,7 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
     if (!formData) return;
     const newV: ProductVariant = {
       variantId: crypto.randomUUID(),
-      sku: "Tự tạo...",
+      sku: "",
       size: "",
       thickness: "",
       color: "",
@@ -203,7 +203,7 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
     e.preventDefault();
     if (!formData) return;
 
-    const toastId = toast.loading("Đang chuẩn bị dữ liệu...");
+    // const toastId = toast.loading("Đang chuẩn bị dữ liệu...");
     try {
       //  toast.loading("Đang chuẩn bị dữ liệu...");
       const data = new FormData();
@@ -273,7 +273,7 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
         );
       }
 
-      toast.dismiss(toastId);
+      // toast.dismiss(toastId);
       onSave(data);
       onClose();
     } catch (error) {
@@ -455,7 +455,7 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
                     });
                   }}
                 >
-                  <option value="">-- Chọn ngành hàng --</option>
+                  <option value="">-- Chọn danh mục --</option>
                   {categories
                     .filter((c) => !c.parentCode)
                     .map((cat) => (
@@ -615,13 +615,14 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
                     />
                   </div>
                   <div>
-                    <label className="text-[9px] font-black text-blue-400 uppercase ml-1 italic tracking-tighter">
+                    <label className="text-[9px] font-black text-gray-400 uppercase ml-1 italic tracking-tighter">
                       Mã SKU
                     </label>
                     <input
                       type="text"
-                      value="Tự tạo..."
+                      value=""
                       className="w-full px-3 py-2 rounded-xl border bg-gray-100 text-gray-400 text-[9px] h-[34px]"
+                      placeholder="Hệ thống tự tạo"
                       disabled
                     />
                   </div>

@@ -126,6 +126,7 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getTopSellingDashboard());
 
     }
+<<<<<<< HEAD
     // Thêm vào OrderController.java
 
     @GetMapping("/email/{email}")
@@ -146,4 +147,15 @@ public class OrderController {
     //     order.setUpdatedAt(LocalDateTime.now());
     //     return ResponseEntity.ok(convertToOrderResponse(orderRepository.save(order)));
     // }
+=======
+
+    @GetMapping("/check-purchased-count")
+    public ResponseEntity<Integer> getPurchasedCount(
+            @RequestParam String userId,
+            @RequestParam String productId) {
+
+        Integer count = orderService.countPurchasedProduct(userId, productId);
+        return ResponseEntity.ok(count);
+    }
+>>>>>>> ec1320aa9a7fc627aab9cb98cfa4112d9214c326
 }

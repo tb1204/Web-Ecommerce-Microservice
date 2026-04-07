@@ -59,6 +59,9 @@ public class ProductService {
         String newCode = prefix + String.format("%03d", count + 1);
         product.setProductCode(newCode);
 
+        //Tao sku
+        generateSkus(product);
+
         // 4. XỬ LÝ BIẾN THỂ (VARIANTS)
         if (product.getVariants() != null && !product.getVariants().isEmpty()) {
             int totalStock = 0;
@@ -70,10 +73,10 @@ public class ProductService {
                     variant.setVariantId(UUID.randomUUID().toString());
                 }
                 // Tự sinh SKU
-                if (variant.getSku() == null || variant.getSku().isEmpty()) {
-                    String sizeClean = variant.getSize().replaceAll("\\s+", "").toUpperCase();
-                    variant.setSku(newCode + "-" + sizeClean);
-                }
+//                if (variant.getSku() == null || variant.getSku().isEmpty()) {
+//                    String sizeClean = variant.getSize().replaceAll("\\s+", "").toUpperCase();
+//                    variant.setSku(newCode + "-" + sizeClean);
+//                }
                 // Cộng dồn tồn kho
                 totalStock += (variant.getStockQuantity() != null) ? variant.getStockQuantity() : 0;
                 // Tìm giá bán thấp nhất (Giá đã giảm)
@@ -110,6 +113,14 @@ public class ProductService {
                 newCode, product.getTotalStockQuantity(), product.getVariants().size());
 
         return productRepository.save(product);
+    }
+    //Tu tao sku
+    private void generateSkus(Product product) {
+        if (product.getVariants() == null) return;
+        for (Product.ProductVariant v : product.getVariants()) {
+            String sizeClean = (v.getSize() != null) ? v.getSize().replaceAll("\\s+", "").toUpperCase() : "FREE";
+            v.setSku(product.getProductCode() + "-" + sizeClean);
+        }
     }
 
     /**
@@ -235,12 +246,20 @@ public class ProductService {
     }
 
     //Ham update san pham
+<<<<<<< HEAD
+=======
+
+>>>>>>> ec1320aa9a7fc627aab9cb98cfa4112d9214c326
     public Product updateProduct(String id, Product updatedProduct, List<MultipartFile> newImages) {
         // 1. Tìm sản phẩm cũ trong DB
         Product existingProduct = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm để cập nhật"));
 
         // 2. Cập nhật thông tin cơ bản
+<<<<<<< HEAD
+=======
+
+>>>>>>> ec1320aa9a7fc627aab9cb98cfa4112d9214c326
         if (updatedProduct.getName() != null) {
             existingProduct.setName(updatedProduct.getName().trim());
         }
@@ -251,6 +270,12 @@ public class ProductService {
             existingProduct.setOrigin(updatedProduct.getOrigin().trim());
         }
 
+<<<<<<< HEAD
+=======
+        if (updatedProduct.getName() != null) existingProduct.setName(updatedProduct.getName().trim());
+        if (updatedProduct.getBrand() != null) existingProduct.setBrand(updatedProduct.getBrand().trim());
+        if (updatedProduct.getOrigin() != null) existingProduct.setOrigin(updatedProduct.getOrigin().trim());
+>>>>>>> ec1320aa9a7fc627aab9cb98cfa4112d9214c326
         existingProduct.setDescription(updatedProduct.getDescription());
         existingProduct.setStatus(updatedProduct.getStatus());
         existingProduct.setCategory(updatedProduct.getCategory());
@@ -272,6 +297,7 @@ public class ProductService {
                 }
             }
             existingProduct.setVariants(updatedProduct.getVariants());
+            generateSkus(existingProduct);
             existingProduct.setTotalStockQuantity(totalStock);
             existingProduct.setPrice(minPrice);
         }
@@ -293,6 +319,10 @@ public class ProductService {
             }
         }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> ec1320aa9a7fc627aab9cb98cfa4112d9214c326
         boolean isUpdatingPrimary = false;
         if (keptImagesFromFrontend != null && !keptImagesFromFrontend.isEmpty()) {
             String firstUrl = keptImagesFromFrontend.get(0).getUrl();
@@ -311,6 +341,10 @@ public class ProductService {
                     Product.ProductImage newImg = new Product.ProductImage();
                     newImg.setUrl(uploadResult.get("url").toString());
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> ec1320aa9a7fc627aab9cb98cfa4112d9214c326
                     if (isUpdatingPrimary && i == 0) {
                         newImg.setIsPrimary(true);
                         finalImages.add(0, newImg);
@@ -468,5 +502,15 @@ public class ProductService {
         // Trường hợp không có variant (rất hiếm)
         // Chúng ta bỏ qua hoặc trả về false vì Product không có originalPrice trực tiếp
         return false;
+    }
+
+    public List<Product> searchByName(String query) {
+        // Nếu khách không gõ gì thì trả về list rỗng hoặc list all tùy ông chọn
+        if (query == null || query.trim().isEmpty()) {
+            return productRepository.findAll();
+        }
+
+        // Gọi repo để lùng sục trong Database
+        return productRepository.findByNameContainingIgnoreCase(query);
     }
 }

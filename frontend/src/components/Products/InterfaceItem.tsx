@@ -97,6 +97,7 @@ export interface Order {
   id: string;
   orderNumber: string;
   userId: string;
+  note: string;
   customerInfo: {
     name: string;
     phone: string;
