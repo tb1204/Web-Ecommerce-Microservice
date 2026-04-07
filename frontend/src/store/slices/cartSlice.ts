@@ -19,9 +19,19 @@ export interface Cart {
   totalPrice: number;
 }
 
+// interface CartState {
+//   cart: Cart;
+//   selectedItems: string[];
+//   loading: boolean;
+//   error: string | null;
+// }
+
+//fix lỗi mua ngay
 interface CartState {
   cart: Cart;
   selectedItems: string[];
+  checkoutItems: CartProduct[]; // ← THÊM: items đang checkout
+  isBuyNow: boolean; // ← THÊM: phân biệt mua ngay vs từ giỏ
   loading: boolean;
   error: string | null;
 }
@@ -32,6 +42,8 @@ const initialState: CartState = {
     products: [],
     totalPrice: 0,
   },
+  checkoutItems: [], // fix lỗi mua ngay
+  isBuyNow: false, //fix lỗi mua ngay
   selectedItems: [],
   loading: false,
   error: null,
@@ -246,6 +258,19 @@ const cartSlice = createSlice({
     clearError(state) {
       state.error = null;
     },
+    // Trong reducers — THÊM 2 action: fix mua ngay
+    setCheckoutItems(
+      state,
+      action: { payload: { items: CartProduct[]; isBuyNow: boolean } },
+    ) {
+      state.checkoutItems = action.payload.items;
+      state.isBuyNow = action.payload.isBuyNow;
+    },
+    clearCheckoutItems(state) {
+      state.checkoutItems = [];
+      state.isBuyNow = false;
+    },
+    //
   },
   extraReducers: (builder) => {
     // fetchCart
@@ -319,6 +344,8 @@ export const {
   selectAllItems,
   deselectAllItems,
   clearError,
+  setCheckoutItems, // fix muua ngay
+  clearCheckoutItems, // fix mua ngay
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

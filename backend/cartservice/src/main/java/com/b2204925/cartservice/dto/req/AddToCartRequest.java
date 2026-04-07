@@ -1,11 +1,3 @@
-//package com.b2204925.cartservice.dto.req;
-//
-//public class AddToCartRequest {
-//}
-// ═══════════════════════════════════════════════════════
-// DTO - REQUEST
-// ═══════════════════════════════════════════════════════
-// dto/request/AddToCartRequest.java
 package com.b2204925.cartservice.dto.req;
 
 import jakarta.validation.constraints.Min;

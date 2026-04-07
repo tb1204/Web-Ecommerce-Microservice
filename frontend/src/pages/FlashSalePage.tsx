@@ -306,20 +306,12 @@ import { CirclePlus } from "lucide-react";
 const BASE_URL = "http://localhost:8082";
 const SLIDER_URL = "http://localhost:8081";
 
-// Map parentCode của backend → code danh mục frontend
 const PARENT_CODE_MAP: Record<string, string> = {
   NEM: "nem",
-  CHAN_GA: "chan-ga",
+  "CHAN-GA": "chan-ga", // ← Sửa thành dấu gạch ngang
   GOI: "goi",
-  PHU_KIEN: "phu-kien",
+  "PHU-KIEN": "phu-kien", // ← Nên sửa luôn cho nhất quán
 };
-
-// const PARENT_CODE_MAP: Record<string, string> = {
-//   NEM: "nem",
-//   CHAN_GA: "chan-ga",
-//   GOI: "goi",
-//   PHU_KIEN: "phu-kien",
-// };
 
 // Chuyển 1 product từ backend sang Product interface frontend
 const mapProduct = (p: any): Product => ({

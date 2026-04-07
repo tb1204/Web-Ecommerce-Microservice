@@ -201,3 +201,8 @@ export const selectAverageRating = (state: RootState) => {
   if (reviews.length === 0) return 0;
   return reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
 };
+// THÊM 2 selector vào cuối file selectors.ts:
+export const selectCheckoutItems = (state: RootState) =>
+  state.cart.checkoutItems;
+
+export const selectIsBuyNow = (state: RootState) => state.cart.isBuyNow;

@@ -1,6 +1,59 @@
+// // package com.b2204925.paymentservice.config;
+// // public class SecurityConfig {
+// // }
 // package com.b2204925.paymentservice.config;
+// import java.util.List;
+// import org.springframework.beans.factory.annotation.Value;
+// import org.springframework.context.annotation.Bean;
+// import org.springframework.context.annotation.Configuration;
+// import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+// import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+// import org.springframework.security.config.http.SessionCreationPolicy;
+// import org.springframework.security.oauth2.jwt.JwtDecoder;
+// import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+// import org.springframework.security.web.SecurityFilterChain;
+// import org.springframework.web.cors.CorsConfiguration;
+// import org.springframework.web.cors.CorsConfigurationSource;
+// import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+// @Configuration
+// @EnableWebSecurity
 // public class SecurityConfig {
+//     @Value("${clerk.jwks-url}")
+//     private String jwksUrl;
+//     @Bean
+//     public JwtDecoder jwtDecoder() {
+//         return NimbusJwtDecoder.withJwkSetUri(jwksUrl).build();
+//     }
+//     @Bean
+//     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//         http
+//                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+//                 .csrf(csrf -> csrf.disable())
+//                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                 .authorizeHttpRequests(auth -> auth
+//                 .requestMatchers("/api/payments/vnpay/return").permitAll()
+//                                 .requestMatchers("/api/payments/order/*/refund").permitAll()
+//                 .anyRequest().authenticated()
+//                 )
+//                 .oauth2ResourceServer(oauth2 -> oauth2
+//                 .jwt(jwt -> jwt.decoder(jwtDecoder()))
+//                 );
+//         return http.build();
+//     }
+//     @Bean
+//     public CorsConfigurationSource corsConfigurationSource() {
+//         CorsConfiguration configuration = new CorsConfiguration();
+//         configuration.setAllowedOrigins(List.of("http://localhost:5173")); // ← port của bạn
+//         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+//         configuration.setAllowedHeaders(List.of("*"));
+//         configuration.setAllowCredentials(true);
+//         configuration.setMaxAge(3600L);
+//         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//         source.registerCorsConfiguration("/**", configuration);
+//         return source;
+//     }
 // }
+//test tài khoản chưa đăng nhập mua hàng
 package com.b2204925.paymentservice.config;
 
 import java.util.List;
@@ -13,6 +66,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -37,10 +91,17 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                // ✅ Cho phép VNPay callback không cần auth
                 .requestMatchers("/api/payments/vnpay/return").permitAll()
-                                .requestMatchers("/api/payments/order/*/refund").permitAll()
+                // ✅ Cho phép tạo payment và tạo đơn hàng không cần đăng nhập (guest checkout)
+                .requestMatchers(
+                        org.springframework.http.HttpMethod.POST,
+                        "/api/payments"
+                ).permitAll()
+                // Tất cả còn lại cần auth
                 .anyRequest().authenticated()
                 )
+                // ✅ Cấu hình JWT là optional (không throw 401 khi không có token)
                 .oauth2ResourceServer(oauth2 -> oauth2
                 .jwt(jwt -> jwt.decoder(jwtDecoder()))
                 );
@@ -50,7 +111,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:5173")); // ← port của bạn
+        configuration.setAllowedOrigins(List.of("http://localhost:5173"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);

@@ -15,6 +15,26 @@ const PaymentSuccess = () => {
   const [payment, setPayment] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
+  // useEffect(() => {
+  //   const fetchPayment = async () => {
+  //     if (!orderId) return;
+  //     try {
+  //       const token = await getToken({ template: "my-backend" });
+  //       const res = await axios.get(
+  //         `${BASE_URL}/api/payments/order/${orderId}`,
+  //         { headers: { Authorization: `Bearer ${token}` } },
+  //       );
+  //       setPayment(res.data);
+  //     } catch (err) {
+  //       console.error(err);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchPayment();
+  // }, [orderId]);
+
+  //xóa item khi thanh toán thành công
   useEffect(() => {
     const fetchPayment = async () => {
       if (!orderId) return;
@@ -25,6 +45,29 @@ const PaymentSuccess = () => {
           { headers: { Authorization: `Bearer ${token}` } },
         );
         setPayment(res.data);
+
+        // ✅ Xóa đúng cart items sau VNPAY thành công
+        if (res.data?.paymentStatus === "PAID" && token) {
+          const stored = sessionStorage.getItem("pendingCheckoutVariantIds");
+          if (stored) {
+            const variantIds = JSON.parse(stored);
+            if (variantIds.length > 0) {
+              try {
+                await axios.delete(
+                  "http://localhost:8083/api/cart/checkout-items",
+                  {
+                    headers: { Authorization: `Bearer ${token}` },
+                    data: { variantIds },
+                  },
+                );
+              } catch (err) {
+                console.warn("Không xóa cart items:", err);
+              } finally {
+                sessionStorage.removeItem("pendingCheckoutVariantIds");
+              }
+            }
+          }
+        }
       } catch (err) {
         console.error(err);
       } finally {

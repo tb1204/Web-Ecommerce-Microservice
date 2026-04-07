@@ -670,6 +670,7 @@ const ProductGrid: React.FC<ProductCardProps> = ({
       toast.error(err?.message ?? "Thêm vào giỏ thất bại!");
     }
   };
+
   const renderStars = (rating: number) => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {

@@ -32,4 +32,16 @@ public class OrderClientService {
             log.warn("⚠️ Không thể gọi order-service: {}", e.getMessage());
         }
     }
+    // public void updatePaymentStatus(String orderId, String paymentStatus, String transactionId) {
+    //     // ✅ Dùng endpoint by-id thay vì by-orderNumber
+    //     String url = orderServiceUrl + "/api/orders/payment-status-by-id/" + orderId
+    //             + "?status=" + paymentStatus
+    //             + "&transactionId=" + (transactionId != null ? transactionId : "");
+    //     try {
+    //         restTemplate.patchForObject(url, null, Void.class);
+    //         log.info("✅ Đã cập nhật payment status '{}' cho order id {}", paymentStatus, orderId);
+    //     } catch (Exception e) {
+    //         log.warn("⚠️ Không thể gọi order-service: {}", e.getMessage());
+    //     }
+    // }
 }

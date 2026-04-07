@@ -275,6 +275,8 @@ import { Trash2, Plus, Minus, Phone } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { useAuth } from "@clerk/clerk-react";
+// Thêm imports:
+import { setCheckoutItems } from "../store/slices/cartSlice";
 import {
   fetchCart,
   updateCartQuantity,
@@ -320,6 +322,12 @@ const CartPage = () => {
     [cartItems],
   );
   console.log("Total calculated:", totalPrice);
+
+  const handleCheckoutAll = () => {
+    if (cartItems.length === 0) return;
+    dispatch(setCheckoutItems({ items: cartItems, isBuyNow: false }));
+    navigate("/checkout");
+  };
 
   if (cartLoading) {
     return (
@@ -488,7 +496,8 @@ const CartPage = () => {
               </div>
 
               <button
-                onClick={() => navigate("/checkout")}
+                // onClick={() => navigate("/checkout")}
+                onClick={handleCheckoutAll}
                 className="w-full bg-[#004225] text-white py-4 rounded-xl font-bold text-lg hover:bg-emerald-900 transition-all active:scale-[0.98] shadow-md"
               >
                 Thanh toán ngay

@@ -212,35 +212,100 @@ import {
 import ProductGrid from "../Products/ProductGrid";
 import type { Product } from "../Products/InterfaceItem";
 import axios from "axios";
-
+import { toast } from "sonner";
 const BASE_URL = "http://localhost:8082";
+// const mapProduct = (p: any): Product => {
+//   const discountVariant = p.variants?.find(
+//     (v: any) => v.originalPrice && v.originalPrice > v.price,
+//   );
+//   return {
+//     id: p._id?.$oid ?? p.id ?? p._id,
+//     name: p.name,
+//     brand: p.brand,
+//     origin: p.origin,
+//     productCode: p.productCode,
+//     price: p.price ?? 0, // ← tránh null
+//     originalPrice: discountVariant?.originalPrice ?? undefined,
+//     totalStockQuantity: p.totalStockQuantity ?? 0,
+//     stockQuantity: p.totalStockQuantity ?? 0,
+//     variants: p.variants ?? [],
+//     images: (p.images ?? []).map((img: any) => ({
+//       url: img.url,
+//       isPrimary: img.isPrimary,
+//     })),
+//     status:
+//       p.status === "AVAILABLE"
+//         ? "selling"
+//         : p.status === "OUT_OF_STOCK"
+//           ? "stopselling"
+//           : (p.status ?? "selling"),
+//     rating: p.rating ?? 0,
+//     reviewCount: p.reviewCount ?? 0,
+//     category: p.category
+//       ? {
+//           name: p.category.name,
+//           code: p.category.code,
+//           parentName: p.category.parentName ?? null,
+//           parentCode: p.category.parentCode ?? null,
+//         }
+//       : undefined,
+//     specifications: p.specifications ?? undefined,
+//     tags: p.tags ?? [],
+//     description: p.description ?? "",
+//     createdAt: p.createdAt?.$date ?? p.createdAt,
+//     updatedAt: p.updatedAt?.$date ?? p.updatedAt,
+//   };
+// };
+
+// fix thêm  sản phẩm cụ thể trong giỏ hàng
 const mapProduct = (p: any): Product => {
+  // Tìm variant có giảm giá (nếu có)
   const discountVariant = p.variants?.find(
-    (v: any) => v.originalPrice && v.originalPrice > v.price,
+    (v: any) => v.originalPrice && v.originalPrice > (v.price || p.price),
   );
+
   return {
-    id: p._id?.$oid ?? p.id ?? p._id,
-    name: p.name,
-    brand: p.brand,
+    id: p._id?.$oid ?? p.id ?? p._id ?? "",
+    name: p.name ?? "",
+    brand: p.brand ?? "",
     origin: p.origin,
     productCode: p.productCode,
-    price: p.price ?? 0, // ← tránh null
+    price: Number(p.price) || 0,
     originalPrice: discountVariant?.originalPrice ?? undefined,
-    totalStockQuantity: p.totalStockQuantity ?? 0,
-    stockQuantity: p.totalStockQuantity ?? 0,
-    variants: p.variants ?? [],
+
+    // ================== SỬA CHÍNH Ở ĐÂY ==================
+    variants: Array.isArray(p.variants)
+      ? p.variants.map((v: any) => ({
+          variantId: v.variantId || v.id || "",
+          sku: v.sku || "",
+          size: v.size || "",
+          thickness: v.thickness || "",
+          color: v.color || "",
+          price: Number(v.price) || Number(p.price) || 0,
+          originalPrice: v.originalPrice ? Number(v.originalPrice) : undefined,
+          stockQuantity: Number(v.stockQuantity) || 0,
+          status: v.status || "ACTIVE",
+        }))
+      : [],
+    // ====================================================
+
     images: (p.images ?? []).map((img: any) => ({
       url: img.url,
-      isPrimary: img.isPrimary,
+      isPrimary: Boolean(img.isPrimary),
     })),
+
     status:
       p.status === "AVAILABLE"
         ? "selling"
-        : p.status === "OUT_OF_STOCK"
+        : p.status === "OUT_OF_STOCK" || p.status === "DISCONTINUED"
           ? "stopselling"
-          : (p.status ?? "selling"),
-    rating: p.rating ?? 0,
-    reviewCount: p.reviewCount ?? 0,
+          : "selling",
+
+    rating: Number(p.rating) || 0,
+    reviewCount: Number(p.reviewCount) || 0,
+    totalStockQuantity: Number(p.totalStockQuantity) || 0,
+    stockQuantity: Number(p.totalStockQuantity) || 0,
+
     category: p.category
       ? {
           name: p.category.name,
@@ -249,6 +314,7 @@ const mapProduct = (p: any): Product => {
           parentCode: p.category.parentCode ?? null,
         }
       : undefined,
+
     specifications: p.specifications ?? undefined,
     tags: p.tags ?? [],
     description: p.description ?? "",

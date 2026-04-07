@@ -2,7 +2,10 @@ package com.b2204922.orderservice.controller;
 
 import com.b2204922.orderservice.dto.request.OrderRequest;
 import com.b2204922.orderservice.dto.response.OrderResponse;
+import com.b2204922.orderservice.exception.ResourceNotFoundException;
 import com.b2204922.orderservice.service.IOrderService;
+// import com.b2204922.orderservice.repository.OrderRepository;
+// import com.b2204922.orderservice.entity.Order;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -10,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +25,7 @@ import java.util.Map;
 public class OrderController {
 
     private final IOrderService orderService;
+    // private final OrderRepository orderRepository;
 
     @PostMapping("/add")
     public ResponseEntity<OrderResponse> createOrder(@RequestBody OrderRequest request) {
@@ -121,4 +126,24 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getTopSellingDashboard());
 
     }
+    // Thêm vào OrderController.java
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<List<OrderResponse>> getByEmail(@PathVariable String email) {
+        return ResponseEntity.ok(orderService.getOrdersByEmail(email));
+    }
+    // ✅ THÊM endpoint mới tìm theo orderId thay vì orderNumber
+
+    // @PatchMapping("/payment-status-by-id/{orderId}")
+    // public ResponseEntity<OrderResponse> updatePaymentStatusById(
+    //         @PathVariable String orderId,
+    //         @RequestParam String status,
+    //         @RequestParam(required = false) String transactionId) {
+    //     Order order = orderRepository.findById(orderId)
+    //             .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy đơn hàng ID: " + orderId));
+    //     order.getPayment().setStatus(status);
+    //     order.getPayment().setTransactionId(transactionId != null ? transactionId : "");
+    //     order.setUpdatedAt(LocalDateTime.now());
+    //     return ResponseEntity.ok(convertToOrderResponse(orderRepository.save(order)));
+    // }
 }

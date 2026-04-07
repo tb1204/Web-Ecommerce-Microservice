@@ -137,7 +137,7 @@ public class OrderServiceImpl implements IOrderService {
         Order.CustomerInfo customerInfo = new Order.CustomerInfo(
                 request.getName(), request.getPhone(), request.getEmail(), request.getShippingAddress()
         );
-        Order.Payment payment = new Order.Payment(request.getPaymentMethod(), "UNPAID", "");
+        Order.Payment payment = new Order.Payment(request.getPaymentMethod(), "PENDING", "");
 
         Order order = Order.builder()
                 .orderNumber(orderNumber)
@@ -763,6 +763,16 @@ public class OrderServiceImpl implements IOrderService {
                     map.put("value", e.getValue() + " lượt");
                     return map;
                 })
+                .collect(Collectors.toList());
+    }
+
+    //query đơn hàng theo email
+    // Thêm implementation
+    @Override
+    public List<OrderResponse> getOrdersByEmail(String email) {
+        // Tìm đơn hàng theo email trong customerInfo
+        return orderRepository.findByCustomerInfoEmail(email).stream()
+                .map(this::convertToOrderResponse)
                 .collect(Collectors.toList());
     }
 }

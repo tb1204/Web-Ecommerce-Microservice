@@ -441,6 +441,7 @@ import ProductReviews from "./ProductReviews";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { addToCart } from "../../store/slices/cartSlice";
 import { openCartDrawer } from "../../store/slices/uiSlice";
+import { setCheckoutItems } from "../../store/slices/cartSlice";
 import { useAuth } from "@clerk/clerk-react";
 import axios from "axios";
 import type { Product, ProductVariant } from "../Products/InterfaceItem";
@@ -594,22 +595,52 @@ const ProductDetails = () => {
   };
 
   // ✅ SỬA: KHÔNG mở drawer, chỉ navigate sang checkout
-  const handleBuyNow = async () => {
+  // const handleBuyNow = async () => {
+  //   if (!selectedVariant) {
+  //     toast.error("Vui lòng chọn biến thể sản phẩm!");
+  //     return;
+  //   }
+  //   setAddingToCart(true);
+  //   try {
+  //     await addProductToCart();
+  //     navigate("/checkout");
+  //   } catch (err: any) {
+  //     toast.error(err?.message ?? "Thêm vào giỏ thất bại!");
+  //   } finally {
+  //     setAddingToCart(false);
+  //   }
+  // };
+
+  //fix lỗi mua ngay
+  const handleBuyNow = () => {
     if (!selectedVariant) {
       toast.error("Vui lòng chọn biến thể sản phẩm!");
       return;
     }
-    setAddingToCart(true);
-    try {
-      await addProductToCart();
-      navigate("/checkout");
-    } catch (err: any) {
-      toast.error(err?.message ?? "Thêm vào giỏ thất bại!");
-    } finally {
-      setAddingToCart(false);
+    if ((selectedVariant.stockQuantity ?? 0) <= 0) {
+      toast.error("Sản phẩm đã hết hàng!");
+      return;
     }
-  };
 
+    const buyNowItem = {
+      productId: product!.id,
+      variantId: selectedVariant.variantId,
+      name: product!.name,
+      price: selectedVariant.price ?? product!.price,
+      quantity,
+      image:
+        product!.images?.find((img) => img.isPrimary)?.url ||
+        product!.images?.[0]?.url ||
+        "",
+      size: selectedVariant.size,
+      thickness: selectedVariant.thickness,
+      color: selectedVariant.color,
+    };
+
+    // Dispatch vào Redux, không cần đăng nhập
+    dispatch(setCheckoutItems({ items: [buyNowItem], isBuyNow: true }));
+    navigate("/checkout");
+  };
   const handleNext = () =>
     setCurrentImgIndex((prev) =>
       prev === (product?.images.length ?? 1) - 1 ? 0 : prev + 1,

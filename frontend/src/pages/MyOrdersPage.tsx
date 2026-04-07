@@ -332,6 +332,34 @@ const MyOrdersPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // useEffect(() => {
+  //   const fetchOrders = async () => {
+  //     if (!isSignedIn || !user) {
+  //       setLoading(false);
+  //       return;
+  //     }
+  //     try {
+  //       const token = await getToken({ template: "my-backend" });
+  //       const res = await axios.get(`${ORDER_URL}/api/orders/user/${user.id}`, {
+  //         headers: { Authorization: `Bearer ${token}` },
+  //       });
+  //       // Sắp xếp mới nhất lên đầu
+  //       const sorted = (res.data as Order[]).sort(
+  //         (a, b) =>
+  //           new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+  //       );
+  //       setOrders(sorted);
+  //     } catch (err: any) {
+  //       setError("Không thể tải danh sách đơn hàng.");
+  //       console.error(err);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchOrders();
+  // }, [isSignedIn, user]);
+
+  //fix user chưa có tài khoản đặt hàng
   useEffect(() => {
     const fetchOrders = async () => {
       if (!isSignedIn || !user) {
@@ -340,11 +368,36 @@ const MyOrdersPage: React.FC = () => {
       }
       try {
         const token = await getToken({ template: "my-backend" });
-        const res = await axios.get(`${ORDER_URL}/api/orders/user/${user.id}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const headers = { Authorization: `Bearer ${token}` };
+
+        // 1. Lấy theo userId
+        const resByUserId = await axios.get(
+          `${ORDER_URL}/api/orders/user/${user.id}`,
+          { headers },
+        );
+        let allOrders: Order[] = resByUserId.data ?? [];
+
+        // 2. Nếu có email, lấy thêm theo email (bắt đơn đặt lúc chưa đăng nhập)
+        const userEmail = user.primaryEmailAddress?.emailAddress;
+        if (userEmail) {
+          try {
+            const resByEmail = await axios.get(
+              `${ORDER_URL}/api/orders/email/${encodeURIComponent(userEmail)}`,
+              { headers },
+            );
+            const byEmail: Order[] = resByEmail.data ?? [];
+
+            // Merge — tránh trùng id
+            const existingIds = new Set(allOrders.map((o) => o.id));
+            const newOrders = byEmail.filter((o) => !existingIds.has(o.id));
+            allOrders = [...allOrders, ...newOrders];
+          } catch {
+            // Email không có đơn nào cũng không sao
+          }
+        }
+
         // Sắp xếp mới nhất lên đầu
-        const sorted = (res.data as Order[]).sort(
+        const sorted = allOrders.sort(
           (a, b) =>
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
         );
@@ -358,7 +411,6 @@ const MyOrdersPage: React.FC = () => {
     };
     fetchOrders();
   }, [isSignedIn, user]);
-
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen bg-gray-50 dark:bg-gray-900">
