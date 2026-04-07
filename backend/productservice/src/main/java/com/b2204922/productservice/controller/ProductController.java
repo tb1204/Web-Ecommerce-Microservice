@@ -114,4 +114,9 @@ public class ProductController {
         List<Product> discountProducts = productService.getDiscountProducts();
         return ResponseEntity.ok(discountProducts);
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Product>> searchProducts(@RequestParam("q") String query) {
+        return ResponseEntity.ok(productService.searchByName(query));
+    }
 }

@@ -121,4 +121,13 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getTopSellingDashboard());
 
     }
+
+    @GetMapping("/check-purchased-count")
+    public ResponseEntity<Integer> getPurchasedCount(
+            @RequestParam String userId,
+            @RequestParam String productId) {
+
+        Integer count = orderService.countPurchasedProduct(userId, productId);
+        return ResponseEntity.ok(count);
+    }
 }

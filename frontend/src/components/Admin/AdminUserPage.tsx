@@ -73,10 +73,10 @@ const AdminUsersPage = () => {
   const fetchUsers = async (page = 0) => {
     setLoading(true);
     try {
-      const headers = await getAuthHeader();
+      const headers = await getAuthHeader(); //Test xong nhớ bật lên
       const res = await axios.get(
         `${BASE_URL}/api/admin/users?page=${page}&size=${PAGE_SIZE}`,
-        { headers },
+        { headers }, //Test xong nhớ bật lên
       );
       setUsers(res.data.content); // chỉ 10 user
       setTotalPages(res.data.totalPages);

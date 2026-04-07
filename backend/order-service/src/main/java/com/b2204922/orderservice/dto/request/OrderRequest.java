@@ -18,11 +18,13 @@ public class OrderRequest {
     private String phone;
     private String email;
     private String shippingAddress;
-// OrderItemRequest.java — thêm field
-    private String variantId; // ✅ THÊM
+
+    private String variantId;
     private List<OrderItemRequest> items;
 
     private String paymentMethod;
 
     private String cancelReason;
+
+    private String note;
 }

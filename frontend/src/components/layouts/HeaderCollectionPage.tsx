@@ -331,9 +331,9 @@ const HeaderCollectionPage: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-4 md:py-6 font-sans">
-      <h1 className="text-lg md:text-xl font-bold text-gray-900 mb-4 uppercase tracking-tight">
+      {/* <h1 className="text-lg md:text-xl font-bold text-gray-900 mb-4 uppercase tracking-tight">
         Tất cả sản phẩm
-      </h1>
+      </h1> */}
 
       <div className="w-full rounded-xl md:rounded-2xl overflow-hidden mb-6 md:mb-8 shadow-sm">
         <img
@@ -349,7 +349,8 @@ const HeaderCollectionPage: React.FC = () => {
             Giảm Giá Sốc
           </h2>
           <Link
-            to="/collections/all"
+            // to="/collections/all"
+            to="/flashsale/"
             className="flex-shrink-0 flex items-center gap-1 text-white text-[10px] md:text-sm font-semibold hover:opacity-80 transition-all border-b border-white/30 pb-0.5"
           >
             Xem tất cả{" "}

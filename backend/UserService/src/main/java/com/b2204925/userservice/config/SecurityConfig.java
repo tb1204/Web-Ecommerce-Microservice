@@ -67,12 +67,14 @@ public class SecurityConfig {
                 .accessDeniedHandler(new CustomAccessDeniedHandler())
                 )
                 .authorizeHttpRequests(auth -> auth
+      //                          .requestMatchers("/api/admin/**").permitAll() //Test xong nhớ xóa nha
                 .requestMatchers("/api/webhook/**").permitAll()
                 .requestMatchers("/api/banners/flashsale").permitAll()
                 .requestMatchers("/api/admin/sliders/list").permitAll()
                 .requestMatchers("/api/admin/sliders/banners/**").permitAll()
                                 .requestMatchers("/api/users/statistics/**").permitAll()
-                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                .requestMatchers("/api/admin/**").hasRole("ADMIN") //tắt để test xong nhớ bật lại
+
                 .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2

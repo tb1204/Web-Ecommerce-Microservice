@@ -73,7 +73,7 @@ public class OrderServiceImpl implements IOrderService {
 
                         double price = Double.parseDouble(priceObj.toString());
 
-                        // ✅ Lấy size/thickness/color từ variant khớp variantId
+                        //  Lấy size/thickness/color từ variant khớp variantId
                         String size = null, thickness = null, color = null, image = null;
 
                         @SuppressWarnings("unchecked")
@@ -89,7 +89,7 @@ public class OrderServiceImpl implements IOrderService {
                                 size = (String) matchedVariant.get("size");
                                 thickness = (String) matchedVariant.get("thickness");
                                 color = (String) matchedVariant.get("color");
-                                // ✅ Ưu tiên lấy price từ variant nếu có
+                                //  Ưu tiên lấy price từ variant nếu có
                                 Object variantPrice = matchedVariant.get("price");
                                 if (variantPrice != null) {
                                     price = Double.parseDouble(variantPrice.toString());
@@ -97,7 +97,7 @@ public class OrderServiceImpl implements IOrderService {
                             }
                         }
 
-                        // ✅ Lấy ảnh primary
+                        //  Lấy ảnh primary
                         @SuppressWarnings("unchecked")
                         List<Map<String, Object>> images
                                 = (List<Map<String, Object>>) product.get("images");
@@ -113,13 +113,13 @@ public class OrderServiceImpl implements IOrderService {
                                 .productId(itemReq.getProductId())
                                 .variantId(itemReq.getVariantId())
                                 .productName(name)
-                                .productImage(image) // ✅
+                                .productImage(image) //
                                 .price(price)
                                 .quantity(itemReq.getQuantity())
                                 .lineTotal(price * itemReq.getQuantity())
-                                .size(size) // ✅
-                                .thickness(thickness) // ✅
-                                .color(color) // ✅
+                                .size(size) //
+                                .thickness(thickness) //
+                                .color(color) //
                                 .build();
 
                     } catch (Exception e) {
@@ -131,7 +131,7 @@ public class OrderServiceImpl implements IOrderService {
 
         double subTotal = entityItems.stream().mapToDouble(OrderItem::getLineTotal).sum();
         int totalQty = entityItems.stream().mapToInt(OrderItem::getQuantity).sum();
-        double shippingFee = subTotal >= 3_000_000 ? 0.0 : 30_000.0; // ✅ khớp với frontend
+        double shippingFee = subTotal >= 3_000_000 ? 0.0 : 30_000.0; // khớp với frontend
         Order.Summary summary = new Order.Summary(subTotal + shippingFee, shippingFee, totalQty);
 
         Order.CustomerInfo customerInfo = new Order.CustomerInfo(
@@ -142,6 +142,7 @@ public class OrderServiceImpl implements IOrderService {
         Order order = Order.builder()
                 .orderNumber(orderNumber)
                 .userId(request.getUserId())
+                .note(request.getNote())
                 .customerInfo(customerInfo)
                 .summary(summary)
                 .payment(payment)
@@ -334,19 +335,19 @@ public class OrderServiceImpl implements IOrderService {
                 .transactionId(order.getPayment().getTransactionId())
                 .build();
 
-        // ✅ THÊM: map items đầy đủ
+        //  THÊM: map items đầy đủ
         List<OrderItemResponse> items = order.getItems() != null
                 ? order.getItems().stream()
                         .map(item -> OrderItemResponse.builder()
                         .productId(item.getProductId())
                         .productName(item.getProductName())
-                        .productImage(item.getProductImage()) // ✅
+                        .productImage(item.getProductImage()) //
                         .quantity(item.getQuantity())
                         .price(item.getPrice())
                         .lineTotal(item.getLineTotal())
-                        .size(item.getSize()) // ✅
-                        .thickness(item.getThickness()) // ✅
-                        .color(item.getColor()) // ✅
+                        .size(item.getSize()) //
+                        .thickness(item.getThickness()) //
+                        .color(item.getColor()) //
                         .build())
                         .collect(Collectors.toList())
                 : new ArrayList<>();
@@ -355,12 +356,13 @@ public class OrderServiceImpl implements IOrderService {
                 .id(order.getId())
                 .orderNumber(order.getOrderNumber())
                 .userId(order.getUserId())
+                .note(order.getNote())
                 .orderStatus(order.getOrderStatus())
                 .cancelReason(order.getCancelReason())
                 .customerInfo(customerInfo)
                 .summary(summary)
                 .payment(payment)
-                .items(items) // ✅ THÊM
+                .items(items) //  THÊM
                 .createdAt(order.getCreatedAt())
                 .updatedAt(order.getUpdatedAt())
                 .build();
@@ -764,5 +766,29 @@ public class OrderServiceImpl implements IOrderService {
                     return map;
                 })
                 .collect(Collectors.toList());
+    }
+
+    public Integer countPurchasedProduct(String userId, String productId) {
+        // 1. Lấy tất cả đơn hàng của User này
+        List<Order> userOrders = orderRepository.findByUserId(userId);
+
+        int count = 0;
+
+        for (Order order : userOrders) {
+            // 2. Chỉ tính những đơn hàng đã giao thành công (Tránh việc đặt rồi hủy vẫn được đánh giá)
+            if ("DELIVERED".equalsIgnoreCase(order.getOrderStatus())) {
+
+                // 3. Kiểm tra xem trong danh sách sản phẩm của đơn hàng này có productId đó không
+                // Giả sử trong Order ông có List<OrderItem> items
+                boolean hasProduct = order.getItems().stream()
+                        .anyMatch(item -> item.getProductId().equals(productId));
+
+                if (hasProduct) {
+                    count++;
+                }
+            }
+        }
+
+        return count;
     }
 }

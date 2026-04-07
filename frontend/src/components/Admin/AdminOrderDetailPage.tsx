@@ -159,6 +159,16 @@ const AdminOrderDetailModal = ({ isOpen, onClose, order }: Props) => {
                     <p className="font-medium text-gray-600 leading-relaxed italic">{order.customerInfo.shippingAddress}</p>
                   </div>
                 </div>
+                {order.note && (
+                  <div className="mt-4">
+                    <h4 className="font-bold text-red-400 text-[10px] tracking-widest mb-2">Ghi chú từ khách hàng:</h4>
+                    <div className="bg-red-50 p-4 rounded-2xl border border-red-100 shadow-sm">
+                      <p className="text-sm text-red-900 italic font-medium">
+                        "{order.note}"
+                      </p>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* THỜI GIAN */}

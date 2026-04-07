@@ -497,11 +497,18 @@ const Navbar = () => {
 
   const handleWishlistClick = () => navigate("/wishlist");
 
-  const handleSearch = (e: FormEvent) => {
+  // const handleSearch = (e: FormEvent) => {
+  //   e.preventDefault();
+  //   const query = searchTerm.trim();
+  //   if (!query) return;
+  //   navigate(`/collections/all?search=${encodeURIComponent(query)}`);
+  // };
+  const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    const query = searchTerm.trim();
-    if (!query) return;
-    navigate(`/collections/all?search=${encodeURIComponent(query)}`);
+    if (!searchTerm.trim()) return;
+    navigate(`/collections/all?q=${encodeURIComponent(searchTerm.trim())}`);
+
+    setSearchTerm(""); 
   };
 
   const { wishlistItems } = useWishlist();

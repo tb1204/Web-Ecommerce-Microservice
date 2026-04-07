@@ -24,4 +24,7 @@ public interface ReviewRepository extends CrudRepository<Review, String> {
     // Dùng khi admin vừa lọc "Nệm" vừa lọc "Đã ẩn"
     List<Review> findByStatusAndProductIdIn(String status, List<String> productIds);
 
+    long countByUserIdAndProductId(String userId, String productId);
+
+    long countByProductIdAndStatus(String productId, String approved);
 }

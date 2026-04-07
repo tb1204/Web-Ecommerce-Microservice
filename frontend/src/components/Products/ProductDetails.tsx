@@ -1202,11 +1202,12 @@ const ProductDetails = () => {
       )}
 
       {/* ĐÁNH GIÁ */}
-      <ProductReviews
+      {/* <ProductReviews
         reviews={[]}
         reviewCount={product.reviewCount ?? 0}
         averageRating={product.rating ?? 0}
-      />
+      /> */}
+      {product && <ProductReviews productId={product.id} />}
 
       {/* SẢN PHẨM TƯƠNG TỰ */}
       {similarProducts.length > 0 && (
