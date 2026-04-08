@@ -2,6 +2,7 @@ package com.b2204922.productservice.entity;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
@@ -18,6 +19,7 @@ public class Product {
     @Id
     private String id;
 
+    @TextIndexed(weight = 10)
     private String name;
 //    private String sku;
     private String productCode;

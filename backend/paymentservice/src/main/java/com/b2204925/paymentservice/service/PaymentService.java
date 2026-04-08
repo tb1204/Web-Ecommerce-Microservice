@@ -16,6 +16,8 @@ import com.b2204925.paymentservice.repository.PaymentRepository;
 import com.b2204925.paymentservice.util.VNPayUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -31,6 +33,8 @@ public class PaymentService {
     private final PaymentRepository paymentRepository;
     private final VNPayUtil vnPayUtil;
     private final OrderClientService orderClientService;
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     public PaymentResponse createPayment(String userId, CreatePaymentRequest req) {
         paymentRepository.findByOrderId(req.getOrderId()).ifPresent(p -> {
@@ -102,6 +106,44 @@ public class PaymentService {
     //     }
     //     return toResponse(paymentRepository.save(payment));
     // }
+//    public PaymentResponse handleVNPayReturn(Map<String, String> params) {
+//        String orderId = params.get("vnp_TxnRef");
+//        String responseCode = params.get("vnp_ResponseCode");
+//        String transactionStatus = params.get("vnp_TransactionStatus");
+//        String transactionId = params.get("vnp_TransactionNo");
+//
+//        Payment payment = paymentRepository.findByOrderId(orderId)
+//                .orElseThrow(() -> new AppException(ErrorCode.PAYMENT_NOT_FOUND));
+//
+//        payment.setResponseCode(responseCode);
+//        payment.setTransactionId(transactionId);
+//        payment.setPaymentGatewayResponse(params.toString());
+//        payment.setUpdatedAt(Instant.now());
+//
+//        boolean isValidSignature = vnPayUtil.verifyReturn(params);
+//        boolean isResponseSuccess = "00".equals(responseCode);
+//        boolean isTransactionSuccess = "00".equals(transactionStatus);
+//
+//        if (isValidSignature && isResponseSuccess && isTransactionSuccess) {
+//            payment.setPaymentStatus(PaymentStatus.PAID);
+//            payment.setPaidAt(Instant.now());
+//            log.info("VNPay SUCCESS for order {}", orderId);
+//
+//            Payment saved = paymentRepository.save(payment);
+//            orderClientService.updatePaymentStatus(orderId, "PAID", transactionId); // ← THÊM
+//            return toResponse(saved);
+//
+//        } else {
+//            payment.setPaymentStatus(PaymentStatus.FAILED);
+//            String failMessage = vnPayUtil.getResponseMessage(responseCode);
+//            payment.setFailedReason(failMessage);
+//            log.warn("VNPay FAILED for order {} | reason: {}", orderId, failMessage);
+//
+//            Payment saved = paymentRepository.save(payment);
+//            orderClientService.updatePaymentStatus(orderId, "FAILED", transactionId); // ← THÊM
+//            return toResponse(saved);
+//        }
+//    }
     public PaymentResponse handleVNPayReturn(Map<String, String> params) {
         String orderId = params.get("vnp_TxnRef");
         String responseCode = params.get("vnp_ResponseCode");
@@ -123,21 +165,37 @@ public class PaymentService {
         if (isValidSignature && isResponseSuccess && isTransactionSuccess) {
             payment.setPaymentStatus(PaymentStatus.PAID);
             payment.setPaidAt(Instant.now());
-            log.info("VNPay SUCCESS for order {}", orderId);
-
             Payment saved = paymentRepository.save(payment);
-            orderClientService.updatePaymentStatus(orderId, "PAID", transactionId); // ← THÊM
-            return toResponse(saved);
 
+            //   Gửi tin nhắn RabbitMQ thay vì gọi RestTemplate
+            sendPaymentUpdate(orderId, "PAID", transactionId);
+
+            return toResponse(saved);
         } else {
             payment.setPaymentStatus(PaymentStatus.FAILED);
             String failMessage = vnPayUtil.getResponseMessage(responseCode);
             payment.setFailedReason(failMessage);
-            log.warn("VNPay FAILED for order {} | reason: {}", orderId, failMessage);
-
             Payment saved = paymentRepository.save(payment);
-            orderClientService.updatePaymentStatus(orderId, "FAILED", transactionId); // ← THÊM
+
+            //   Gửi tin nhắn thất bại
+            sendPaymentUpdate(orderId, "FAILED", transactionId);
+
             return toResponse(saved);
+        }
+    }
+    // --- HELPER ĐỂ GỬI TIN NHẮN ---
+    private void sendPaymentUpdate(String orderId, String status, String transactionId) {
+        try {
+            Map<String, String> message = Map.of(
+                    "orderId", orderId,
+                    "status", status,
+                    "transactionId", transactionId != null ? transactionId : ""
+            );
+            // Gửi vào exchange đã cấu hình
+            rabbitTemplate.convertAndSend("order_update_queue", message);
+            log.info(" [RabbitMQ] Đã gửi thông báo cập nhật cho đơn hàng: {}", orderId);
+        } catch (Exception e) {
+            log.error(" [RabbitMQ] Lỗi gửi tin nhắn: {}", e.getMessage());
         }
     }
 
@@ -155,7 +213,13 @@ public class PaymentService {
         payment.setPaymentStatus(PaymentStatus.PAID);
         payment.setPaidAt(Instant.now());
         payment.setUpdatedAt(Instant.now());
-        return toResponse(paymentRepository.save(payment));
+//        return toResponse(paymentRepository.save(payment));
+        Payment saved = paymentRepository.save(payment);
+
+        // Khi Admin xác nhận COD thành công, cũng phải bắn tin nhắn để Order Service cập nhật!
+        sendPaymentUpdate(orderId, "PAID", "COD_CONFIRMED_" + orderId);
+
+        return toResponse(saved);
     }
 
     public PaymentResponse cancelPayment(String orderId) {

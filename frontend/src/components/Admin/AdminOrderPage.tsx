@@ -19,8 +19,10 @@ import axios from "axios";
 import type { Order } from "../Products/InterfaceItem";
 import { PrintInvoice } from "./PrintInvoice";
 import AdminOrderDetailModal from "./AdminOrderDetailPage";
+import { useAuth } from "@clerk/clerk-react";
 
 const AdminOrderPage = () => {
+  const { getToken } = useAuth();
   const ORDER_API_URL = "http://localhost:8084";
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -90,26 +92,59 @@ const AdminOrderPage = () => {
   //   }
   // };
 
-  const handleStatusChange = async (id: string, newStatus: string) => {
-  let reason = "";
-  if (newStatus === "CANCELLED") {
-    reason = window.prompt("Vui lòng nhập lý do hủy đơn hàng:", "Khách hàng đổi ý") || "";
-    if (reason === null) return; // Nếu không nhập lý do thì không cho hủy
-  }
+  // const handleStatusChange = async (id: string, newStatus: string) => {
+  //   let reason = "";
+  //   if (newStatus === "CANCELLED") {
+  //     reason = window.prompt("Vui lòng nhập lý do hủy đơn hàng:", "Khách hàng đổi ý") || "";
+  //     if (reason === null) return; // Nếu không nhập lý do thì không cho hủy
+  //   }
 
-  try {
+  //   try {
+  //     if (newStatus === "CANCELLED") {
+  //         await axios.put(`${ORDER_API_URL}/api/orders/cancel/${id}`, { cancelReason: reason });
+  //     } else {
+  //         await axios.patch(`${ORDER_API_URL}/api/orders/status/${id}?status=${newStatus}`);
+  //     }
+      
+  //     fetchOrders();
+  //     toast.success(`Cập nhật thành công!`);
+  //   } catch (error: any) {
+  //     toast.error(error.response?.data?.message || "Thao tác thất bại");
+  //   }
+  // };
+  const handleStatusChange = async (id: string, newStatus: string) => {
+    let reason = "";
     if (newStatus === "CANCELLED") {
-        await axios.put(`${ORDER_API_URL}/api/orders/cancel/${id}`, { cancelReason: reason });
-    } else {
-        await axios.patch(`${ORDER_API_URL}/api/orders/status/${id}?status=${newStatus}`);
+      reason = window.prompt("Vui lòng nhập lý do hủy đơn hàng:", "Khách hàng đổi ý") || "";
+      if (reason === null) return; 
     }
-    
-    fetchOrders();
-    toast.success(`Cập nhật thành công!`);
-  } catch (error: any) {
-    toast.error(error.response?.data?.message || "Thao tác thất bại");
-  }
-};
+
+    // 1. Lấy Token "giấy thông hành" từ Clerk
+    const token = await getToken({ template: "my-backend" });
+
+    try {
+      // 2. Tạo cấu hình Header có chứa Token
+      const config = {
+        headers: { 
+          Authorization: `Bearer ${token}` 
+        }
+      };
+
+      if (newStatus === "CANCELLED") {
+          // Gửi bằng PUT kèm body và config (headers)
+          await axios.put(`${ORDER_API_URL}/api/orders/cancel/${id}`, { cancelReason: reason }, config);
+      } else {
+          // Gửi bằng PATCH kèm config (headers)
+          await axios.patch(`${ORDER_API_URL}/api/orders/status/${id}?status=${newStatus}`, {}, config);
+      }
+      
+      fetchOrders();
+      toast.success(`Cập nhật thành công!`);
+    } catch (error: any) {
+      console.error("Lỗi cập nhật:", error.response?.data);
+      toast.error(error.response?.data?.message || "Thao tác thất bại");
+    }
+  };
 
   const handlePrintInvoice = (order: Order) => {
     setItemsToPrint([order]);
@@ -141,15 +176,34 @@ const AdminOrderPage = () => {
     setCurrentPage(1);
   };
 
-  const handleConfirmPayment = async (orderNumber: string) => {
-    if (!window.confirm("Xác nhận khách hàng đã trả tiền mặt cho đơn này?")) return;
+  // const handleConfirmPayment = async (orderNumber: string) => {
+  //   if (!window.confirm("Xác nhận khách hàng đã trả tiền mặt cho đơn này?")) return;
+  //   try {
+  //     // Gọi sang Payment Service (Cổng 8085 của bạn ông)
+  //     await axios.patch(`http://localhost:8085/api/payments/order/${orderNumber}/confirm-cod`);
+  //     toast.success("Đã cập nhật trạng thái: Đã thu tiền!");
+  //     fetchOrders(); // Load lại danh sách
+  //   } catch (error) {
+  //     toast.error("Không thể cập nhật trạng thái thanh toán!");
+  //   }
+  // };
+  const handleConfirmPayment = async ( orderId: string) => { // Nhận thêm orderId
+    const token = await getToken({ template: "my-backend" });
+
     try {
-      // Gọi sang Payment Service (Cổng 8085 của bạn ông)
-      await axios.patch(`http://localhost:8085/api/payments/order/${orderNumber}/confirm-cod`);
-      toast.success("Đã cập nhật trạng thái: Đã thu tiền!");
-      fetchOrders(); // Load lại danh sách
+      await axios.patch(
+        //  ĐỔI TẠI ĐÂY: Dùng orderId thay vì orderNumber
+        `http://localhost:8085/api/payments/order/${orderId}/confirm-cod`, 
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      );
+      toast.success("Xác nhận thanh toán thành công!");
+      fetchOrders();
     } catch (error) {
-      toast.error("Không thể cập nhật trạng thái thanh toán!");
+      console.error("Lỗi:", error.response?.data);
+      toast.error("Lỗi: " + (error.response?.data?.message || "Không thể cập nhật"));
     }
   };
 
@@ -372,7 +426,7 @@ const AdminOrderPage = () => {
                             {order.customerInfo.name}
                           </span>
                           <span className="text-[10px] text-gray-400 font-bold mt-1 uppercase tracking-tighter">
-                            {order.customerInfo.phone}
+                            {order.customerInfo.phone} 
                           </span>
                         </div>
                       </div>
@@ -388,7 +442,7 @@ const AdminOrderPage = () => {
                     </td> */}
                     <td className="px-6 py-4 text-center">
                       <div className="flex flex-col items-center gap-1">
-                        <span
+                        {/* <span
                           className={`px-3 py-1 rounded-lg text-[10px] font-black border-2 uppercase ${
                             order.payment.status === "PAID" 
                               ? "bg-blue-50 text-blue-600 border-blue-100" 
@@ -399,9 +453,9 @@ const AdminOrderPage = () => {
                         >
                           {order.payment.status === "PAID" ? "Đã thanh toán" : 
                           order.payment.status === "REFUNDED" ? "Đã hoàn tiền" : "Chưa trả"}
-                        </span>
+                        </span> */}
                         
-                        {/* HIỆN NÚT XÁC NHẬN COD: Nếu là COD và chưa trả tiền */}
+                        {/* HIỆN NÚT XÁC NHẬN COD: Nếu là COD và chưa trả tiền
                         {order.payment.method === "CASH" && order.payment.status === "UNPAID" && order.orderStatus === "DELIVERED" && (
                           <button 
                             onClick={() => handleConfirmPayment(order.orderNumber)}
@@ -409,7 +463,54 @@ const AdminOrderPage = () => {
                           >
                             [Xác nhận đã thu tiền]
                           </button>
-                        )}
+                        )} */}
+                        <select
+                          // 🚀 KHÓA CHỌN TRONG CÁC TRƯỜNG HỢP:
+                          // 1. Đã thanh toán (PAID) hoặc đã hoàn tiền (REFUNDED)
+                          // 2. Thanh toán đã thất bại (FAILED) hoặc đơn đã bị hủy (CANCELLED)
+                          // 3. Phương thức thanh toán là VNPAY (Vì VNPAY phải để hệ thống tự chạy)
+                          disabled={
+                            ["PAID", "REFUNDED", "FAILED", "CANCELLED"].includes(order.payment.status) || 
+                            order.payment.method === "VNPAY"
+                          }
+                          value={order.payment.status}
+                          onChange={(e) => {
+                            if (e.target.value === "PAID") {
+                              // Dùng order.id (hoặc order._id) để Backend dễ tìm record nhé Bằng
+                              handleConfirmPayment(order.id); 
+                            }
+                          }}
+                          className={`w-[140px] px-2 py-2 rounded-xl text-[10px] font-black uppercase border-2 outline-none transition-all shadow-sm text-center ${
+                            order.payment.status === "PAID" 
+                              ? "bg-blue-50 text-blue-600 border-blue-100 cursor-not-allowed" 
+                              : order.payment.status === "REFUNDED"
+                              ? "bg-pink-50 text-pink-600 border-pink-100 cursor-not-allowed"
+                              : order.payment.status === "FAILED" || order.payment.status === "CANCELLED"
+                              ? "bg-gray-100 text-gray-500 border-gray-200 cursor-not-allowed"
+                              : "bg-red-50 text-red-600 border-red-100 hover:border-red-300 cursor-pointer"
+                          }`}
+                        >
+                          {/* Luôn hiện trạng thái hiện tại */}
+                          <option value="PENDING">Chờ thanh toán</option>
+                          <option value="PAID">Đã thanh toán</option>
+                          
+                          {/* Các option đặc biệt chỉ hiện khi đơn hàng đang ở chính trạng thái đó */}
+                          {order.payment.status === "FAILED" && <option value="FAILED">Thanh toán lỗi</option>}
+                          {order.payment.status === "CANCELLED" && <option value="CANCELLED">Đã hủy</option>}
+                          {order.payment.status === "REFUNDED" && <option value="REFUNDED">Đã hoàn tiền</option>}
+                        </select>
+
+                        {/* Nhãn hiển thị phương thức thanh toán */}
+                        <div className="flex flex-col items-center">
+                          <span className="text-[9px] text-gray-400 font-bold uppercase mt-1">
+                            {order.payment.method === "COD" ? "Tiền mặt (COD)" : "VNPAY Online"}
+                          </span>
+                          {/* Gợi ý thêm: hiện cái note nhỏ nếu là VNPAY để Admin biết tại sao bị khóa */}
+                          {order.payment.method === "VNPAY" && order.payment.status === "PENDING" && (
+                            <span className="text-[8px] text-orange-400 italic font-medium">Đợi hệ thống...</span>
+                          )}
+                        </div>
+
                       </div>
                     </td>
                     <td className="px-6 py-4 text-center">
@@ -425,7 +526,7 @@ const AdminOrderPage = () => {
                             e.target.value as Order["orderStatus"],
                           )
                         }
-                        className={`px-3 py-2 rounded-xl text-[10px] font-black uppercase border-2 outline-none transition-all cursor-pointer shadow-sm ${getStatusColor(order.orderStatus)}`}
+                        className={`w-[140px] px-2 py-2 rounded-xl text-[10px] font-black uppercase border-2 outline-none transition-all shadow-sm text-center ${getStatusColor(order.orderStatus)}`}
                       >
                         <option value="PENDING">Chờ xác nhận</option>
                         <option value="PROCESSING">Đang đóng gói</option>

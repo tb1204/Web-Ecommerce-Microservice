@@ -670,7 +670,7 @@ import {
   ChevronUp,
   RotateCcw,
   X,
-  Loader2,
+  
 } from "lucide-react";
 import ProductGrid from "../Products/ProductGrid";
 import type { Product } from "../Products/InterfaceItem";
@@ -721,6 +721,13 @@ const BASE_URL = "http://localhost:8082";
 //   };
 // };
 
+<<<<<<< HEAD
+=======
+// fix thêm  sản phẩm cụ thể trong giỏ hàng
+
+// --- HÀM MAP DỮ LIỆU CỦA BẠN ÔNG (GIỮ NGUYÊN) ---
+
+>>>>>>> 69cc10bbd31a54c4bc32de8f083d9959ca93916f
 const mapProduct = (p: any): Product => {
   // Tìm variant có giảm giá (nếu có)
   const discountVariant = p.variants?.find(
@@ -734,8 +741,12 @@ const mapProduct = (p: any): Product => {
     origin: p.origin,
     productCode: p.productCode,
 
+<<<<<<< HEAD
     price: p.price ?? 0,
 
+=======
+    price: Number(p.price) || 0,
+>>>>>>> 69cc10bbd31a54c4bc32de8f083d9959ca93916f
     originalPrice: discountVariant?.originalPrice ?? undefined,
 
     // ================== SỬA CHÍNH Ở ĐÂY ==================
@@ -845,27 +856,67 @@ const MainCollectionPage: React.FC = () => {
   //   };
   //   fetchProducts();
   // }, []);
+  // useEffect(() => {
+  //   const fetchProducts = async () => {
+  //     try {
+  //       setLoading(true);
+        
+  //       // Kiểm tra: Nếu có query thì gọi Search, không thì gọi All
+  //       const endpoint = query 
+  //         ? `${BASE_URL}/api/products/search?q=${query}` 
+  //         : `${BASE_URL}/api/products/all`;
+
+  //       const res = await axios.get<any[]>(endpoint);
+  //       setAllProducts(res.data.map(mapProduct));
+  //       setError(null);
+  //     } catch (err: any) {
+  //       setError("Không thể tải sản phẩm. Vui lòng thử lại.");
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchProducts();
+  // }, [query]);
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
+<<<<<<< HEAD
 
         // Kiểm tra: Nếu có query thì gọi Search, không thì gọi All
         const endpoint = query
           ? `${BASE_URL}/api/products/search?q=${query}`
           : `${BASE_URL}/api/products/all`;
+=======
+        let endpoint = "";
+
+        // 1. Nếu có từ khóa Search (q) -> Gọi API Search
+        if (query) {
+          endpoint = `${BASE_URL}/api/products/search?q=${query}`;
+        } 
+        // 2. Nếu có Category trên URL (NEM, CHAN-GA...) -> Gọi thẳng API Category của Backend
+        else if (currentCatKey) {
+          endpoint = `${BASE_URL}/api/products/parent-category/${currentCatKey}`;
+        } 
+        // 3. Mặc định -> Lấy tất cả
+        else {
+          endpoint = `${BASE_URL}/api/products/all`;
+        }
+>>>>>>> 69cc10bbd31a54c4bc32de8f083d9959ca93916f
 
         const res = await axios.get<any[]>(endpoint);
         setAllProducts(res.data.map(mapProduct));
         setError(null);
       } catch (err: any) {
+        console.error("Lỗi tải sản phẩm:", err);
         setError("Không thể tải sản phẩm. Vui lòng thử lại.");
       } finally {
         setLoading(false);
       }
     };
     fetchProducts();
-  }, [query]);
+    // Thêm currentCatKey vào mảng dependency để khi chuyển Tab Nệm -> Gối nó tự load lại API
+  }, [query, currentCatKey]);
 
   // --- STATE BỘ LỌC ---
   const [selectedFilters, setSelectedFilters] = useState<{
@@ -899,12 +950,30 @@ const MainCollectionPage: React.FC = () => {
   const mainContentRef = useRef<HTMLDivElement>(null);
 
   // --- ĐỒNG BỘ URL PARAMS ---
+  // useEffect(() => {
+  //   const brand = searchParams.get("brand");
+  //   const size = searchParams.get("size");
+  //   const type = searchParams.get("type");
+  //   const price = searchParams.get("price");
+
+  //   if (brand || size || type || price) {
+  //     setSelectedFilters(prev => ({
+  //       ...prev,
+  //       categories: type ? [type] : prev.categories,
+  //       brands: brand ? [brand] : prev.brands,
+  //       sizes: size ? [size] : prev.sizes,
+  //       priceRanges: price ? [price] : prev.priceRanges
+  //     }));
+  //   }
+  //   setCurrentPage(1);
+  // }, [searchParams]);
   useEffect(() => {
     const brand = searchParams.get("brand");
     const size = searchParams.get("size");
-    const type = searchParams.get("type");
+    const type = searchParams.get("type"); // Lấy cái filter "Nệm lò xo" ông vừa gán ở Search
     const price = searchParams.get("price");
 
+<<<<<<< HEAD
     if (brand || size || type || price) {
       setSelectedFilters((prev) => ({
         ...prev,
@@ -914,8 +983,45 @@ const MainCollectionPage: React.FC = () => {
         priceRanges: price ? [price] : prev.priceRanges,
       }));
     }
+=======
+    // setSelectedFilters(prev => ({
+    //   ...prev,
+    //   //  Nếu URL có type thì tự động tích checkbox "Loại sản phẩm" tương ứng
+    //   categories: type ? [type] : (brand || size || price ? prev.categories : []), 
+    //   brands: brand ? [brand] : prev.brands,
+    //   sizes: size ? [size] : prev.sizes,
+    //   priceRanges: price ? [price] : prev.priceRanges
+    // }));
+    setSelectedFilters({
+      categories: type ? [type] : [],
+      brands: brand ? [brand] : [],
+      sizes: size ? [size] : [],
+      priceRanges: price ? [price] : [],
+      origins: [],
+      colors: []
+    });
+    
+>>>>>>> 69cc10bbd31a54c4bc32de8f083d9959ca93916f
     setCurrentPage(1);
   }, [searchParams]);
+
+  //Tu dong scroll 
+  useEffect(() => {
+    
+    const hasFilters = searchParams.toString().length > 0;
+
+    if (hasFilters && mainContentRef.current) {
+      const offset = mainContentRef.current.offsetTop - 100;
+      window.scrollTo({
+        top: offset,
+        behavior: "smooth"
+      });
+    } else {
+     
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [searchParams]); // Lắng nghe mỗi khi URL thay đổi
+  
 
   // ---  LOGIC LẤY OPTION ĐỘNG TỪ CSDL ---
   // const dynamicOptions = useMemo(() => {
@@ -970,6 +1076,7 @@ const MainCollectionPage: React.FC = () => {
     const cls = new Set<string>();
     const szs = new Set<string>(); // Thêm Set cho kích thước
 
+<<<<<<< HEAD
     productsInCat.forEach((p) => {
       // ✅ Lấy Category Name động (Nếu ở trong danh mục cụ thể)
       if (p.category?.name) cats.add(p.category.name);
@@ -979,6 +1086,17 @@ const MainCollectionPage: React.FC = () => {
       if (p.origin) ogs.add(p.origin);
 
       // ✅ Kích thước, Màu sắc lấy ĐỘNG từ variants
+=======
+    productsInCat.forEach(p => {
+      //  Lấy Category Name động (Nếu ở trong danh mục cụ thể)
+      if (p.category?.name) cats.add(p.category.name);
+      
+      //  Thương hiệu, Xuất xứ lấy ĐỘNG
+      if (p.brand) brs.add(p.brand);
+      if (p.origin) ogs.add(p.origin);
+      
+      //  Kích thước, Màu sắc lấy ĐỘNG từ variants
+>>>>>>> 69cc10bbd31a54c4bc32de8f083d9959ca93916f
       p.variants?.forEach((v: any) => {
         if (v.size) szs.add(v.size);
         if (v.color) cls.add(v.color);
@@ -986,14 +1104,21 @@ const MainCollectionPage: React.FC = () => {
     });
 
     return {
+<<<<<<< HEAD
       // 🔥 LOẠI SẢN PHẨM: Trang 'Tất cả' hiện 4 cha, trang cụ thể hiện con ĐỘNG
       categories: !currentCatKey
         ? ["Nệm", "Chăn ga", "Gối", "Phụ kiện"]
+=======
+      //  LOẠI SẢN PHẨM: Trang 'Tất cả' hiện 4 cha, trang cụ thể hiện con ĐỘNG
+      categories: !currentCatKey 
+        ? ["Nệm", "Chăn ga", "Gối", "Phụ kiện"] 
+>>>>>>> 69cc10bbd31a54c4bc32de8f083d9959ca93916f
         : Array.from(cats).sort(),
 
       brands: Array.from(brs).sort(),
       origins: Array.from(ogs).sort(),
       colors: Array.from(cls).sort(),
+<<<<<<< HEAD
 
       // 🔥 KÍCH THƯỚC: Quay lại lấy ĐỘNG từ Database
       sizes: Array.from(szs).sort((a, b) =>
@@ -1013,6 +1138,18 @@ const MainCollectionPage: React.FC = () => {
           : currentCatKey === "GOI"
             ? ["Dưới 200k", "200k - 500k", "500k - 1 triệu", "Trên 1 triệu"]
             : ["Dưới 1 triệu", "1 - 3 triệu", "3 - 5 triệu", "Trên 5 triệu"],
+=======
+      
+      //  KÍCH THƯỚC: Quay lại lấy ĐỘNG từ Database
+      sizes: Array.from(szs).sort((a, b) => a.localeCompare(b, undefined, { numeric: true })),
+
+      //  KHOẢNG GIÁ: Giữ nguyên GÁN CỨNG theo logic của ông
+      priceRanges: currentCatKey === "NEM" 
+        ? ["Dưới 5 triệu", "5 - 10 triệu", "10 - 15 triệu", "15 - 30 triệu", "Trên 30 triệu"] 
+        : currentCatKey === "GOI" 
+          ? ["Dưới 200k", "200k - 500k", "500k - 1 triệu", "Trên 1 triệu"] 
+          : ["Dưới 1 triệu", "1 - 3 triệu", "3 - 5 triệu", "Trên 5 triệu"]
+>>>>>>> 69cc10bbd31a54c4bc32de8f083d9959ca93916f
     };
   }, [allProducts, currentCatKey]);
 
@@ -1042,6 +1179,7 @@ const MainCollectionPage: React.FC = () => {
     let result = allProducts.filter((p: any) => {
       const pCode = p.category?.code?.toUpperCase() || "";
       const pParentCode = p.category?.parentCode?.toUpperCase() || "";
+<<<<<<< HEAD
       const urlCatMatch =
         !currentCatKey ||
         pCode === currentCatKey ||
@@ -1052,6 +1190,14 @@ const MainCollectionPage: React.FC = () => {
         selectedFilters.categories.length === 0 ||
         selectedFilters.categories.includes(p.category?.name || "") ||
         selectedFilters.categories.includes(p.category?.parentName || "");
+=======
+      const urlCatMatch = !currentCatKey || pCode === currentCatKey || pParentCode === currentCatKey;
+      
+      //  Khớp Category: Check cả tên con (name) và tên cha (parentName) cho trang 'Tất cả'
+      const catMatch = selectedFilters.categories.length === 0 || 
+                       selectedFilters.categories.includes(p.category?.name || "") ||
+                       selectedFilters.categories.includes(p.category?.parentName || "");
+>>>>>>> 69cc10bbd31a54c4bc32de8f083d9959ca93916f
 
       const brandMatch =
         selectedFilters.brands.length === 0 ||

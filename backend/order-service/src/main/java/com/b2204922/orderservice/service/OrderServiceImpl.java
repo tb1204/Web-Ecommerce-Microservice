@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -768,6 +769,10 @@ public class OrderServiceImpl implements IOrderService {
                 .collect(Collectors.toList());
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 69cc10bbd31a54c4bc32de8f083d9959ca93916f
     //query đơn hàng theo email
     // Thêm implementation
     @Override
@@ -777,7 +782,10 @@ public class OrderServiceImpl implements IOrderService {
                 .map(this::convertToOrderResponse)
                 .collect(Collectors.toList());
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 69cc10bbd31a54c4bc32de8f083d9959ca93916f
     public Integer countPurchasedProduct(String userId, String productId) {
         // 1. Lấy tất cả đơn hàng của User này
         List<Order> userOrders = orderRepository.findByUserId(userId);

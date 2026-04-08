@@ -7,6 +7,10 @@ import com.cloudinary.utils.ObjectUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.TextCriteria;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.core.io.InputStreamSource;
@@ -23,6 +27,7 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final Cloudinary cloudinary;
+    private final MongoTemplate mongoTemplate;
 
     public List<Product> getAllProducts() {
         // Sắp xếp theo thời gian mới nhất lên đầu để Admin dễ quản lý
@@ -249,12 +254,20 @@ public class ProductService {
     }
 
     //Ham update san pham
+<<<<<<< HEAD
+=======
+
+>>>>>>> 69cc10bbd31a54c4bc32de8f083d9959ca93916f
     public Product updateProduct(String id, Product updatedProduct, List<MultipartFile> newImages) {
         // 1. Tìm sản phẩm cũ trong DB
         Product existingProduct = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm để cập nhật"));
 
         // 2. Cập nhật thông tin cơ bản
+<<<<<<< HEAD
+=======
+
+>>>>>>> 69cc10bbd31a54c4bc32de8f083d9959ca93916f
         if (updatedProduct.getName() != null) {
             existingProduct.setName(updatedProduct.getName().trim());
         }
@@ -265,6 +278,7 @@ public class ProductService {
             existingProduct.setOrigin(updatedProduct.getOrigin().trim());
         }
 
+<<<<<<< HEAD
         if (updatedProduct.getName() != null) {
             existingProduct.setName(updatedProduct.getName().trim());
         }
@@ -274,6 +288,12 @@ public class ProductService {
         if (updatedProduct.getOrigin() != null) {
             existingProduct.setOrigin(updatedProduct.getOrigin().trim());
         }
+=======
+
+        if (updatedProduct.getName() != null) existingProduct.setName(updatedProduct.getName().trim());
+        if (updatedProduct.getBrand() != null) existingProduct.setBrand(updatedProduct.getBrand().trim());
+        if (updatedProduct.getOrigin() != null) existingProduct.setOrigin(updatedProduct.getOrigin().trim());
+>>>>>>> 69cc10bbd31a54c4bc32de8f083d9959ca93916f
 
         existingProduct.setDescription(updatedProduct.getDescription());
         existingProduct.setStatus(updatedProduct.getStatus());
@@ -318,6 +338,10 @@ public class ProductService {
             }
         }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 69cc10bbd31a54c4bc32de8f083d9959ca93916f
         boolean isUpdatingPrimary = false;
         if (keptImagesFromFrontend != null && !keptImagesFromFrontend.isEmpty()) {
             String firstUrl = keptImagesFromFrontend.get(0).getUrl();
@@ -336,6 +360,10 @@ public class ProductService {
                     Product.ProductImage newImg = new Product.ProductImage();
                     newImg.setUrl(uploadResult.get("url").toString());
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 69cc10bbd31a54c4bc32de8f083d9959ca93916f
                     if (isUpdatingPrimary && i == 0) {
                         newImg.setIsPrimary(true);
                         finalImages.add(0, newImg);
@@ -495,13 +523,45 @@ public class ProductService {
         return false;
     }
 
+//    public List<Product> searchByName(String query) {
+//        // Nếu khách không gõ gì thì trả về list rỗng hoặc list all tùy ông chọn
+//        if (query == null || query.trim().isEmpty()) {
+//            return productRepository.findAll();
+//        }
+//
+//        // Gọi repo để lùng sục trong Database
+//        return productRepository.findByNameContainingIgnoreCase(query);
+//    }
     public List<Product> searchByName(String query) {
-        // Nếu khách không gõ gì thì trả về list rỗng hoặc list all tùy ông chọn
-        if (query == null || query.trim().isEmpty()) {
-            return productRepository.findAll();
-        }
+        if (query == null || query.trim().isEmpty()) return productRepository.findAll();
 
-        // Gọi repo để lùng sục trong Database
-        return productRepository.findByNameContainingIgnoreCase(query);
+        // 1. Biến "nem" thành "n[eéèẻẽẹêếềểễệ]m" để khớp mọi biến thể dấu
+        String fuzzyQuery = makeFuzzy(query.trim());
+        String regexPattern = ".*" + fuzzyQuery.replace(" ", ".*") + ".*";
+
+        Query mongoQuery = new Query();
+        mongoQuery.addCriteria(new Criteria().orOperator(
+                Criteria.where("name").regex(regexPattern, "i"),
+                Criteria.where("brand").regex(regexPattern, "i"),
+                Criteria.where("category.name").regex(regexPattern, "i"),
+                Criteria.where("category.parentName").regex(regexPattern, "i")
+        ));
+
+        mongoQuery.with(Sort.by(Sort.Order.desc("status"), Sort.Order.desc("rating"), Sort.Order.desc("createdAt")));
+        mongoQuery.limit(20);
+
+        return mongoTemplate.find(mongoQuery, Product.class);
+    }
+
+    // Hàm phụ trợ để biến chữ không dấu thành regex có dấu (Ông thêm hàm này vào Service)
+    private String makeFuzzy(String s) {
+        return s.toLowerCase()
+                .replaceAll("a", "[aàáảãạăằắẳẵặâầấẩẫậ]")
+                .replaceAll("e", "[eèéẻẽẹêềếểễệ]")
+                .replaceAll("i", "[iìíỉĩị]")
+                .replaceAll("o", "[oòóỏõọôồốổỗộơờớởỡợ]")
+                .replaceAll("u", "[uùúủũụưừứửữự]")
+                .replaceAll("y", "[yỳýỷỹỵ]")
+                .replaceAll("d", "[dđ]");
     }
 }

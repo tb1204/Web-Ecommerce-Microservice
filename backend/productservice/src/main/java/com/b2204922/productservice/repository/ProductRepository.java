@@ -2,7 +2,9 @@ package com.b2204922.productservice.repository;
 
 import com.b2204922.productservice.entity.Product;
 import lombok.NonNull;
+import org.springframework.data.mongodb.core.query.TextCriteria;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,7 +14,12 @@ import java.util.Optional;
 public interface ProductRepository extends MongoRepository<Product, String> {
 
     @NonNull
-    List<Product> findAll();
+//    List<Product> findAll();
+    List<Product> findAllBy(TextCriteria criteria);
+
+    @Query("{ 'name': { $regex: ?0, $options: 'i' } }")
+    List<Product> findByNameRegex(String regex);
+
 
     //tim theo brand
     List<Product> findByBrand(String brand);

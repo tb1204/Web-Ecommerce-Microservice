@@ -2,7 +2,9 @@ package com.b2204922.orderservice.repository;
 
 import com.b2204922.orderservice.entity.Order;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -28,4 +30,8 @@ public interface OrderRepository extends MongoRepository<Order, String> {
 
     // Đếm số đơn hàng theo trạng thái (Dùng cho "Đang xử lý" hoặc "Đã hủy")
     long countByOrderStatus(String orderStatus);
+
+    //Kiem tra don hang VNPAY nhung PENDING
+    @Query("{ 'payment.method': ?0, 'payment.status': ?1, 'createdAt': { $lt: ?2 } }")
+    List<Order> findExpiredVnpayOrders(String method, String status, Instant threshold);
 }

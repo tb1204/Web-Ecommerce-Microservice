@@ -405,6 +405,10 @@ import { selectCartItemCount } from "../../store/selectors";
 import { fetchCart } from "../../store/slices/cartSlice";
 // import { fetchWishlist } from "../../store/slices/userSlice"; // nếu chưa có
 import { useAuth } from "@clerk/clerk-react";
+
+//import search 
+import Search from "../layouts/Search";
+
 const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const { theme, toggleTheme } = useTheme();
@@ -529,7 +533,7 @@ const Navbar = () => {
           </div>
 
           {/* 2. Search */}
-          <div className="order-3 lg:order-none col-span-2 lg:col-span-1">
+          {/* <div className="order-3 lg:order-none col-span-2 lg:col-span-1">
             <form
               onSubmit={handleSearch}
               className="flex items-center w-full border border-gray-200 dark:border-gray-700 rounded-full pl-5 pr-1.5 py-1 bg-gray-50 dark:bg-gray-800 focus-within:border-[#3cb371] focus-within:bg-white dark:focus-within:bg-gray-900 transition-all shadow-sm"
@@ -548,6 +552,9 @@ const Navbar = () => {
                 <IoIosSearch size={24} className="shrink-0" />
               </button>
             </form>
+          </div> */}
+          <div className="order-3 lg:order-none col-span-2 lg:col-span-1">
+            <Search /> 
           </div>
 
           {/* 3. Action Icons */}
