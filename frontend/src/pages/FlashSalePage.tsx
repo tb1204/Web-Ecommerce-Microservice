@@ -481,7 +481,8 @@ const FlashSalePage = () => {
           <img
             src={flashsaleBanner}
             alt="Flash Sale WolfBed"
-            className="w-full h-auto object-cover border-b-4 border-[#1a4d32] dark:border-emerald-700 dark:brightness-90 dark:contrast-110"
+            className="w-full h-auto max-h-[500px] object-cover border-b-4 border-[#1a4d32] dark:border-emerald-700 dark:brightness-90 dark:contrast-110"
+            // className="w-full h-auto object-cover border-b-4 border-[#1a4d32] dark:border-emerald-700 dark:brightness-90 dark:contrast-110"
             onError={(e) => {
               e.currentTarget.src = "/fallback-flashsale.jpg";
             }}

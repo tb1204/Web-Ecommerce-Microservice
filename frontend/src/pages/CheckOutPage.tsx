@@ -538,7 +538,7 @@ import {
   removeAppliedVoucher,
   applyVoucherByCode,
 } from "../store/slices/voucherSlice";
-import { Tag, X, CheckCircle } from "lucide-react";
+import { Tag, X, Ticket, Info } from "lucide-react";
 import axios from "axios";
 import { toast } from "sonner";
 
@@ -546,6 +546,7 @@ const ORDER_URL = "http://localhost:8084";
 const USER_URL = "http://localhost:8081";
 const PAYMENT_URL = "http://localhost:8085";
 const CART_URL = "http://localhost:8083";
+const VOUCHER_URL = "http://localhost:8089";
 
 interface Ward {
   wardCode: number;
@@ -576,6 +577,13 @@ const CheckoutPage = () => {
   const applyError = useAppSelector(selectApplyError);
   const [voucherCode, setVoucherCode] = useState("");
 
+  // Voucher picker dropdown
+  const [showVoucherPicker, setShowVoucherPicker] = useState(false);
+  const [activeVouchers, setActiveVouchers] = useState<any[]>([]);
+  const [loadingVouchers, setLoadingVouchers] = useState(false);
+  // Modal điều kiện: lưu voucher đang xem
+  const [conditionModal, setConditionModal] = useState<any | null>(null);
+
   const [formData, setFormData] = useState({
     fullName: "",
     phone: "",
@@ -594,6 +602,7 @@ const CheckoutPage = () => {
 
   const provRef = useRef<HTMLDivElement>(null);
   const wardRef = useRef<HTMLDivElement>(null);
+  const voucherPickerRef = useRef<HTMLDivElement>(null);
 
   // ✅ Auto-fill thông tin user nếu đã đăng nhập
   useEffect(() => {
@@ -628,6 +637,11 @@ const CheckoutPage = () => {
         setShowProvDropdown(false);
       if (wardRef.current && !wardRef.current.contains(event.target as Node))
         setShowWardDropdown(false);
+      if (
+        voucherPickerRef.current &&
+        !voucherPickerRef.current.contains(event.target as Node)
+      )
+        setShowVoucherPicker(false);
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
@@ -684,6 +698,33 @@ const CheckoutPage = () => {
   const handleRemoveVoucher = () => {
     dispatch(removeAppliedVoucher());
     setVoucherCode("");
+  };
+
+  // Fetch danh sach voucher active
+  const fetchActiveVouchers = async () => {
+    if (activeVouchers.length > 0) return;
+    setLoadingVouchers(true);
+    try {
+      const res = await axios.get(`${VOUCHER_URL}/api/vouchers`);
+      setActiveVouchers(Array.isArray(res.data) ? res.data : []);
+    } catch {
+      setActiveVouchers([]);
+    } finally {
+      setLoadingVouchers(false);
+    }
+  };
+
+  const handleOpenVoucherPicker = () => {
+    const next = !showVoucherPicker;
+    setShowVoucherPicker(next);
+    if (next) fetchActiveVouchers();
+  };
+
+  const handleApplyVoucherFromPicker = async (code: string) => {
+    setVoucherCode(code);
+    setShowVoucherPicker(false);
+    const token = await getToken({ template: "my-backend" });
+    dispatch(applyVoucherByCode({ token, code, orderAmount: subtotal }));
   };
 
   const validateForm = () => {
@@ -1143,52 +1184,300 @@ const CheckoutPage = () => {
                 )}
               </div>
 
-              {/* ✅ Voucher */}
+              {/* ✅ Voucher Section */}
               <div className="border-t pt-4 mb-2 border-gray-200 dark:border-gray-700">
                 {appliedVoucher ? (
-                  <div className="flex items-center justify-between bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg px-3 py-2">
-                    <div className="flex items-center gap-2">
-                      <CheckCircle size={15} className="text-green-600" />
-                      <span className="text-sm font-bold text-green-700 dark:text-green-400">
+                  // — Đã áp mã: coupon card pill —
+                  <div className="flex rounded-xl overflow-hidden border border-gray-200 dark:border-gray-600 relative">
+                    {/* Stub trái */}
+                    <div className="w-14 shrink-0 bg-yellow-500 flex flex-col items-center justify-center py-3.5 gap-1.5 relative">
+                      <div className="absolute -top-2 -right-2 w-4 h-4 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 z-10" />
+                      <div className="absolute -bottom-2 -right-2 w-4 h-4 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 z-10" />
+                      <Ticket size={16} className="text-white" />
+                      <span className="text-[7px] font-black tracking-widest text-white">
+                        VOUCHER
+                      </span>
+                    </div>
+                    {/* Dashed divider */}
+                    <div
+                      className="w-px self-stretch"
+                      style={{
+                        background:
+                          "repeating-linear-gradient(to bottom,transparent,transparent 4px,#d1d5db 4px,#d1d5db 8px)",
+                      }}
+                    />
+                    {/* Content */}
+                    <div className="flex-1 px-3 py-2.5">
+                      <p className="text-xs font-black tracking-widest text-gray-900 dark:text-white font-mono">
                         {appliedVoucher.code}
-                      </span>
-                      <span className="text-xs text-green-600">
-                        -{discountAmount.toLocaleString("vi-VN")}₫
-                      </span>
+                      </p>
+                      <p className="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5">
+                        Giảm{" "}
+                        <span className="font-bold text-gray-800 dark:text-gray-200">
+                          {discountAmount.toLocaleString("vi-VN")}đ
+                        </span>
+                      </p>
                     </div>
                     <button
                       onClick={handleRemoveVoucher}
-                      className="text-gray-400 hover:text-red-500"
+                      className="px-3 flex items-center text-gray-400 hover:text-black dark:hover:text-white transition-colors"
                     >
-                      <X size={15} />
+                      <X size={14} />
                     </button>
                   </div>
                 ) : (
-                  <div className="flex gap-2">
-                    <div className="relative flex-1">
-                      <Tag
-                        size={13}
-                        className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
-                      />
-                      <input
-                        placeholder="Mã giảm giá"
-                        value={voucherCode}
-                        onChange={(e) =>
-                          setVoucherCode(e.target.value.toUpperCase())
-                        }
-                        onKeyDown={(e) =>
-                          e.key === "Enter" && handleApplyVoucher()
-                        }
-                        className="w-full pl-8 pr-3 py-2.5 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm rounded outline-none focus:border-blue-500"
-                      />
-                    </div>
+                  // — Chưa chọn mã —
+                  <div className="relative" ref={voucherPickerRef}>
+                    {/* ── Trigger row ── */}
                     <button
-                      onClick={handleApplyVoucher}
-                      disabled={applyLoading || !voucherCode.trim()}
-                      className="bg-[#6687cc] text-white px-4 py-2 rounded font-bold text-sm hover:bg-blue-700 transition disabled:opacity-60"
+                      type="button"
+                      onClick={handleOpenVoucherPicker}
+                      className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 hover:border-gray-400 dark:hover:border-gray-400 transition-colors"
                     >
-                      {applyLoading ? "..." : "Áp dụng"}
+                      <div className="w-8 h-8 rounded-lg bg-yellow-500 flex items-center justify-center shrink-0">
+                        <Ticket size={15} className="text-white" />
+                      </div>
+                      <span className="flex-1 text-left text-sm font-medium text-gray-700 dark:text-gray-200">
+                        Mã giảm giá
+                      </span>
+                      {activeVouchers.length > 0 && (
+                        <span className="text-[10px] font-black bg-black dark:bg-white text-white dark:text-black px-1.5 py-0.5 rounded-full">
+                          {activeVouchers.length}
+                        </span>
+                      )}
+                      <ChevronDown
+                        size={14}
+                        className={`text-gray-400 transition-transform duration-200 ${showVoucherPicker ? "rotate-180" : ""}`}
+                      />
                     </button>
+
+                    {/* ── Input nhập thủ công ── */}
+                    <div className="flex gap-2 mt-2">
+                      <div className="relative flex-1">
+                        <Tag
+                          size={12}
+                          className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                        />
+                        <input
+                          placeholder="Nhập mã (nếu có)"
+                          value={voucherCode}
+                          onChange={(e) =>
+                            setVoucherCode(e.target.value.toUpperCase())
+                          }
+                          onKeyDown={(e) =>
+                            e.key === "Enter" && handleApplyVoucher()
+                          }
+                          className="w-full pl-8 pr-3 py-2.5 border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm rounded-xl outline-none focus:border-gray-900 dark:focus:border-gray-300 text-gray-800 dark:text-white placeholder:text-gray-400 transition-colors"
+                        />
+                      </div>
+                      <button
+                        onClick={handleApplyVoucher}
+                        disabled={applyLoading || !voucherCode.trim()}
+                        className="bg-blue-600 text-white px-4 rounded-xl font-bold text-sm hover:bg-blue-700 transition-colors disabled:opacity-40 shrink-0"
+                      >
+                        {applyLoading ? "..." : "Áp dụng"}
+                      </button>
+                    </div>
+
+                    {/* ── Dropdown Vua Nem style ── */}
+                    {showVoucherPicker && (
+                      <div className="absolute left-0 right-0 top-[calc(100%+6px)] z-50 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-2xl overflow-hidden">
+                        {/* Header */}
+                        <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between sticky top-0 bg-white dark:bg-gray-900 z-10">
+                          <div>
+                            <p className="text-sm font-bold text-gray-900 dark:text-white">
+                              Mã giảm giá
+                            </p>
+                            {activeVouchers.length > 0 && (
+                              <p className="text-[11px] text-gray-400 mt-0.5">
+                                {activeVouchers.length} mã có thể dùng
+                              </p>
+                            )}
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => setShowVoucherPicker(false)}
+                            className="w-7 h-7 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                          >
+                            <X size={13} />
+                          </button>
+                        </div>
+
+                        {/* Body */}
+                        <div className="max-h-[300px] overflow-y-auto px-3 py-3 space-y-2.5">
+                          {loadingVouchers ? (
+                            <div className="py-10 text-center">
+                              <div className="w-6 h-6 border-2 border-black dark:border-white border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+                              <p className="text-xs text-gray-400">
+                                Đang tải...
+                              </p>
+                            </div>
+                          ) : activeVouchers.length === 0 ? (
+                            <div className="py-10 text-center">
+                              <Ticket
+                                size={26}
+                                className="mx-auto mb-2 text-gray-300"
+                              />
+                              <p className="text-sm text-gray-400">
+                                Không có mã nào đang hiệu lực
+                              </p>
+                            </div>
+                          ) : (
+                            activeVouchers.map((v) => {
+                              const notEnoughOrder =
+                                v.minOrderAmount && subtotal < v.minOrderAmount;
+                              const isExpired = v.validity?.end
+                                ? new Date(v.validity.end) < new Date()
+                                : false;
+                              const isDisabled = isExpired || !!notEnoughOrder;
+                              const isSelected = voucherCode === v.code;
+
+                              const discountText =
+                                v.voucherType === "PERCENT" ||
+                                v.discountType === "PERCENT"
+                                  ? `Giảm ${v.discountValue}%${v.maxDiscountAmount ? ` tối đa ${Number(v.maxDiscountAmount).toLocaleString("vi-VN")}đ` : ""}`
+                                  : `Giảm ${Number(v.discountValue).toLocaleString("vi-VN")}đ`;
+
+                              const conditionLines = [
+                                v.minOrderAmount
+                                  ? `Đơn tối thiểu ${Number(v.minOrderAmount).toLocaleString("vi-VN")}đ`
+                                  : null,
+                                v.validity?.start || v.validity?.end
+                                  ? `HSD: ${v.validity?.start ? new Date(v.validity.start).toLocaleDateString("vi-VN") : "..."} - ${v.validity?.end ? new Date(v.validity.end).toLocaleDateString("vi-VN") : "..."}`
+                                  : null,
+                                v.usageLimit?.total
+                                  ? `Còn ${v.usageLimit.total - (v.usageLimit.used ?? 0)} lượt dùng`
+                                  : null,
+                                v.isStackable === false
+                                  ? "Không kết hợp mã khác"
+                                  : null,
+                              ].filter(Boolean);
+
+                              return (
+                                <div
+                                  key={v._id ?? v.code}
+                                  onClick={() =>
+                                    !isDisabled &&
+                                    setVoucherCode(isSelected ? "" : v.code)
+                                  }
+                                  className={`flex rounded-xl overflow-hidden border transition-all ${
+                                    isDisabled
+                                      ? "opacity-45 cursor-not-allowed"
+                                      : "cursor-pointer hover:shadow-md"
+                                  } ${
+                                    isSelected && !isDisabled
+                                      ? "border-gray-900 dark:border-gray-200 shadow-sm"
+                                      : "border-gray-200 dark:border-gray-700"
+                                  }`}
+                                >
+                                  {/* Stub trái */}
+                                  <div
+                                    className={`w-[52px] shrink-0 flex flex-col items-center justify-center py-4 gap-1.5 relative ${
+                                      isDisabled
+                                        ? "bg-gray-400 dark:bg-gray-600"
+                                        : "bg-yellow-500"
+                                    }`}
+                                  >
+                                    <div className="absolute -top-[9px] -right-[9px] w-[18px] h-[18px] rounded-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 z-10" />
+                                    <div className="absolute -bottom-[9px] -right-[9px] w-[18px] h-[18px] rounded-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 z-10" />
+                                    <Ticket size={17} className="text-white" />
+                                    <span className="text-[7px] font-black tracking-widest text-white">
+                                      VOUCHER
+                                    </span>
+                                  </div>
+
+                                  {/* Dashed divider */}
+                                  <div
+                                    className="w-px self-stretch shrink-0"
+                                    style={{
+                                      background:
+                                        "repeating-linear-gradient(to bottom,transparent,transparent 4px,#e5e7eb 4px,#e5e7eb 8px)",
+                                    }}
+                                  />
+                                  <div className="flex-1 px-3 py-3 min-w-0">
+                                    <p className="text-[11px] font-black tracking-widest text-gray-900 dark:text-white font-mono">
+                                      {v.code}
+                                    </p>
+                                    <p className="text-xs font-semibold text-gray-700 dark:text-gray-200 mt-0.5 line-clamp-2 leading-snug">
+                                      {v.name || discountText}
+                                    </p>
+                                    <div className="flex items-center justify-between mt-2 gap-2 flex-wrap">
+                                      {(v.validity?.start ||
+                                        v.validity?.end) && (
+                                        <div className="flex items-center gap-1 text-[9px] font-medium text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">
+                                          <span>
+                                            {v.validity?.start
+                                              ? new Date(
+                                                  v.validity.start,
+                                                ).toLocaleDateString("vi-VN")
+                                              : "..."}
+                                          </span>
+                                          <span>-</span>
+                                          <span>
+                                            {v.validity?.end
+                                              ? new Date(
+                                                  v.validity.end,
+                                                ).toLocaleDateString("vi-VN")
+                                              : "..."}
+                                          </span>
+                                        </div>
+                                      )}
+                                      {conditionLines.length > 0 && (
+                                        <button
+                                          type="button"
+                                          onClick={(e) => {
+                                            e.stopPropagation();
+                                            setConditionModal({
+                                              v,
+                                              conditionLines,
+                                              notEnoughOrder,
+                                            });
+                                          }}
+                                          className="text-[10px] font-semibold text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 underline underline-offset-2 transition-colors"
+                                        >
+                                          Điều kiện
+                                        </button>
+                                      )}
+                                    </div>
+                                  </div>
+                                  {/* Radio */}
+                                  <div className="pr-3 flex items-center">
+                                    <div
+                                      className={`w-[18px] h-[18px] rounded-full border-2 flex items-center justify-center transition-all ${
+                                        isSelected && !isDisabled
+                                          ? "border-[#f6a733] bg-[#f6a733]"
+                                          : "border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900"
+                                      }`}
+                                    >
+                                      {isSelected && !isDisabled && (
+                                        <div className="w-2 h-2 rounded-full bg-white" />
+                                      )}
+                                    </div>
+                                  </div>
+                                </div>
+                              );
+                            })
+                          )}
+                        </div>
+
+                        {/* Footer sticky: Áp dụng voucher */}
+                        {!loadingVouchers && activeVouchers.length > 0 && (
+                          <div className="px-3 py-3 border-t border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-900">
+                            <button
+                              type="button"
+                              disabled={!voucherCode.trim()}
+                              onClick={() => {
+                                if (voucherCode.trim())
+                                  handleApplyVoucherFromPicker(voucherCode);
+                              }}
+                              className="w-full py-3 rounded-xl font-bold text-sm tracking-wide bg-blue-600 text-white hover:bg-blue-700 active:scale-[0.99] transition-all disabled:opacity-35 disabled:cursor-not-allowed"
+                            >
+                              Áp dụng voucher
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
                 )}
                 {applyError && !appliedVoucher && (
@@ -1196,7 +1485,110 @@ const CheckoutPage = () => {
                 )}
               </div>
 
-              {/* Chi tiết thanh toán */}
+              {/* ── Modal Điều kiện Voucher (giữa màn hình) ── */}
+              {conditionModal && (
+                <div
+                  className="fixed inset-0 z-[999] flex items-center justify-center p-4"
+                  onClick={() => setConditionModal(null)}
+                >
+                  {/* Backdrop */}
+                  <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
+
+                  {/* Panel */}
+                  <div
+                    className="relative bg-white dark:bg-gray-900 rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {/* Header modal */}
+                    <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100 dark:border-gray-700">
+                      <div>
+                        <p className="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-widest font-semibold">
+                          Điều kiện sử dụng
+                        </p>
+                        <p className="text-base font-black text-gray-900 dark:text-white font-mono tracking-wider mt-0.5">
+                          {conditionModal.v.code}
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => setConditionModal(null)}
+                        className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                      >
+                        <X size={15} />
+                      </button>
+                    </div>
+
+                    {/* Coupon stub decoration */}
+                    <div className="flex">
+                      <div className="w-14 shrink-0 bg-yellow-500 flex flex-col items-center justify-center py-5 gap-1.5">
+                        <Ticket size={20} className="text-white" />
+                        <span className="text-[7px] font-black tracking-widest text-white">
+                          VOUCHER
+                        </span>
+                      </div>
+                      <div
+                        className="w-px self-stretch"
+                        style={{
+                          background:
+                            "repeating-linear-gradient(to bottom,transparent,transparent 4px,#e5e7eb 4px,#e5e7eb 8px)",
+                        }}
+                      />
+                      <div className="flex-1 px-4 py-4">
+                        <p className="text-sm font-semibold text-gray-800 dark:text-gray-100 leading-snug">
+                          {conditionModal.v.name ||
+                            (conditionModal.v.voucherType === "PERCENT" ||
+                            conditionModal.v.discountType === "PERCENT"
+                              ? `Giảm ${conditionModal.v.discountValue}%`
+                              : `Giảm ${Number(conditionModal.v.discountValue).toLocaleString("vi-VN")}đ`)}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Divider dash */}
+                    <div className="mx-5 border-t border-dashed border-gray-200 dark:border-gray-700" />
+
+                    {/* Conditions list */}
+                    <div className="px-5 py-4 space-y-3">
+                      {conditionModal.conditionLines.map(
+                        (line: string, i: number) => (
+                          <div key={i} className="flex items-start gap-3">
+                            <div className="w-5 h-5 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center shrink-0 mt-0.5">
+                              <span className="text-[10px] font-black text-gray-600 dark:text-gray-300">
+                                {i + 1}
+                              </span>
+                            </div>
+                            <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                              {line}
+                            </p>
+                          </div>
+                        ),
+                      )}
+                      {conditionModal.notEnoughOrder && (
+                        <div className="flex items-start gap-3 mt-2 pt-2 border-t border-dashed border-red-200 dark:border-red-900">
+                          <div className="w-5 h-5 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center shrink-0 mt-0.5">
+                            <span className="text-[10px] font-black text-red-500">
+                              !
+                            </span>
+                          </div>
+                          <p className="text-sm text-red-500 leading-relaxed">
+                            Đơn hàng hiện tại chưa đủ điều kiện áp mã này
+                          </p>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Footer */}
+                    <div className="px-5 pb-5">
+                      <button
+                        type="button"
+                        onClick={() => setConditionModal(null)}
+                        className="w-full py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                      >
+                        Đóng
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
               <div className="space-y-2 border-t pt-4 text-sm text-gray-600 dark:text-gray-300 border-gray-200 dark:border-gray-700">
                 <div className="flex justify-between">
                   <span>Tổng tiền hàng</span>
@@ -1234,7 +1626,7 @@ const CheckoutPage = () => {
               <button
                 onClick={handleSubmitOrder}
                 disabled={submitting || checkoutItems.length === 0}
-                className="w-full mt-6 bg-[#1947af] text-white py-4 rounded font-bold uppercase tracking-widest shadow-md hover:bg-blue-800 transition-all active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full mt-6 bg-blue-700 text-white py-4 rounded font-bold uppercase tracking-widest shadow-md hover:bg-blue-800 transition-all active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {submitting ? (
                   <>

@@ -43,7 +43,7 @@ public class UserVoucherController {
     public ResponseEntity<ApplyVoucherResponse> apply(
             @AuthenticationPrincipal Jwt jwt,
             @Valid @RequestBody ApplyVoucherRequest req) {
-        String clerkId = jwt.getSubject();
+        String clerkId = (jwt != null) ? jwt.getSubject() : "GUEST_" + java.util.UUID.randomUUID().toString();
         return ResponseEntity.ok(voucherService.applyVoucher(clerkId, req));
     }
 }

@@ -227,14 +227,26 @@ const AdminUsersPage = () => {
     setFormData((prev) => ({ ...prev, roles: [value] }));
   };
 
+  // const handleMembershipChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  //   const value = e.target.value;
+  //   setFormData((prev) => ({
+  //     ...prev,
+  //     membership: value ? { tierName: value } : undefined,
+  //   }));
+  // };
   const handleMembershipChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value;
+    const value = e.target.value; // ví dụ: "silver"
+
     setFormData((prev) => ({
       ...prev,
-      membership: value ? { tierName: value } : undefined,
+      membership: value
+        ? {
+            tierName:
+              value.charAt(0).toUpperCase() + value.slice(1).toLowerCase(),
+          }
+        : undefined,
     }));
   };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -467,7 +479,9 @@ const AdminUsersPage = () => {
       {loading ? (
         <div className="flex flex-col items-center justify-center py-20 text-gray-400">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mb-4"></div>
-          <p className="font-bold tracking-widest uppercase text-xs">Đang tải dữ liệu...</p>
+          <p className="font-bold tracking-widest uppercase text-xs">
+            Đang tải dữ liệu...
+          </p>
         </div>
       ) : users.length === 0 ? (
         <div className="text-center py-20 text-gray-500">
@@ -884,7 +898,7 @@ const AdminUsersPage = () => {
                       </div>
                     </div>
 
-                    <div className="space-y-1.5">
+                    {/* <div className="space-y-1.5">
                       <label className="flex items-center gap-2 text-xs font-bold text-slate-600 uppercase tracking-wider">
                         <Award size={14} className="text-slate-400" /> Hạng
                       </label>
@@ -893,6 +907,31 @@ const AdminUsersPage = () => {
                           value={normalizeTierName(formData.membership)}
                           onChange={handleMembershipChange}
                           className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-sm font-bold text-indigo-600"
+                        >
+                          <option value="member">Thành viên</option>
+                          <option value="silver">Bạc</option>
+                          <option value="gold">Vàng</option>
+                          <option value="diamond">Kim cương</option>
+                        </select>
+                        <ChevronDown
+                          size={16}
+                          className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
+                        />
+                      </div>
+                    </div> */}
+                    {/* Hạng thành viên */}
+                    <div className="space-y-1.5">
+                      <label className="flex items-center gap-2 text-xs font-bold text-slate-600 uppercase tracking-wider">
+                        <Award size={14} className="text-slate-400" /> Hạng
+                        thành viên
+                      </label>
+                      <div className="relative">
+                        <select
+                          value={
+                            formData.membership?.tierName?.toLowerCase() || ""
+                          }
+                          onChange={handleMembershipChange}
+                          className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-sm font-medium"
                         >
                           <option value="member">Thành viên</option>
                           <option value="silver">Bạc</option>

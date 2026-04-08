@@ -61,6 +61,7 @@ public class SecurityConfig {
                 // Cho phép GET danh sách ACTIVE và validate không cần đăng nhập
                 .requestMatchers(HttpMethod.GET, "/api/vouchers").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/vouchers/validate").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/vouchers/apply").permitAll() //user chưa đăng nhập áp voucher
                 // Tất cả còn lại phải authenticated
                 .anyRequest().authenticated()
                 )

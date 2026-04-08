@@ -606,7 +606,7 @@ const AdminChatPage: React.FC = () => {
             <option value="ALL">Tất cả</option>
             <option value="WAITING">Đang chờ</option>
             <option value="ACTIVE">Đang chat</option>
-            <option value="CLOSED">Đã đóng</option>
+            {/* <option value="CLOSED">Đã đóng</option> */}
           </select>
         </div>
 
@@ -701,7 +701,7 @@ const AdminChatPage: React.FC = () => {
                                     ? "Bật thông báo"
                                     : "Tắt thông báo"}
                                 </button>
-                                {conv.status !== "CLOSED" && (
+                                {/* {conv.status !== "CLOSED" && (
                                   <button
                                     onClick={async () => {
                                       setSelectedSummary(conv);
@@ -712,7 +712,7 @@ const AdminChatPage: React.FC = () => {
                                   >
                                     Đóng cuộc trò chuyện
                                   </button>
-                                )}
+                                )} */}
                               </div>
                             )}
                           </div>
@@ -787,14 +787,14 @@ const AdminChatPage: React.FC = () => {
                     {selectedSummary.isMuted && (
                       <span className="text-gray-500 text-sm">🔇</span>
                     )}
-                    {selectedSummary.status !== "CLOSED" && (
+                    {/* {selectedSummary.status !== "CLOSED" && (
                       <button
                         onClick={handleCloseConversation}
                         className="text-sm px-3 py-1.5 border border-red-200 text-red-600 rounded-lg hover:bg-red-50 transition-colors"
                       >
                         Đóng chat
                       </button>
-                    )}
+                    )} */}
                   </div>
                 </div>
 
@@ -932,58 +932,54 @@ const AdminChatPage: React.FC = () => {
                       </div>
                     </div>
                   )}
-
-                  {selectedSummary.status === "CLOSED" ? (
+                  {/* {selectedSummary.status === "CLOSED" ? (
                     <div className="flex items-center justify-center py-3 text-sm text-gray-400">
                       <span className="bg-gray-50 border border-gray-200 px-4 py-2 rounded-full">
                         Cuộc trò chuyện đã kết thúc
                       </span>
                     </div>
-                  ) : (
-                    <div className="flex gap-3 items-center">
-                      <button
-                        onClick={() => fileInputRef.current?.click()}
-                        className="p-3 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors flex items-center justify-center text-gray-600 hover:text-blue-600 shadow-sm min-w-[44px] h-11"
-                        title="Đính kèm ảnh"
-                      >
-                        <Paperclip className="w-5 h-5" />
-                      </button>
-                      <input
-                        type="file"
-                        accept="image/*,video/*"
-                        ref={fileInputRef}
-                        onChange={handleFileChange}
-                        className="hidden"
-                      />
+                  ) : ( */}
+                  <div className="flex gap-3 items-center">
+                    <button
+                      onClick={() => fileInputRef.current?.click()}
+                      className="p-3 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors flex items-center justify-center text-gray-600 hover:text-blue-600 shadow-sm min-w-[44px] h-11"
+                      title="Đính kèm ảnh"
+                    >
+                      <Paperclip className="w-5 h-5" />
+                    </button>
+                    <input
+                      type="file"
+                      accept="image/*,video/*"
+                      ref={fileInputRef}
+                      onChange={handleFileChange}
+                      className="hidden"
+                    />
 
-                      <textarea
-                        value={replyText}
-                        onChange={(e) => setReplyText(e.target.value)}
-                        placeholder="Nhập tin nhắn trả lời..."
-                        rows={1}
-                        onKeyDown={handleKeyDown}
-                        className="flex-1 px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all shadow-sm resize-none min-h-[44px] max-h-[140px] overflow-y-auto text-sm"
-                      />
+                    <textarea
+                      value={replyText}
+                      onChange={(e) => setReplyText(e.target.value)}
+                      placeholder="Nhập tin nhắn trả lời..."
+                      rows={1}
+                      onKeyDown={handleKeyDown}
+                      className="flex-1 px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all shadow-sm resize-none min-h-[44px] max-h-[140px] overflow-y-auto text-sm"
+                    />
 
-                      <button
-                        onClick={handleSendReply}
-                        disabled={
-                          (!replyText.trim() && !selectedFile) || sending
-                        }
-                        className={`min-w-[80px] px-6 py-3 rounded-full font-medium transition-all shadow-sm h-11 flex items-center justify-center text-sm ${
-                          (replyText.trim() || selectedFile) && !sending
-                            ? "bg-blue-600 text-white hover:bg-blue-700"
-                            : "bg-gray-200 text-gray-500 cursor-not-allowed"
-                        }`}
-                      >
-                        {sending ? (
-                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                        ) : (
-                          "Gửi"
-                        )}
-                      </button>
-                    </div>
-                  )}
+                    <button
+                      onClick={handleSendReply}
+                      disabled={(!replyText.trim() && !selectedFile) || sending}
+                      className={`min-w-[80px] px-6 py-3 rounded-full font-medium transition-all shadow-sm h-11 flex items-center justify-center text-sm ${
+                        (replyText.trim() || selectedFile) && !sending
+                          ? "bg-blue-600 text-white hover:bg-blue-700"
+                          : "bg-gray-200 text-gray-500 cursor-not-allowed"
+                      }`}
+                    >
+                      {sending ? (
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      ) : (
+                        "Gửi"
+                      )}
+                    </button>
+                  </div>
                 </div>
               </>
             ) : (

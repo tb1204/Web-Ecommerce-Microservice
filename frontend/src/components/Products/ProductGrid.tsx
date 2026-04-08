@@ -609,6 +609,7 @@ import { useAppDispatch } from "../../store/hooks";
 import { useAuth } from "@clerk/clerk-react";
 import { addToCart } from "../../store/slices/cartSlice";
 import { openCartDrawer } from "../../store/slices/uiSlice";
+import { useNavigate } from "react-router-dom";
 
 //Them sao
 import { useState, useEffect } from "react";
@@ -635,6 +636,7 @@ const ProductGrid: React.FC<ProductCardProps> = ({
   const { addToWishlist, isInWishlist } = useWishlist();
   const dispatch = useAppDispatch();
   const { getToken } = useAuth();
+  const navigate = useNavigate();
 
   //Them sao
   //  State để quản lý danh sách sản phẩm kèm Rating thực tế
@@ -676,13 +678,27 @@ const ProductGrid: React.FC<ProductCardProps> = ({
   }, [products]); //HetThemsao///////////////
 
   const handleAddToCart = async (product: Product) => {
-    // Lấy variant đầu tiên có hàng — bỏ check status vì có thể null
+    // Kiểm tra số kích thước (size) khác nhau
+    const uniqueSizes = new Set(
+      (product.variants ?? []).map((v) => v.size).filter(Boolean),
+    );
+
+    // Nếu sản phẩm có nhiều size khác nhau → buộc user vào trang chi tiết để chọn
+    if (uniqueSizes.size > 1) {
+      toast.info("📌 Vui lòng chọn kích thước trước khi thêm vào giỏ!");
+      navigate(`/product/${product.id}`);
+      return;
+    }
+
+    // Nếu chỉ có 1 size (hoặc không có variants có size) → tự chọn variant đầu tiên có hàng
     const availableVariant =
       product.variants?.find((v) => (v.stockQuantity ?? 0) > 0) ??
       product.variants?.[0];
 
     if (!availableVariant?.variantId) {
-      toast.error("Sản phẩm chưa có biến thể, vui lòng xem chi tiết!");
+      // toast.error("Sản phẩm chưa có biến thể, vui lòng xem chi tiết!");
+       toast.info("📌 Vui lòng chọn kích thước trước khi thêm vào giỏ!")
+      navigate(`/product/${product.id}`);
       return;
     }
 

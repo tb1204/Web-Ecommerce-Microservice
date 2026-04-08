@@ -509,6 +509,10 @@ const ProductDetails = () => {
   );
   const [addingToCart, setAddingToCart] = useState(false);
 
+  // ✅ State rating thực tế từ ReviewService
+  const [actualRating, setActualRating] = useState<number>(0);
+  const [actualReviewCount, setActualReviewCount] = useState<number>(0);
+
   useEffect(() => {
     if (!id) return;
     const fetchProduct = async () => {
@@ -527,6 +531,26 @@ const ProductDetails = () => {
           mapped.variants?.[0] ??
           null;
         setSelectedVariant(firstAvailable);
+
+        // ✅ Lấy rating thực tế từ ReviewService (port 8088)
+        try {
+          const ratingRes = await axios.post(
+            "http://localhost:8088/api/reviews/ratings/batch",
+            [mapped.id],
+          );
+          const ratingData = ratingRes.data[mapped.id];
+          if (ratingData) {
+            setActualRating(ratingData.rating ?? 0);
+            setActualReviewCount(ratingData.reviewCount ?? 0);
+          } else {
+            setActualRating(mapped.rating ?? 0);
+            setActualReviewCount(mapped.reviewCount ?? 0);
+          }
+        } catch {
+          // Nếu ReviewService lỗi, dùng giá trị từ product-service
+          setActualRating(mapped.rating ?? 0);
+          setActualReviewCount(mapped.reviewCount ?? 0);
+        }
 
         if (res.data.category?.parentCode) {
           const similarRes = await axios.get(
@@ -805,7 +829,7 @@ const ProductDetails = () => {
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white leading-tight mb-4">
               {product.name}
             </h1>
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-400">
+            {/* <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-400">
               <span>
                 Mã SP:{" "}
                 <span className="text-gray-500 italic">
@@ -849,6 +873,75 @@ const ProductDetails = () => {
                   </div>
                 </>
               ) : null}
+            </div> */}
+
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-400">
+              <span>
+                Mã SP:{" "}
+                <span className="text-gray-500 italic">
+                  {product.productCode ?? "Đang cập nhật"}
+                </span>
+              </span>
+
+              {/* ← THÊM SKU của variant đang chọn */}
+              {selectedVariant?.sku && (
+                <>
+                  <span className="text-gray-200 dark:text-gray-700">|</span>
+                  <span>
+                    SKU:{" "}
+                    <span className="text-gray-500  ">
+                      {selectedVariant.sku}
+                    </span>
+                  </span>
+                </>
+              )}
+
+              <span className="text-gray-200 dark:text-gray-700">|</span>
+              <span>
+                Thương hiệu:{" "}
+                <span className="text-green-800 dark:text-green-400 font-bold">
+                  {product.brand ?? "—"}
+                </span>
+              </span>
+
+              <span className="text-gray-200 dark:text-gray-700">|</span>
+              <span>
+                Xuất xứ:{" "}
+                <span className="text-gray-600 dark:text-gray-300 font-medium">
+                  {product.origin ?? "—"}
+                </span>
+              </span>
+
+              {/* ← LUÔN hiện sao, dùng rating thực tế từ ReviewService */}
+              <span className="text-gray-200 dark:text-gray-700">|</span>
+              <div className="flex items-center gap-1">
+                <div className="flex text-yellow-400">
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      size={14}
+                      fill={
+                        i < Math.floor(actualRating)
+                          ? "currentColor"
+                          : i < actualRating
+                            ? "currentColor"
+                            : "none"
+                      }
+                      className={
+                        i < Math.floor(actualRating)
+                          ? "text-yellow-400"
+                          : i < actualRating
+                            ? "text-yellow-400"
+                            : "text-gray-300 dark:text-gray-600"
+                      }
+                    />
+                  ))}
+                </div>
+                <span className="text-xs text-gray-400">
+                  {actualRating > 0 ? actualRating.toFixed(1) : "0"} (
+                  {actualReviewCount} đánh giá)
+                </span>
+              </div>
             </div>
           </div>
           {/* Giá cả */}

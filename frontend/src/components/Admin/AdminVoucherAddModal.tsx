@@ -10,6 +10,18 @@ interface AdminVoucherAddModalProps {
   onAdd: (newVoucher: Voucher) => void;
 }
 
+const toLocalISOString = (isoString?: string) => {
+  if (!isoString) return "";
+  const date = new Date(isoString);
+  const tzoffset = date.getTimezoneOffset() * 60000;
+  return new Date(date.getTime() - tzoffset).toISOString().slice(0, 16);
+};
+
+const localToUTCISOString = (localString: string) => {
+  if (!localString) return new Date().toISOString();
+  return new Date(localString).toISOString();
+};
+
 const AdminVoucherAddModal: React.FC<AdminVoucherAddModalProps> = ({
   isOpen,
   onClose,
@@ -212,7 +224,7 @@ const AdminVoucherAddModal: React.FC<AdminVoucherAddModalProps> = ({
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className="text-[10px] font-black text-gray-400 uppercase mb-2 block italic">
-                        Đơn tối thiểu
+                        Gía đơn tối thiểu
                       </label>
                       <input
                         type="number"
@@ -297,13 +309,13 @@ const AdminVoucherAddModal: React.FC<AdminVoucherAddModalProps> = ({
                     </label>
                     <input
                       type="datetime-local"
-                      value={formData.validity.start.slice(0, 16)}
+                      value={toLocalISOString(formData.validity.start)}
                       onChange={(e) =>
                         setFormData({
                           ...formData,
                           validity: {
                             ...formData.validity,
-                            start: new Date(e.target.value).toISOString(),
+                            start: localToUTCISOString(e.target.value),
                           },
                         })
                       }
@@ -316,13 +328,13 @@ const AdminVoucherAddModal: React.FC<AdminVoucherAddModalProps> = ({
                     </label>
                     <input
                       type="datetime-local"
-                      value={formData.validity.end.slice(0, 16)}
+                      value={toLocalISOString(formData.validity.end)}
                       onChange={(e) =>
                         setFormData({
                           ...formData,
                           validity: {
                             ...formData.validity,
-                            end: new Date(e.target.value).toISOString(),
+                            end: localToUTCISOString(e.target.value),
                           },
                         })
                       }

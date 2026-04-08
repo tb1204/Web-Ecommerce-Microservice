@@ -1,141 +1,3 @@
-# version: "3.8"
-
-# services:
-#   redis:
-#     image: redis:7-alpine
-#     container_name: redis
-#     ports:
-#       - "6379:6379"
-#     networks:
-#       - mattress-network
-
-#   # ── Discovery Server (Eureka) ────────────────────────────────────
-#   discoveryserver:
-#     build: ./backend/discoveryserver
-#     container_name: discoveryserver
-#     ports:
-#       - "8761:8761"
-#     networks:
-#       - mattress-network
-
-#   # ── API Gateway ──────────────────────────────────────────────────
-#   apigateway:
-#     build: ./backend/apigateway
-#     container_name: apigateway
-#     ports:
-#       - "8080:8080"
-#     depends_on:
-#       - discoveryserver
-#       - redis
-#     environment:
-#       - SPRING_DATA_REDIS_HOST=redis
-#       - SPRING_DATA_REDIS_PORT=6379
-#       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discoveryserver:8761/eureka
-#     networks:
-#       - mattress-network
-
-#   # ── User Service ─────────────────────────────────────────────────
-#   user-service:
-#     build: ./backend/userservice
-#     container_name: user-service
-#     ports:
-#       - "8081:8081"
-#     depends_on:
-#       - discoveryserver
-#     environment:
-#       - SPRING_DATA_MONGODB_URI=mongodb://host.docker.internal:27017/artisano
-#       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discoveryserver:8761/eureka
-#     networks:
-#       - mattress-network
-
-#   # ── Product Service ──────────────────────────────────────────────
-#   product-service:
-#     build: ./backend/productservice
-#     container_name: product-service
-#     ports:
-#       - "8082:8082"
-#     depends_on:
-#       - discoveryserver
-#     environment:
-#       - SPRING_DATA_MONGODB_URI=mongodb://host.docker.internal:27017/artisano
-#       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discoveryserver:8761/eureka
-#     networks:
-#       - mattress-network
-
-#   # ── Cart Service ─────────────────────────────────────────────────
-#   cart-service:
-#     build: ./backend/cartservice
-#     container_name: cart-service
-#     ports:
-#       - "8083:8083"
-#     depends_on:
-#       - discoveryserver
-#     environment:
-#       - SPRING_DATA_MONGODB_URI=mongodb://host.docker.internal:27017/artisano
-#       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discoveryserver:8761/eureka
-
-#     networks:
-#       - mattress-network
-
-#   payment-service:
-#     build: ./backend/paymentservice
-#     container_name: payment-service
-#     ports:
-#       - "8085:8085"
-#     depends_on:
-#       - discoveryserver
-#     environment:
-#       - SPRING_DATA_MONGODB_URI=mongodb://host.docker.internal:27017/artisano
-#       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discoveryserver:8761/eureka
-#     networks:
-#       - mattress-network
-
-#   # ── Order Service ─────────────────────────────────────────────────
-#   order-service:
-#     build: ./backend/orderservice
-#     container_name: order-service
-#     ports:
-#       - "8084:8084"
-#     depends_on:
-#       - discoveryserver
-#     environment:
-#       - SPRING_DATA_MONGODB_URI=mongodb://host.docker.internal:27017/artisano
-#       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discoveryserver:8761/eureka
-#     networks:
-#       - mattress-network
-
-#   # ── Voucher Service ───────────────────────────────────────────────
-#   voucher-service:
-#     build: ./backend/voucherservice
-#     container_name: voucher-service
-#     ports:
-#       - "8086:8086"
-#     depends_on:
-#       - discoveryserver
-#     environment:
-#       - SPRING_DATA_MONGODB_URI=mongodb://host.docker.internal:27017/artisano
-#       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discoveryserver:8761/eureka
-#     networks:
-#       - mattress-network
-
-#   # ── Notification Service ──────────────────────────────────────────
-#   notification-service:
-#     build: ./backend/notificationservice
-#     container_name: notification-service
-#     ports:
-#       - "8087:8087"
-#     depends_on:
-#       - discoveryserver
-#     environment:
-#       - SPRING_DATA_MONGODB_URI=mongodb://host.docker.internal:27017/artisano
-#       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discoveryserver:8761/eureka
-#     networks:
-#       - mattress-network
-
-# networks:
-#   mattress-network:
-#     driver: bridge
-
 version: "3.8"
 
 services:
@@ -303,3 +165,616 @@ services:
 networks:
   mattress-network:
     driver: bridge
+
+# #####
+# # test docker-compose
+# version: "3.9"
+
+# # ═══════════════════════════════════════════════════════════════════
+# #  ARTISANO — Docker Compose
+# #  Thứ tự khởi động: mongodb/rabbitmq → eureka → services → gateway
+# # ═══════════════════════════════════════════════════════════════════
+
+# networks:
+#   artisano-net:
+#     driver: bridge
+
+# volumes:
+#   mongo_data:
+#   rabbitmq_data:
+
+# services:
+
+#   # ─────────────────────────────────────────────
+#   # INFRASTRUCTURE
+#   # ─────────────────────────────────────────────
+
+#   mongodb:
+#     image: mongo:7.0
+#     container_name: mongodb
+#     restart: unless-stopped
+#     ports:
+#       - "27017:27017"
+#     environment:
+#       MONGO_INITDB_ROOT_USERNAME: root
+#       MONGO_INITDB_ROOT_PASSWORD: root123
+#     volumes:
+#       - mongo_data:/data/db
+#     networks:
+#       - artisano-net
+#     healthcheck:
+#       test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+#       interval: 10s
+#       timeout: 5s
+#       retries: 5
+
+#   rabbitmq:
+#     image: rabbitmq:3.13-management
+#     container_name: rabbitmq
+#     restart: unless-stopped
+#     ports:
+#       - "5672:5672"
+#       - "15672:15672"   # Management UI: http://localhost:15672  guest/guest
+#     volumes:
+#       - rabbitmq_data:/var/lib/rabbitmq
+#     networks:
+#       - artisano-net
+#     healthcheck:
+#       test: ["CMD", "rabbitmqctl", "status"]
+#       interval: 10s
+#       timeout: 5s
+#       retries: 5
+
+#   # ─────────────────────────────────────────────
+#   # DISCOVERY SERVER (Eureka)  — port 8761
+#   # ─────────────────────────────────────────────
+
+#   eureka-server:
+#     build:
+#       context: ./discoveryserver
+#       dockerfile: Dockerfile
+#     container_name: eureka-server
+#     restart: unless-stopped
+#     ports:
+#       - "8761:8761"
+#     networks:
+#       - artisano-net
+#     healthcheck:
+#       test: ["CMD", "curl", "-f", "http://localhost:8761/actuator/health"]
+#       interval: 15s
+#       timeout: 5s
+#       retries: 5
+
+#   # ─────────────────────────────────────────────
+#   # USER SERVICE — port 8081
+#   # ─────────────────────────────────────────────
+
+#   user-service:
+#     build:
+#       context: ./user-service
+#       dockerfile: Dockerfile
+#     container_name: user-service
+#     restart: unless-stopped
+#     ports:
+#       - "8081:8081"
+#     environment:
+#       SPRING_DATA_MONGODB_URI: mongodb://root:root123@mongodb:27017/userdb?authSource=admin
+#       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+#       SPRING_APPLICATION_NAME: user-service
+#       SERVER_PORT: 8081
+#     depends_on:
+#       mongodb:
+#         condition: service_healthy
+#       eureka-server:
+#         condition: service_healthy
+#     networks:
+#       - artisano-net
+
+#   # ─────────────────────────────────────────────
+#   # PRODUCT SERVICE — port 8082
+#   # ─────────────────────────────────────────────
+
+#   product-service:
+#     build:
+#       context: ./product-service
+#       dockerfile: Dockerfile
+#     container_name: product-service
+#     restart: unless-stopped
+#     ports:
+#       - "8082:8082"
+#     environment:
+#       SPRING_DATA_MONGODB_URI: mongodb://root:root123@mongodb:27017/productdb?authSource=admin
+#       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+#       SPRING_APPLICATION_NAME: product-service
+#       SERVER_PORT: 8082
+#     depends_on:
+#       mongodb:
+#         condition: service_healthy
+#       eureka-server:
+#         condition: service_healthy
+#     networks:
+#       - artisano-net
+
+#   # ─────────────────────────────────────────────
+#   # CART SERVICE — port 8083
+#   # ─────────────────────────────────────────────
+
+#   cart-service:
+#     build:
+#       context: ./cart-service
+#       dockerfile: Dockerfile
+#     container_name: cart-service
+#     restart: unless-stopped
+#     ports:
+#       - "8083:8083"
+#     environment:
+#       SPRING_DATA_MONGODB_URI: mongodb://root:root123@mongodb:27017/cartdb?authSource=admin
+#       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+#       SPRING_APPLICATION_NAME: cart-service
+#       SERVER_PORT: 8083
+#       # ← KEY: đổi localhost thành container name
+#       PRODUCT_SERVICE_URL: http://product-service:8082
+#     depends_on:
+#       mongodb:
+#         condition: service_healthy
+#       eureka-server:
+#         condition: service_healthy
+#       product-service:
+#         condition: service_started
+#     networks:
+#       - artisano-net
+
+#   # ─────────────────────────────────────────────
+#   # ORDER SERVICE — port 8084
+#   # ─────────────────────────────────────────────
+
+#   order-service:
+#     build:
+#       context: ./order-service
+#       dockerfile: Dockerfile
+#     container_name: order-service
+#     restart: unless-stopped
+#     ports:
+#       - "8084:8084"
+#     environment:
+#       SPRING_DATA_MONGODB_URI: mongodb://root:root123@mongodb:27017/orderdb?authSource=admin
+#       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+#       SPRING_APPLICATION_NAME: order-service
+#       SERVER_PORT: 8084
+#       PRODUCT_SERVICE_URL: http://product-service:8082
+#       SPRING_RABBITMQ_HOST: rabbitmq
+#       SPRING_RABBITMQ_PORT: 5672
+#       SPRING_RABBITMQ_USERNAME: guest
+#       SPRING_RABBITMQ_PASSWORD: guest
+#     depends_on:
+#       mongodb:
+#         condition: service_healthy
+#       eureka-server:
+#         condition: service_healthy
+#       rabbitmq:
+#         condition: service_healthy
+#     networks:
+#       - artisano-net
+
+#   # ─────────────────────────────────────────────
+#   # PAYMENT SERVICE — port 8085
+#   # ─────────────────────────────────────────────
+
+#   payment-service:
+#     build:
+#       context: ./payment-service
+#       dockerfile: Dockerfile
+#     container_name: payment-service
+#     restart: unless-stopped
+#     ports:
+#       - "8085:8085"
+#     environment:
+#       SPRING_DATA_MONGODB_URI: mongodb://root:root123@mongodb:27017/paymentdb?authSource=admin
+#       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+#       SPRING_APPLICATION_NAME: payment-service
+#       SERVER_PORT: 8085
+#       ORDER_SERVICE_URL: http://order-service:8084
+#       SPRING_RABBITMQ_HOST: rabbitmq
+#       SPRING_RABBITMQ_PORT: 5672
+#       SPRING_RABBITMQ_USERNAME: guest
+#       SPRING_RABBITMQ_PASSWORD: guest
+#       EUREKA_CLIENT_ENABLED: "false"
+#     depends_on:
+#       mongodb:
+#         condition: service_healthy
+#       eureka-server:
+#         condition: service_healthy
+#       rabbitmq:
+#         condition: service_healthy
+#       order-service:
+#         condition: service_started
+#     networks:
+#       - artisano-net
+
+#   # ─────────────────────────────────────────────
+#   # NOTIFICATION SERVICE — port 8087
+#   # ─────────────────────────────────────────────
+
+#   notification-service:
+#     build:
+#       context: ./notification-service
+#       dockerfile: Dockerfile
+#     container_name: notification-service
+#     restart: unless-stopped
+#     ports:
+#       - "8087:8087"
+#     environment:
+#       SPRING_DATA_MONGODB_URI: mongodb://root:root123@mongodb:27017/notificationdb?authSource=admin
+#       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+#       SPRING_APPLICATION_NAME: notification-service
+#       SERVER_PORT: 8087
+#       SPRING_RABBITMQ_HOST: rabbitmq
+#       SPRING_RABBITMQ_PORT: 5672
+#       SPRING_RABBITMQ_USERNAME: guest
+#       SPRING_RABBITMQ_PASSWORD: guest
+#     depends_on:
+#       mongodb:
+#         condition: service_healthy
+#       eureka-server:
+#         condition: service_healthy
+#       rabbitmq:
+#         condition: service_healthy
+#     networks:
+#       - artisano-net
+
+#   # ─────────────────────────────────────────────
+#   # REVIEW SERVICE — port 8088
+#   # ─────────────────────────────────────────────
+
+#   review-service:
+#     build:
+#       context: ./review-service
+#       dockerfile: Dockerfile
+#     container_name: review-service
+#     restart: unless-stopped
+#     ports:
+#       - "8088:8088"
+#     environment:
+#       SPRING_DATA_MONGODB_URI: mongodb://root:root123@mongodb:27017/reviewdb?authSource=admin
+#       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+#       SPRING_APPLICATION_NAME: review-service
+#       SERVER_PORT: 8088
+#     depends_on:
+#       mongodb:
+#         condition: service_healthy
+#       eureka-server:
+#         condition: service_healthy
+#     networks:
+#       - artisano-net
+
+#   # ─────────────────────────────────────────────
+#   # VOUCHER SERVICE — port 8089
+#   # ─────────────────────────────────────────────
+
+#   voucher-service:
+#     build:
+#       context: ./voucher-service
+#       dockerfile: Dockerfile
+#     container_name: voucher-service
+#     restart: unless-stopped
+#     ports:
+#       - "8089:8089"
+#     environment:
+#       SPRING_DATA_MONGODB_URI: mongodb://root:root123@mongodb:27017/voucherdb?authSource=admin
+#       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+#       SPRING_APPLICATION_NAME: voucher-service
+#       SERVER_PORT: 8089
+#     depends_on:
+#       mongodb:
+#         condition: service_healthy
+#       eureka-server:
+#         condition: service_healthy
+#     networks:
+#       - artisano-net
+
+#   # ─────────────────────────────────────────────
+#   # API GATEWAY — port 8080
+#   # ─────────────────────────────────────────────
+
+#   api-gateway:
+#     build:
+#       context: ./api-gateway
+#       dockerfile: Dockerfile
+#     container_name: api-gateway
+#     restart: unless-stopped
+#     ports:
+#       - "8080:8080"
+#     environment:
+#       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+#       SPRING_APPLICATION_NAME: api-gateway
+#       SERVER_PORT: 8080
+#     depends_on:
+#       eureka-server:
+#         condition: service_healthy
+#       user-service:
+#         condition: service_started
+#       product-service:
+#         condition: service_started
+#       cart-service:
+#         condition: service_started
+#       order-service:
+#         condition: service_started
+#       payment-service:
+#         condition: service_started
+#     networks:
+#       - artisano-net
+
+#   # ─────────────────────────────────────────────
+#   # FRONTEND — port 5173
+#   # ─────────────────────────────────────────────
+
+#   frontend:
+#     build:
+#       context: ./frontend
+#       dockerfile: Dockerfile
+#     container_name: frontend
+#     restart: unless-stopped
+#     ports:
+#       - "5173:80"   # Nginx serve Vite build
+#     environment:
+#       VITE_API_BASE_URL: http://api-gateway:8080
+#     depends_on:
+#       - api-gateway
+#     networks:
+#       - artisano-net
+
+
+
+# test gần đúng 
+version: "3.9"
+
+networks:
+  artisano-net:
+    driver: bridge
+
+volumes:
+  mongo_data:
+
+services:
+  # ==================== MONGODB (Không dùng user/password) ====================
+  mongodb:
+    image: mongo:7.0
+    container_name: mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: artisano        # Tạo sẵn database artisano
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - artisano-net
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ==================== DISCOVERY SERVER (Eureka) ====================
+  discoveryserver:
+    build:
+      context: ./backend/discoveryserver
+      dockerfile: Dockerfile
+    container_name: discoveryserver
+    restart: unless-stopped
+    ports:
+      - "8761:8761"
+    networks:
+      - artisano-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8761/actuator/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  # ==================== API GATEWAY ====================
+  apigateway:
+    build:
+      context: ./backend/apigateway
+      dockerfile: Dockerfile
+    container_name: apigateway
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    depends_on:
+      discoveryserver:
+        condition: service_healthy
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discoveryserver:8761/eureka
+    networks:
+      - artisano-net
+
+  # ==================== BACKEND SERVICES ====================
+
+  userservice:
+    build:
+      context: ./backend/userservice
+      dockerfile: Dockerfile
+    container_name: userservice
+    restart: unless-stopped
+    ports:
+      - "9001:9001"
+    depends_on:
+      discoveryserver:
+        condition: service_healthy
+      mongodb:
+        condition: service_healthy
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discoveryserver:8761/eureka
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/artisano
+    networks:
+      - artisano-net
+
+  productservice:
+    build:
+      context: ./backend/productservice
+      dockerfile: Dockerfile
+    container_name: productservice
+    restart: unless-stopped
+    ports:
+      - "9004:9004"
+    depends_on:
+      discoveryserver:
+        condition: service_healthy
+      mongodb:
+        condition: service_healthy
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discoveryserver:8761/eureka
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/artisano
+    networks:
+      - artisano-net
+
+  cartservice:
+    build:
+      context: ./backend/cartservice
+      dockerfile: Dockerfile
+    container_name: cartservice
+    restart: unless-stopped
+    ports:
+      - "9005:9005"
+    depends_on:
+      discoveryserver:
+        condition: service_healthy
+      mongodb:
+        condition: service_healthy
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discoveryserver:8761/eureka
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/artisano
+    networks:
+      - artisano-net
+
+  orderservice:
+    build:
+      context: ./backend/order-service
+      dockerfile: Dockerfile
+    container_name: orderservice
+    restart: unless-stopped
+    ports:
+      - "9003:9003"
+    depends_on:
+      discoveryserver:
+        condition: service_healthy
+      mongodb:
+        condition: service_healthy
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discoveryserver:8761/eureka
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/artisano
+    networks:
+      - artisano-net
+
+  paymentservice:
+    build:
+      context: ./backend/paymentservice
+      dockerfile: Dockerfile
+    container_name: paymentservice
+    restart: unless-stopped
+    ports:
+      - "9006:9006"
+    depends_on:
+      discoveryserver:
+        condition: service_healthy
+      mongodb:
+        condition: service_healthy
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discoveryserver:8761/eureka
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/artisano
+    networks:
+      - artisano-net
+
+  notificationservice:
+    build:
+      context: ./backend/notificationservice
+      dockerfile: Dockerfile
+    container_name: notificationservice
+    restart: unless-stopped
+    ports:
+      - "9002:9002"
+    depends_on:
+      discoveryserver:
+        condition: service_healthy
+      mongodb:
+        condition: service_healthy
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discoveryserver:8761/eureka
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/artisano
+    networks:
+      - artisano-net
+
+  reviewservice:
+    build:
+      context: ./backend/review-service
+      dockerfile: Dockerfile
+    container_name: reviewservice
+    restart: unless-stopped
+    ports:
+      - "9008:9008"
+    depends_on:
+      discoveryserver:
+        condition: service_healthy
+      mongodb:
+        condition: service_healthy
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discoveryserver:8761/eureka
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/artisano
+    networks:
+      - artisano-net
+
+  chatservice:
+    build:
+      context: ./backend/chatservice
+      dockerfile: Dockerfile
+    container_name: chatservice
+    restart: unless-stopped
+    ports:
+      - "9007:9007"
+    depends_on:
+      discoveryserver:
+        condition: service_healthy
+      mongodb:
+        condition: service_healthy
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discoveryserver:8761/eureka
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/artisano
+    networks:
+      - artisano-net
+
+  voucherservice:
+    build:
+      context: ./backend/voucherservice
+      dockerfile: Dockerfile
+    container_name: voucherservice
+    restart: unless-stopped
+    ports:
+      - "9009:9009"
+    depends_on:
+      discoveryserver:
+        condition: service_healthy
+      mongodb:
+        condition: service_healthy
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discoveryserver:8761/eureka
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/artisano
+    networks:
+      - artisano-net
+
+  # ==================== FRONTEND ====================
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    restart: unless-stopped
+    ports:
+      - "5173:80"           # Truy cập bằng http://localhost:5173
+    depends_on:
+      - apigateway
+    networks:
+      - artisano-net
+    environment:
+      - NODE_ENV=production
+      - VITE_API_BASE_URL=http://localhost:8080/api
