@@ -85,9 +85,16 @@ function MegaMenu() {
     }).concat([{ id: "khuyen-mai", name: "Khuyến mãi", icon: khuyenmaiIcon, hasSub: false, subCategories: [] } as any]);
   }, [allProducts]);
 
+  // const handleItemClick = (categoryId: string, filterKey: string, value: string) => {
+  //   const lowCat = categoryId.toLowerCase();
+  //   navigate(`/collections/all?category=${lowCat}&${filterKey}=${encodeURIComponent(value)}`);
+  // };
   const handleItemClick = (categoryId: string, filterKey: string, value: string) => {
     const lowCat = categoryId.toLowerCase();
+    
     navigate(`/collections/all?category=${lowCat}&${filterKey}=${encodeURIComponent(value)}`);
+    
+    if (setOpenCategory) setOpenCategory(null);
   };
 
   return (
@@ -162,7 +169,21 @@ function MegaMenu() {
                       </ul>
                     </div>
                   ))}
+                  {/*  NÚT XEM TẤT CẢ */}
+                  <div className="col-span-full mt-6 pt-4 border-t border-gray-100 lg:hidden">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate(`/collections/all?category=${category.id.toLowerCase()}`);
+                        setOpenCategory(null);
+                      }}
+                      className="w-full py-3 mt-2 bg-green-50 text-green-800 text-xs hover:bg-green-600 font-bold uppercase rounded-lg border border-green-100"
+                    >
+                      Xem tất cả {category.name}
+                    </button>
+                  </div>
                 </div>
+                
               )}
             </li>
           ))}

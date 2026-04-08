@@ -111,8 +111,8 @@ export interface Order {
     totalQty: number;
   };
   payment: {
-    method: "VNPAY" | "CASH" | "MOMO";
-    status: "PAID" | "UNPAID" | "REFUNDED";
+    method: "VNPAY" | "COD" ;
+    status: "PAID" | "PENDING" | "REFUNDED" | "CANCELLED" | "FAILED"; 
     transactionId?: string;
   };
   orderStatus:

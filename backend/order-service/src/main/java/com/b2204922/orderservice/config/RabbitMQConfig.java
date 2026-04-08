@@ -13,6 +13,8 @@ public class RabbitMQConfig {
     public static final String EXCHANGE = "order.exchange";
     public static final String ROUTING_KEY = "order.notification.routing";
 
+    public static final String PAYMENT_UPDATE_QUEUE = "order_update_queue";
+
 //    @Bean
 //    public Queue queue() { return new Queue(QUEUE); }
 
@@ -23,6 +25,11 @@ public class RabbitMQConfig {
 //    public Binding binding(Queue queue, TopicExchange exchange) {
 //        return BindingBuilder.bind(queue).to(exchange).with(ROUTING_KEY);
 //    }
+
+    @Bean
+    public Queue paymentUpdateQueue() {
+        return new Queue(PAYMENT_UPDATE_QUEUE);
+    }
 
     @Bean
     public MessageConverter converter() {
