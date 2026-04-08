@@ -375,6 +375,19 @@ function ProductReviews({ productId }: ProductReviewsProps) {
                   {rev.images.map((imgUrl, idx) => (<img key={idx} src={imgUrl} className="w-14 h-14 rounded-lg object-cover border" alt="review" />))}
                 </div>
               )}
+              {rev.adminReplyContent && (
+                <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-700 relative">
+                  <div className="absolute -top-2 left-4 w-4 h-4 bg-gray-50 dark:bg-gray-900 border-t border-l border-gray-100 dark:border-gray-700 rotate-45"></div>
+                  <div className="relative z-10">
+                    <p className="text-[10px] font-black text-green-800 dark:text-green-500 uppercase flex items-center gap-2 mb-1.5">
+                      <CheckCircle size={10} fill="currentColor" /> ADMIN PHẢN HỒI
+                    </p>
+                    <p className="text-xs text-gray-700 dark:text-gray-300 italic leading-relaxed">
+                      "{rev.adminReplyContent}"
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
           ))}
         </div>

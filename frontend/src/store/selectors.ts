@@ -127,13 +127,19 @@ export const selectVoucherTotalPages = (state: RootState) => {
   return Math.ceil(filtered.length / state.voucher.itemsPerPage);
 };
 
-/** Voucher đang được áp dụng trong checkout */
-export const selectAppliedVoucher = (state: RootState) =>
-  state.voucher.appliedVoucher;
+/** Vouchers đang được áp dụng trong checkout */
+export const selectAppliedProductVoucher = (state: RootState) =>
+  state.voucher.appliedProductVoucher;
+
+export const selectAppliedShippingVoucher = (state: RootState) =>
+  state.voucher.appliedShippingVoucher;
 
 /** Số tiền được giảm từ voucher */
-export const selectVoucherDiscount = (state: RootState) =>
-  state.voucher.discountAmount;
+export const selectProductDiscountAmount = (state: RootState) =>
+  state.voucher.productDiscountAmount;
+
+export const selectShippingDiscountAmount = (state: RootState) =>
+  state.voucher.shippingDiscountAmount;
 
 /** Loading apply voucher */
 export const selectApplyLoading = (state: RootState) =>

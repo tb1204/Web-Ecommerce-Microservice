@@ -189,15 +189,15 @@ const CustomProfile = () => {
   const getTierBadgeClass = (tierName?: string) => {
     switch (tierName) {
       case "Member":
-        return "bg-orange-100 text-orange-700 border border-orange-200";
+        return "bg-slate-100 text-slate-700 border border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700";
       case "Silver":
-        return "bg-gray-100 text-gray-700 border border-gray-300";
+        return "bg-gray-200 text-gray-800 border border-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600";
       case "Gold":
-        return "bg-yellow-100 text-yellow-800 border border-yellow-300";
+        return "bg-gradient-to-r from-yellow-100 to-amber-100 text-yellow-800 border border-yellow-300 dark:from-yellow-900/40 dark:to-amber-900/40 dark:text-yellow-400 dark:border-yellow-700/50";
       case "Diamond":
-        return "bg-blue-50 text-blue-700 border border-blue-200";
+        return "bg-gradient-to-r from-cyan-100 to-blue-100 text-blue-800 border border-blue-300 dark:from-cyan-900/40 dark:to-blue-900/40 dark:text-cyan-300 dark:border-cyan-700/50";
       default:
-        return "bg-gray-100 text-gray-600 border border-gray-200";
+        return "bg-gray-100 text-gray-600 border border-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700";
     }
   };
 
@@ -226,51 +226,76 @@ const CustomProfile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa] dark:bg-gray-900 py-12 px-4 sm:px-6">
-      <div className="max-w-4xl mx-auto space-y-8">
-        {/* Header */}
-        <div className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col md:flex-row items-center gap-8">
-          <div className="relative group">
-            <img
-              src={user?.imageUrl}
-              alt="Avatar"
-              className="w-32 h-32 rounded-full object-cover ring-4 ring-gray-50 dark:ring-gray-800 shadow-md"
-            />
-            <label className="absolute -bottom-2 -right-2 bg-[#14532d] p-2 rounded-xl text-white cursor-pointer hover:scale-110 transition shadow-lg">
-              <FiCamera size={18} />
-              <input
-                type="file"
-                className="hidden"
-                accept="image/*"
-                onChange={handleAvatarUpload}
-              />
-            </label>
+    <div className="min-h-screen bg-[#FBFBFB] dark:bg-[#0a0a0a] py-12 px-4 sm:px-6 relative overflow-hidden">
+      {/* Decorative background blobs */}
+      <div className="absolute top-0 left-0 w-full h-96 bg-gradient-to-b from-[#14532d]/5 to-transparent dark:from-emerald-900/10 pointer-events-none" />
+      <div className="absolute top-20 -left-64 w-[500px] h-[500px] bg-[#14532d]/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute top-40 -right-64 w-[500px] h-[500px] bg-emerald-500/5 blur-[120px] rounded-full pointer-events-none" />
+
+      <div className="max-w-[1200px] mx-auto space-y-8 relative z-10">
+        {/* Header Cover + Avatar */}
+        <div className="relative rounded-[32px] md:rounded-[40px] bg-white dark:bg-gray-800/90 shadow-xl shadow-gray-200/40 dark:shadow-black/40 border border-gray-100 dark:border-gray-700/50 backdrop-blur-xl overflow-hidden mb-10 transition-all">
+          <div className="h-48 md:h-56 bg-gradient-to-r from-emerald-800 via-[#14532d] to-green-950 overflow-hidden relative">
+            <div className="absolute inset-0 bg-black/10 mix-blend-multiply" />
+            <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-white/10 blur-3xl rounded-full" />
+            <div className="absolute top-10 right-10 w-64 h-64 bg-emerald-400/20 blur-3xl rounded-full" />
           </div>
-          <div className="text-center md:text-left space-y-1">
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-              {firstName} {lastName}
-            </h1>
-            <p className="text-gray-500 dark:text-gray-400 flex items-center justify-center md:justify-start gap-2">
-              <FiMail className="inline" />{" "}
-              {user?.primaryEmailAddress?.emailAddress}
-            </p>
-            <span
-              className={`inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mt-2 ${getTierBadgeClass(membership)}`}
-            >
-              Hạng: {membership}
-            </span>
+          
+          <div className="px-6 md:px-12 pb-10 pt-0 flex flex-col md:flex-row items-center md:items-end gap-6 md:gap-8 relative">
+            {/* Avatar overlapping */}
+            <div className="relative -mt-20 md:-mt-24 group z-10 w-36 h-36 md:w-44 md:h-44">
+              <img
+                src={user?.imageUrl}
+                alt="Avatar"
+                className="w-full h-full rounded-full object-cover ring-8 ring-white dark:ring-gray-800 shadow-2xl bg-white transition-transform duration-500 group-hover:scale-105"
+              />
+              <label className="absolute bottom-2 right-2 bg-white dark:bg-gray-700 p-3 rounded-full text-[#14532d] dark:text-emerald-400 cursor-pointer hover:bg-emerald-50 dark:hover:bg-gray-600 shadow-xl border-2 border-white dark:border-gray-800 transition-all hover:scale-110 active:scale-95">
+                <FiCamera size={20} />
+                <input
+                  type="file"
+                  className="hidden"
+                  accept="image/*"
+                  onChange={handleAvatarUpload}
+                />
+              </label>
+            </div>
+            
+            {/* Info */}
+            <div className="text-center md:text-left md:mb-3 flex-1">
+              <h1 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white tracking-tight">
+                {firstName} {lastName}
+              </h1>
+              <p className="text-gray-500 dark:text-gray-400 font-medium flex items-center justify-center md:justify-start gap-2 mt-2 text-sm md:text-base">
+                <FiMail /> {user?.primaryEmailAddress?.emailAddress}
+              </p>
+            </div>
+            
+            <div className="mt-2 md:mt-0 md:mb-5">
+              <span
+                className={`inline-flex items-center px-5 py-2.5 rounded-full text-xs font-black uppercase tracking-widest shadow-sm ${getTierBadgeClass(membership)}`}
+              >
+                Hạng: {membership}
+              </span>
+            </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2 space-y-8">
+        <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
+          {/* Left Col: Info + Address */}
+          <div className="xl:col-span-7 space-y-8">
+            
             {/* Basic Info */}
-            <div className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-sm border border-gray-100 dark:border-gray-800">
-              <div className="flex items-center gap-2 mb-6 text-gray-900 dark:text-white">
-                <FiUser className="text-[#14532d]" size={20} />
-                <h2 className="text-lg font-bold">Thông tin cá nhân</h2>
+            <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-[32px] p-8 md:p-10 shadow-sm border border-white/20 dark:border-gray-700/50 shadow-gray-200/50 dark:shadow-black/30 relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/5 blur-3xl rounded-full group-hover:bg-emerald-500/10 transition-colors duration-700 pointer-events-none" />
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center text-[#14532d] dark:text-emerald-400 shadow-sm border border-emerald-100 dark:border-emerald-800/30">
+                  <FiUser size={22} />
+                </div>
+                <h2 className="text-xl md:text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                  Thông tin cá nhân
+                </h2>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 relative z-10">
                 {[
                   { label: "Username", value: username, set: setUsername },
                   { label: "Số điện thoại", value: phone, set: setPhone },
@@ -278,24 +303,24 @@ const CustomProfile = () => {
                   { label: "Tên", value: lastName, set: setLastName },
                 ].map(({ label, value, set }) => (
                   <div key={label} className="space-y-2">
-                    <label className="text-xs font-bold text-gray-400 uppercase ml-1">
+                    <label className="text-[11px] font-black tracking-widest text-gray-400 dark:text-gray-500 uppercase ml-1">
                       {label}
                     </label>
                     <input
                       value={value}
                       onChange={(e) => set(e.target.value)}
-                      className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-2 border-gray-400 dark:border-gray-600 rounded-xl focus:outline-none focus:border-gray-600 dark:focus:border-white transition"
+                      className="w-full px-5 py-4 bg-gray-50/50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 rounded-2xl focus:bg-white dark:focus:bg-gray-800 focus:border-[#14532d] dark:focus:border-emerald-500 focus:ring-4 focus:ring-[#14532d]/10 dark:focus:ring-emerald-500/10 outline-none transition-all text-sm font-semibold text-gray-800 dark:text-gray-200 shadow-sm shadow-gray-100/50 dark:shadow-none"
                     />
                   </div>
                 ))}
-                <div className="space-y-2 md:col-span-2">
-                  <label className="text-xs font-bold text-gray-400 uppercase ml-1">
+                <div className="space-y-2 sm:col-span-2">
+                  <label className="text-[11px] font-black tracking-widest text-gray-400 dark:text-gray-500 uppercase ml-1">
                     Giới tính
                   </label>
                   <select
                     value={gender}
                     onChange={(e) => setGender(e.target.value)}
-                    className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-2 border-gray-400 dark:border-gray-600 rounded-xl focus:outline-none focus:border-gray-600 dark:focus:border-white transition"
+                    className="w-full px-5 py-4 bg-gray-50/50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 rounded-2xl focus:bg-white dark:focus:bg-gray-800 focus:border-[#14532d] dark:focus:border-emerald-500 focus:ring-4 focus:ring-[#14532d]/10 dark:focus:ring-emerald-500/10 outline-none transition-all text-sm font-semibold text-gray-800 dark:text-gray-200 appearance-none shadow-sm shadow-gray-100/50 dark:shadow-none"
                   >
                     <option value="">Chọn giới tính</option>
                     <option value="male">Nam</option>
@@ -307,42 +332,57 @@ const CustomProfile = () => {
             </div>
 
             {/* Address */}
-            <div className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-sm border border-gray-100 dark:border-gray-800">
-              <div className="flex items-center gap-2 mb-6 text-gray-900 dark:text-white">
-                <FiMapPin className="text-[#14532d]" size={20} />
-                <h2 className="text-lg font-bold">Địa chỉ nhận hàng</h2>
+            <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-[32px] p-8 md:p-10 shadow-sm border border-white/20 dark:border-gray-700/50 shadow-gray-200/50 dark:shadow-black/30 relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 blur-3xl rounded-full group-hover:bg-blue-500/10 transition-colors duration-700 pointer-events-none" />
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-blue-600 dark:text-blue-400 shadow-sm border border-blue-100 dark:border-blue-800/30">
+                  <FiMapPin size={22} />
+                </div>
+                <h2 className="text-xl md:text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                  Sổ địa chỉ
+                </h2>
               </div>
-              <div className="flex gap-2 mb-6">
+              <div className="flex flex-col sm:flex-row gap-3 mb-8 relative z-10">
                 <input
                   value={newAddress}
                   onChange={(e) => setNewAddress(e.target.value)}
-                  placeholder="Thêm địa chỉ mới..."
-                  className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-2 border-gray-400 dark:border-gray-600 rounded-xl focus:outline-none focus:border-gray-600 dark:focus:border-white transition"
+                  placeholder="Thêm địa chỉ giao hàng mới..."
+                  className="flex-1 px-5 py-4 bg-gray-50/50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 rounded-2xl focus:bg-white dark:focus:bg-gray-800 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all text-sm font-semibold shadow-sm"
                 />
                 <button
                   onClick={addAddress}
-                  className="bg-[#14532d] hover:bg-[#0f3d21] text-white px-6 rounded-xl font-bold transition"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 sm:py-0 rounded-2xl font-bold text-sm transition-all shadow-lg shadow-blue-600/20 active:scale-95"
                 >
-                  Thêm
+                  Thêm địa chỉ
                 </button>
               </div>
-              <div className="space-y-3">
+              <div className="space-y-4 relative z-10">
+                {addresses.length === 0 && (
+                  <div className="py-8 text-center text-gray-400 dark:text-gray-500 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-2xl">
+                    Chưa có địa chỉ nào được lưu
+                  </div>
+                )}
                 {addresses.map((addr) => (
                   <div
                     key={addr.id}
-                    className="group flex items-center justify-between p-4 rounded-2xl bg-gray-50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-800 border border-transparent hover:border-gray-100 dark:hover:border-gray-700 transition"
+                    className="group/addr flex flex-col sm:flex-row sm:items-center justify-between p-5 rounded-2xl bg-gray-50/80 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-800 hover:border-blue-200 dark:hover:border-blue-800/50 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 transition-all gap-4 shadow-sm"
                   >
-                    <div className="flex items-center gap-3 text-sm">
-                      <span className="font-medium text-gray-700 dark:text-gray-300">
-                        {addr.value}
-                      </span>
-                      {addr.isDefault && (
-                        <span className="bg-[#14532d]/10 text-[#14532d] text-[10px] font-bold px-2 py-0.5 rounded-full">
-                          Mặc định
-                        </span>
-                      )}
+                    <div className="flex items-start gap-4">
+                      <div className="mt-1 text-gray-400 group-hover/addr:text-blue-500 transition-colors">
+                        <FiMapPin size={18} />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-800 dark:text-gray-200 leading-relaxed">
+                          {addr.value}
+                        </p>
+                        {addr.isDefault && (
+                          <span className="inline-block mt-2.5 bg-blue-100/80 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300 text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full border border-blue-200/50 dark:border-blue-700/50">
+                            Mặc định
+                          </span>
+                        )}
+                      </div>
                     </div>
-                    <div className="flex gap-4">
+                    <div className="flex items-center gap-3 self-end sm:self-center opacity-100 sm:opacity-0 sm:group-hover/addr:opacity-100 transition-opacity">
                       {!addr.isDefault && (
                         <button
                           onClick={() =>
@@ -353,9 +393,9 @@ const CustomProfile = () => {
                               })),
                             )
                           }
-                          className="text-gray-400 hover:text-[#14532d] text-xs font-bold uppercase transition"
+                          className="text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                         >
-                          Đặt mặc định
+                          Làm mặc định
                         </button>
                       )}
                       <button
@@ -364,7 +404,7 @@ const CustomProfile = () => {
                             addresses.filter((a) => a.id !== addr.id),
                           )
                         }
-                        className="text-gray-400 hover:text-red-500 transition"
+                        className="w-10 h-10 flex items-center justify-center rounded-xl bg-red-50 dark:bg-red-900/20 text-red-500 hover:bg-red-500 hover:text-white transition-all shadow-sm"
                       >
                         <FiTrash2 size={16} />
                       </button>
@@ -375,44 +415,53 @@ const CustomProfile = () => {
             </div>
           </div>
 
-          {/* Right: Security */}
-          <div className="space-y-8">
+          {/* Right Col: Security */}
+          <div className="xl:col-span-5 space-y-8">
+            
             {/* Email */}
-            <div className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-sm border border-gray-100 dark:border-gray-800">
-              <h2 className="text-lg font-bold mb-6 flex items-center gap-2">
-                <FiMail className="text-[#14532d]" /> Thay đổi Email
-              </h2>
-              <div className="space-y-4">
+            <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-[32px] p-8 md:p-10 shadow-sm border border-white/20 dark:border-gray-700/50 shadow-gray-200/50 dark:shadow-black/30 relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-48 h-48 bg-orange-500/5 blur-3xl rounded-full group-hover:bg-orange-500/10 transition-colors duration-700 pointer-events-none" />
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-12 h-12 rounded-2xl bg-orange-50 dark:bg-orange-900/20 flex items-center justify-center text-orange-600 dark:text-orange-400 shadow-sm border border-orange-100 dark:border-orange-800/30">
+                  <FiMail size={22} />
+                </div>
+                <h2 className="text-xl md:text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                  Đổi Email
+                </h2>
+              </div>
+              <div className="space-y-4 relative z-10">
                 <input
                   type="email"
                   value={newEmail}
                   onChange={(e) => setNewEmail(e.target.value)}
-                  placeholder="Email mới..."
-                  className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-2 border-gray-400 dark:border-gray-600 rounded-xl focus:outline-none focus:border-gray-600 dark:focus:border-white transition"
+                  placeholder="Email mới của bạn..."
+                  className="w-full px-5 py-4 bg-gray-50/50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 rounded-2xl focus:bg-white dark:focus:bg-gray-800 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all text-sm font-semibold shadow-sm"
                 />
                 <button
                   onClick={handleChangeEmail}
                   disabled={isChangingEmail}
-                  className="w-full py-3 bg-[#14532d] hover:bg-[#0f3d21] text-white rounded-xl font-bold transition disabled:opacity-50"
+                  className="w-full py-4 bg-orange-500 hover:bg-orange-600 text-white rounded-2xl font-bold transition-all shadow-lg shadow-orange-500/20 active:scale-95 disabled:opacity-50 disabled:scale-100"
                 >
-                  Gửi mã xác thực
+                  Gửi mã OTP xác thực
                 </button>
+                
                 {verificationStep && (
-                  <div className="mt-4 p-4 bg-orange-50 dark:bg-orange-900/10 rounded-2xl border border-orange-100 dark:border-orange-900/30">
-                    <p className="text-xs text-orange-700 dark:text-orange-400 mb-3 font-medium text-center">
-                      Nhập mã OTP từ email mới
+                  <div className="mt-6 p-5 sm:p-6 bg-orange-50/80 dark:bg-orange-900/10 rounded-[24px] border border-orange-200 dark:border-orange-900/50">
+                    <p className="text-[11px] uppercase tracking-widest text-orange-700 dark:text-orange-400 mb-4 font-black">
+                      Nhập mã 6 số từ Email mới
                     </p>
-                    <div className="flex gap-2">
+                    <div className="flex flex-col sm:flex-row gap-3">
                       <input
                         value={verificationCode}
                         onChange={(e) => setVerificationCode(e.target.value)}
                         maxLength={6}
-                        className="w-full text-center tracking-widest px-4 py-2 bg-white dark:bg-gray-800 border border-orange-200 rounded-lg focus:ring-1 focus:ring-orange-500 outline-none transition"
+                        placeholder="••••••"
+                        className="flex-1 text-center text-lg tracking-[0.5em] font-mono px-4 py-3 bg-white dark:bg-gray-800 border-2 border-orange-200 dark:border-orange-800/50 rounded-xl focus:border-orange-500 focus:ring-4 focus:ring-orange-500/20 outline-none transition-all shadow-inner"
                       />
                       <button
                         onClick={handleVerifyCode}
                         disabled={isVerifying}
-                        className="bg-orange-500 hover:bg-orange-600 text-white px-4 rounded-lg transition font-bold text-sm"
+                        className="bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:bg-black dark:hover:bg-gray-100 py-3 px-6 rounded-xl transition-all font-bold text-sm shadow-md active:scale-95 disabled:opacity-50 disabled:scale-100"
                       >
                         Xác nhận
                       </button>
@@ -423,40 +472,52 @@ const CustomProfile = () => {
             </div>
 
             {/* Password */}
-            <div className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-sm border border-gray-100 dark:border-gray-800">
-              <h2 className="text-lg font-bold mb-6 flex items-center gap-2">
-                <FiLock className="text-[#14532d]" /> Bảo mật
-              </h2>
-              <div className="space-y-4">
-                <input
-                  type="password"
-                  value={currentPassword}
-                  onChange={(e) => setCurrentPassword(e.target.value)}
-                  placeholder="Mật khẩu cũ"
-                  className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-2 border-gray-400 dark:border-gray-600 rounded-xl focus:outline-none focus:border-gray-600 dark:focus:border-white transition"
-                />
-                <input
-                  type="password"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  placeholder="Mật khẩu mới"
-                  className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-2 border-gray-400 dark:border-gray-600 rounded-xl focus:outline-none focus:border-gray-600 dark:focus:border-white transition"
-                />
-                <input
-                  type="password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  placeholder="Xác nhận lại"
-                  className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-2 border-gray-400 dark:border-gray-600 rounded-xl focus:outline-none focus:border-gray-600 dark:focus:border-white transition"
-                />
+            <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-[32px] p-8 md:p-10 shadow-sm border border-white/20 dark:border-gray-700/50 shadow-gray-200/50 dark:shadow-black/30 relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-48 h-48 bg-purple-500/5 blur-3xl rounded-full group-hover:bg-purple-500/10 transition-colors duration-700 pointer-events-none" />
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-12 h-12 rounded-2xl bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center text-purple-600 dark:text-purple-400 shadow-sm border border-purple-100 dark:border-purple-800/30">
+                  <FiLock size={22} />
+                </div>
+                <h2 className="text-xl md:text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                  Đổi mật khẩu
+                </h2>
+              </div>
+              <div className="space-y-5 relative z-10">
+                <div className="space-y-2">
+                  <input
+                    type="password"
+                    value={currentPassword}
+                    onChange={(e) => setCurrentPassword(e.target.value)}
+                    placeholder="Mật khẩu hiện tại"
+                    className="w-full px-5 py-4 bg-gray-50/50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 rounded-2xl focus:bg-white dark:focus:bg-gray-800 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all text-sm font-semibold shadow-sm"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <input
+                    type="password"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    placeholder="Mật khẩu mới"
+                    className="w-full px-5 py-4 bg-gray-50/50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 rounded-2xl focus:bg-white dark:focus:bg-gray-800 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all text-sm font-semibold shadow-sm"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <input
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    placeholder="Xác nhận mật khẩu mới"
+                    className="w-full px-5 py-4 bg-gray-50/50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 rounded-2xl focus:bg-white dark:focus:bg-gray-800 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none transition-all text-sm font-semibold shadow-sm"
+                  />
+                </div>
                 {passwordError && (
-                  <p className="text-red-500 text-[11px] font-bold text-center uppercase">
+                  <p className="text-red-500 bg-red-50 dark:bg-red-900/10 py-3 rounded-xl border border-red-100 dark:border-red-900/30 text-xs font-bold text-center uppercase tracking-widest mt-2">
                     {passwordError}
                   </p>
                 )}
                 <button
                   onClick={handleChangePassword}
-                  className="w-full py-3 bg-[#14532d] hover:bg-[#0f3d21] text-white rounded-xl font-bold transition"
+                  className="w-full py-4 mt-2 bg-gradient-to-r from-gray-900 to-gray-800 dark:from-gray-100 dark:to-gray-300 text-white dark:text-gray-900 rounded-2xl font-bold transition-all shadow-xl shadow-gray-900/20 dark:shadow-white/10 hover:shadow-gray-900/30 active:scale-95"
                 >
                   Đổi mật khẩu
                 </button>
@@ -466,18 +527,18 @@ const CustomProfile = () => {
         </div>
 
         {/* Bottom Actions */}
-        <div className="flex flex-col sm:flex-row gap-4 pt-4">
+        <div className="flex flex-col md:flex-row gap-5 pt-8 pb-12">
           <button
             onClick={handleSaveAll}
-            className="flex-1 flex items-center justify-center gap-2 py-4 bg-[#14532d] hover:bg-[#0f3d21] text-white rounded-2xl font-bold shadow-lg shadow-[#14532d]/20 transition transform active:scale-95"
+            className="flex-1 flex items-center justify-center gap-3 py-5 bg-gradient-to-r from-emerald-700 to-[#14532d] hover:from-emerald-800 hover:to-green-950 text-white rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl shadow-[#14532d]/20 transition-all transform hover:-translate-y-1 active:translate-y-0 active:scale-95"
           >
-            <FiSave /> Lưu tất cả thay đổi
+            <FiSave size={18} /> Lưu tất cả thay đổi
           </button>
           <button
             onClick={handleDeleteAccount}
-            className="flex-1 flex items-center justify-center gap-2 py-4 bg-red-600 hover:bg-red-700 text-white rounded-2xl font-bold shadow-lg shadow-red-600/20 transition transform active:scale-95"
+            className="md:w-auto px-8 flex items-center justify-center gap-3 py-5 bg-white dark:bg-gray-800 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-700 border-2 border-red-100 dark:border-red-900/50 rounded-2xl font-bold text-sm shadow-sm transition-all transform active:scale-95"
           >
-            <FiTrash2 /> Xóa tài khoản vĩnh viễn
+            <FiTrash2 size={18} /> Xóa tài khoản vĩnh viễn
           </button>
         </div>
       </div>

@@ -19,13 +19,6 @@ export interface Cart {
   totalPrice: number;
 }
 
-// interface CartState {
-//   cart: Cart;
-//   selectedItems: string[];
-//   loading: boolean;
-//   error: string | null;
-// }
-
 //fix lỗi mua ngay
 interface CartState {
   cart: Cart;
@@ -159,7 +152,7 @@ export const removeFromCart = createAsyncThunk(
         `${BASE_URL}/api/cart/items/${productId}/${variantId}`,
         { headers },
       );
-      return { productId, variantId };
+      return { productId, variantId }; //xóa trong giỏ hàng
     } catch (err: any) {
       return rejectWithValue(
         err.response?.data?.message || "Xóa sản phẩm thất bại",
@@ -348,4 +341,4 @@ export const {
   clearCheckoutItems, // fix mua ngay
 } = cartSlice.actions;
 
-export default cartSlice.reducer;
+export default cartSlice.reducer; //dùng khi tajo store

@@ -5,10 +5,12 @@ import type { Voucher } from "../../components/Products/InterfaceItem";
 // ==================== TYPES ====================
 interface VoucherState {
   vouchers: Voucher[];
-  appliedVoucher: Voucher | null; // Voucher đang áp dụng ở checkout
-  discountAmount: number; // Số tiền được giảm
+  appliedProductVoucher: Voucher | null;
+  productDiscountAmount: number;
+  appliedShippingVoucher: Voucher | null;
+  shippingDiscountAmount: number;
   loading: boolean;
-  applyLoading: boolean; // Loading riêng cho việc apply voucher
+  applyLoading: boolean;
   error: string | null;
   applyError: string | null;
   // Bộ lọc cho admin
@@ -29,8 +31,10 @@ interface VoucherState {
 // ==================== INITIAL STATE ====================
 const initialState: VoucherState = {
   vouchers: [],
-  appliedVoucher: null,
-  discountAmount: 0,
+  appliedProductVoucher: null,
+  productDiscountAmount: 0,
+  appliedShippingVoucher: null,
+  shippingDiscountAmount: 0,
   loading: false,
   applyLoading: false,
   error: null,
@@ -216,10 +220,15 @@ const voucherSlice = createSlice({
   name: "voucher",
   initialState,
   reducers: {
-    /** Hủy áp dụng voucher */
-    removeAppliedVoucher(state) {
-      state.appliedVoucher = null;
-      state.discountAmount = 0;
+    /** Hủy áp dụng voucher (tuỳ loại) */
+    removeAppliedProductVoucher(state) {
+      state.appliedProductVoucher = null;
+      state.productDiscountAmount = 0;
+      state.applyError = null;
+    },
+    removeAppliedShippingVoucher(state) {
+      state.appliedShippingVoucher = null;
+      state.shippingDiscountAmount = 0;
       state.applyError = null;
     },
 
@@ -270,14 +279,18 @@ const voucherSlice = createSlice({
       })
       .addCase(applyVoucherByCode.fulfilled, (state, action) => {
         state.applyLoading = false;
-        state.appliedVoucher = action.payload.voucher;
-        state.discountAmount = action.payload.discountAmount;
+        const { voucher, discountAmount } = action.payload;
+        if (voucher.voucherType === "SHIPPING_DISCOUNT") {
+          state.appliedShippingVoucher = voucher;
+          state.shippingDiscountAmount = discountAmount;
+        } else {
+          state.appliedProductVoucher = voucher;
+          state.productDiscountAmount = discountAmount;
+        }
       })
       .addCase(applyVoucherByCode.rejected, (state, action) => {
         state.applyLoading = false;
         state.applyError = action.payload as string;
-        state.appliedVoucher = null;
-        state.discountAmount = 0;
       });
 
     // createVoucher
@@ -339,7 +352,8 @@ const voucherSlice = createSlice({
 });
 
 export const {
-  removeAppliedVoucher,
+  removeAppliedProductVoucher,
+  removeAppliedShippingVoucher,
   // fetchVoucherStats,
   setVoucherSearchTerm,
   setSelectedType,

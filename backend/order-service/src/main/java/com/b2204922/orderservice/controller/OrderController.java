@@ -126,11 +126,6 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getTopSellingDashboard());
 
     }
-<<<<<<< HEAD
-=======
-
-    // Thêm vào OrderController.java
->>>>>>> 69cc10bbd31a54c4bc32de8f083d9959ca93916f
 
     @GetMapping("/email/{email}")
     public ResponseEntity<List<OrderResponse>> getByEmail(@PathVariable String email) {
@@ -150,11 +145,6 @@ public class OrderController {
     //     order.setUpdatedAt(LocalDateTime.now());
     //     return ResponseEntity.ok(convertToOrderResponse(orderRepository.save(order)));
     // }
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 69cc10bbd31a54c4bc32de8f083d9959ca93916f
     @GetMapping("/check-purchased-count")
     public ResponseEntity<Integer> getPurchasedCount(
             @RequestParam String userId,
