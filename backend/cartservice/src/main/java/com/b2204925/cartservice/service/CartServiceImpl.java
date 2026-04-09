@@ -115,7 +115,7 @@ public class CartServiceImpl implements CartService {
         try {
             //gọi qua eruka
             product = restTemplate.getForObject(
-                    "http://product-service /api/products/detail/" + req.getProductId(),
+                    "http://product-service/api/products/detail/" + req.getProductId(),
                     Map.class);
             //gọi thẳng service
 

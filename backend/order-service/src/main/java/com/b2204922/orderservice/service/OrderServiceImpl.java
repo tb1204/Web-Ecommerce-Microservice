@@ -53,12 +53,12 @@ public class OrderServiceImpl implements IOrderService {
                 .map(itemReq -> {
 
                     //gọi qua eruka
-                    String productServiceUrl = "http://product-service/api/products/get-category-map";
+                    // String productServiceUrl = "http://product-service/api/products/get-category-map";
                     // gọi local
-                    // String url = "http://localhost:8082/api/products/detail/" + itemReq.getProductId();
+                    String url = "http://product-service/api/products/detail/" + itemReq.getProductId();
                     try {
                         @SuppressWarnings("unchecked")
-                        Map<String, Object> product = restTemplate.getForObject(productServiceUrl, Map.class);
+                        Map<String, Object> product = restTemplate.getForObject(url, Map.class);
 
                         if (product == null) {
                             throw new ResourceNotFoundException("Không tìm thấy sản phẩm ID: " + itemReq.getProductId());

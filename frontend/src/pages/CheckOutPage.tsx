@@ -1047,12 +1047,12 @@ const CheckoutPage = () => {
                     >
                       {savedAddresses.map((addr) => (
                         <option key={addr.id} value={addr.id}>
-                          {addr.isDefault || addr.defaultAddress ? "⭐ " : ""}
+                          {addr.isDefault || addr.defaultAddress ? " " : ""}
                           {addr.street}, {addr.province}
                           {addr.receiverName ? ` (${addr.receiverName})` : ""}
                         </option>
                       ))}
-                      <option value="new">✏️ Nhập địa chỉ mới...</option>
+                      <option value="new"> Nhập địa chỉ mới...</option>
                     </select>
                   </div>
                 )}
