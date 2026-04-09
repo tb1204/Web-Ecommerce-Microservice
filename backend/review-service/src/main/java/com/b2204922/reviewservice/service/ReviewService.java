@@ -79,7 +79,7 @@ public class ReviewService {
     // Tạo đánh giá mới (Đã thêm logic chống spam: 1 lần mua = 1 lần đánh giá)
     public ReviewResponse createReview(ReviewRequest request) {
         //GỌI QUA ERUKA
-        String orderServiceUrl = "http://order-service/api/orders/count-purchased?userId="
+        String orderServiceUrl = "http://order-service/api/orders/check-purchased-count?userId="
                 + request.getUserId() + "&productId=" + request.getProductId();
         // 1. GỌI LOCAL
         // String orderServiceUrl = "http://localhost:8084/api/orders/count-purchased?userId="

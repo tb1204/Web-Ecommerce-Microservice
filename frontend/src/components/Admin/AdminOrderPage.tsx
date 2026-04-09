@@ -461,92 +461,85 @@ const AdminOrderPage = () => {
                       </span>
                     </td> */}
                     <td className="px-6 py-4 text-center">
-                      <div className="flex flex-col items-center gap-1">
-                        {/* <span
-                          className={`px-3 py-1 rounded-lg text-[10px] font-black border-2 uppercase ${
-                            order.payment.status === "PAID" 
-                              ? "bg-blue-50 text-blue-600 border-blue-100" 
-                              : order.payment.status === "REFUNDED"
-                              ? "bg-pink-50 text-pink-600 border-pink-100" 
-                              : "bg-red-50 text-red-600 border-red-100"
-                          }`}
-                        >
-                          {order.payment.status === "PAID" ? "Đã thanh toán" : 
-                          order.payment.status === "REFUNDED" ? "Đã hoàn tiền" : "Chưa trả"}
-                        </span> */}
-
-                        {/* HIỆN NÚT XÁC NHẬN COD: Nếu là COD và chưa trả tiền
-                        {order.payment.method === "CASH" && order.payment.status === "UNPAID" && order.orderStatus === "DELIVERED" && (
-                          <button 
-                            onClick={() => handleConfirmPayment(order.orderNumber)}
-                            className="text-[9px] font-bold text-emerald-600 hover:underline"
-                          >
-                            [Xác nhận đã thu tiền]
-                          </button>
-                        )} */}
-                        <select
-                          // 🚀 KHÓA CHỌN TRONG CÁC TRƯỜNG HỢP:
-                          // 1. Đã thanh toán (PAID) hoặc đã hoàn tiền (REFUNDED)
-                          // 2. Thanh toán đã thất bại (FAILED) hoặc đơn đã bị hủy (CANCELLED)
-                          // 3. Phương thức thanh toán là VNPAY (Vì VNPAY phải để hệ thống tự chạy)
-                          disabled={
-                            [
-                              "PAID",
-                              "REFUNDED",
-                              "FAILED",
-                              "CANCELLED",
-                            ].includes(order.payment.status) ||
-                            order.payment.method === "VNPAY"
-                          }
-                          value={order.payment.status}
-                          onChange={(e) => {
-                            if (e.target.value === "PAID") {
-                              // Dùng order.id (hoặc order._id) để Backend dễ tìm record nhé Bằng
-                              handleConfirmPayment(order.id);
-                            }
-                          }}
-                          className={`w-[140px] px-2 py-2 rounded-xl text-[10px] font-black uppercase border-2 outline-none transition-all shadow-sm text-center ${
+                      <div className="flex flex-col items-center justify-center">
+                        {/* Khối bọc chung: Tạo khung và đổ màu theo trạng thái */}
+                        <div
+                          className={`flex items-center rounded-xl border-2 transition-all shadow-sm overflow-hidden ${
                             order.payment.status === "PAID"
-                              ? "bg-blue-50 text-blue-600 border-blue-100 cursor-not-allowed"
+                              ? "bg-blue-50 border-blue-100"
                               : order.payment.status === "REFUNDED"
-                                ? "bg-pink-50 text-pink-600 border-pink-100 cursor-not-allowed"
-                                : order.payment.status === "FAILED" ||
-                                    order.payment.status === "CANCELLED"
-                                  ? "bg-gray-100 text-gray-500 border-gray-200 cursor-not-allowed"
-                                  : "bg-red-50 text-red-600 border-red-100 hover:border-red-300 cursor-pointer"
+                              ? "bg-pink-50 border-pink-100"
+                              : order.payment.status === "FAILED" || order.payment.status === "CANCELLED"
+                              ? "bg-gray-100 border-gray-200"
+                              : "bg-red-50 border-red-100 hover:border-red-300"
                           }`}
                         >
-                          {/* Luôn hiện trạng thái hiện tại */}
-                          <option value="PENDING">Chờ thanh toán</option>
-                          <option value="PAID">Đã thanh toán</option>
+                          {/* 1. SELECT: Loại bỏ border/bg riêng để hòa vào khung chung */}
+                          <select
+                            disabled={
+                              ["PAID", "REFUNDED", "FAILED", "CANCELLED"].includes(order.payment.status) ||
+                              order.payment.method === "VNPAY"
+                            }
+                            value={order.payment.status}
+                            onChange={(e) => {
+                              const nextStatus = e.target.value;
+                              if (nextStatus === "PAID") {
+                                // Hiện hộp thoại xác nhận của trình duyệt
+                                const isConfirmed = window.confirm("Xác nhận đơn hàng này đã thanh toán tiền mặt thành công?");
+                                
+                                if (isConfirmed) {
+                                  handleConfirmPayment(order.id);
+                                } else {
+                                  // Nếu nhấn Cancel thì trả lại giá trị cũ, không đổi
+                                  e.target.value = order.payment.status;
+                                }
+                              }
+                            }}
+                            className={`bg-transparent px-2 py-2 text-[10px] font-black uppercase outline-none transition-colors ${
+                              order.payment.status === "PAID"
+                                ? "text-blue-600"
+                                : order.payment.status === "REFUNDED"
+                                ? "text-pink-600"
+                                : order.payment.status === "FAILED" || order.payment.status === "CANCELLED"
+                                ? "text-gray-500"
+                                : "text-red-600"
+                            } ${order.payment.method === "VNPAY" ? "cursor-not-allowed" : "cursor-pointer"}`}
+                          >
+                            <option value="PENDING">Chờ thanh toán</option>
+                            <option value="PAID">Đã thanh toán</option>
+                            {order.payment.status === "FAILED" && <option value="FAILED">Thanh toán lỗi</option>}
+                            {order.payment.status === "CANCELLED" && <option value="CANCELLED">Đã hủy</option>}
+                            {order.payment.status === "REFUNDED" && <option value="REFUNDED">Đã hoàn tiền</option>}
+                          </select>
 
-                          {/* Các option đặc biệt chỉ hiện khi đơn hàng đang ở chính trạng thái đó */}
-                          {order.payment.status === "FAILED" && (
-                            <option value="FAILED">Thanh toán lỗi</option>
-                          )}
-                          {order.payment.status === "CANCELLED" && (
-                            <option value="CANCELLED">Đã hủy</option>
-                          )}
-                          {order.payment.status === "REFUNDED" && (
-                            <option value="REFUNDED">Đã hoàn tiền</option>
-                          )}
-                        </select>
+                          {/* 2. Dấu gạch đứng phân cách mỏng */}
+                          <div
+                            className={`w-[1px] h-4 ${
+                              order.payment.status === "PAID"
+                                ? "bg-blue-200"
+                                : order.payment.status === "REFUNDED"
+                                ? "bg-pink-200"
+                                : "bg-red-200"
+                            }`}
+                          ></div>
 
-                        {/* Nhãn hiển thị phương thức thanh toán */}
-                        <div className="flex flex-col items-center">
-                          <span className="text-[9px] text-gray-400 font-bold uppercase mt-1">
-                            {order.payment.method === "COD"
-                              ? "Tiền mặt (COD)"
-                              : "VNPAY Online"}
-                          </span>
-                          {/* Gợi ý thêm: hiện cái note nhỏ nếu là VNPAY để Admin biết tại sao bị khóa */}
-                          {order.payment.method === "VNPAY" &&
-                            order.payment.status === "PENDING" && (
-                              <span className="text-[8px] text-orange-400 italic font-medium">
-                                Đợi hệ thống...
-                              </span>
-                            )}
+                          {/* 3. Nhãn phương thức: Nằm ngay bên phải select trên cùng 1 hàng */}
+                          <div className="px-2">
+                            <span
+                              className={`text-[8px] font-black uppercase whitespace-nowrap ${
+                                order.payment.status === "PAID"
+                                  ? "text-blue-400"
+                                  : order.payment.status === "REFUNDED"
+                                  ? "text-pink-400"
+                                  : "text-red-400"
+                              }`}
+                            >
+                              {order.payment.method === "COD" ? "COD" : "VNPAY"}
+                            </span>
+                          </div>
                         </div>
+
+                      
                       </div>
                     </td>
                     <td className="px-6 py-4 text-center">

@@ -418,11 +418,11 @@ public class OrderServiceImpl implements IOrderService {
         }
 
         // Kiem tra tru kho
-        if ("PENDING".equals(status) && !"PENDING".equals(oldStatus)) {
-            order.getItems().forEach(item -> {
-                callProductServiceToUpdateStock(item.getProductId(), item.getVariantId(), -item.getQuantity());
-            });
-        }
+//        if ("PENDING".equals(status) && !"PENDING".equals(oldStatus)) {
+//            order.getItems().forEach(item -> {
+//                callProductServiceToUpdateStock(item.getProductId(), item.getVariantId(), -item.getQuantity());
+//            });
+//        }
 
         // 3. Cập nhật trạng thái
         order.setOrderStatus(status);
@@ -795,7 +795,7 @@ public class OrderServiceImpl implements IOrderService {
     public Integer countPurchasedProduct(String userId, String productId) {
         // 1. Lấy tất cả đơn hàng của User này
         List<Order> userOrders = orderRepository.findByUserId(userId);
-
+        System.out.println(">>> [DEBUG ORDER] Tim thay tong cong " + userOrders.size() + " don hang cua user: " + userId);
         int count = 0;
 
         for (Order order : userOrders) {
@@ -806,7 +806,7 @@ public class OrderServiceImpl implements IOrderService {
                 // Giả sử trong Order ông có List<OrderItem> items
                 boolean hasProduct = order.getItems().stream()
                         .anyMatch(item -> item.getProductId().equals(productId));
-
+                System.out.println(">>> [DEBUG ORDER] Co chua san pham can tim khong: " + hasProduct);
                 if (hasProduct) {
                     count++;
                 }

@@ -266,7 +266,7 @@ function ProductReviews({ productId }: ProductReviewsProps) {
     const reviewData = {
       productId,
       userId: user?.id,
-      userName: user?.fullName || "Khách hàng",
+      username: user?.fullName || "Khách hàng",
       comment: formComment,
       rating: formRating,
     };
