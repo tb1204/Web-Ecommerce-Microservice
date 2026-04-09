@@ -21,19 +21,17 @@ function Banner() {
   const [isTransitioning, setIsTransitioning] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
   const [loading, setLoading] = useState(true);
+  const API_BASE = `${import.meta.env.VITE_API_BASE_URL}/api/admin/sliders`;
 
   // ================== LOAD SLIDES ==================
   useEffect(() => {
     const loadSlides = async () => {
       setLoading(true);
       try {
-        const res = await fetch(
-          "http://localhost:8081/api/admin/sliders/list?folder=slider&max=50",
-          {
-            cache: "no-store",
-            headers: { "Content-Type": "application/json" },
-          },
-        );
+        const res = await fetch(`${API_BASE}/list?folder=slider&max=50`, {
+          cache: "no-store",
+          headers: { "Content-Type": "application/json" },
+        });
 
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
@@ -45,8 +43,8 @@ function Banner() {
           id: r.public_id,
           image: r.secure_url,
           title:
-            r.context?.title || 
-            r.context?.custom?.title || 
+            r.context?.title ||
+            r.context?.custom?.title ||
             r.metadata?.title ||
             "",
         }));

@@ -4,7 +4,7 @@ spring:
 
   data:
     mongodb:
-      uri: mongodb://localhost:27017/artisano
+      uri: mongodb://host.docker.internal:27017/artisano
       database: artisano
 
 server:
@@ -14,16 +14,20 @@ clerk:
   jwks-url: https://pro-oryx-45.clerk.accounts.dev/.well-known/jwks.json
   issuer: https://pro-oryx-45.clerk.accounts.dev
 
-# eureka:
-#   client:
-#     service-url:
-#       defaultZone: http://discoveryserver:8761/eureka
-#     register-with-eureka: true
-#     fetch-registry: true
-#test riêng service
+#gọi eruka
 eureka:
   client:
-    enabled: false
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka/
+  instance:
+    prefer-ip-address: true # Rất quan trọng trong Docker
+
+#test riêng service
+# eureka:
+#   client:
+#     enabled: false
 logging:
   level:
     org.springframework.security: INFO

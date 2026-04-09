@@ -254,20 +254,12 @@ public class ProductService {
     }
 
     //Ham update san pham
-<<<<<<< HEAD
-=======
-
->>>>>>> 69cc10bbd31a54c4bc32de8f083d9959ca93916f
     public Product updateProduct(String id, Product updatedProduct, List<MultipartFile> newImages) {
         // 1. Tìm sản phẩm cũ trong DB
         Product existingProduct = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm để cập nhật"));
 
         // 2. Cập nhật thông tin cơ bản
-<<<<<<< HEAD
-=======
-
->>>>>>> 69cc10bbd31a54c4bc32de8f083d9959ca93916f
         if (updatedProduct.getName() != null) {
             existingProduct.setName(updatedProduct.getName().trim());
         }
@@ -278,7 +270,6 @@ public class ProductService {
             existingProduct.setOrigin(updatedProduct.getOrigin().trim());
         }
 
-<<<<<<< HEAD
         if (updatedProduct.getName() != null) {
             existingProduct.setName(updatedProduct.getName().trim());
         }
@@ -288,12 +279,6 @@ public class ProductService {
         if (updatedProduct.getOrigin() != null) {
             existingProduct.setOrigin(updatedProduct.getOrigin().trim());
         }
-=======
-
-        if (updatedProduct.getName() != null) existingProduct.setName(updatedProduct.getName().trim());
-        if (updatedProduct.getBrand() != null) existingProduct.setBrand(updatedProduct.getBrand().trim());
-        if (updatedProduct.getOrigin() != null) existingProduct.setOrigin(updatedProduct.getOrigin().trim());
->>>>>>> 69cc10bbd31a54c4bc32de8f083d9959ca93916f
 
         existingProduct.setDescription(updatedProduct.getDescription());
         existingProduct.setStatus(updatedProduct.getStatus());
@@ -338,10 +323,6 @@ public class ProductService {
             }
         }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 69cc10bbd31a54c4bc32de8f083d9959ca93916f
         boolean isUpdatingPrimary = false;
         if (keptImagesFromFrontend != null && !keptImagesFromFrontend.isEmpty()) {
             String firstUrl = keptImagesFromFrontend.get(0).getUrl();
@@ -360,10 +341,6 @@ public class ProductService {
                     Product.ProductImage newImg = new Product.ProductImage();
                     newImg.setUrl(uploadResult.get("url").toString());
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 69cc10bbd31a54c4bc32de8f083d9959ca93916f
                     if (isUpdatingPrimary && i == 0) {
                         newImg.setIsPrimary(true);
                         finalImages.add(0, newImg);
@@ -533,7 +510,9 @@ public class ProductService {
 //        return productRepository.findByNameContainingIgnoreCase(query);
 //    }
     public List<Product> searchByName(String query) {
-        if (query == null || query.trim().isEmpty()) return productRepository.findAll();
+        if (query == null || query.trim().isEmpty()) {
+            return productRepository.findAll();
+        }
 
         // 1. Biến "nem" thành "n[eéèẻẽẹêếềểễệ]m" để khớp mọi biến thể dấu
         String fuzzyQuery = makeFuzzy(query.trim());

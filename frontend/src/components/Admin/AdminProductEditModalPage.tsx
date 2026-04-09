@@ -49,7 +49,8 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
 }) => {
   const [formData, setFormData] = useState<ProductFormState | null>(null);
   const [categories, setCategories] = useState<any[]>([]);
-  const PRODUCT_API_URL = "http://localhost:8082";
+  // const BASE_URL = "http://localhost:8082";
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   // State lưu File ảnh đại diện mới
   const [primaryFile, setPrimaryFile] = useState<File | null>(null);
   // State lưu danh sách các File ảnh phụ mới (chỉ chứa những ảnh mới thêm vào)
@@ -59,7 +60,7 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
   useEffect(() => {
     const fetchCats = async () => {
       try {
-        const res = await axios.get(`${PRODUCT_API_URL}/api/categories/all`);
+        const res = await axios.get(`${BASE_URL}/api/categories/all`);
         setCategories(res.data);
       } catch (err) {
         console.error("Không lấy được danh mục:", err);
@@ -274,7 +275,7 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
       }
 
       // toast.dismiss(toastId);
-      onSave(data);
+      onSave(data as any);
       onClose();
     } catch (error) {
       toast.dismiss();

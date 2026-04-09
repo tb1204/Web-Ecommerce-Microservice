@@ -26,7 +26,8 @@ const initialState: OrderState = {
   currentPage: 1,
   itemsPerPage: 5,
 };
-const BASE_URL = "http://localhost:8084";
+// const BASE_URL = "http://localhost:8084";
+ const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080";
 // ==================== ASYNC THUNKS ====================
 
 /** Lấy toàn bộ đơn hàng (Admin) */

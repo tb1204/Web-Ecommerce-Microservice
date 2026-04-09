@@ -675,7 +675,8 @@ import ProductGrid from "../Products/ProductGrid";
 import type { Product } from "../Products/InterfaceItem";
 import axios from "axios";
 import { toast } from "sonner";
-const BASE_URL = "http://localhost:8082";
+// const BASE_URL = "http://localhost:8082";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 // const mapProduct = (p: any): Product => {
 //   const discountVariant = p.variants?.find(

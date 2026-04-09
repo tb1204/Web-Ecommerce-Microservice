@@ -544,12 +544,12 @@ import {
 import { Tag, X, Ticket, Info } from "lucide-react";
 import axios from "axios";
 import { toast } from "sonner";
-
-const ORDER_URL = "http://localhost:8084";
-const USER_URL = "http://localhost:8081";
-const PAYMENT_URL = "http://localhost:8085";
-const CART_URL = "http://localhost:8083";
-const VOUCHER_URL = "http://localhost:8089";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+// const BASE_URL = "http://localhost:8084";
+// const BASE_URL = "http://localhost:8081";
+// const BASE_URL = "http://localhost:8085";
+// const BASE_URL = "http://localhost:8083";
+// const BASE_URL = "http://localhost:8089";
 
 interface Ward {
   wardCode: number;
@@ -586,7 +586,9 @@ const CheckoutPage = () => {
   const [showVoucherPicker, setShowVoucherPicker] = useState(false);
   const [activeVouchers, setActiveVouchers] = useState<any[]>([]);
   const [loadingVouchers, setLoadingVouchers] = useState(false);
-  const [voucherTab, setVoucherTab] = useState<"PRODUCT_DISCOUNT" | "SHIPPING_DISCOUNT">("PRODUCT_DISCOUNT");
+  const [voucherTab, setVoucherTab] = useState<
+    "PRODUCT_DISCOUNT" | "SHIPPING_DISCOUNT"
+  >("PRODUCT_DISCOUNT");
   // Modal điều kiện: lưu voucher đang xem
   const [conditionModal, setConditionModal] = useState<any | null>(null);
 
@@ -606,6 +608,11 @@ const CheckoutPage = () => {
   const [showWardDropdown, setShowWardDropdown] = useState(false);
   const [availableWards, setAvailableWards] = useState<Ward[]>([]);
 
+  // ═══ Địa chỉ đã lưu ═══
+  const [savedAddresses, setSavedAddresses] = useState<any[]>([]);
+  const [selectedAddressId, setSelectedAddressId] = useState<string>("new");
+  const [isAddressFromSaved, setIsAddressFromSaved] = useState(false);
+
   const provRef = useRef<HTMLDivElement>(null);
   const wardRef = useRef<HTMLDivElement>(null);
   const voucherPickerRef = useRef<HTMLDivElement>(null);
@@ -616,16 +623,41 @@ const CheckoutPage = () => {
     const fetchUserInfo = async () => {
       try {
         const token = await getToken({ template: "my-backend" });
-        const res = await axios.get(`${USER_URL}/api/users/me`, {
+        const res = await axios.get(`${BASE_URL}/api/users/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const u = res.data;
+        const addrs: any[] = u.addresses || [];
+        setSavedAddresses(addrs);
+
+        // Điền thông tin cơ bản
         setFormData((prev) => ({
           ...prev,
-          fullName: `${u.firstName ?? ""} ${u.lastName ?? ""}`.trim(),
-          phone: u.phone ?? "",
+          fullName:
+            `${u.firstName ?? ""} ${u.lastName ?? ""}`.trim() || prev.fullName,
+          phone: u.phone || prev.phone,
           email: u.email ?? user.emailAddresses?.[0]?.emailAddress ?? "",
         }));
+
+        // Tự động chọn địa chỉ mặc định nếu có
+        const defaultAddr = addrs.find(
+          (a: any) => a.isDefault || a.defaultAddress,
+        );
+        if (defaultAddr?.id) {
+          setSelectedAddressId(defaultAddr.id);
+          setIsAddressFromSaved(true);
+          setFormData((prev) => ({
+            ...prev,
+            fullName:
+              defaultAddr.receiverName ||
+              `${u.firstName ?? ""} ${u.lastName ?? ""}`.trim() ||
+              prev.fullName,
+            phone: defaultAddr.phone || u.phone || prev.phone,
+            addressDetail: defaultAddr.street || "",
+            province: defaultAddr.province || "",
+            ward: defaultAddr.ward || "",
+          }));
+        }
       } catch {
         setFormData((prev) => ({
           ...prev,
@@ -680,16 +712,51 @@ const CheckoutPage = () => {
     setShowWardDropdown(false);
   };
 
+  // ═══ Chọn địa chỉ đã lưu ═══
+  const handleSelectSavedAddress = (addrId: string) => {
+    if (addrId === "new") {
+      setSelectedAddressId("new");
+      setIsAddressFromSaved(false);
+      setFormData((prev) => ({
+        ...prev,
+        addressDetail: "",
+        province: "",
+        ward: "",
+      }));
+      setAvailableWards([]);
+      return;
+    }
+    const addr = savedAddresses.find((a) => a.id === addrId);
+    if (!addr) return;
+    setSelectedAddressId(addrId);
+    setIsAddressFromSaved(true);
+    setFormData((prev) => ({
+      ...prev,
+      fullName: addr.receiverName || prev.fullName,
+      phone: addr.phone || prev.phone,
+      addressDetail: addr.street || "",
+      province: addr.province || "",
+      ward: addr.ward || "",
+    }));
+    setAvailableWards([]);
+  };
+
   // ✅ Tính tiền từ Redux checkoutItems
   const subtotal = checkoutItems.reduce(
     (acc, item) => acc + (item.price ?? 0) * (item.quantity ?? 1),
     0,
   );
   const baseShippingFee = subtotal >= 3_000_000 ? 0 : 30_000;
-  const actualShippingDiscount = Math.min(shippingDiscountAmount, baseShippingFee);
+  const actualShippingDiscount = Math.min(
+    shippingDiscountAmount,
+    baseShippingFee,
+  );
   const actualProductDiscount = Math.min(productDiscountAmount, subtotal);
   const shippingFee = baseShippingFee - actualShippingDiscount;
-  const totalPayment = Math.max(0, subtotal - actualProductDiscount + shippingFee);
+  const totalPayment = Math.max(
+    0,
+    subtotal - actualProductDiscount + shippingFee,
+  );
 
   // ✅ Áp dụng voucher
   const handleApplyVoucher = async () => {
@@ -717,7 +784,7 @@ const CheckoutPage = () => {
     if (activeVouchers.length > 0) return;
     setLoadingVouchers(true);
     try {
-      const res = await axios.get(`${VOUCHER_URL}/api/vouchers`);
+      const res = await axios.get(`${BASE_URL}/api/vouchers`);
       setActiveVouchers(Array.isArray(res.data) ? res.data : []);
     } catch {
       setActiveVouchers([]);
@@ -782,7 +849,7 @@ const CheckoutPage = () => {
   //   if (variantIds.length === 0) return;
 
   //   try {
-  //     await axios.delete(`${CART_URL}/api/cart/checkout-items`, {
+  //     await axios.delete(`${BASE_URL}/api/cart/checkout-items`, {
   //       headers: { Authorization: `Bearer ${token}` },
   //       data: { variantIds },
   //     });
@@ -798,7 +865,7 @@ const CheckoutPage = () => {
       .filter(Boolean) as string[];
     if (variantIds.length === 0) return;
     try {
-      await axios.delete(`${CART_URL}/api/cart/checkout-items`, {
+      await axios.delete(`${BASE_URL}/api/cart/checkout-items`, {
         headers: { Authorization: `Bearer ${token}` },
         data: { variantIds },
       });
@@ -822,7 +889,7 @@ const CheckoutPage = () => {
 
       // 1. Tạo đơn hàng
       const orderRes = await axios.post(
-        `${ORDER_URL}/api/orders/add`,
+        `${BASE_URL}/api/orders/add`,
         {
           userId: user?.id ?? null,
           name: formData.fullName,
@@ -845,12 +912,15 @@ const CheckoutPage = () => {
 
       // 2. Tạo payment
       const paymentRes = await axios.post(
-        `${PAYMENT_URL}/api/payments`,
+        `${BASE_URL}/api/payments`,
         {
           orderId,
           paymentMethod: formData.paymentMethod,
           amount: Math.round(totalPayment),
-          voucherCode: [appliedProductVoucher?.code, appliedShippingVoucher?.code].filter(Boolean).join(",") || null,
+          voucherCode:
+            [appliedProductVoucher?.code, appliedShippingVoucher?.code]
+              .filter(Boolean)
+              .join(",") || null,
           voucherDiscount: actualProductDiscount + actualShippingDiscount,
           clientIp: "127.0.0.1",
         },
@@ -860,6 +930,34 @@ const CheckoutPage = () => {
       const payment = paymentRes.data;
 
       // 3. Xử lý sau khi đặt hàng
+      // ✅ Lưu địa chỉ mới vào user-service nếu user nhập địa chỉ mới (không phải chọn từ danh sách)
+      if (
+        token &&
+        !isAddressFromSaved &&
+        formData.addressDetail &&
+        formData.province
+      ) {
+        try {
+          await axios.post(
+            `${BASE_URL}/api/users/me/save-checkout-address`,
+            {
+              address: {
+                receiverName: formData.fullName,
+                phone: formData.phone,
+                street: formData.addressDetail,
+                ward: formData.ward || "",
+                district: "",
+                province: formData.province,
+              },
+              phone: formData.phone,
+            },
+            { headers: { Authorization: `Bearer ${token}` } },
+          );
+        } catch {
+          // Không block flow chính nếu lưu địa chỉ thất bại
+        }
+      }
+
       if (formData.paymentMethod === "COD") {
         // ✅ Xóa đúng items đã mua khỏi giỏ (không xóa toàn bộ)
         if (token) {
@@ -936,6 +1034,29 @@ const CheckoutPage = () => {
               )}
 
               <div className="space-y-3">
+                {/* ═══ Dropdown chọn địa chỉ đã lưu ═══ */}
+                {isSignedIn && savedAddresses.length > 0 && (
+                  <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                    <p className="text-[11px] font-black uppercase tracking-widest text-blue-600 dark:text-blue-400 mb-2">
+                      📍 Địa chỉ đã lưu ({savedAddresses.length}/4)
+                    </p>
+                    <select
+                      value={selectedAddressId}
+                      onChange={(e) => handleSelectSavedAddress(e.target.value)}
+                      className="w-full p-2.5 border rounded text-sm bg-white dark:bg-slate-800 border-blue-300 dark:border-blue-700 focus:border-blue-500 outline-none transition"
+                    >
+                      {savedAddresses.map((addr) => (
+                        <option key={addr.id} value={addr.id}>
+                          {addr.isDefault || addr.defaultAddress ? "⭐ " : ""}
+                          {addr.street}, {addr.province}
+                          {addr.receiverName ? ` (${addr.receiverName})` : ""}
+                        </option>
+                      ))}
+                      <option value="new">✏️ Nhập địa chỉ mới...</option>
+                    </select>
+                  </div>
+                )}
+
                 <input
                   name="fullName"
                   value={formData.fullName}
@@ -961,8 +1082,13 @@ const CheckoutPage = () => {
                   name="addressDetail"
                   value={formData.addressDetail}
                   onChange={handleInputChange}
+                  disabled={isAddressFromSaved}
                   placeholder="Địa chỉ chi tiết (Số nhà, tên đường...) *"
-                  className="w-full p-2.5 border rounded text-sm bg-white dark:bg-slate-800 border-gray-300 dark:border-slate-600 focus:border-blue-500 outline-none transition"
+                  className={`w-full p-2.5 border rounded text-sm outline-none transition ${
+                    isAddressFromSaved
+                      ? "bg-gray-100 dark:bg-slate-700 text-gray-500 dark:text-gray-400 cursor-not-allowed border-gray-200 dark:border-slate-700"
+                      : "bg-white dark:bg-slate-800 border-gray-300 dark:border-slate-600 focus:border-blue-500"
+                  }`}
                 />
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -970,10 +1096,16 @@ const CheckoutPage = () => {
                   <div className="relative" ref={provRef}>
                     <div className="relative">
                       <input
-                        className="w-full p-2.5 border rounded text-sm pr-8 bg-white dark:bg-slate-800 border-gray-300 dark:border-slate-600 focus:border-blue-500 outline-none transition"
+                        className={`w-full p-2.5 border rounded text-sm pr-8 outline-none transition ${
+                          isAddressFromSaved
+                            ? "bg-gray-100 dark:bg-slate-700 text-gray-500 dark:text-gray-400 cursor-not-allowed border-gray-200 dark:border-slate-700"
+                            : "bg-white dark:bg-slate-800 border-gray-300 dark:border-slate-600 focus:border-blue-500"
+                        }`}
                         placeholder="Tỉnh thành *"
                         value={formData.province}
+                        disabled={isAddressFromSaved}
                         onChange={(e) => {
+                          if (isAddressFromSaved) return;
                           setFormData({
                             ...formData,
                             province: e.target.value,
@@ -981,14 +1113,16 @@ const CheckoutPage = () => {
                           });
                           setShowProvDropdown(true);
                         }}
-                        onFocus={() => setShowProvDropdown(true)}
+                        onFocus={() => {
+                          if (!isAddressFromSaved) setShowProvDropdown(true);
+                        }}
                       />
                       <ChevronDown
                         size={14}
                         className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
                       />
                     </div>
-                    {showProvDropdown && (
+                    {showProvDropdown && !isAddressFromSaved && (
                       <ul className="absolute z-50 w-full mt-1 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-600 rounded shadow-xl max-h-60 overflow-y-auto">
                         {filteredProvinces.length > 0 ? (
                           filteredProvinces.map((p, i) => (
@@ -1011,27 +1145,34 @@ const CheckoutPage = () => {
 
                   {/* Phường/xã */}
                   <div
-                    className={`relative ${!formData.province ? "opacity-60" : ""}`}
+                    className={`relative ${!formData.province && !isAddressFromSaved ? "opacity-60" : ""}`}
                     ref={wardRef}
                   >
                     <div className="relative">
                       <input
-                        className="w-full p-2.5 border rounded text-sm pr-8 bg-white dark:bg-slate-800 border-gray-300 dark:border-slate-600 focus:border-blue-500 outline-none transition disabled:bg-gray-50"
+                        className={`w-full p-2.5 border rounded text-sm pr-8 outline-none transition ${
+                          isAddressFromSaved
+                            ? "bg-gray-100 dark:bg-slate-700 text-gray-500 dark:text-gray-400 cursor-not-allowed border-gray-200 dark:border-slate-700"
+                            : "bg-white dark:bg-slate-800 border-gray-300 dark:border-slate-600 focus:border-blue-500 disabled:bg-gray-50"
+                        }`}
                         placeholder="Phường xã"
-                        disabled={!formData.province}
+                        disabled={isAddressFromSaved || !formData.province}
                         value={formData.ward}
                         onChange={(e) => {
+                          if (isAddressFromSaved) return;
                           setFormData({ ...formData, ward: e.target.value });
                           setShowWardDropdown(true);
                         }}
-                        onFocus={() => setShowWardDropdown(true)}
+                        onFocus={() => {
+                          if (!isAddressFromSaved) setShowWardDropdown(true);
+                        }}
                       />
                       <ChevronDown
                         size={14}
                         className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
                       />
                     </div>
-                    {showWardDropdown && (
+                    {showWardDropdown && !isAddressFromSaved && (
                       <ul className="absolute z-50 w-full mt-1 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-600 rounded shadow-xl max-h-60 overflow-y-auto">
                         {filteredWards.length > 0 ? (
                           filteredWards.map((w, i) => (
@@ -1157,7 +1298,7 @@ const CheckoutPage = () => {
                         <img
                           src={item.image || ""}
                           className="w-14 h-14 rounded-md object-cover border border-gray-100 dark:border-gray-700"
-                          alt={item.name ?? item.productName}
+                          alt={item.name ?? "Sản phẩm"}
                           onError={(e) => {
                             (e.target as HTMLImageElement).src =
                               "/placeholder.webp";
@@ -1169,7 +1310,7 @@ const CheckoutPage = () => {
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-[13px] font-medium text-gray-800 dark:text-gray-200 line-clamp-2 leading-snug">
-                          {item.name ?? item.productName}
+                          {item.name ?? "Sản phẩm"}
                         </p>
                         {item.size && (
                           <p className="text-[11px] text-gray-400 mt-0.5">
@@ -1208,12 +1349,28 @@ const CheckoutPage = () => {
                       <div className="absolute -bottom-2 -right-2 w-4 h-4 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 z-10" />
                       <Ticket size={16} className="text-white" />
                     </div>
-                    <div className="w-px self-stretch" style={{background: "repeating-linear-gradient(to bottom,transparent,transparent 4px,#d1d5db 4px,#d1d5db 8px)", }} />
+                    <div
+                      className="w-px self-stretch"
+                      style={{
+                        background:
+                          "repeating-linear-gradient(to bottom,transparent,transparent 4px,#d1d5db 4px,#d1d5db 8px)",
+                      }}
+                    />
                     <div className="flex-1 px-3 py-2.5">
-                      <p className="text-xs font-black tracking-widest text-gray-900 dark:text-white font-mono">{appliedProductVoucher.code}</p>
-                      <p className="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5">Giảm SP <span className="font-bold text-gray-800 dark:text-gray-200">{actualProductDiscount.toLocaleString("vi-VN")}đ</span></p>
+                      <p className="text-xs font-black tracking-widest text-gray-900 dark:text-white font-mono">
+                        {appliedProductVoucher.code}
+                      </p>
+                      <p className="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5">
+                        Giảm SP{" "}
+                        <span className="font-bold text-gray-800 dark:text-gray-200">
+                          {actualProductDiscount.toLocaleString("vi-VN")}đ
+                        </span>
+                      </p>
                     </div>
-                    <button onClick={handleRemoveProductVoucher} className="px-3 flex items-center text-gray-400 hover:text-black">
+                    <button
+                      onClick={handleRemoveProductVoucher}
+                      className="px-3 flex items-center text-gray-400 hover:text-black"
+                    >
                       <X size={14} />
                     </button>
                   </div>
@@ -1227,132 +1384,150 @@ const CheckoutPage = () => {
                       <div className="absolute -bottom-2 -right-2 w-4 h-4 rounded-full bg-white dark:bg-gray-800 border border-green-200 dark:border-green-800 z-10" />
                       <Ticket size={16} className="text-white" />
                     </div>
-                    <div className="w-px self-stretch" style={{background: "repeating-linear-gradient(to bottom,transparent,transparent 4px,#d1d5db 4px,#d1d5db 8px)", }} />
+                    <div
+                      className="w-px self-stretch"
+                      style={{
+                        background:
+                          "repeating-linear-gradient(to bottom,transparent,transparent 4px,#d1d5db 4px,#d1d5db 8px)",
+                      }}
+                    />
                     <div className="flex-1 px-3 py-2.5">
-                      <p className="text-xs font-black tracking-widest text-green-700 dark:text-green-400 font-mono">{appliedShippingVoucher.code}</p>
-                      <p className="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5">Freeship <span className="font-bold text-gray-800 dark:text-gray-200">{actualShippingDiscount.toLocaleString("vi-VN")}đ</span></p>
+                      <p className="text-xs font-black tracking-widest text-green-700 dark:text-green-400 font-mono">
+                        {appliedShippingVoucher.code}
+                      </p>
+                      <p className="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5">
+                        Freeship{" "}
+                        <span className="font-bold text-gray-800 dark:text-gray-200">
+                          {actualShippingDiscount.toLocaleString("vi-VN")}đ
+                        </span>
+                      </p>
                     </div>
-                    <button onClick={handleRemoveShippingVoucher} className="px-3 flex items-center text-gray-400 hover:text-black">
+                    <button
+                      onClick={handleRemoveShippingVoucher}
+                      className="px-3 flex items-center text-gray-400 hover:text-black"
+                    >
                       <X size={14} />
                     </button>
                   </div>
                 )}
-                 
-                  <div className="relative" ref={voucherPickerRef}>
-                    {/* ── Trigger row ── */}
-                    <button
-                      type="button"
-                      onClick={handleOpenVoucherPicker}
-                      className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 hover:border-gray-400 dark:hover:border-gray-400 transition-colors"
-                    >
-                      <div className="w-8 h-8 rounded-lg bg-yellow-500 flex items-center justify-center shrink-0">
-                        <Ticket size={15} className="text-white" />
-                      </div>
-                      <span className="flex-1 text-left text-sm font-medium text-gray-700 dark:text-gray-200">
-                        Mã giảm giá
-                      </span>
-                      {activeVouchers.length > 0 && (
-                        <span className="text-[10px] font-black bg-black dark:bg-white text-white dark:text-black px-1.5 py-0.5 rounded-full">
-                          {activeVouchers.length}
-                        </span>
-                      )}
-                      <ChevronDown
-                        size={14}
-                        className={`text-gray-400 transition-transform duration-200 ${showVoucherPicker ? "rotate-180" : ""}`}
-                      />
-                    </button>
 
-                    {/* ── Input nhập thủ công ── */}
-                    <div className="flex gap-2 mt-2">
-                      <div className="relative flex-1">
-                        <Tag
-                          size={12}
-                          className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
-                        />
-                        <input
-                          placeholder="Nhập mã (nếu có)"
-                          value={voucherCode}
-                          onChange={(e) =>
-                            setVoucherCode(e.target.value.toUpperCase())
-                          }
-                          onKeyDown={(e) =>
-                            e.key === "Enter" && handleApplyVoucher()
-                          }
-                          className="w-full pl-8 pr-3 py-2.5 border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm rounded-xl outline-none focus:border-gray-900 dark:focus:border-gray-300 text-gray-800 dark:text-white placeholder:text-gray-400 transition-colors"
-                        />
-                      </div>
-                      <button
-                        onClick={handleApplyVoucher}
-                        disabled={applyLoading || !voucherCode.trim()}
-                        className="bg-blue-600 text-white px-4 rounded-xl font-bold text-sm hover:bg-blue-700 transition-colors disabled:opacity-40 shrink-0"
-                      >
-                        {applyLoading ? "..." : "Áp dụng"}
-                      </button>
+                <div className="relative" ref={voucherPickerRef}>
+                  {/* ── Trigger row ── */}
+                  <button
+                    type="button"
+                    onClick={handleOpenVoucherPicker}
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 hover:border-gray-400 dark:hover:border-gray-400 transition-colors"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-yellow-500 flex items-center justify-center shrink-0">
+                      <Ticket size={15} className="text-white" />
                     </div>
+                    <span className="flex-1 text-left text-sm font-medium text-gray-700 dark:text-gray-200">
+                      Mã giảm giá
+                    </span>
+                    {activeVouchers.length > 0 && (
+                      <span className="text-[10px] font-black bg-black dark:bg-white text-white dark:text-black px-1.5 py-0.5 rounded-full">
+                        {activeVouchers.length}
+                      </span>
+                    )}
+                    <ChevronDown
+                      size={14}
+                      className={`text-gray-400 transition-transform duration-200 ${showVoucherPicker ? "rotate-180" : ""}`}
+                    />
+                  </button>
 
-                    {/* ── Dropdown Vua Nem style ── */}
-                    {showVoucherPicker && (
-                      <div className="absolute left-0 right-0 top-[calc(100%+6px)] z-50 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-2xl overflow-hidden">
-                        {/* Header \& Tabs */}
-                        <div className="border-b border-gray-100 dark:border-gray-700 sticky top-0 bg-white dark:bg-gray-900 z-10">
-                          <div className="px-4 py-3 flex items-center justify-between">
-                            <p className="text-sm font-bold text-gray-900 dark:text-white">
-                              Mã giảm giá & Miễn phí vận chuyển
-                            </p>
-                            <button
-                              type="button"
-                              onClick={() => setShowVoucherPicker(false)}
-                              className="w-7 h-7 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
-                            >
-                              <X size={13} />
-                            </button>
-                          </div>
-                          
-                          <div className="flex px-4 gap-4">
-                            <button
-                              onClick={() => setVoucherTab("PRODUCT_DISCOUNT")}
-                              className={`pb-2 text-[12px] font-bold border-b-2 transition-colors ${
-                                voucherTab === "PRODUCT_DISCOUNT" 
-                                ? "border-blue-600 text-blue-600" 
-                                : "border-transparent text-gray-400 hover:text-gray-600"
-                              }`}
-                            >
-                              Sản Phẩm
-                            </button>
-                            <button
-                              onClick={() => setVoucherTab("SHIPPING_DISCOUNT")}
-                              className={`pb-2 text-[12px] font-bold border-b-2 transition-colors ${
-                                voucherTab === "SHIPPING_DISCOUNT" 
-                                ? "border-green-600 text-green-600" 
-                                : "border-transparent text-gray-400 hover:text-gray-600"
-                              }`}
-                            >
-                              Phí Vận Chuyển
-                            </button>
-                          </div>
+                  {/* ── Input nhập thủ công ── */}
+                  <div className="flex gap-2 mt-2">
+                    <div className="relative flex-1">
+                      <Tag
+                        size={12}
+                        className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                      />
+                      <input
+                        placeholder="Nhập mã (nếu có)"
+                        value={voucherCode}
+                        onChange={(e) =>
+                          setVoucherCode(e.target.value.toUpperCase())
+                        }
+                        onKeyDown={(e) =>
+                          e.key === "Enter" && handleApplyVoucher()
+                        }
+                        className="w-full pl-8 pr-3 py-2.5 border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm rounded-xl outline-none focus:border-gray-900 dark:focus:border-gray-300 text-gray-800 dark:text-white placeholder:text-gray-400 transition-colors"
+                      />
+                    </div>
+                    <button
+                      onClick={handleApplyVoucher}
+                      disabled={applyLoading || !voucherCode.trim()}
+                      className="bg-blue-600 text-white px-4 rounded-xl font-bold text-sm hover:bg-blue-700 transition-colors disabled:opacity-40 shrink-0"
+                    >
+                      {applyLoading ? "..." : "Áp dụng"}
+                    </button>
+                  </div>
+
+                  {/* ── Dropdown Vua Nem style ── */}
+                  {showVoucherPicker && (
+                    <div className="absolute left-0 right-0 top-[calc(100%+6px)] z-50 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-2xl overflow-hidden">
+                      {/* Header \& Tabs */}
+                      <div className="border-b border-gray-100 dark:border-gray-700 sticky top-0 bg-white dark:bg-gray-900 z-10">
+                        <div className="px-4 py-3 flex items-center justify-between">
+                          <p className="text-sm font-bold text-gray-900 dark:text-white">
+                            Mã giảm giá & Miễn phí vận chuyển
+                          </p>
+                          <button
+                            type="button"
+                            onClick={() => setShowVoucherPicker(false)}
+                            className="w-7 h-7 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                          >
+                            <X size={13} />
+                          </button>
                         </div>
 
-                        {/* Body */}
-                        <div className="max-h-[300px] overflow-y-auto px-3 py-3 space-y-2.5">
-                          {loadingVouchers ? (
-                            <div className="py-10 text-center">
-                              <div className="w-6 h-6 border-2 border-black dark:border-white border-t-transparent rounded-full animate-spin mx-auto mb-2" />
-                              <p className="text-xs text-gray-400">
-                                Đang tải...
-                              </p>
-                            </div>
-                          ) : activeVouchers.filter(v => v.voucherType === voucherTab).length === 0 ? (
-                            <div className="py-10 text-center">
-                              <Ticket
-                                size={26}
-                                className="mx-auto mb-2 text-gray-300"
-                              />
-                              <p className="text-sm text-gray-400">
-                                Không có mã nào đang hiệu lực
-                              </p>
-                            </div>
-                          ) : (
-                            activeVouchers.filter(v => v.voucherType === voucherTab).map((v) => {
+                        <div className="flex px-4 gap-4">
+                          <button
+                            onClick={() => setVoucherTab("PRODUCT_DISCOUNT")}
+                            className={`pb-2 text-[12px] font-bold border-b-2 transition-colors ${
+                              voucherTab === "PRODUCT_DISCOUNT"
+                                ? "border-blue-600 text-blue-600"
+                                : "border-transparent text-gray-400 hover:text-gray-600"
+                            }`}
+                          >
+                            Sản Phẩm
+                          </button>
+                          <button
+                            onClick={() => setVoucherTab("SHIPPING_DISCOUNT")}
+                            className={`pb-2 text-[12px] font-bold border-b-2 transition-colors ${
+                              voucherTab === "SHIPPING_DISCOUNT"
+                                ? "border-green-600 text-green-600"
+                                : "border-transparent text-gray-400 hover:text-gray-600"
+                            }`}
+                          >
+                            Phí Vận Chuyển
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Body */}
+                      <div className="max-h-[300px] overflow-y-auto px-3 py-3 space-y-2.5">
+                        {loadingVouchers ? (
+                          <div className="py-10 text-center">
+                            <div className="w-6 h-6 border-2 border-black dark:border-white border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+                            <p className="text-xs text-gray-400">Đang tải...</p>
+                          </div>
+                        ) : activeVouchers.filter(
+                            (v) => v.voucherType === voucherTab,
+                          ).length === 0 ? (
+                          <div className="py-10 text-center">
+                            <Ticket
+                              size={26}
+                              className="mx-auto mb-2 text-gray-300"
+                            />
+                            <p className="text-sm text-gray-400">
+                              Không có mã nào đang hiệu lực
+                            </p>
+                          </div>
+                        ) : (
+                          activeVouchers
+                            .filter((v) => v.voucherType === voucherTab)
+                            .map((v) => {
                               const notEnoughOrder =
                                 v.minOrderAmount && subtotal < v.minOrderAmount;
                               const isExpired = v.validity?.end
@@ -1486,32 +1661,34 @@ const CheckoutPage = () => {
                                 </div>
                               );
                             })
-                          )}
-                        </div>
-
-                        {/* Footer sticky: Áp dụng voucher */}
-                        {!loadingVouchers && activeVouchers.length > 0 && (
-                          <div className="px-3 py-3 border-t border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-900">
-                            <button
-                              type="button"
-                              disabled={!voucherCode.trim()}
-                              onClick={() => {
-                                if (voucherCode.trim())
-                                  handleApplyVoucherFromPicker(voucherCode);
-                              }}
-                              className="w-full py-3 rounded-xl font-bold text-sm tracking-wide bg-blue-600 text-white hover:bg-blue-700 active:scale-[0.99] transition-all disabled:opacity-35 disabled:cursor-not-allowed"
-                            >
-                              Áp dụng voucher
-                            </button>
-                          </div>
                         )}
                       </div>
-                    )}
-                  </div>
-                
-                {applyError && !appliedProductVoucher && !appliedShippingVoucher && (
-                  <p className="text-red-500 text-xs mt-1">{applyError}</p>
-                )}
+
+                      {/* Footer sticky: Áp dụng voucher */}
+                      {!loadingVouchers && activeVouchers.length > 0 && (
+                        <div className="px-3 py-3 border-t border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-900">
+                          <button
+                            type="button"
+                            disabled={!voucherCode.trim()}
+                            onClick={() => {
+                              if (voucherCode.trim())
+                                handleApplyVoucherFromPicker(voucherCode);
+                            }}
+                            className="w-full py-3 rounded-xl font-bold text-sm tracking-wide bg-blue-600 text-white hover:bg-blue-700 active:scale-[0.99] transition-all disabled:opacity-35 disabled:cursor-not-allowed"
+                          >
+                            Áp dụng voucher
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                {applyError &&
+                  !appliedProductVoucher &&
+                  !appliedShippingVoucher && (
+                    <p className="text-red-500 text-xs mt-1">{applyError}</p>
+                  )}
               </div>
 
               {/* ── Modal Điều kiện Voucher (giữa màn hình) ── */}
@@ -1636,13 +1813,17 @@ const CheckoutPage = () => {
                 {actualProductDiscount > 0 && (
                   <div className="flex justify-between text-yellow-600 dark:text-yellow-500">
                     <span>Giảm voucher (Sản phẩm)</span>
-                    <span>-{actualProductDiscount.toLocaleString("vi-VN")}₫</span>
+                    <span>
+                      -{actualProductDiscount.toLocaleString("vi-VN")}₫
+                    </span>
                   </div>
                 )}
                 {actualShippingDiscount > 0 && (
                   <div className="flex justify-between text-green-600 dark:text-green-500">
                     <span>Giảm phí vận chuyển</span>
-                    <span>-{actualShippingDiscount.toLocaleString("vi-VN")}₫</span>
+                    <span>
+                      -{actualShippingDiscount.toLocaleString("vi-VN")}₫
+                    </span>
                   </div>
                 )}
                 {subtotal >= 3_000_000 && (

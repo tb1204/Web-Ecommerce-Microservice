@@ -222,7 +222,8 @@ import axios from "axios";
 // Assets
 import collection_banner_1 from "../../assets/banner/collection_banner_1.webp";
 
-const BASE_URL = "http://localhost:8082";
+// const BASE_URL = "http://localhost:8082";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 // Map 1 product backend → Product interface frontend
 const mapProduct = (p: any): Product => {
@@ -235,7 +236,12 @@ const mapProduct = (p: any): Product => {
     name: p.name,
     brand: p.brand,
     category: p.category
-      ? { name: p.category.name, code: p.category.code }
+      ? {
+          name: p.category.name || p.category,
+          code: p.category.code || "",
+          parentName: p.category.parentName || null,
+          parentCode: p.category.parentCode || null,
+        }
       : undefined,
     price: p.price,
     originalPrice: discountVariant?.originalPrice ?? undefined,
@@ -247,7 +253,7 @@ const mapProduct = (p: any): Product => {
     rating: p.rating ?? 0,
     reviewCount: p.reviewCount ?? 0,
     stockQuantity: p.totalStockQuantity ?? 0,
-  };
+  } as Product;
 };
 
 // Lấy ngẫu nhiên n phần tử từ mảng (để làm Combo đa dạng)

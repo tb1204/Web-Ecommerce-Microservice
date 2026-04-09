@@ -4,7 +4,7 @@ spring:
 
   data:
     mongodb:
-      uri: mongodb://localhost:27017/artisano
+      uri: mongodb://host.docker.internal:27017/artisano
       database: artisano
 
   servlet:
@@ -36,9 +36,18 @@ dialogflow:
 #     register-with-eureka: true
 #     fetch-registry: true
 
+# eureka:
+#   client:
+#     enabled: false
 eureka:
   client:
-    enabled: false
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka/
+  instance:
+    prefer-ip-address: true # Rất quan trọng trong Docker
+
 logging:
   level:
     org.springframework.security: INFO

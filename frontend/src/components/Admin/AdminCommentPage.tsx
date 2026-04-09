@@ -13,7 +13,8 @@ import {
   EyeOff,
   Edit2,
   X,
-  ChevronLeft, ChevronRight
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 
 // --- INTERFACE ---
@@ -218,8 +219,9 @@ interface Comment {
 */
 
 const AdminCommentPage = () => {
-  const REVIEW_API_URL = "http://localhost:8088";
-  const PRODUCT_API_URL = "http://localhost:8082";
+  // const BASE_URL = "http://localhost:8088";
+  // const BASE_URL = "http://localhost:8082";
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   // const [comments, setComments] = useState<Comment[]>(fakeComments);
   const [comments, setComments] = useState<Comment[]>([]);
   const [loading, setLoading] = useState(true);
@@ -242,7 +244,7 @@ const AdminCommentPage = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`${REVIEW_API_URL}/api/reviews/all`);
+      const response = await axios.get(`${BASE_URL}/api/reviews/all`);
       if (response.status === 200) {
         setComments(response.data);
       }
@@ -278,11 +280,11 @@ const AdminCommentPage = () => {
     const fetchFilterData = async () => {
       try {
         // 1. Lấy sản phẩm
-        const prodRes = await axios.get(`${PRODUCT_API_URL}/api/products/all`);
+        const prodRes = await axios.get(`${BASE_URL}/api/products/all`);
         setAllProducts(prodRes.data);
 
         // 2. Lấy danh mục
-        const catRes = await axios.get(`${PRODUCT_API_URL}/api/categories/all`);
+        const catRes = await axios.get(`${BASE_URL}/api/categories/all`);
         setCategories(catRes.data);
       } catch (error) {
         console.error("Lỗi khi lấy dữ liệu lọc:", error);
@@ -327,7 +329,7 @@ const AdminCommentPage = () => {
     );
     */
     try {
-      await axios.put(`${REVIEW_API_URL}/api/reviews/toggle/${id}`);
+      await axios.put(`${BASE_URL}/api/reviews/toggle/${id}`);
       fetchData();
       toast.success("Đã cập nhật trạng thái!");
     } catch (err) {
@@ -392,7 +394,7 @@ const AdminCommentPage = () => {
   const handleSendReply = async (id: string) => {
     if (!tempReply.trim()) return;
     try {
-      await axios.put(`${REVIEW_API_URL}/api/reviews/reply/${id}`, {
+      await axios.put(`${BASE_URL}/api/reviews/reply/${id}`, {
         content: tempReply,
       });
       setReplyingId(null);
@@ -436,16 +438,16 @@ const AdminCommentPage = () => {
                 value={filterCategory}
                 onChange={(e) => {
                   setFilterCategory(e.target.value as any);
-                  setCurrentPage(1); 
+                  setCurrentPage(1);
                 }}
               >
                 <option value="all">Tất cả danh mục</option>
                 {categories
-                  .filter((c) => !c.parentCode) 
+                  .filter((c) => !c.parentCode)
                   .map((parent) => (
                     <optgroup key={parent.code} label={parent.name}>
                       {categories
-                        .filter((sub) => sub.parentCode === parent.code) 
+                        .filter((sub) => sub.parentCode === parent.code)
                         .map((sub) => (
                           <option key={sub.code} value={sub.code}>
                             {sub.name}
@@ -498,11 +500,11 @@ const AdminCommentPage = () => {
         <div className="space-y-4">
           {loading ? (
             <div className="flex flex-col items-center justify-center py-20 text-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600"></div>
-                <p className="mt-4 text-gray-400 text-[10px] font-black uppercase tracking-[3px]">
-                  Đang tải dữ liệu...
-                </p>
-              </div>
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600"></div>
+              <p className="mt-4 text-gray-400 text-[10px] font-black uppercase tracking-[3px]">
+                Đang tải dữ liệu...
+              </p>
+            </div>
           ) : (
             paginatedComments.map((comment) => (
               <div
@@ -569,7 +571,7 @@ const AdminCommentPage = () => {
                               onClick={async () => {
                                 if (window.confirm("Xóa trả lời?")) {
                                   await axios.delete(
-                                    `${REVIEW_API_URL}/api/reviews/reply/${comment.id}`,
+                                    `${BASE_URL}/api/reviews/reply/${comment.id}`,
                                   );
                                   fetchData();
                                 }
@@ -649,7 +651,7 @@ const AdminCommentPage = () => {
                       onClick={async () => {
                         if (window.confirm("Xóa bình luận này?")) {
                           await axios.delete(
-                            `${REVIEW_API_URL}/api/reviews/${comment.id}`,
+                            `${BASE_URL}/api/reviews/${comment.id}`,
                           );
                           fetchData();
                         }
@@ -703,9 +705,9 @@ const AdminCommentPage = () => {
         {totalPages > 1 && (
           <div className="flex justify-center items-center gap-4 mt-8 pb-10">
             {/* Nút lùi lại */}
-            <button 
-              disabled={currentPage === 1} 
-              onClick={() => setCurrentPage(prev => prev - 1)} 
+            <button
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage((prev) => prev - 1)}
               className="p-2 rounded-full bg-white border hover:bg-emerald-50 disabled:opacity-30 transition-all shadow-sm"
             >
               <ChevronLeft size={20} className="text-gray-600" />
@@ -714,12 +716,12 @@ const AdminCommentPage = () => {
             {/* Các nút số trang */}
             <div className="flex gap-2">
               {Array.from({ length: totalPages }).map((_, i) => (
-                <button 
-                  key={i} 
-                  onClick={() => setCurrentPage(i + 1)} 
+                <button
+                  key={i}
+                  onClick={() => setCurrentPage(i + 1)}
                   className={`w-10 h-10 rounded-xl font-bold transition-all shadow-sm ${
-                    currentPage === i + 1 
-                      ? "bg-emerald-600 text-white shadow-md" 
+                    currentPage === i + 1
+                      ? "bg-emerald-600 text-white shadow-md"
                       : "bg-white border text-gray-500 hover:border-emerald-400 hover:text-emerald-600"
                   }`}
                 >
@@ -729,9 +731,9 @@ const AdminCommentPage = () => {
             </div>
 
             {/* Nút tiến tới */}
-            <button 
-              disabled={currentPage === totalPages} 
-              onClick={() => setCurrentPage(prev => prev + 1)} 
+            <button
+              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage((prev) => prev + 1)}
               className="p-2 rounded-full bg-white border hover:bg-emerald-50 disabled:opacity-30 transition-all shadow-sm"
             >
               <ChevronRight size={20} className="text-gray-600" />

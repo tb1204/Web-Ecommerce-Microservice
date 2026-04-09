@@ -114,13 +114,15 @@ public class CartServiceImpl implements CartService {
         Map<String, Object> product;
         try {
             //gọi qua eruka
-            //     product = restTemplate.getForObject(
-            //             "http://productservice/api/products/" + req.getProductId(),
-            //             Map.class);
-            //gọi thẳng service
             product = restTemplate.getForObject(
-                    "http://localhost:8082/api/products/detail/" + req.getProductId(),
+                    "http://product-service /api/products/detail/" + req.getProductId(),
                     Map.class);
+            //gọi thẳng service
+
+            //chạy local
+            //     product = restTemplate.getForObject(
+            //             "http://localhost:8082/api/products/detail/" + req.getProductId(),
+            //             Map.class);
         } catch (RestClientException e) {
             throw new AppException(ErrorCode.PRODUCT_SERVICE_ERROR);
         }

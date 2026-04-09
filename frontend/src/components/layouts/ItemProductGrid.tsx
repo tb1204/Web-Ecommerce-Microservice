@@ -168,11 +168,33 @@ import ProductGrid from "../Products/ProductGrid";
 import axios from "axios";
 
 // Import hình ảnh banner (vẫn dùng local)
-import banner_phu_1 from "../../assets/banner/Banner-phu-1.webp";
-import banner_phu_2 from "../../assets/banner/Banner-phu-2.webp";
+import banner_phu_1 from "../../assets/banner/banner-phu-1.webp";
+import banner_phu_2 from "../../assets/banner/banner-phu-2.webp";
 
-const BASE_URL = "http://localhost:8082";
+// const BASE_URL = "http://localhost:8082";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
+// const mapProduct = (p: any): Product => ({
+//   id: p._id?.$oid ?? p.id ?? p._id,
+//   name: p.name,
+//   brand: p.brand,
+//   price: p.price,
+//   originalPrice:
+//     p.variants?.find((v: any) => v.originalPrice)?.originalPrice ?? undefined,
+//   images: (p.images ?? []).map((img: any) => ({
+//     url: img.url,
+//     isPrimary: img.isPrimary,
+//   })),
+//   status:
+//     p.status === "AVAILABLE"
+//       ? "selling"
+//       : p.status === "DISCONTINUED"
+//         ? "stopselling"
+//         : "selling",
+//   rating: p.rating ?? 0,
+//   reviewCount: p.reviewCount ?? 0,
+//   stockQuantity: p.totalStockQuantity ?? 0,
+// });
 const mapProduct = (p: any): Product => ({
   id: p._id?.$oid ?? p.id ?? p._id,
   name: p.name,
@@ -180,21 +202,29 @@ const mapProduct = (p: any): Product => ({
   price: p.price,
   originalPrice:
     p.variants?.find((v: any) => v.originalPrice)?.originalPrice ?? undefined,
+
   images: (p.images ?? []).map((img: any) => ({
     url: img.url,
     isPrimary: img.isPrimary,
   })),
+
   status:
     p.status === "AVAILABLE"
       ? "selling"
       : p.status === "DISCONTINUED"
         ? "stopselling"
         : "selling",
+
   rating: p.rating ?? 0,
   reviewCount: p.reviewCount ?? 0,
-  stockQuantity: p.totalStockQuantity ?? 0,
-});
 
+  // === THÊM 2 FIELD BỊ THIẾU ===
+  totalStockQuantity: p.totalStockQuantity ?? p.stockQuantity ?? 0,
+  variants: p.variants ?? [],
+
+  // Nếu Product interface còn yêu cầu thêm field nào khác (sku, parentName, parentCode...) thì thêm tiếp:
+  // sku: p.sku ?? "",
+});
 const ItemProductGrid = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -228,7 +258,10 @@ const ItemProductGrid = () => {
             alt="Khuyến mãi nệm"
             className="w-full h-full object-cover transition-transform duration-700 cursor-pointer hover:scale-105"
           /> */}
-          <Link to="/collections/all" className="flex-1 overflow-hidden rounded-xl h-[200px] md:h-[280px] group">
+          <Link
+            to="/collections/all"
+            className="flex-1 overflow-hidden rounded-xl h-[200px] md:h-[280px] group"
+          >
             <img
               src={banner_phu_1}
               alt="Khuyến mãi nệm"
@@ -242,7 +275,10 @@ const ItemProductGrid = () => {
             alt="Gối cao su thiên nhiên"
             className="w-full h-full object-cover transition-transform duration-700 cursor-pointer hover:scale-105"
           /> */}
-          <Link to="/collections/all" className="flex-1 overflow-hidden rounded-xl h-[200px] md:h-[280px] group">
+          <Link
+            to="/collections/all"
+            className="flex-1 overflow-hidden rounded-xl h-[200px] md:h-[280px] group"
+          >
             <img
               src={banner_phu_2}
               alt="Gối cao su thiên nhiên"

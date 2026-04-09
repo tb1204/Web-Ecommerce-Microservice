@@ -327,7 +327,8 @@ import { useAuth } from "@clerk/clerk-react";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
 
-const ORDER_URL = "http://localhost:8084";
+// const BASE_URL = "http://localhost:8084";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 interface OrderItem {
   productId: string;
@@ -416,7 +417,7 @@ const OrderDetailsPage: React.FC = () => {
       if (!id) return;
       try {
         const token = await getToken({ template: "my-backend" });
-        const res = await axios.get(`${ORDER_URL}/api/orders/${id}`, {
+        const res = await axios.get(`${BASE_URL}/api/orders/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 

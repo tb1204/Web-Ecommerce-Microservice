@@ -918,9 +918,10 @@ interface Conversation {
   createdAt: string;
   updatedAt: string;
 }
-
-const API_BASE = "http://localhost:8086/api/chat";
-const WS_URL = "http://localhost:8086/ws";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080";
+const API_BASE = `${BASE_URL}/api/chat`;
+// Tự động thay thế http:// thành ws:// (hoặc https:// thành wss://) cho WebSocket
+const WS_URL = BASE_URL.replace(/^http/, "ws") + "/ws";
 
 const formatTime = (iso: string) =>
   new Date(iso).toLocaleTimeString("vi-VN", {
@@ -953,7 +954,15 @@ const groupByDate = (messages: Message[]) => {
   return groups;
 };
 
-const UserChatPage: React.FC = () => {
+interface UserChatPageProps {
+  isWidgetOpen?: boolean; // ChatWidget truyền vào để biết widget đang mở không
+  onNewAdminMessage?: () => void; // Callback khi admin/bot gửi tin mới
+}
+
+const UserChatPage: React.FC<UserChatPageProps> = ({
+  isWidgetOpen = true,
+  onNewAdminMessage,
+}) => {
   const { getToken } = useAuth();
   const { user: clerkUser, isLoaded: isUserLoaded } = useUser();
 
@@ -1046,7 +1055,12 @@ const UserChatPage: React.FC = () => {
                 return wasReplaced ? replaced : [...prev, incoming];
               });
 
-              // ✅ Nếu là tin nhắn từ admin/bot, user đang scroll lên → hiện notification
+              // ✅ Nếu là tin nhắn từ admin/bot, gọi callback để ChatWidget hiển badge
+              if (incoming.senderRole !== "USER") {
+                onNewAdminMessage?.();
+              }
+
+              // ✅ Nếu là tin nhắn từ admin/bot và user đang scroll lên → hiện notification
               if (
                 incoming.senderRole !== "USER" &&
                 incoming.type === "TEXT" &&
@@ -1091,7 +1105,8 @@ const UserChatPage: React.FC = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        const convList: Conversation[] = convRes.data;
+        // ✅ Đảm bảo convRes.data là array trước khi gọi .find()
+        const convList: Conversation[] = Array.isArray(convRes.data) ? convRes.data : [];
         const openConv = convList.find(
           (c) => c.status === "WAITING" || c.status === "ACTIVE",
         );
@@ -1106,7 +1121,8 @@ const UserChatPage: React.FC = () => {
               headers: { Authorization: `Bearer ${token}` },
             },
           );
-          setMessages(msgRes.data);
+          // ✅ Đảm bảo msgRes.data là array trước khi setMessages
+          setMessages(Array.isArray(msgRes.data) ? msgRes.data : []);
           setTimeout(() => scrollToBottom(false), 100);
         } else {
           const displayName =
@@ -1342,14 +1358,15 @@ const UserChatPage: React.FC = () => {
 
   if (!isUserLoaded || loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-white dark:bg-gray-900">
+      // ✅ Dùng h-full thay min-h-screen để tương thích với ChatWidget (fixed height)
+      <div className="flex items-center justify-center h-full bg-white dark:bg-gray-900">
         <div className="text-center">
-          <div className="relative w-16 h-16 mx-auto mb-4">
+          <div className="relative w-10 h-10 mx-auto mb-3">
             <div className="absolute inset-0 rounded-full border-4 border-emerald-100 dark:border-emerald-900" />
             <div className="absolute inset-0 rounded-full border-4 border-t-emerald-600 animate-spin" />
           </div>
-          <p className="text-gray-500 dark:text-gray-400 font-medium">
-            Đang kết nối hỗ trợ...
+          <p className="text-gray-500 dark:text-gray-400 text-sm">
+            Đang kết nối...
           </p>
         </div>
       </div>

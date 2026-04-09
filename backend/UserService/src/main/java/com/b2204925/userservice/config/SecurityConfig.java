@@ -1,6 +1,7 @@
 package com.b2204925.userservice.config;
 
 import lombok.RequiredArgsConstructor;
+
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +22,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.beans.factory.annotation.Qualifier;
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -38,8 +42,35 @@ public class SecurityConfig {
     }
 
     @Bean
+    @LoadBalanced
     public RestTemplate restTemplate() {
         return new RestTemplate(new HttpComponentsClientHttpRequestFactory());
+    }
+
+    @Bean
+    public RestTemplate vanillaRestTemplate() {
+        return new RestTemplate(new HttpComponentsClientHttpRequestFactory());
+    }
+
+    @Bean("simpleRestTemplate")
+    public RestTemplate simpleRestTemplate() {
+        // Dùng HttpComponentsClientHttpRequestFactory (Apache HttpClient5) thay vì
+        // SimpleClientHttpRequestFactory vì SimpleClientHttpRequestFactory không xử lý
+        // tốt HTTPS + redirects trong Docker Alpine JRE environment
+        org.apache.hc.client5.http.impl.classic.CloseableHttpClient httpClient =
+            org.apache.hc.client5.http.impl.classic.HttpClients.custom()
+                .setConnectionManager(
+                    org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManagerBuilder.create()
+                        .setMaxConnTotal(50)
+                        .setMaxConnPerRoute(20)
+                        .build()
+                )
+                .build();
+        HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory(httpClient);
+        factory.setConnectTimeout(10000);
+        factory.setConnectionRequestTimeout(10000);
+        return new RestTemplate(factory);
+        // Bean này dùng cho Cloudinary/Slider — KHÔNG dùng @LoadBalanced
     }
 
     @Bean
@@ -67,13 +98,15 @@ public class SecurityConfig {
                 .accessDeniedHandler(new CustomAccessDeniedHandler())
                 )
                 .authorizeHttpRequests(auth -> auth
-      //                          .requestMatchers("/api/admin/**").permitAll() //Test xong nhớ xóa nha
+                // ⚠️ Thứ tự CỰC KỲ QUAN TRỌNG: permitAll phải đứng TRƯỚC hasRole
                 .requestMatchers("/api/webhook/**").permitAll()
                 .requestMatchers("/api/banners/flashsale").permitAll()
+                // Cho phép public truy cập slider/banner list (dùng cho Banner, FlashSale)
                 .requestMatchers("/api/admin/sliders/list").permitAll()
                 .requestMatchers("/api/admin/sliders/banners/**").permitAll()
-                                .requestMatchers("/api/users/statistics/**").permitAll()
-                .requestMatchers("/api/admin/**").hasRole("ADMIN") //tắt để test xong nhớ bật lại
+                .requestMatchers("/api/users/statistics/**").permitAll()
+                // Các route /api/admin/** còn lại yêu cầu ADMIN role
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
 
                 .anyRequest().authenticated()
                 )

@@ -303,8 +303,8 @@ import banner_cat_phukien from "../assets/flash-sale/flash-sale-5-phukien.webp";
 
 import { CirclePlus } from "lucide-react";
 
-const BASE_URL = "http://localhost:8082";
-const SLIDER_URL = "http://localhost:8081";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL; // <-- Sửa thành 8082, port của product-service
+// const SLIDER_URL = "http://localhost:8081";
 
 const PARENT_CODE_MAP: Record<string, string> = {
   NEM: "nem",
@@ -314,6 +314,27 @@ const PARENT_CODE_MAP: Record<string, string> = {
 };
 
 // Chuyển 1 product từ backend sang Product interface frontend
+// const mapProduct = (p: any): Product => ({
+//   id: p._id?.$oid ?? p.id ?? p._id,
+//   name: p.name,
+//   brand: p.brand,
+//   price: p.price,
+//   originalPrice:
+//     p.variants?.find((v: any) => v.originalPrice)?.originalPrice ?? undefined,
+//   images: (p.images ?? []).map((img: any) => ({
+//     url: img.url,
+//     isPrimary: img.isPrimary,
+//   })),
+//   status:
+//     p.status === "AVAILABLE"
+//       ? "selling"
+//       : p.status === "DISCONTINUED"
+//         ? "stopselling"
+//         : "selling",
+//   rating: p.rating ?? 0,
+//   reviewCount: p.reviewCount ?? 0,
+//   stockQuantity: p.totalStockQuantity ?? 0,
+// });
 const mapProduct = (p: any): Product => ({
   id: p._id?.$oid ?? p.id ?? p._id,
   name: p.name,
@@ -321,21 +342,29 @@ const mapProduct = (p: any): Product => ({
   price: p.price,
   originalPrice:
     p.variants?.find((v: any) => v.originalPrice)?.originalPrice ?? undefined,
+
   images: (p.images ?? []).map((img: any) => ({
     url: img.url,
     isPrimary: img.isPrimary,
   })),
+
   status:
     p.status === "AVAILABLE"
       ? "selling"
       : p.status === "DISCONTINUED"
         ? "stopselling"
         : "selling",
+
   rating: p.rating ?? 0,
   reviewCount: p.reviewCount ?? 0,
-  stockQuantity: p.totalStockQuantity ?? 0,
-});
 
+  // === THÊM 2 FIELD BỊ THIẾU ===
+  totalStockQuantity: p.totalStockQuantity ?? p.stockQuantity ?? 0,
+  variants: p.variants ?? [],
+
+  // Nếu Product interface còn yêu cầu thêm field nào khác (sku, parentName, parentCode...) thì thêm tiếp:
+  // sku: p.sku ?? "",
+});
 const FlashSalePage = () => {
   const categories = [
     { name: "NỆM", code: "nem", categoryBanner: banner_cat_nem },
@@ -372,7 +401,7 @@ const FlashSalePage = () => {
         setLoadingBanner(true);
         setBannerError(null);
         const res = await axios.get(
-          `${SLIDER_URL}/api/admin/sliders/banners/flashsale`,
+          `${BASE_URL}/api/admin/sliders/banners/flashsale`,
           {
             headers: { "Cache-Control": "no-store" },
           },

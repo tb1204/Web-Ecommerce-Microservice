@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class ReviewService {
@@ -41,7 +42,9 @@ public class ReviewService {
     // Tính điểm trung bình để hiện "sao" sản phẩm
     public double getAverageRating(String productId) {
         List<Review> reviews = reviewRepository.findByProductIdAndStatus(productId, "approved");
-        if (reviews.isEmpty()) return 0.0;
+        if (reviews.isEmpty()) {
+            return 0.0;
+        }
         return reviews.stream().mapToDouble(Review::getRating).average().orElse(0.0);
     }
 
@@ -75,10 +78,12 @@ public class ReviewService {
 //    }
     // Tạo đánh giá mới (Đã thêm logic chống spam: 1 lần mua = 1 lần đánh giá)
     public ReviewResponse createReview(ReviewRequest request) {
-        // 1. GỌI SANG ORDER SERVICE ĐỂ LẤY SỐ LƯỢNG ĐÃ MUA
-        String orderServiceUrl = "http://localhost:8084/api/orders/count-purchased?userId="
+        //GỌI QUA ERUKA
+        String orderServiceUrl = "http://order-service/api/orders/count-purchased?userId="
                 + request.getUserId() + "&productId=" + request.getProductId();
-
+        // 1. GỌI LOCAL
+        // String orderServiceUrl = "http://localhost:8084/api/orders/count-purchased?userId="
+        //         + request.getUserId() + "&productId=" + request.getProductId();
         Integer purchaseCount = restTemplate.getForObject(orderServiceUrl, Integer.class);
 
         if (purchaseCount == null || purchaseCount <= 0) {
@@ -170,7 +175,9 @@ public class ReviewService {
 
     // Hàm dọn dẹp ảnh trên Cloudinary (Helper)
     private void deleteImagesFromCloudinary(List<String> imageUrls) {
-        if (imageUrls == null || imageUrls.isEmpty()) return;
+        if (imageUrls == null || imageUrls.isEmpty()) {
+            return;
+        }
 
         for (String url : imageUrls) {
             try {
@@ -224,8 +231,11 @@ public class ReviewService {
         System.out.println("User ID: " + request.getUserId());
         System.out.println("Product ID: " + request.getProductId());
 
-        String orderServiceUrl = "http://localhost:8084/api/orders/check-purchased-count?userId="
+        //GỌI QUA ERUKA
+        String orderServiceUrl = "http://order-service/api/orders/check-purchased-count?userId="
                 + request.getUserId() + "&productId=" + request.getProductId();
+        // String orderServiceUrl = "http://localhost:8084/api/orders/check-purchased-count?userId="
+        //         + request.getUserId() + "&productId=" + request.getProductId();
 
         Integer purchaseCount = restTemplate.getForObject(orderServiceUrl, Integer.class);
         System.out.println("Số lần đã mua từ OrderService: " + purchaseCount);

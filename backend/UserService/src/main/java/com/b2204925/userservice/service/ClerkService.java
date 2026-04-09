@@ -9,7 +9,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,12 +22,15 @@ import java.util.Map;
  * tiếp nữa.
  */
 @Service
-@RequiredArgsConstructor
 public class ClerkService {
 
     private static final Logger logger = LoggerFactory.getLogger(ClerkService.class);
 
-    private final RestTemplate restTemplate;
+    private final RestTemplate vanillaRestTemplate;
+
+    public ClerkService(@Qualifier("vanillaRestTemplate") RestTemplate vanillaRestTemplate) {
+        this.vanillaRestTemplate = vanillaRestTemplate;
+    }
 
     @Value("${clerk.secret-key}")
     private String clerkSecretKey;
@@ -50,7 +55,7 @@ public class ClerkService {
         );
 
         try {
-            ResponseEntity<String> response = restTemplate.exchange(
+            ResponseEntity<String> response = vanillaRestTemplate.exchange(
                     clerkApiUrl + "/users/" + clerkId, // ← bỏ /metadata
                     HttpMethod.PATCH,
                     new HttpEntity<>(body, headers),
@@ -65,7 +70,7 @@ public class ClerkService {
 
     private void postToClerk(String path, ErrorCode errorOnFail) {
         try {
-            restTemplate.exchange(
+            vanillaRestTemplate.exchange(
                     clerkApiUrl + path,
                     HttpMethod.POST,
                     new HttpEntity<>(authHeaders()),
@@ -95,7 +100,7 @@ public class ClerkService {
         body.put("public_metadata", Map.of("role", role));
 
         try {
-            ResponseEntity<Map> response = restTemplate.postForEntity(
+            ResponseEntity<Map> response = vanillaRestTemplate.postForEntity(
                     clerkApiUrl + "/users",
                     new HttpEntity<>(body, headers),
                     Map.class
@@ -109,6 +114,9 @@ public class ClerkService {
             return clerkId;
         } catch (AppException ex) {
             throw ex;
+        } catch (HttpStatusCodeException ex) {
+            logger.error("Clerk API returned error: {} - {}", ex.getStatusCode(), ex.getResponseBodyAsString());
+            throw new AppException(ErrorCode.CLERK_CREATE_FAILED, "Lỗi từ Clerk: " + ex.getResponseBodyAsString());
         } catch (Exception e) {
             logger.error("Create Clerk user failed: {}", e.getMessage());
             throw new AppException(ErrorCode.CLERK_CREATE_FAILED, e.getMessage());
@@ -118,7 +126,7 @@ public class ClerkService {
     public void deleteUser(String clerkId) {
         HttpHeaders headers = authHeaders();
         try {
-            restTemplate.exchange(
+            vanillaRestTemplate.exchange(
                     clerkApiUrl + "/users/" + clerkId,
                     HttpMethod.DELETE,
                     new HttpEntity<>(headers),

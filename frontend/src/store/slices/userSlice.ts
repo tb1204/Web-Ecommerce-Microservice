@@ -29,7 +29,8 @@ const initialState: UserState = {
   wishlistLoading: false,
   error: null,
 };
-const BASE_URL = "http://localhost:8081";
+// const BASE_URL = "http://localhost:8081";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080";
 // ==================== ASYNC THUNKS ====================
 
 /** Lấy thông tin user từ userservice */

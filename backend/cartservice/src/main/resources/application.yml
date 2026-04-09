@@ -4,7 +4,7 @@ spring:
 
   data:
     mongodb:
-      uri: mongodb://localhost:27017/artisano
+      uri: mongodb://host.docker.internal:27017/artisano
       database: artisano
 
   security:
@@ -28,9 +28,20 @@ clerk:
 #       defaultZone: http://discoveryserver:8761/eureka # ← đổi localhost
 #     register-with-eureka: true
 #     fetch-registry: true
+# eureka:
+#   client:
+#     enabled: false # ← tắt hoàn toàn, không cần Eureka khi dev local
+
+# #chay eruka
 eureka:
   client:
-    enabled: false # ← tắt hoàn toàn, không cần Eureka khi dev local
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka/
+  instance:
+    prefer-ip-address: true # rất quan trọng trong Docker
+#     hostname: ${spring.application.name}
 logging:
   level:
     org.springframework.security: INFO

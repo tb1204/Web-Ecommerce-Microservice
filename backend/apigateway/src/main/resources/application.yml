@@ -6,7 +6,7 @@ spring:
     name: api-gateway
   data:
     redis:
-      host: localhost
+      host: redis
       port: 6379
 
   cloud:
@@ -29,7 +29,7 @@ spring:
           uri: lb://user-service # thay bằng lb://userservice nếu dùng Eureka
           # uri: http://localhost:8081
           predicates:
-            - Path=/api/users/**
+            - Path=/api/users/**,/api/webhook/**
           filters:
             - name: RequestRateLimiter
               args:
@@ -37,17 +37,15 @@ spring:
                 redis-rate-limiter.burstCapacity: 40 # burst tối đa 20
                 redis-rate-limiter.requestedTokens: 1 # mỗi request tốn 1 token
                 key-resolver: "#{@ipKeyResolver}" # theo IP (bean trong GatewayConfig)
-            - name: CircuitBreaker
+            - name: CircuitBreaker # Bảo vệ system khi service down
               args:
                 name: defaultCB
                 fallbackUri: forward:/fallback/userservice
-
-        # Route cho userservice
+        # Route cho userservice-admin
         - id: userservice-admin
           uri: lb://user-service # thay bằng lb://userservice nếu dùng Eureka
-          # uri: http://localhost:8081
           predicates:
-            - Path=/api/admin/**
+            - Path=/api/admin/users/**, /api/admin/sliders/**
           filters:
             - name: RequestRateLimiter
               args:
@@ -80,7 +78,7 @@ spring:
         - id: productservice
           uri: lb://product-service
           predicates:
-            - Path=/api/products/**
+            - Path=/api/products/**, /api/categories/**
           filters:
             - name: RequestRateLimiter
               args:
@@ -144,7 +142,7 @@ spring:
         - id: chatservice
           uri: lb://chat-service
           predicates:
-            - Path=/api/chat/**
+            - Path=/api/chat/**, /ws/**
           filters:
             - name: RequestRateLimiter
               args:
@@ -159,22 +157,22 @@ spring:
         - id: reviewservice
           uri: lb://review-service
           predicates:
-            - Path=/api/review/**
+            - Path=/api/reviews/**
           filters:
-            - name: RequestRateLimiter
-              args:
-                redis-rate-limiter.replenishRate: 10
-                redis-rate-limiter.burstCapacity: 20
-                key-resolver: "#{@ipKeyResolver}"
+            # - name: RequestRateLimiter
+            #   args:
+            #     redis-rate-limiter.replenishRate: 15
+            #     redis-rate-limiter.burstCapacity: 30
+            #     key-resolver: "#{@ipKeyResolver}"
             - name: CircuitBreaker
               args:
                 name: defaultCB
                 fallbackUri: forward:/fallback/reviewservice
-        # Ví dụ cho notificationservice (limit chặt vì nhạy cảm)
+        # Ví dụ cho notificationservice
         - id: notificationservice
           uri: lb://notification-service
           predicates:
-            - Path=/api/notification/**
+            - Path=/api/notifications/**, /ws-notifications/**
           filters:
             - name: RequestRateLimiter
               args:
@@ -202,6 +200,7 @@ spring:
               - GET
               - POST
               - PUT
+              - PATCH
               - DELETE
               - OPTIONS
             allowedHeaders: "*"
@@ -219,11 +218,12 @@ resilience4j:
 # Eureka client (nếu bạn có discovery server)
 eureka:
   client:
-    register-with-eureka: false # Gateway thường không cần đăng ký với eruka
-    fetch-registry: true #"Gateway lấy danh sách service từ Eureka"
+    register-with-eureka: false # ← Khuyến nghị để false (Gateway không cần register)
+    fetch-registry: true
     service-url:
-      defaultZone: http://localhost:8761/eureka # thay bằng địa chỉ Eureka thật
-
+      defaultZone: http://eureka-server:8761/eureka/
+  instance:
+    prefer-ip-address: true
 # Log để debug dễ dàng
 logging:
   level:

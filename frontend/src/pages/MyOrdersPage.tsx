@@ -255,7 +255,8 @@ import { useAuth, useUser } from "@clerk/clerk-react";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
 
-const ORDER_URL = "http://localhost:8084";
+// const BASE_URL = "http://localhost:8084";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 interface OrderItem {
   productId: string;
@@ -340,7 +341,7 @@ const MyOrdersPage: React.FC = () => {
   //     }
   //     try {
   //       const token = await getToken({ template: "my-backend" });
-  //       const res = await axios.get(`${ORDER_URL}/api/orders/user/${user.id}`, {
+  //       const res = await axios.get(`${BASE_URL}/api/orders/user/${user.id}`, {
   //         headers: { Authorization: `Bearer ${token}` },
   //       });
   //       // Sắp xếp mới nhất lên đầu
@@ -372,7 +373,7 @@ const MyOrdersPage: React.FC = () => {
 
         // 1. Lấy theo userId
         const resByUserId = await axios.get(
-          `${ORDER_URL}/api/orders/user/${user.id}`,
+          `${BASE_URL}/api/orders/user/${user.id}`,
           { headers },
         );
         let allOrders: Order[] = resByUserId.data ?? [];
@@ -382,7 +383,7 @@ const MyOrdersPage: React.FC = () => {
         if (userEmail) {
           try {
             const resByEmail = await axios.get(
-              `${ORDER_URL}/api/orders/email/${encodeURIComponent(userEmail)}`,
+              `${BASE_URL}/api/orders/email/${encodeURIComponent(userEmail)}`,
               { headers },
             );
             const byEmail: Order[] = resByEmail.data ?? [];

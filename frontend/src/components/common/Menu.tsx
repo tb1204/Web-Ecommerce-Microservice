@@ -24,6 +24,7 @@ interface NavItem {
 }
 
 function Menu() {
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeMobileSub, setActiveMobileSub] = useState<string | null>(null);
   const [activeMobileDeepSub, setActiveMobileDeepSub] = useState<string | null>(
@@ -35,7 +36,7 @@ function Menu() {
   // 1. Lấy dữ liệu sản phẩm từ CSDL
   useEffect(() => {
     axios
-      .get("http://localhost:8082/api/products/all")
+      .get(`${BASE_URL}/api/products/all`)
       .then((res) => setAllProducts(res.data))
       .catch((err) => console.error("Menu API Error:", err));
   }, []);

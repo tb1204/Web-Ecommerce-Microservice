@@ -43,10 +43,19 @@ import PaymentFailed from "./pages/PaymentFailed";
 
 import store from "./store";
 import { Provider } from "react-redux";
+// import { useEffect } from "react";
 
 //import AdminSliderUpload from "./components/Admin/AdminSliderUpload";
 
 function App() {
+  // useEffect(() => {
+  //   console.log("====================================");
+  //   console.log("VITE_API_BASE_URL =", import.meta.env.VITE_API_BASE_URL);
+  //   console.log("MODE =", import.meta.env.MODE);
+  //   console.log("BASE_URL =", import.meta.env.BASE_URL);
+  //   console.log("====================================");
+  // }, []);
+  // console.log(import.meta.env.BASE_URL || "local");
   return (
     <Provider store={store}>
       <BrowserRouter>
@@ -93,9 +102,9 @@ function App() {
               <Route
                 path="/admin"
                 element={
-                  // <ProtectedRoute role="admin">
+                  <ProtectedRoute role="admin">
                     <AdminLayout />
-                  // </ProtectedRoute>
+                  </ProtectedRoute>
                 }
               >
                 <Route index element={<AdminHomePage />} />

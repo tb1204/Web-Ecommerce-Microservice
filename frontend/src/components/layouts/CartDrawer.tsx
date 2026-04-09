@@ -525,8 +525,10 @@
 import { useState, useMemo, useEffect } from "react";
 import { IoMdClose } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
-import CartContents from "../Cart/CartContents";
-import type { CartItem } from "../Cart/CartContents";
+// import CartContents from "../Cart/CartContents";
+// import type { CartItem } from "../Cart/CartContents";
+// import CartItem from "../Cart/CartContents";
+import CartContents, { type CartProduct } from "../Cart/CartContents";
 import { setCheckoutItems } from "../../store/slices/cartSlice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { useAuth } from "@clerk/clerk-react";
@@ -553,7 +555,18 @@ function CartDrawer() {
   );
   const cartLoading = useAppSelector((state) => state.cart.loading);
 
-  const cartProducts: CartItem[] = cartItemsRaw.map((item) => ({
+  // const cartProducts: CartItem[] = cartItemsRaw.map((item) => ({
+  //   productId: item.productId,
+  //   variantId: item.variantId,
+  //   name: item.name,
+  //   price: Number(item.price) || 0,
+  //   quantity: Number(item.quantity) || 0,
+  //   image: item.image,
+  //   size: item.size,
+  //   thickness: item.thickness,
+  //   color: item.color,
+  // }));
+  const cartProducts: CartProduct[] = cartItemsRaw.map((item) => ({
     productId: item.productId,
     variantId: item.variantId,
     name: item.name,
@@ -564,7 +577,6 @@ function CartDrawer() {
     thickness: item.thickness,
     color: item.color,
   }));
-
   // ✅ selectedItems dùng key "productId::variantId" giống CartContents
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
 

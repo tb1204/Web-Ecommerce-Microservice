@@ -374,12 +374,13 @@
 
 //lấy data thật từ backend
 
-import { useState, useEffect, FormEvent } from "react";
+import { useState, useEffect } from "react";
+// import type { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser, UserButton } from "@clerk/clerk-react";
 // import { useTheme } from "../common/ThemeProvider";
 import { useTheme } from "../../context/ThemeContext";
-import { IoIosSearch } from "react-icons/io";
+// import { IoIosSearch } from "react-icons/io";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
 import {
   FaRegBell,
@@ -406,11 +407,12 @@ import { fetchCart } from "../../store/slices/cartSlice";
 // import { fetchWishlist } from "../../store/slices/userSlice"; // nếu chưa có
 import { useAuth } from "@clerk/clerk-react";
 
-//import search 
+//import search
 import Search from "../layouts/Search";
 
 const Navbar = () => {
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  // const [searchTerm, setSearchTerm] = useState<string>("");
   const { theme, toggleTheme } = useTheme();
   const { isLoaded, isSignedIn, user } = useUser();
   const isDark = theme === "dark";
@@ -438,7 +440,7 @@ const Navbar = () => {
   useEffect(() => {
     if (isSignedIn && user?.id) {
       axios
-        .get(`http://localhost:8087/api/notifications/user/${user.id}`)
+        .get(`${BASE_URL}/api/notifications/user/${user.id}`)
         .then((res) => {
           setNotifications(res.data);
           setUnreadCount(
@@ -451,7 +453,7 @@ const Navbar = () => {
 
   useEffect(() => {
     if (!isSignedIn || !user?.id) return;
-    const socket = new SockJS("http://localhost:8087/ws-notifications");
+    const socket = new SockJS(`${BASE_URL}/ws-notifications`);
     const stompClient = Stomp.over(socket);
     stompClient.debug = () => {};
     stompClient.connect(
@@ -473,9 +475,7 @@ const Navbar = () => {
   const handleMarkAsRead = async (noti: any) => {
     try {
       if (noti.status === "UNREAD") {
-        await axios.put(
-          `http://localhost:8087/api/notifications/${noti.id}/read`,
-        );
+        await axios.put(`${BASE_URL}/api/notifications/${noti.id}/read`);
         setNotifications((prev) =>
           prev.map((n) => (n.id === noti.id ? { ...n, status: "READ" } : n)),
         );
@@ -492,8 +492,12 @@ const Navbar = () => {
       } else {
         navigate("/my-orders");
       }
-    } catch (err) {
-      console.error("Lỗi xử lý thông báo:", err);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Lỗi xử lý thông báo:", error.message);
+      } else {
+        console.error("Lỗi xử lý thông báo:", error);
+      }
     }
   };
 
@@ -507,13 +511,13 @@ const Navbar = () => {
   //   if (!query) return;
   //   navigate(`/collections/all?search=${encodeURIComponent(query)}`);
   // };
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!searchTerm.trim()) return;
-    navigate(`/collections/all?q=${encodeURIComponent(searchTerm.trim())}`);
+  // const handleSearch = (e: FormEvent) => {
+  //   e.preventDefault();
+  //   if (!searchTerm.trim()) return;
+  //   navigate(`/collections/all?q=${encodeURIComponent(searchTerm.trim())}`);
 
-    setSearchTerm(""); 
-  };
+  //   setSearchTerm("");
+  // };
 
   const { wishlistItems } = useWishlist();
   const wishlistCount = wishlistItems?.length || 0;
@@ -554,7 +558,7 @@ const Navbar = () => {
             </form>
           </div> */}
           <div className="order-3 lg:order-none col-span-2 lg:col-span-1">
-            <Search /> 
+            <Search />
           </div>
 
           {/* 3. Action Icons */}

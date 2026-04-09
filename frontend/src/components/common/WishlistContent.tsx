@@ -16,7 +16,8 @@ const WishlistContext = createContext<WishlistContextType | undefined>(
   undefined,
 );
 
-const BASE_URL = "http://localhost:8081";
+// const BASE_URL = "http://localhost:8081";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 // Normalize _id từ backend → id chuẩn string
 const normalizeId = (raw: any): string =>

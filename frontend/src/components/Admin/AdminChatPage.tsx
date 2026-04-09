@@ -1,9 +1,10 @@
 import { MessageCircleMore, MessagesSquare, Paperclip } from "lucide-react";
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useAuth } from "@clerk/clerk-react";
-import axios from "axios";
+
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
+import api from "../../api/client";
 
 // client.activate();    // bật kết nối
 // client.deactivate();  // tắt kết nối
@@ -52,9 +53,9 @@ interface ConversationSummary {
   updatedAt: string;
 }
 
-const API_BASE = "http://localhost:8086/api/chat";
-const WS_URL = "http://localhost:8086/ws";
-
+const API_BASE = `${import.meta.env.VITE_API_BASE_URL}/api/chat`;
+const WS_URL = `${import.meta.env.VITE_API_BASE_URL}/ws`;
+console.log(API_BASE, WS_URL);
 const formatTime = (iso: string) =>
   new Date(iso).toLocaleTimeString("vi-VN", {
     hour: "2-digit",
@@ -97,7 +98,7 @@ const AdminChatPage: React.FC = () => {
     if (!token) return;
 
     try {
-      const res = await axios.patch(
+      const res = await api.patch(
         `${API_BASE}/conversations/${convId}/pin`,
         null,
         { headers: { Authorization: `Bearer ${token}` } },
@@ -128,7 +129,7 @@ const AdminChatPage: React.FC = () => {
     if (!token) return;
 
     try {
-      const res = await axios.patch(
+      const res = await api.patch(
         `${API_BASE}/conversations/${convId}/mute`,
         null,
         { headers: { Authorization: `Bearer ${token}` } },
@@ -206,10 +207,10 @@ const AdminChatPage: React.FC = () => {
     try {
       // Load WAITING + ACTIVE separately rồi merge
       const [waitingRes, activeRes] = await Promise.all([
-        axios.get(`${API_BASE}/conversations/admin?status=WAITING`, {
+        api.get(`${API_BASE}/conversations/admin?status=WAITING`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        axios.get(`${API_BASE}/conversations/admin?status=ACTIVE`, {
+        api.get(`${API_BASE}/conversations/admin?status=ACTIVE`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ]);
@@ -237,14 +238,14 @@ const AdminChatPage: React.FC = () => {
 
     try {
       // Load messages
-      const res = await axios.get(`${API_BASE}/messages/${conv.id}`, {
+      const res = await api.get(`${API_BASE}/messages/${conv.id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setMessages(res.data);
       setTimeout(() => scrollToBottom(), 100);
 
       // Mark read
-      await axios.patch(`${API_BASE}/conversations/${conv.id}/read`, null, {
+      await api.patch(`${API_BASE}/conversations/${conv.id}/read`, null, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setSummaries((prev) =>
@@ -396,7 +397,7 @@ const AdminChatPage: React.FC = () => {
 
         const isVideo = selectedFile.type.startsWith("video/");
 
-        const uploadRes = await axios.post(
+        const uploadRes = await api.post(
           `${API_BASE}/media/${isVideo ? "video" : "image"}`,
           formData,
           {
@@ -484,7 +485,7 @@ const AdminChatPage: React.FC = () => {
     if (!selectedSummary) return;
     const token = tokenRef.current;
     try {
-      await axios.patch(
+      await api.patch(
         `${API_BASE}/conversations/${selectedSummary.id}/close`,
         null,
         {

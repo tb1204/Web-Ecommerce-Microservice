@@ -36,7 +36,8 @@ const initialState: ReviewState = {
   currentPage: 1,
   itemsPerPage: 6,
 };
-const BASE_URL = "http://localhost:8088";
+// const BASE_URL = "http://localhost:8088";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080";
 // ==================== ASYNC THUNKS ====================
 
 /** Lấy tất cả review (Admin) */

@@ -35,16 +35,20 @@ const AdminVoucherDetailModal: React.FC<AdminVoucherDetailProps> = ({
 }) => {
   const [userMap, setUserMap] = useState<Record<string, string>>({});
   const { getToken } = useAuth();
-  const USER_URL = "http://localhost:8081";
+  // const BASE_URL = "http://localhost:8081";
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     if (!isOpen || !voucher || voucher.userUsedList.length === 0) return;
     const fetchUsers = async () => {
       try {
         const token = await getToken({ template: "my-backend" });
-        const res = await axios.get(`${USER_URL}/api/admin/users?page=0&size=1000`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const res = await axios.get(
+          `${BASE_URL}/api/admin/users?page=0&size=1000`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          },
+        );
         const map: Record<string, string> = {};
         if (res.data.content) {
           res.data.content.forEach((u: any) => {
@@ -291,10 +295,10 @@ const AdminVoucherDetailModal: React.FC<AdminVoucherDetailProps> = ({
               {voucher.userUsedList.length > 0 ? (
                 voucher.userUsedList.map((uid, i) => {
                   const isGuest = uid.startsWith("GUEST_");
-                  const displayName = isGuest 
+                  const displayName = isGuest
                     ? `Khách vãng lai (${uid.replace("GUEST_", "").slice(0, 8)})`
-                    : (userMap[uid] || `@${uid}`);
-                  
+                    : userMap[uid] || `@${uid}`;
+
                   return (
                     <span
                       key={i}

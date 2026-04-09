@@ -42,7 +42,8 @@ const initialState: CartState = {
   error: null,
 };
 
-const BASE_URL = "http://localhost:8083";
+// const BASE_URL = "http://localhost:8083";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080";
 
 // ==================== HELPER ====================
 const calcTotal = (products: CartProduct[]) =>

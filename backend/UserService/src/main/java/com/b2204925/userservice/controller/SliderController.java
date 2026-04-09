@@ -1,15 +1,11 @@
-//package com.b2204925.userservice.controller;
-//
-//public class SliderController {
-//}
 package com.b2204925.userservice.controller;
 
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +16,8 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/admin/sliders")
-@RequiredArgsConstructor
 @CrossOrigin(origins = "*")
+@Slf4j
 public class SliderController {
 
     @Value("${cloudinary.cloud-name}")
@@ -34,6 +30,15 @@ public class SliderController {
     private String apiSecret;
 
     private final RestTemplate restTemplate;
+
+    // ⚠️ PHẢI dùng explicit constructor — @RequiredArgsConstructor của Lombok
+    // KHÔNG propagate @Qualifier vào constructor parameter, dẫn đến Spring
+    // inject nhầm @LoadBalanced RestTemplate (tên "restTemplate") thay vì "simpleRestTemplate".
+    // Bean @LoadBalanced cố resolve "api.cloudinary.com" qua Eureka → 500 error!
+    public SliderController(@Qualifier("simpleRestTemplate") RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+
 
     // GET /api/admin/sliders/banners/flashsale
     @GetMapping("/banners/flashsale")
@@ -50,10 +55,14 @@ public class SliderController {
         headers.setBasicAuth(apiKey, apiSecret);
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        ResponseEntity<String> response = restTemplate.postForEntity(
-                searchUrl, new HttpEntity<>(body, headers), String.class);
-
-        return ResponseEntity.status(response.getStatusCode()).body(response.getBody());
+        try {
+            ResponseEntity<String> response = restTemplate.postForEntity(
+                    searchUrl, new HttpEntity<>(body, headers), String.class);
+            return ResponseEntity.status(response.getStatusCode()).body(response.getBody());
+        } catch (Exception e) {
+            log.error("Error calling Cloudinary search for flashsale banner: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 
     // POST /api/admin/sliders/sign
@@ -104,10 +113,17 @@ public class SliderController {
         headers.setBasicAuth(apiKey, apiSecret);
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        ResponseEntity<String> res = restTemplate.postForEntity(
-                searchUrl, new HttpEntity<>(body, headers), String.class);
-
-        return ResponseEntity.status(res.getStatusCode()).body(res.getBody());
+        try {
+            ResponseEntity<String> res = restTemplate.postForEntity(
+                    searchUrl, new HttpEntity<>(body, headers), String.class);
+            return ResponseEntity.status(res.getStatusCode()).body(res.getBody());
+        } catch (org.springframework.web.client.HttpClientErrorException e) {
+            log.error("Cloudinary API Client Error: {} - {}", e.getStatusCode(), e.getResponseBodyAsString());
+            return ResponseEntity.status(e.getStatusCode()).body(e.getResponseBodyAsString());
+        } catch (Exception e) {
+            log.error("Error listing images from Cloudinary: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 
     // DELETE /api/admin/sliders/delete

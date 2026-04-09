@@ -11,14 +11,15 @@ import {
 import ProductGrid from "./ProductGrid";
 import type { Product } from "../Products/InterfaceItem";
 import axios from "axios";
-import banner_phu_3 from "../../assets/banner/Banner-phu-3.webp";
+import banner_phu_3 from "../../assets/banner/banner-phu-3.webp";
 
 import { addToCart } from "../../store/slices/cartSlice";
 import { useDispatch } from "react-redux";
 import { useAuth } from "@clerk/clerk-react"; // Để lấy token
 import { toast } from "sonner"; // Hoặc thư viện thông báo ông đang dùng
 
-const BASE_URL = "http://localhost:8082";
+// const BASE_URL = "http://localhost:8082";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 // --- HÀM MAP DỮ LIỆU CHUẨN (GIỮ NGUYÊN TỪ BẠN ÔNG) ---
 const mapProduct = (p: any): Product => {

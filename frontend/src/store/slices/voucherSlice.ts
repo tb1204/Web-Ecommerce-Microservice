@@ -46,7 +46,8 @@ const initialState: VoucherState = {
   // === THÊM DÒNG NÀY ===
   voucherStats: null,
 };
-const BASE_URL = "http://localhost:8089";
+// const BASE_URL = "http://localhost:8089";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080";
 // ==================== ASYNC THUNKS ====================
 
 /** Lấy toàn bộ voucher từ voucher-service (Admin) */

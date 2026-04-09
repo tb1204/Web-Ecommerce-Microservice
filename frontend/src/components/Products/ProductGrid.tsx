@@ -637,7 +637,7 @@ const ProductGrid: React.FC<ProductCardProps> = ({
   const dispatch = useAppDispatch();
   const { getToken } = useAuth();
   const navigate = useNavigate();
-
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   //Them sao
   //  State để quản lý danh sách sản phẩm kèm Rating thực tế
   const [displayProducts, setDisplayProducts] = useState<Product[]>(products);
@@ -652,9 +652,12 @@ const ProductGrid: React.FC<ProductCardProps> = ({
     const fetchRatings = async () => {
       try {
         const productIds = products.map((p) => p.id || (p as any)._id);
-        
+
         // Gọi tới API Batch vừa viết ở Backend
-        const response = await axios.post("http://localhost:8088/api/reviews/ratings/batch", productIds);
+        const response = await axios.post(
+          `${BASE_URL}/api/reviews/ratings/batch`,
+          productIds,
+        );
         const ratingMap = response.data;
 
         // Trộn dữ liệu Rating vào danh sách sản phẩm hiện tại
@@ -697,7 +700,7 @@ const ProductGrid: React.FC<ProductCardProps> = ({
 
     if (!availableVariant?.variantId) {
       // toast.error("Sản phẩm chưa có biến thể, vui lòng xem chi tiết!");
-       toast.info("📌 Vui lòng chọn kích thước trước khi thêm vào giỏ!")
+      toast.info("📌 Vui lòng chọn kích thước trước khi thêm vào giỏ!");
       navigate(`/product/${product.id}`);
       return;
     }

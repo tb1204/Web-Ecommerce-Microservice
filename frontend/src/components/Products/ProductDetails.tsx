@@ -446,7 +446,8 @@ import { useAuth } from "@clerk/clerk-react";
 import axios from "axios";
 import type { Product, ProductVariant } from "../Products/InterfaceItem";
 
-const BASE_URL = "http://localhost:8082";
+// const BASE_URL = "http://localhost:8082";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const mapProduct = (p: any): Product => {
   const discountVariant = p.variants?.find(
@@ -532,10 +533,10 @@ const ProductDetails = () => {
           null;
         setSelectedVariant(firstAvailable);
 
-        // ✅ Lấy rating thực tế từ ReviewService (port 8088)
+        // ✅ Lấy rating thực tế từ ReviewService
         try {
           const ratingRes = await axios.post(
-            "http://localhost:8088/api/reviews/ratings/batch",
+            `${BASE_URL}/api/reviews/ratings/batch`,
             [mapped.id],
           );
           const ratingData = ratingRes.data[mapped.id];
@@ -556,7 +557,9 @@ const ProductDetails = () => {
           const similarRes = await axios.get(
             `${BASE_URL}/api/products/parent-category/${res.data.category.parentCode}`,
           );
-          const mappedSimilar = similarRes.data
+          // ✅ Đảm bảo data là array trước khi .map().filter() — tránh lỗi "a.filter is not a function"
+          const rawData = Array.isArray(similarRes.data) ? similarRes.data : [];
+          const mappedSimilar = rawData
             .map(mapProduct)
             .filter((p: Product) => p.id !== mapped.id)
             .slice(0, 6);

@@ -166,7 +166,10 @@ public class UserService {
 
         try {
             String idsParam = String.join(",", productIds);
-            String url = "http://localhost:8082/api/products/by-ids?ids=" + idsParam;
+
+            //gọi qua eruka 
+            String url = "http://product-service/api/products/by-ids?ids=" + idsParam;
+            // String url = "http://localhost:8082/api/products/by-ids?ids=" + idsParam;  gọi local
 
             ResponseEntity<List<Map<String, Object>>> response = restTemplate.exchange(
                     url, HttpMethod.GET, null,
@@ -229,4 +232,102 @@ public class UserService {
         LocalDateTime thirtyDaysAgo = LocalDateTime.now().minusDays(7);
         return userRepository.countByCreatedAtAfter(thirtyDaysAgo);
     }
+
+    // ================== ADDRESS MANAGEMENT ==================
+
+    /**
+     * Thêm địa chỉ mới (tối đa 4 địa chỉ/user).
+     * Nếu là địa chỉ đầu tiên thì tự động set default.
+     */
+    public List<com.b2204925.userservice.entity.Address> addAddress(
+            String clerkId,
+            com.b2204925.userservice.entity.Address address) {
+
+        User user = getUserOrThrow(clerkId);
+        if (user.getAddresses() == null) {
+            user.setAddresses(new ArrayList<>());
+        }
+        if (user.getAddresses().size() >= 4) {
+            throw new RuntimeException("Tối đa 4 địa chỉ mỗi tài khoản.");
+        }
+        address.setId(java.util.UUID.randomUUID().toString());
+        if (user.getAddresses().isEmpty()) {
+            address.setDefaultAddress(true);
+        }
+        user.getAddresses().add(address);
+        user.setUpdatedAt(Instant.now());
+        userRepository.save(user);
+        return user.getAddresses();
+    }
+
+    /**
+     * Xoá địa chỉ theo id.
+     * Nếu xoá địa chỉ default thì set địa chỉ đầu tiên còn lại làm default.
+     */
+    public List<com.b2204925.userservice.entity.Address> removeAddress(
+            String clerkId, String addressId) {
+
+        User user = getUserOrThrow(clerkId);
+        boolean wasDefault = user.getAddresses().stream()
+                .anyMatch(a -> addressId.equals(a.getId()) && a.isDefaultAddress());
+        user.getAddresses().removeIf(a -> addressId.equals(a.getId()));
+        if (wasDefault && !user.getAddresses().isEmpty()) {
+            user.getAddresses().get(0).setDefaultAddress(true);
+        }
+        user.setUpdatedAt(Instant.now());
+        userRepository.save(user);
+        return user.getAddresses();
+    }
+
+    /**
+     * Set địa chỉ mặc định theo id.
+     */
+    public List<com.b2204925.userservice.entity.Address> setDefaultAddress(
+            String clerkId, String addressId) {
+
+        User user = getUserOrThrow(clerkId);
+        user.getAddresses().forEach(a -> a.setDefaultAddress(addressId.equals(a.getId())));
+        user.setUpdatedAt(Instant.now());
+        userRepository.save(user);
+        return user.getAddresses();
+    }
+
+    /**
+     * Lưu địa chỉ từ Checkout.
+     * - Chỉ lưu nếu chưa có địa chỉ trùng (street + province) và chưa đủ 4.
+     * - Cập nhật phone nếu user chưa có.
+     */
+    public User saveCheckoutAddress(
+            String clerkId,
+            com.b2204925.userservice.entity.Address address,
+            String phone) {
+
+        User user = getUserOrThrow(clerkId);
+
+        // Cập nhật phone nếu chưa có
+        if ((user.getPhone() == null || user.getPhone().isBlank())
+                && phone != null && !phone.isBlank()) {
+            user.setPhone(phone);
+        }
+
+        // Kiểm tra xem địa chỉ đã tồn tại chưa (theo street + province)
+        boolean exists = user.getAddresses().stream().anyMatch(a ->
+                address.getStreet() != null &&
+                address.getStreet().equalsIgnoreCase(a.getStreet()) &&
+                address.getProvince() != null &&
+                address.getProvince().equalsIgnoreCase(a.getProvince()));
+
+        if (!exists && user.getAddresses().size() < 4) {
+            address.setId(java.util.UUID.randomUUID().toString());
+            if (user.getAddresses().isEmpty()) {
+                address.setDefaultAddress(true);
+            }
+            user.getAddresses().add(address);
+        }
+
+        user.setUpdatedAt(Instant.now());
+        userRepository.save(user);
+        return user;
+    }
 }
+

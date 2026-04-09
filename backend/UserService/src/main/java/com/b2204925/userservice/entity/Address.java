@@ -9,12 +9,14 @@ import lombok.Setter;
 @Setter
 public class Address {
 
+    private String id; // UUID để frontend identify địa chỉ
     private String receiverName;
     private String phone;
     private String street;
     private String ward;
-    private String district; //cho null
+    private String district;
     private String province;
+
     @JsonProperty("isDefault")
     private boolean defaultAddress;
 }

@@ -23,7 +23,8 @@ import { useAuth } from "@clerk/clerk-react";
 
 const AdminOrderPage = () => {
   const { getToken } = useAuth();
-  const ORDER_API_URL = "http://localhost:8084";
+  // const BASE_URL = "http://localhost:8084";
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -50,12 +51,10 @@ const AdminOrderPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const ordersPerPage = 6;
 
-  
   const fetchOrders = async () => {
     setLoading(true);
     try {
-
-      const response = await axios.get(`${ORDER_API_URL}/api/orders/all`);
+      const response = await axios.get(`${BASE_URL}/api/orders/all`);
       if (response.status === 200) {
         setOrders(response.data);
       }
@@ -71,12 +70,11 @@ const AdminOrderPage = () => {
     fetchOrders();
   }, []);
 
-  
   // const handleStatusChange = async (id: string, newStatus: string) => {
   //   try {
   //     // Khớp với @PatchMapping("/status/{id}") @RequestParam String status ở Backend
   //     const response = await axios.patch(
-  //       `${ORDER_API_URL}/api/orders/status/${id}?status=${newStatus}`,
+  //       `${BASE_URL}/api/orders/status/${id}?status=${newStatus}`,
   //     );
 
   //     if (response.status === 200) {
@@ -101,11 +99,11 @@ const AdminOrderPage = () => {
 
   //   try {
   //     if (newStatus === "CANCELLED") {
-  //         await axios.put(`${ORDER_API_URL}/api/orders/cancel/${id}`, { cancelReason: reason });
+  //         await axios.put(`${BASE_URL}/api/orders/cancel/${id}`, { cancelReason: reason });
   //     } else {
-  //         await axios.patch(`${ORDER_API_URL}/api/orders/status/${id}?status=${newStatus}`);
+  //         await axios.patch(`${BASE_URL}/api/orders/status/${id}?status=${newStatus}`);
   //     }
-      
+
   //     fetchOrders();
   //     toast.success(`Cập nhật thành công!`);
   //   } catch (error: any) {
@@ -115,8 +113,12 @@ const AdminOrderPage = () => {
   const handleStatusChange = async (id: string, newStatus: string) => {
     let reason = "";
     if (newStatus === "CANCELLED") {
-      reason = window.prompt("Vui lòng nhập lý do hủy đơn hàng:", "Khách hàng đổi ý") || "";
-      if (reason === null) return; 
+      reason =
+        window.prompt(
+          "Vui lòng nhập lý do hủy đơn hàng:",
+          "Khách hàng đổi ý",
+        ) || "";
+      if (reason === null) return;
     }
 
     // 1. Lấy Token "giấy thông hành" từ Clerk
@@ -125,19 +127,27 @@ const AdminOrderPage = () => {
     try {
       // 2. Tạo cấu hình Header có chứa Token
       const config = {
-        headers: { 
-          Authorization: `Bearer ${token}` 
-        }
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       };
 
       if (newStatus === "CANCELLED") {
-          // Gửi bằng PUT kèm body và config (headers)
-          await axios.put(`${ORDER_API_URL}/api/orders/cancel/${id}`, { cancelReason: reason }, config);
+        // Gửi bằng PUT kèm body và config (headers)
+        await axios.put(
+          `${BASE_URL}/api/orders/cancel/${id}`,
+          { cancelReason: reason },
+          config,
+        );
       } else {
-          // Gửi bằng PATCH kèm config (headers)
-          await axios.patch(`${ORDER_API_URL}/api/orders/status/${id}?status=${newStatus}`, {}, config);
+        // Gửi bằng PATCH kèm config (headers)
+        await axios.patch(
+          `${BASE_URL}/api/orders/status/${id}?status=${newStatus}`,
+          {},
+          config,
+        );
       }
-      
+
       fetchOrders();
       toast.success(`Cập nhật thành công!`);
     } catch (error: any) {
@@ -187,23 +197,33 @@ const AdminOrderPage = () => {
   //     toast.error("Không thể cập nhật trạng thái thanh toán!");
   //   }
   // };
-  const handleConfirmPayment = async ( orderId: string) => { // Nhận thêm orderId
+  const handleConfirmPayment = async (orderId: string) => {
+    // Nhận thêm orderId
     const token = await getToken({ template: "my-backend" });
 
     try {
       await axios.patch(
         //  ĐỔI TẠI ĐÂY: Dùng orderId thay vì orderNumber
-        `http://localhost:8085/api/payments/order/${orderId}/confirm-cod`, 
+        `${BASE_URL}/api/payments/order/${orderId}/confirm-cod`,
         {},
         {
-          headers: { Authorization: `Bearer ${token}` }
-        }
+          headers: { Authorization: `Bearer ${token}` },
+        },
       );
       toast.success("Xác nhận thanh toán thành công!");
       fetchOrders();
-    } catch (error) {
-      console.error("Lỗi:", error.response?.data);
-      toast.error("Lỗi: " + (error.response?.data?.message || "Không thể cập nhật"));
+    } catch (error: unknown) {
+      console.error("Lỗi:", error);
+
+      if (error && typeof error === "object" && "response" in error) {
+        const err = error as any;
+        console.error("Lỗi:", err.response?.data);
+        toast.error(
+          "Lỗi: " + (err.response?.data?.message || "Không thể cập nhật"),
+        );
+      } else {
+        toast.error("Đã xảy ra lỗi không xác định");
+      }
     }
   };
 
@@ -426,7 +446,7 @@ const AdminOrderPage = () => {
                             {order.customerInfo.name}
                           </span>
                           <span className="text-[10px] text-gray-400 font-bold mt-1 uppercase tracking-tighter">
-                            {order.customerInfo.phone} 
+                            {order.customerInfo.phone}
                           </span>
                         </div>
                       </div>
@@ -454,7 +474,7 @@ const AdminOrderPage = () => {
                           {order.payment.status === "PAID" ? "Đã thanh toán" : 
                           order.payment.status === "REFUNDED" ? "Đã hoàn tiền" : "Chưa trả"}
                         </span> */}
-                        
+
                         {/* HIỆN NÚT XÁC NHẬN COD: Nếu là COD và chưa trả tiền
                         {order.payment.method === "CASH" && order.payment.status === "UNPAID" && order.orderStatus === "DELIVERED" && (
                           <button 
@@ -470,47 +490,63 @@ const AdminOrderPage = () => {
                           // 2. Thanh toán đã thất bại (FAILED) hoặc đơn đã bị hủy (CANCELLED)
                           // 3. Phương thức thanh toán là VNPAY (Vì VNPAY phải để hệ thống tự chạy)
                           disabled={
-                            ["PAID", "REFUNDED", "FAILED", "CANCELLED"].includes(order.payment.status) || 
+                            [
+                              "PAID",
+                              "REFUNDED",
+                              "FAILED",
+                              "CANCELLED",
+                            ].includes(order.payment.status) ||
                             order.payment.method === "VNPAY"
                           }
                           value={order.payment.status}
                           onChange={(e) => {
                             if (e.target.value === "PAID") {
                               // Dùng order.id (hoặc order._id) để Backend dễ tìm record nhé Bằng
-                              handleConfirmPayment(order.id); 
+                              handleConfirmPayment(order.id);
                             }
                           }}
                           className={`w-[140px] px-2 py-2 rounded-xl text-[10px] font-black uppercase border-2 outline-none transition-all shadow-sm text-center ${
-                            order.payment.status === "PAID" 
-                              ? "bg-blue-50 text-blue-600 border-blue-100 cursor-not-allowed" 
+                            order.payment.status === "PAID"
+                              ? "bg-blue-50 text-blue-600 border-blue-100 cursor-not-allowed"
                               : order.payment.status === "REFUNDED"
-                              ? "bg-pink-50 text-pink-600 border-pink-100 cursor-not-allowed"
-                              : order.payment.status === "FAILED" || order.payment.status === "CANCELLED"
-                              ? "bg-gray-100 text-gray-500 border-gray-200 cursor-not-allowed"
-                              : "bg-red-50 text-red-600 border-red-100 hover:border-red-300 cursor-pointer"
+                                ? "bg-pink-50 text-pink-600 border-pink-100 cursor-not-allowed"
+                                : order.payment.status === "FAILED" ||
+                                    order.payment.status === "CANCELLED"
+                                  ? "bg-gray-100 text-gray-500 border-gray-200 cursor-not-allowed"
+                                  : "bg-red-50 text-red-600 border-red-100 hover:border-red-300 cursor-pointer"
                           }`}
                         >
                           {/* Luôn hiện trạng thái hiện tại */}
                           <option value="PENDING">Chờ thanh toán</option>
                           <option value="PAID">Đã thanh toán</option>
-                          
+
                           {/* Các option đặc biệt chỉ hiện khi đơn hàng đang ở chính trạng thái đó */}
-                          {order.payment.status === "FAILED" && <option value="FAILED">Thanh toán lỗi</option>}
-                          {order.payment.status === "CANCELLED" && <option value="CANCELLED">Đã hủy</option>}
-                          {order.payment.status === "REFUNDED" && <option value="REFUNDED">Đã hoàn tiền</option>}
+                          {order.payment.status === "FAILED" && (
+                            <option value="FAILED">Thanh toán lỗi</option>
+                          )}
+                          {order.payment.status === "CANCELLED" && (
+                            <option value="CANCELLED">Đã hủy</option>
+                          )}
+                          {order.payment.status === "REFUNDED" && (
+                            <option value="REFUNDED">Đã hoàn tiền</option>
+                          )}
                         </select>
 
                         {/* Nhãn hiển thị phương thức thanh toán */}
                         <div className="flex flex-col items-center">
                           <span className="text-[9px] text-gray-400 font-bold uppercase mt-1">
-                            {order.payment.method === "COD" ? "Tiền mặt (COD)" : "VNPAY Online"}
+                            {order.payment.method === "COD"
+                              ? "Tiền mặt (COD)"
+                              : "VNPAY Online"}
                           </span>
                           {/* Gợi ý thêm: hiện cái note nhỏ nếu là VNPAY để Admin biết tại sao bị khóa */}
-                          {order.payment.method === "VNPAY" && order.payment.status === "PENDING" && (
-                            <span className="text-[8px] text-orange-400 italic font-medium">Đợi hệ thống...</span>
-                          )}
+                          {order.payment.method === "VNPAY" &&
+                            order.payment.status === "PENDING" && (
+                              <span className="text-[8px] text-orange-400 italic font-medium">
+                                Đợi hệ thống...
+                              </span>
+                            )}
                         </div>
-
                       </div>
                     </td>
                     <td className="px-6 py-4 text-center">

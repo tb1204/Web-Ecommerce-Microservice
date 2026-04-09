@@ -98,6 +98,10 @@ public class SecurityConfig {
                         org.springframework.http.HttpMethod.POST,
                         "/api/payments"
                 ).permitAll()
+                .requestMatchers(
+                        org.springframework.http.HttpMethod.PATCH,
+                        "/api/payments/order/*/confirm-cod"
+                ).permitAll()
                 // Tất cả còn lại cần auth
                 .anyRequest().authenticated()
                 )

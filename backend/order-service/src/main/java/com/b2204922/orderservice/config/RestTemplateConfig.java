@@ -1,7 +1,7 @@
 package com.b2204922.orderservice.config;
 
 //import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-//import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,8 +11,9 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class RestTemplateConfig {
+
     @Bean
-//    @LoadBalanced
+    @LoadBalanced // chạy eruka
     public RestTemplate loadBalancedRestTemplate() {
         // Khởi tạo factory của Apache HttpClient 5 để hỗ trợ PATCH
         HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();

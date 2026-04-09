@@ -6,7 +6,7 @@ export const selectFilteredProducts = (state: RootState) => {
   return products.filter((p) => {
     const matchName =
       p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (p.sku ?? "").toLowerCase().includes(searchTerm.toLowerCase());
+      ((p as any).sku ?? "").toLowerCase().includes(searchTerm.toLowerCase());
     const matchCat =
       selectedCategory === "all" || p.category?.code === selectedCategory;
     return matchName && matchCat;

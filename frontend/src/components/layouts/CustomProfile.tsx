@@ -14,7 +14,8 @@ import {
 import { toast } from "sonner";
 
 const CustomProfile = () => {
-  const BASE_URL = "http://localhost:8081";
+  // const BASE_URL = "http://localhost:8081";
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const { isLoaded, isSignedIn, user } = useUser();
   const { signOut } = useClerk();
   const { getToken } = useAuth();
@@ -25,10 +26,7 @@ const CustomProfile = () => {
   const [phone, setPhone] = useState("");
   const [gender, setGender] = useState("");
   const [membership, setMembership] = useState("Member");
-  const [addresses, setAddresses] = useState<
-    { id: string; value: string; isDefault: boolean }[]
-  >([]);
-  const [newAddress, setNewAddress] = useState("");
+  const [addresses, setAddresses] = useState<any[]>([]);
   const [loadingProfile, setLoadingProfile] = useState(true);
 
   const [currentPassword, setCurrentPassword] = useState("");
@@ -201,17 +199,34 @@ const CustomProfile = () => {
     }
   };
 
-  const addAddress = () => {
-    if (!newAddress.trim()) return;
-    setAddresses([
-      ...addresses,
-      {
-        id: Date.now().toString(),
-        value: newAddress,
-        isDefault: addresses.length === 0,
-      },
-    ]);
-    setNewAddress("");
+  const handleSetDefault = async (addrId: string) => {
+    try {
+      const token = await getToken({ template: "my-backend" });
+      const res = await axios.put(
+        `${BASE_URL}/api/users/me/addresses/${addrId}/default`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } },
+      );
+      setAddresses(res.data);
+      toast.success("Đã đặt địa chỉ mặc định!");
+    } catch {
+      toast.error("Không thể thay đổi địa chỉ mặc định.");
+    }
+  };
+
+  const handleDeleteAddress = async (addrId: string) => {
+    if (!window.confirm("Đồng ý xóa địa chỉ này?")) return;
+    try {
+      const token = await getToken({ template: "my-backend" });
+      const res = await axios.delete(
+        `${BASE_URL}/api/users/me/addresses/${addrId}`,
+        { headers: { Authorization: `Bearer ${token}` } },
+      );
+      setAddresses(res.data);
+      toast.success("Đã xóa địa chỉ!");
+    } catch {
+      toast.error("Không thể xóa địa chỉ.");
+    }
   };
 
   const handleDeleteAccount = async () => {
@@ -240,7 +255,7 @@ const CustomProfile = () => {
             <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-white/10 blur-3xl rounded-full" />
             <div className="absolute top-10 right-10 w-64 h-64 bg-emerald-400/20 blur-3xl rounded-full" />
           </div>
-          
+
           <div className="px-6 md:px-12 pb-10 pt-0 flex flex-col md:flex-row items-center md:items-end gap-6 md:gap-8 relative">
             {/* Avatar overlapping */}
             <div className="relative -mt-20 md:-mt-24 group z-10 w-36 h-36 md:w-44 md:h-44">
@@ -259,7 +274,7 @@ const CustomProfile = () => {
                 />
               </label>
             </div>
-            
+
             {/* Info */}
             <div className="text-center md:text-left md:mb-3 flex-1">
               <h1 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white tracking-tight">
@@ -269,7 +284,7 @@ const CustomProfile = () => {
                 <FiMail /> {user?.primaryEmailAddress?.emailAddress}
               </p>
             </div>
-            
+
             <div className="mt-2 md:mt-0 md:mb-5">
               <span
                 className={`inline-flex items-center px-5 py-2.5 rounded-full text-xs font-black uppercase tracking-widest shadow-sm ${getTierBadgeClass(membership)}`}
@@ -283,7 +298,6 @@ const CustomProfile = () => {
         <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
           {/* Left Col: Info + Address */}
           <div className="xl:col-span-7 space-y-8">
-            
             {/* Basic Info */}
             <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-[32px] p-8 md:p-10 shadow-sm border border-white/20 dark:border-gray-700/50 shadow-gray-200/50 dark:shadow-black/30 relative overflow-hidden group">
               <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/5 blur-3xl rounded-full group-hover:bg-emerald-500/10 transition-colors duration-700 pointer-events-none" />
@@ -342,24 +356,13 @@ const CustomProfile = () => {
                   Sổ địa chỉ
                 </h2>
               </div>
-              <div className="flex flex-col sm:flex-row gap-3 mb-8 relative z-10">
-                <input
-                  value={newAddress}
-                  onChange={(e) => setNewAddress(e.target.value)}
-                  placeholder="Thêm địa chỉ giao hàng mới..."
-                  className="flex-1 px-5 py-4 bg-gray-50/50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 rounded-2xl focus:bg-white dark:focus:bg-gray-800 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all text-sm font-semibold shadow-sm"
-                />
-                <button
-                  onClick={addAddress}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 sm:py-0 rounded-2xl font-bold text-sm transition-all shadow-lg shadow-blue-600/20 active:scale-95"
-                >
-                  Thêm địa chỉ
-                </button>
-              </div>
               <div className="space-y-4 relative z-10">
                 {addresses.length === 0 && (
                   <div className="py-8 text-center text-gray-400 dark:text-gray-500 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-2xl">
-                    Chưa có địa chỉ nào được lưu
+                    <p>Chưa có địa chỉ nào được lưu</p>
+                    <p className="text-xs mt-1 text-gray-300 dark:text-gray-600">
+                      Địa chỉ sẽ tự động lưu khi bạn đặt hàng
+                    </p>
                   </div>
                 )}
                 {addresses.map((addr) => (
@@ -373,9 +376,18 @@ const CustomProfile = () => {
                       </div>
                       <div>
                         <p className="text-sm font-medium text-gray-800 dark:text-gray-200 leading-relaxed">
-                          {addr.value}
+                          {addr.street}
+                          {addr.ward ? `, ${addr.ward}` : ""}
+                          {addr.province ? `, ${addr.province}` : ""}
                         </p>
-                        {addr.isDefault && (
+                        {(addr.receiverName || addr.phone) && (
+                          <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                            {addr.receiverName}
+                            {addr.receiverName && addr.phone ? " — " : ""}
+                            {addr.phone}
+                          </p>
+                        )}
+                        {(addr.isDefault || addr.defaultAddress) && (
                           <span className="inline-block mt-2.5 bg-blue-100/80 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300 text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full border border-blue-200/50 dark:border-blue-700/50">
                             Mặc định
                           </span>
@@ -383,27 +395,16 @@ const CustomProfile = () => {
                       </div>
                     </div>
                     <div className="flex items-center gap-3 self-end sm:self-center opacity-100 sm:opacity-0 sm:group-hover/addr:opacity-100 transition-opacity">
-                      {!addr.isDefault && (
+                      {!(addr.isDefault || addr.defaultAddress) && (
                         <button
-                          onClick={() =>
-                            setAddresses(
-                              addresses.map((a) => ({
-                                ...a,
-                                isDefault: a.id === addr.id,
-                              })),
-                            )
-                          }
+                          onClick={() => handleSetDefault(addr.id)}
                           className="text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                         >
                           Làm mặc định
                         </button>
                       )}
                       <button
-                        onClick={() =>
-                          setAddresses(
-                            addresses.filter((a) => a.id !== addr.id),
-                          )
-                        }
+                        onClick={() => handleDeleteAddress(addr.id)}
                         className="w-10 h-10 flex items-center justify-center rounded-xl bg-red-50 dark:bg-red-900/20 text-red-500 hover:bg-red-500 hover:text-white transition-all shadow-sm"
                       >
                         <FiTrash2 size={16} />
@@ -417,7 +418,6 @@ const CustomProfile = () => {
 
           {/* Right Col: Security */}
           <div className="xl:col-span-5 space-y-8">
-            
             {/* Email */}
             <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-[32px] p-8 md:p-10 shadow-sm border border-white/20 dark:border-gray-700/50 shadow-gray-200/50 dark:shadow-black/30 relative overflow-hidden group">
               <div className="absolute top-0 right-0 w-48 h-48 bg-orange-500/5 blur-3xl rounded-full group-hover:bg-orange-500/10 transition-colors duration-700 pointer-events-none" />
@@ -444,7 +444,7 @@ const CustomProfile = () => {
                 >
                   Gửi mã OTP xác thực
                 </button>
-                
+
                 {verificationStep && (
                   <div className="mt-6 p-5 sm:p-6 bg-orange-50/80 dark:bg-orange-900/10 rounded-[24px] border border-orange-200 dark:border-orange-900/50">
                     <p className="text-[11px] uppercase tracking-widest text-orange-700 dark:text-orange-400 mb-4 font-black">

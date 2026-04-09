@@ -1,12 +1,31 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
-  DollarSign, ShoppingBag, Users, TrendingUp,
-  AlertTriangle, XCircle, Printer, Clock, PackageCheck, PackageOpen, ArrowUpRight
+  DollarSign,
+  ShoppingBag,
+  Users,
+  TrendingUp,
+  AlertTriangle,
+  XCircle,
+  Printer,
+  Clock,
+  PackageCheck,
+  PackageOpen,
+  ArrowUpRight,
 } from "lucide-react";
 import {
-  XAxis, YAxis, CartesianGrid, Tooltip,
-  ResponsiveContainer, AreaChart, Area,
-  PieChart, Pie, Cell, Legend, BarChart, Bar
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  AreaChart,
+  Area,
+  PieChart,
+  Pie,
+  Cell,
+  Legend,
+  BarChart,
+  Bar,
 } from "recharts";
 import { useReactToPrint } from "react-to-print";
 import axios from "axios";
@@ -48,14 +67,20 @@ interface RevenueGrowthStat {
 // }
 
 const AdminStatisticalPage: React.FC = () => {
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const [loading, setLoading] = useState<boolean>(true);
   // const [timeFilter, setTimeFilter] = useState<"day" | "week" | "month">("day");
   const [startDate, setStartDate] = useState<string>("");
   const [endDate, setEndDate] = useState<string>("");
   const reportRef = useRef<HTMLDivElement>(null);
   const [totalRevenue, setTotalRevenue] = useState<number>(0);
-  const [orderStats, setOrderStats] = useState({ 
-    total: 0, pending: 0, shipping: 0, delivered: 0, cancelled: 0,processing: 0 
+  const [orderStats, setOrderStats] = useState({
+    total: 0,
+    pending: 0,
+    shipping: 0,
+    delivered: 0,
+    cancelled: 0,
+    processing: 0,
   });
   const [categoryData, setCategoryData] = useState<CategoryStat[]>([]);
   const [userStats, setUserStats] = useState({ totalUsers: 0, newUsers: 0 });
@@ -65,7 +90,7 @@ const AdminStatisticalPage: React.FC = () => {
   const [lowStock, setLowStock] = useState<InventoryStat[]>([]);
   const [revenueGrowth, setRevenueGrowth] = useState<RevenueGrowthStat[]>([]);
 
-  const formatDate = (date: Date) => date.toISOString().split('T')[0];
+  const formatDate = (date: Date) => date.toISOString().split("T")[0];
 
   const getStartOfThisMonth = () => {
     const now = new Date();
@@ -87,7 +112,6 @@ const AdminStatisticalPage: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  
   const handlePrint = useReactToPrint({
     contentRef: reportRef,
     documentTitle: `Bao_cao_Artisano_${new Date().toLocaleDateString()}`,
@@ -96,7 +120,9 @@ const AdminStatisticalPage: React.FC = () => {
   useEffect(() => {
     const fetchRevenue = async () => {
       try {
-        const response = await axios.get("http://localhost:8084/api/orders/statistics/total-revenue");
+        const response = await axios.get(
+          `${BASE_URL}/api/orders/statistics/total-revenue`,
+        );
         setTotalRevenue(response.data);
       } catch (error) {
         console.error("Lỗi lấy doanh thu:", error);
@@ -107,12 +133,14 @@ const AdminStatisticalPage: React.FC = () => {
 
   useEffect(() => {
     const fetchOrderCounts = async () => {
-    try {
-      const response = await axios.get("http://localhost:8084/api/orders/statistics/order-counts");
-      setOrderStats(response.data);
-    } catch (error) {
-      console.error("Lỗi lấy số lượng đơn hàng:", error);
-    }
+      try {
+        const response = await axios.get(
+          `${BASE_URL}/api/orders/statistics/order-counts`,
+        );
+        setOrderStats(response.data);
+      } catch (error) {
+        console.error("Lỗi lấy số lượng đơn hàng:", error);
+      }
     };
     fetchOrderCounts();
   }, []);
@@ -120,26 +148,30 @@ const AdminStatisticalPage: React.FC = () => {
   useEffect(() => {
     const fetchUserStats = async () => {
       try {
-        const response = await axios.get("http://localhost:8081/api/users/statistics/user-counts");
+        const response = await axios.get(
+          `${BASE_URL}/api/users/statistics/user-counts`,
+        );
         setUserStats(response.data);
       } catch (error) {
         console.error("Lỗi lấy thống kê người dùng:", error);
       }
     };
     fetchUserStats();
-  }, [])
+  }, []);
 
   useEffect(() => {
     const fetchCategoryRevenue = async () => {
       try {
         // Gọi API từ Order Service (Port 8084)
-        const response = await axios.get("http://localhost:8084/api/orders/statistics/revenue-by-category");
+        const response = await axios.get(
+          `${BASE_URL}/api/orders/statistics/revenue-by-category`,
+        );
         const colors = ["#059669", "#10b981", "#34d399", "#6ee7b7", "#a7f3d0"];
-        
+
         const formattedData = response.data.map((item: any, index: number) => ({
           name: item.name,
           giaTri: item.giaTri,
-          color: colors[index % colors.length] 
+          color: colors[index % colors.length],
         }));
 
         setCategoryData(formattedData);
@@ -154,8 +186,8 @@ const AdminStatisticalPage: React.FC = () => {
     const fetchProductStats = async () => {
       try {
         const [sellRes, cancelRes] = await Promise.all([
-          axios.get("http://localhost:8084/api/orders/statistics/top-selling"),
-          axios.get("http://localhost:8084/api/orders/statistics/most-cancelled")
+          axios.get(`${BASE_URL}/api/orders/statistics/top-selling`),
+          axios.get(`${BASE_URL}/api/orders/statistics/most-cancelled`),
         ]);
         setTopSelling(sellRes.data);
         setMostCancelled(cancelRes.data);
@@ -171,8 +203,8 @@ const AdminStatisticalPage: React.FC = () => {
       try {
         // Port 8082 là của Product Service của Bằng đúng không?
         const [highRes, lowRes] = await Promise.all([
-          axios.get("http://localhost:8082/api/products/statistics/high-stock"),
-          axios.get("http://localhost:8082/api/products/statistics/low-stock")
+          axios.get(`${BASE_URL}/api/products/statistics/high-stock`),
+          axios.get(`${BASE_URL}/api/products/statistics/low-stock`),
         ]);
         setHighStock(highRes.data);
         setLowStock(lowRes.data);
@@ -186,11 +218,11 @@ const AdminStatisticalPage: React.FC = () => {
   useEffect(() => {
     const fetchGrowth = async () => {
       // Chỉ gọi khi có đủ cả 2 ngày
-      if (!startDate || !endDate) return; 
+      if (!startDate || !endDate) return;
 
       try {
         const response = await axios.get(
-          `http://localhost:8084/api/orders/statistics/revenue-growth?start=${startDate}&end=${endDate}`
+          `${BASE_URL}/api/orders/statistics/revenue-growth?start=${startDate}&end=${endDate}`,
         );
         setRevenueGrowth(response.data);
       } catch (error) {
@@ -233,11 +265,11 @@ const AdminStatisticalPage: React.FC = () => {
   // Hàm tính toán ngày để gửi lên API
 
   const statusData = [
-  { name: "Chờ xác nhận", value: orderStats.pending, color: "#f59e0b" },
-  { name: "Đang đóng gói", value: orderStats.processing, color: "#3b82f6" },
-  { name: "Đang giao hàng", value: orderStats.shipping, color: "#8b5cf6" },
-  { name: "Đã giao hàng", value: orderStats.delivered, color: "#10b981" },
-  { name: "Đã hủy", value: orderStats.cancelled, color: "#ef4444" },
+    { name: "Chờ xác nhận", value: orderStats.pending, color: "#f59e0b" },
+    { name: "Đang đóng gói", value: orderStats.processing, color: "#3b82f6" },
+    { name: "Đang giao hàng", value: orderStats.shipping, color: "#8b5cf6" },
+    { name: "Đã giao hàng", value: orderStats.delivered, color: "#10b981" },
+    { name: "Đã hủy", value: orderStats.cancelled, color: "#ef4444" },
   ];
 
   // const handleQuickSelect = (type: "7days" | "thisMonth" | "lastMonth") => {
@@ -256,7 +288,7 @@ const AdminStatisticalPage: React.FC = () => {
   //       const lastMonthEnd = getEndOfLastMonth();
   //       setStartDate(formatDate(start));
   //       setEndDate(formatDate(lastMonthEnd));
-  //       return; 
+  //       return;
   //   }
 
   //   setStartDate(formatDate(start));
@@ -267,20 +299,20 @@ const AdminStatisticalPage: React.FC = () => {
     let start = new Date();
 
     switch (type) {
-      case "7days": { 
+      case "7days": {
         start.setDate(end.getDate() - 7);
         break;
-      } 
+      }
       case "thisMonth": {
         start = getStartOfThisMonth();
         break;
       }
       case "lastMonth": {
         start = getStartOfLastMonth();
-        const lastMonthEnd = getEndOfLastMonth(); 
+        const lastMonthEnd = getEndOfLastMonth();
         setStartDate(formatDate(start));
         setEndDate(formatDate(lastMonthEnd));
-        return; 
+        return;
       }
     }
     setStartDate(formatDate(start));
@@ -291,15 +323,18 @@ const AdminStatisticalPage: React.FC = () => {
     return (
       <div className="flex flex-col items-center justify-center py-40 bg-gray-50 min-h-screen">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600"></div>
-        <p className="mt-4 text-gray-400 text-[14px] font-black tracking-[3px]">Đang tải dữ liệu...</p>
+        <p className="mt-4 text-gray-400 text-[14px] font-black tracking-[3px]">
+          Đang tải dữ liệu...
+        </p>
       </div>
     );
   }
 
-  
   return (
-    <div className="p-6 bg-gray-50 min-h-screen font-sans text-gray-900" ref={reportRef}>
-      
+    <div
+      className="p-6 bg-gray-50 min-h-screen font-sans text-gray-900"
+      ref={reportRef}
+    >
       {/* HEADER */}
       <div className="flex justify-between items-center mb-8 no-print">
         <div>
@@ -307,34 +342,77 @@ const AdminStatisticalPage: React.FC = () => {
             <TrendingUp className="text-emerald-600" /> Quản lý thống kê
           </h1>
         </div>
-        <button onClick={() => handlePrint()} className="flex items-center gap-2 px-5 py-2.5 bg-emerald-500 text-white rounded-xl hover:bg-emerald-600 transition-all shadow-md active:scale-95">
-          <Printer size={18}/> In báo cáo
+        <button
+          onClick={() => handlePrint()}
+          className="flex items-center gap-2 px-5 py-2.5 bg-emerald-500 text-white rounded-xl hover:bg-emerald-600 transition-all shadow-md active:scale-95"
+        >
+          <Printer size={18} /> In báo cáo
         </button>
       </div>
 
       {/* CHỈ SỐ TỔNG QUAN */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
-        <StatCard title="Tổng doanh thu" value={`${totalRevenue.toLocaleString('vi-VN')} VNĐ`} icon={<DollarSign size={18}/>} color="emerald" />
-        <StatCard title="Tổng đơn hàng" value={orderStats.total.toLocaleString()} icon={<ShoppingBag size={18}/>} color="blue" />
-        <StatCard title="Đang xử lý" value={orderStats.pending.toLocaleString()} icon={<Clock size={18}/>} color="amber" />
-        <StatCard title="Đơn đã hủy" value={orderStats.cancelled.toLocaleString()} icon={<XCircle size={18}/>} color="red" />
-        <StatCard title="Khách hàng" value={userStats.totalUsers.toLocaleString()} icon={<Users size={18}/>} color="indigo" />
-        <StatCard title="Khách mới" value={`+${userStats.newUsers.toLocaleString()}`} icon={<ArrowUpRight size={18}/>} color="emerald" />
+        <StatCard
+          title="Tổng doanh thu"
+          value={`${totalRevenue.toLocaleString("vi-VN")} VNĐ`}
+          icon={<DollarSign size={18} />}
+          color="emerald"
+        />
+        <StatCard
+          title="Tổng đơn hàng"
+          value={orderStats.total.toLocaleString()}
+          icon={<ShoppingBag size={18} />}
+          color="blue"
+        />
+        <StatCard
+          title="Đang xử lý"
+          value={orderStats.pending.toLocaleString()}
+          icon={<Clock size={18} />}
+          color="amber"
+        />
+        <StatCard
+          title="Đơn đã hủy"
+          value={orderStats.cancelled.toLocaleString()}
+          icon={<XCircle size={18} />}
+          color="red"
+        />
+        <StatCard
+          title="Khách hàng"
+          value={userStats.totalUsers.toLocaleString()}
+          icon={<Users size={18} />}
+          color="indigo"
+        />
+        <StatCard
+          title="Khách mới"
+          value={`+${userStats.newUsers.toLocaleString()}`}
+          icon={<ArrowUpRight size={18} />}
+          color="emerald"
+        />
       </div>
 
       {/* BIỂU ĐỒ DOANH THU & TRẠNG THÁI */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
         <div className="lg:col-span-2 bg-white p-8 rounded-[40px] shadow-sm border border-gray-100">
           <div className="flex flex-wrap justify-between items-center mb-8 gap-4">
-            
-            <h3 className="text-base font-black text-gray-800 uppercase tracking-widest italic leading-none">Tăng trưởng doanh thu</h3>
-            
+            <h3 className="text-base font-black text-gray-800 uppercase tracking-widest italic leading-none">
+              Tăng trưởng doanh thu
+            </h3>
+
             <div className="flex items-center gap-3 no-print">
               <div className="flex items-center gap-2 bg-gray-50 p-1.5 rounded-xl border border-gray-100">
-                
-                <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} className="bg-transparent text-[12px] font-bold text-gray-600 outline-none cursor-pointer" />
+                <input
+                  type="date"
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                  className="bg-transparent text-[12px] font-bold text-gray-600 outline-none cursor-pointer"
+                />
                 <span className="text-gray-300">→</span>
-                <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} className="bg-transparent text-[12px] font-bold text-gray-600 outline-none cursor-pointer" />
+                <input
+                  type="date"
+                  value={endDate}
+                  onChange={(e) => setEndDate(e.target.value)}
+                  className="bg-transparent text-[12px] font-bold text-gray-600 outline-none cursor-pointer"
+                />
               </div>
 
               {/* <div className="flex bg-gray-50 p-1 rounded-xl border border-gray-100">
@@ -376,43 +454,84 @@ const AdminStatisticalPage: React.FC = () => {
               <AreaChart data={revenueGrowth}>
                 <defs>
                   <linearGradient id="colorRev" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.2}/>
-                    <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.2} />
+                    <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f3f4f6" />
-                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fontSize: 12, fontWeight: 900}} />
-                <YAxis 
-                  axisLine={false} tickLine={false} tick={{fontSize: 12, fontWeight: 900}} 
-                  tickFormatter={(v) => v.toLocaleString('vi-VN')}
-                  width={90} 
+                <CartesianGrid
+                  strokeDasharray="3 3"
+                  vertical={false}
+                  stroke="#f3f4f6"
                 />
-                <Tooltip 
-                  contentStyle={{ borderRadius: '20px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)', fontSize: '14px' }} 
-                  labelStyle={{ fontWeight: 'bold', color: '#10b981' }}
+                <XAxis
+                  dataKey="name"
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fontSize: 12, fontWeight: 900 }}
                 />
-                <Area type="monotone" dataKey="doanhThu" stroke="#10b981" strokeWidth={5} fill="url(#colorRev)" connectNulls={false} />
+                <YAxis
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fontSize: 12, fontWeight: 900 }}
+                  tickFormatter={(v) => v.toLocaleString("vi-VN")}
+                  width={90}
+                />
+                <Tooltip
+                  contentStyle={{
+                    borderRadius: "20px",
+                    border: "none",
+                    boxShadow: "0 10px 15px -3px rgba(0,0,0,0.1)",
+                    fontSize: "14px",
+                  }}
+                  labelStyle={{ fontWeight: "bold", color: "#10b981" }}
+                />
+                <Area
+                  type="monotone"
+                  dataKey="doanhThu"
+                  stroke="#10b981"
+                  strokeWidth={5}
+                  fill="url(#colorRev)"
+                  connectNulls={false}
+                />
               </AreaChart>
             </ResponsiveContainer>
           </div>
         </div>
 
         <div className="bg-white p-8 rounded-[40px] shadow-sm border border-gray-100 flex flex-col items-center">
-          <h3 className="text-base font-black text-gray-800 uppercase tracking-widest mb-8 italic">Trạng thái đơn hàng</h3>
+          <h3 className="text-base font-black text-gray-800 uppercase tracking-widest mb-8 italic">
+            Trạng thái đơn hàng
+          </h3>
           <div className="h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
-                <Pie data={statusData} innerRadius={70} outerRadius={100} paddingAngle={8} dataKey="value" stroke="none">
+                <Pie
+                  data={statusData}
+                  innerRadius={70}
+                  outerRadius={100}
+                  paddingAngle={8}
+                  dataKey="value"
+                  stroke="none"
+                >
                   {statusData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Pie>
-                <Tooltip 
-                  contentStyle={{ borderRadius: '15px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
+                <Tooltip
+                  contentStyle={{
+                    borderRadius: "15px",
+                    border: "none",
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                  }}
                 />
-                <Legend 
-                verticalAlign="bottom" 
-                wrapperStyle={{ fontSize: '11px', fontWeight: '900', textTransform: 'uppercase', paddingTop: '20px' }} 
+                <Legend
+                  verticalAlign="bottom"
+                  wrapperStyle={{
+                    fontSize: "11px",
+                    fontWeight: "900",
+                    textTransform: "uppercase",
+                    paddingTop: "20px",
+                  }}
                 />
               </PieChart>
             </ResponsiveContainer>
@@ -423,50 +542,62 @@ const AdminStatisticalPage: React.FC = () => {
       {/* DOANH THU THEO DANH MỤC & TOP SẢN PHẨM */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
         <div className="bg-white p-8 rounded-[40px] shadow-sm border border-gray-100">
-           <h3 className="text-base font-black text-gray-800 uppercase tracking-widest mb-8 italic">Doanh thu theo danh mục</h3>
-           <div className="h-[250px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={categoryData} layout="vertical">
-                  <XAxis type="number" hide />
-                  <YAxis dataKey="name" type="category" axisLine={false} tickLine={false} tick={{fontSize: 12, fontWeight: 900}} width={120} />
-                  <Tooltip 
-                      cursor={{fill: 'transparent'}}
-                      formatter={(value: number) => value.toLocaleString('vi-VN') + " VNĐ"}
-                  />
-                  <Bar dataKey="giaTri" radius={[0, 10, 10, 0]} barSize={24}>
-                      {categoryData.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={entry.color} />
-                      ))}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
-           </div>
+          <h3 className="text-base font-black text-gray-800 uppercase tracking-widest mb-8 italic">
+            Doanh thu theo danh mục
+          </h3>
+          <div className="h-[250px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={categoryData} layout="vertical">
+                <XAxis type="number" hide />
+                <YAxis
+                  dataKey="name"
+                  type="category"
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fontSize: 12, fontWeight: 900 }}
+                  width={120}
+                />
+                <Tooltip
+                  cursor={{ fill: "transparent" }}
+                  // formatter={(value: number) => value.toLocaleString('vi-VN') + " VNĐ"}
+                  formatter={(value: number | undefined) =>
+                    (value ?? 0).toLocaleString("vi-VN") + " VNĐ"
+                  }
+                />
+                <Bar dataKey="giaTri" radius={[0, 10, 10, 0]} barSize={24}>
+                  {categoryData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <ProductListCard 
-              title="Bán chạy nhất" 
-              icon={<PackageCheck className="text-emerald-500" size={18}/>}
-              items={topSelling}
-            />
-            <ProductListCard 
-              title="Bị hủy nhiều" 
-              icon={<XCircle className="text-red-400" size={18}/>}
-              items={mostCancelled}
-            />
+          <ProductListCard
+            title="Bán chạy nhất"
+            icon={<PackageCheck className="text-emerald-500" size={18} />}
+            items={topSelling}
+          />
+          <ProductListCard
+            title="Bị hủy nhiều"
+            icon={<XCircle className="text-red-400" size={18} />}
+            items={mostCancelled}
+          />
         </div>
       </div>
 
       {/* TỒN KHO & CẢNH BÁO */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <ProductListCard 
-          title="Tồn kho nhiều" 
-          icon={<PackageOpen className="text-blue-500" size={18}/>}
+        <ProductListCard
+          title="Tồn kho nhiều"
+          icon={<PackageOpen className="text-blue-500" size={18} />}
           items={highStock}
         />
-        <ProductListCard 
-          title="Sắp hết hàng" 
-          icon={<AlertTriangle className="text-red-500" size={18}/>}
+        <ProductListCard
+          title="Sắp hết hàng"
+          icon={<AlertTriangle className="text-red-500" size={18} />}
           items={lowStock}
         />
       </div>
@@ -474,33 +605,55 @@ const AdminStatisticalPage: React.FC = () => {
   );
 };
 
-
-// THẺ CHỈ SỐ 
-const StatCard: React.FC<{ title: string; value: string; icon: React.ReactNode; color: string }> = ({ title, value, icon, color }) => (
+// THẺ CHỈ SỐ
+const StatCard: React.FC<{
+  title: string;
+  value: string;
+  icon: React.ReactNode;
+  color: string;
+}> = ({ title, value, icon, color }) => (
   <div className="bg-white p-5 rounded-3xl border border-gray-100 shadow-sm hover:border-emerald-200 transition-all">
-    <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-3 bg-${color}-50 text-${color}-600`}>
+    <div
+      className={`w-11 h-11 rounded-xl flex items-center justify-center mb-3 bg-${color}-50 text-${color}-600`}
+    >
       {icon}
     </div>
-    <p className="text-[11px] font-black text-gray-400 uppercase tracking-widest leading-none mb-1">{title}</p>
-    <h3 className="text-lg font-black text-gray-800 leading-none truncate italic tracking-tighter">{value}</h3>
+    <p className="text-[11px] font-black text-gray-400 uppercase tracking-widest leading-none mb-1">
+      {title}
+    </p>
+    <h3 className="text-lg font-black text-gray-800 leading-none truncate italic tracking-tighter">
+      {value}
+    </h3>
   </div>
 );
 
-// DANH SÁCH SẢN PHẨM 
-const ProductListCard: React.FC<{ title: string; icon: React.ReactNode; items: ProductStat[] }> = ({ title, icon, items }) => (
+// DANH SÁCH SẢN PHẨM
+const ProductListCard: React.FC<{
+  title: string;
+  icon: React.ReactNode;
+  items: ProductStat[];
+}> = ({ title, icon, items }) => (
   <div className="bg-white p-6 rounded-[32px] shadow-sm border border-gray-100 hover:shadow-md transition-all h-full">
     <div className="flex items-center gap-2 mb-6">
       <div className="p-2 bg-gray-50 rounded-lg">{icon}</div>
-      <h3 className="text-[13px] font-black text-gray-800 uppercase tracking-widest italic leading-none">{title}</h3>
+      <h3 className="text-[13px] font-black text-gray-800 uppercase tracking-widest italic leading-none">
+        {title}
+      </h3>
     </div>
     <div className="space-y-4">
       {items.map((item, idx) => (
         <div key={idx} className="flex justify-between items-center">
           <div className="max-w-[70%]">
-            <p className="text-[13px] font-black text-gray-700 leading-none truncate italic">{item.name}</p>
-            <p className="text-[11px] text-gray-400 font-bold mt-1.5 uppercase italic tracking-tighter leading-none">{item.sub}</p>
+            <p className="text-[13px] font-black text-gray-700 leading-none truncate italic">
+              {item.name}
+            </p>
+            <p className="text-[11px] text-gray-400 font-bold mt-1.5 uppercase italic tracking-tighter leading-none">
+              {item.sub}
+            </p>
           </div>
-          <span className={`text-[11px] font-black px-2.5 py-1 rounded-md ${item.isAlert ? "bg-red-50 text-red-600 animate-pulse" : "bg-emerald-50 text-emerald-600"}`}>
+          <span
+            className={`text-[11px] font-black px-2.5 py-1 rounded-md ${item.isAlert ? "bg-red-50 text-red-600 animate-pulse" : "bg-emerald-50 text-emerald-600"}`}
+          >
             {item.value}
           </span>
         </div>

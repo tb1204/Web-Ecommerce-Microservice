@@ -71,14 +71,16 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({
     description: "",
     imageObjects: [],
   };
-  const PRODUCT_API_URL = "http://localhost:8082";
+  // const BASE_URL = "http://localhost:8082";
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const [formData, setFormData] = useState<ProductFormState>(initialFormState);
   const [categories, setCategories] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchCats = async () => {
       try {
-        const res = await axios.get(`${PRODUCT_API_URL}/api/categories/all`);
+        const res = await axios.get(`${BASE_URL}/api/categories/all`);
         setCategories(res.data);
       } catch (err) {
         console.error("Lỗi lấy danh mục:", err);

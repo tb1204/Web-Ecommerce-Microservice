@@ -62,7 +62,8 @@ interface User {
 }
 
 const AdminUsersPage = () => {
-  const BASE_URL = "http://localhost:8081";
+  // const BASE_URL = "http://localhost:8081";
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const [currentPage, setCurrentPage] = useState(0); // backend dùng 0-based
   const [totalPages, setTotalPages] = useState(0);

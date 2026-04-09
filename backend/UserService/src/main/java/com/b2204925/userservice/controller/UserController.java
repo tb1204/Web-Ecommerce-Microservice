@@ -76,6 +76,68 @@ public ResponseEntity<List<String>> removeFromWishlist(
         return ResponseEntity.ok(stats);
     }
 
-}
+    // ================== ADDRESS ENDPOINTS ==================
 
+    /** POST /api/users/me/addresses — Thêm địa chỉ mới (max 4) */
+    @PostMapping("/me/addresses")
+    public ResponseEntity<?> addAddress(
+            @AuthenticationPrincipal org.springframework.security.oauth2.jwt.Jwt jwt,
+            @RequestBody com.b2204925.userservice.entity.Address address) {
+        try {
+            return ResponseEntity.ok(userService.addAddress(jwt.getSubject(), address));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
+        }
+    }
+
+    /** DELETE /api/users/me/addresses/{addressId} — Xoá địa chỉ theo id */
+    @DeleteMapping("/me/addresses/{addressId}")
+    public ResponseEntity<List<com.b2204925.userservice.entity.Address>> removeAddress(
+            @AuthenticationPrincipal org.springframework.security.oauth2.jwt.Jwt jwt,
+            @PathVariable String addressId) {
+        return ResponseEntity.ok(userService.removeAddress(jwt.getSubject(), addressId));
+    }
+
+    /** PUT /api/users/me/addresses/{addressId}/default — Set địa chỉ mặc định */
+    @PutMapping("/me/addresses/{addressId}/default")
+    public ResponseEntity<List<com.b2204925.userservice.entity.Address>> setDefaultAddress(
+            @AuthenticationPrincipal org.springframework.security.oauth2.jwt.Jwt jwt,
+            @PathVariable String addressId) {
+        return ResponseEntity.ok(userService.setDefaultAddress(jwt.getSubject(), addressId));
+    }
+
+    /**
+     * POST /api/users/me/save-checkout-address
+     * Lưu địa chỉ sau khi đặt hàng thành công.
+     * Body: { address: {...}, phone: "..." }
+     */
+    @PostMapping("/me/save-checkout-address")
+    public ResponseEntity<User> saveCheckoutAddress(
+            @AuthenticationPrincipal org.springframework.security.oauth2.jwt.Jwt jwt,
+            @RequestBody Map<String, Object> body) {
+        try {
+            @SuppressWarnings("unchecked")
+            Map<String, String> addrMap = (Map<String, String>) body.get("address");
+            String phone = (String) body.get("phone");
+
+            com.b2204925.userservice.entity.Address address =
+                    new com.b2204925.userservice.entity.Address();
+            if (addrMap != null) {
+                address.setReceiverName(addrMap.get("receiverName"));
+                address.setPhone(addrMap.get("phone"));
+                address.setStreet(addrMap.get("street"));
+                address.setWard(addrMap.get("ward"));
+                address.setDistrict(addrMap.get("district"));
+                address.setProvince(addrMap.get("province"));
+            }
+
+            return ResponseEntity.ok(
+                    userService.saveCheckoutAddress(jwt.getSubject(), address, phone));
+        } catch (Exception e) {
+            // Không block flow chính — trả 200 dù có lỗi phụ
+            return ResponseEntity.ok(userService.getOrCreateCurrentUser(jwt));
+        }
+    }
+
+}
 

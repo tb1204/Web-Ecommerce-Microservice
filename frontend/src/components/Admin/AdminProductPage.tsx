@@ -20,7 +20,8 @@ import ProductEditModal from "./AdminProductEditModalPage";
 import ProductAddModal from "./AdminProductAddModal";
 
 const AdminProductPage = () => {
-  const PRODUCT_API_URL = "http://localhost:8082";
+  // const BASE_URL = "http://localhost:8082";
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -44,8 +45,8 @@ const AdminProductPage = () => {
     setLoading(true);
     try {
       const [prodRes, catRes] = await Promise.all([
-        axios.get(`${PRODUCT_API_URL}/api/products/all`),
-        axios.get(`${PRODUCT_API_URL}/api/categories/all`),
+        axios.get(`${BASE_URL}/api/products/all`),
+        axios.get(`${BASE_URL}/api/categories/all`),
       ]);
 
       if (prodRes.status === 200) setProducts(prodRes.data);
@@ -92,7 +93,7 @@ const AdminProductPage = () => {
   const handleDelete = async (id: string) => {
     if (!window.confirm("Bạn có chắc muốn xóa sản phẩm này không?")) return;
     try {
-      await axios.delete(`${PRODUCT_API_URL}/api/products/delete/${id}`);
+      await axios.delete(`${BASE_URL}/api/products/delete/${id}`);
       setProducts(products.filter((p) => p.id !== id));
       toast.success("Xóa sản phẩm thành công!");
     } catch (error) {
@@ -108,7 +109,7 @@ const AdminProductPage = () => {
 
     try {
       const response = await axios.put(
-        `${PRODUCT_API_URL}/api/products/update/${productId}`,
+        `${BASE_URL}/api/products/update/${productId}`,
         formDataPayload,
 
         { headers: { "Content-Type": "multipart/form-data" } },
@@ -131,7 +132,7 @@ const AdminProductPage = () => {
   const handleAddProduct = async (formData: FormData) => {
     try {
       const response = await axios.post(
-        `${PRODUCT_API_URL}/api/products/add`,
+        `${BASE_URL}/api/products/add`,
         formData,
 
         { headers: { "Content-Type": "multipart/form-data" } },

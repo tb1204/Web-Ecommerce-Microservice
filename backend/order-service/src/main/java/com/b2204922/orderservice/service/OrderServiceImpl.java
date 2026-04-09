@@ -41,7 +41,8 @@ public class OrderServiceImpl implements IOrderService {
 
     private final RabbitTemplate rabbitTemplate;
 
-    @Value("${product.service.url:http://localhost:8082}") // Cổng của product-service bạn đang dùng
+    // @Value("${product.service.url:http://localhost:8082}") // Chạy local
+    @Value("${product.service.url:http://product-service}") //chạy eruka
     private String productServiceUrl;
 
     @Override
@@ -50,10 +51,14 @@ public class OrderServiceImpl implements IOrderService {
 
         List<OrderItem> entityItems = request.getItems().stream()
                 .map(itemReq -> {
-                    String url = "http://localhost:8082/api/products/detail/" + itemReq.getProductId();
+
+                    //gọi qua eruka
+                    String productServiceUrl = "http://product-service/api/products/get-category-map";
+                    // gọi local
+                    // String url = "http://localhost:8082/api/products/detail/" + itemReq.getProductId();
                     try {
                         @SuppressWarnings("unchecked")
-                        Map<String, Object> product = restTemplate.getForObject(url, Map.class);
+                        Map<String, Object> product = restTemplate.getForObject(productServiceUrl, Map.class);
 
                         if (product == null) {
                             throw new ResourceNotFoundException("Không tìm thấy sản phẩm ID: " + itemReq.getProductId());
@@ -550,10 +555,15 @@ public class OrderServiceImpl implements IOrderService {
 //    }
     private void callProductServiceToUpdateStock(String productId, String variantId, int quantity) {
 
-        String url = "http://localhost:8082/api/products/updateStock?productId=" + productId
+        // gọi qua eruka
+        String url = "http://product-service/api/products/updateStock?productId=" + productId
                 + "&variantId=" + variantId
                 + "&quantity=" + quantity;
 
+        //     gọi local
+        // String url = "http://localhost:8082/api/products/updateStock?productId=" + productId
+        //         + "&variantId=" + variantId
+        //         + "&quantity=" + quantity;
         try {
             log.info(" Đang trả hàng về kho: {} (SL: {})", productId, quantity);
 
@@ -619,10 +629,13 @@ public class OrderServiceImpl implements IOrderService {
                 .distinct()
                 .collect(Collectors.toList());
 
-        //Gọi sang Product Service để lấy Map (ID -> Category)
-        String productServiceUrl = "http://localhost:8082/api/products/get-category-map";
-        Map<String, String> idToCategoryMap = restTemplate.postForObject(productServiceUrl, productIds, Map.class);
-
+        //Gọi sang Product Service để lấy Map (ID -> Category) CHẠY LOCAL
+        // String productServiceUrl = "http://localhost:8082/api/products/get-category-map";
+        // Map<String, String> idToCategoryMap = restTemplate.postForObject(productServiceUrl, productIds, Map.class);
+        //CHẠY ERUKA
+        String url = productServiceUrl + "/api/products/get-category-map";
+        Map<String, String> idToCategoryMap
+                = restTemplate.postForObject(url, productIds, Map.class);
         //Tính toán tổng hợp
         Map<String, Double> revenueMap = new HashMap<>();
 

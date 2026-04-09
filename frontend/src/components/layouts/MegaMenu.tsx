@@ -11,41 +11,51 @@ import goiIcon from "../../assets/icon-mega-menu/gối.svg";
 import khuyenmaiIcon from "../../assets/icon-mega-menu/khuyến mãi.svg";
 
 function MegaMenu() {
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const [openCategory, setOpenCategory] = useState<number | null>(null);
   const [allProducts, setAllProducts] = useState<any[]>([]);
   const navigate = useNavigate();
 
   // 1. Gọi API lấy dữ liệu sản phẩm
   useEffect(() => {
-    axios.get("http://localhost:8082/api/products/all")
-      .then(res => setAllProducts(res.data))
-      .catch(err => console.error("MegaMenu API Error:", err));
+    axios
+      .get(`${BASE_URL}/api/products/all`)
+      .then((res) => setAllProducts(res.data))
+      .catch((err) => console.error("MegaMenu API Error:", err));
   }, []);
 
-  // 2. Định nghĩa các bộ lọc GIÁ TIỀN 
+  // 2. Định nghĩa các bộ lọc GIÁ TIỀN
   const staticFilters = {
     prices: {
-      "NEM": ["Dưới 5 triệu", "5 - 10 triệu", "10 - 15 triệu","15 - 30 triệu" ,"Trên 30 triệu"],
+      NEM: [
+        "Dưới 5 triệu",
+        "5 - 10 triệu",
+        "10 - 15 triệu",
+        "15 - 30 triệu",
+        "Trên 30 triệu",
+      ],
       "CHAN-GA": ["Dưới 1 triệu", "1 - 3 triệu", "3 - 5 triệu", "Trên 5 triệu"],
-      "GOI": ["Dưới 200k", "200k - 500k","500k - 1 triệu" ,"Trên 1 triệu"],
-      "PHU-KIEN": ["Dưới 1 triệu", "1 - 3 triệu", "Trên 3 triệu"]
-    }
+      GOI: ["Dưới 200k", "200k - 500k", "500k - 1 triệu", "Trên 1 triệu"],
+      "PHU-KIEN": ["Dưới 1 triệu", "1 - 3 triệu", "Trên 3 triệu"],
+    },
   };
 
-  // 3. Hàm trích xuất Loại, Thương hiệu và KÍCH THƯỚC 
+  // 3. Hàm trích xuất Loại, Thương hiệu và KÍCH THƯỚC
   const getDynamicFilters = (catId: string) => {
-    const productsInCat = allProducts.filter(p => 
-      p.category?.parentCode?.toUpperCase() === catId || p.category?.code?.toUpperCase() === catId
+    const productsInCat = allProducts.filter(
+      (p) =>
+        p.category?.parentCode?.toUpperCase() === catId ||
+        p.category?.code?.toUpperCase() === catId,
     );
 
     const types = new Set<string>();
     const brands = new Set<string>();
     const sizes = new Set<string>();
 
-    productsInCat.forEach(p => {
+    productsInCat.forEach((p) => {
       if (p.category?.name) types.add(p.category.name);
       if (p.brand) brands.add(p.brand);
-      
+
       // Quét mảng variants để lấy size
       p.variants?.forEach((v: any) => {
         if (v.size) sizes.add(v.size);
@@ -55,7 +65,9 @@ function MegaMenu() {
     return {
       types: Array.from(types).sort().slice(0, 10),
       brands: Array.from(brands).sort().slice(0, 8),
-      sizes: Array.from(sizes).sort((a, b) => a.localeCompare(b, undefined, { numeric: true })) // Sắp xếp size theo số (1m2 < 1m6)
+      sizes: Array.from(sizes).sort((a, b) =>
+        a.localeCompare(b, undefined, { numeric: true }),
+      ), // Sắp xếp size theo số (1m2 < 1m6)
     };
   };
 
@@ -68,32 +80,50 @@ function MegaMenu() {
       { id: "PHU-KIEN", name: "Phụ kiện", icon: phukienIcon },
     ];
 
-    return baseCats.map(cat => {
-      const dynamic = getDynamicFilters(cat.id);
-      const catPrices = staticFilters.prices[cat.id as keyof typeof staticFilters.prices] || [];
+    return baseCats
+      .map((cat) => {
+        const dynamic = getDynamicFilters(cat.id);
+        const catPrices =
+          staticFilters.prices[cat.id as keyof typeof staticFilters.prices] ||
+          [];
 
-      return {
-        ...cat,
-        hasSub: true,
-        subCategories: [
-          { title: "Kích thước", key: "size", items: dynamic.sizes }, 
-          { title: "Loại sản phẩm", key: "type", items: dynamic.types },
-          { title: "Thương hiệu", key: "brand", items: dynamic.brands },
-          { title: "Giá tiền", key: "price", items: catPrices }, 
-        ]
-      };
-    }).concat([{ id: "khuyen-mai", name: "Khuyến mãi", icon: khuyenmaiIcon, hasSub: false, subCategories: [] } as any]);
+        return {
+          ...cat,
+          hasSub: true,
+          subCategories: [
+            { title: "Kích thước", key: "size", items: dynamic.sizes },
+            { title: "Loại sản phẩm", key: "type", items: dynamic.types },
+            { title: "Thương hiệu", key: "brand", items: dynamic.brands },
+            { title: "Giá tiền", key: "price", items: catPrices },
+          ],
+        };
+      })
+      .concat([
+        {
+          id: "khuyen-mai",
+          name: "Khuyến mãi",
+          icon: khuyenmaiIcon,
+          hasSub: false,
+          subCategories: [],
+        } as any,
+      ]);
   }, [allProducts]);
 
   // const handleItemClick = (categoryId: string, filterKey: string, value: string) => {
   //   const lowCat = categoryId.toLowerCase();
   //   navigate(`/collections/all?category=${lowCat}&${filterKey}=${encodeURIComponent(value)}`);
   // };
-  const handleItemClick = (categoryId: string, filterKey: string, value: string) => {
+  const handleItemClick = (
+    categoryId: string,
+    filterKey: string,
+    value: string,
+  ) => {
     const lowCat = categoryId.toLowerCase();
-    
-    navigate(`/collections/all?category=${lowCat}&${filterKey}=${encodeURIComponent(value)}`);
-    
+
+    navigate(
+      `/collections/all?category=${lowCat}&${filterKey}=${encodeURIComponent(value)}`,
+    );
+
     if (setOpenCategory) setOpenCategory(null);
   };
 
@@ -103,11 +133,16 @@ function MegaMenu() {
       <span className="font-bold tracking-wide text-[13px] md:text-[15px] uppercase flex-1 lg:flex-none">
         Danh mục sản phẩm
       </span>
-      <ChevronDown size={18} className="group-hover:rotate-180 transition-transform ml-2" />
+      <ChevronDown
+        size={18}
+        className="group-hover:rotate-180 transition-transform ml-2"
+      />
 
-      <div className="absolute top-full -left-2 lg:-left-2 w-full lg:w-72 bg-white text-gray-800 shadow-xl opacity-0 invisible 
+      <div
+        className="absolute top-full -left-2 lg:-left-2 w-full lg:w-72 bg-white text-gray-800 shadow-xl opacity-0 invisible 
                     group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[100] border-t-2 border-[#004225]
-                    max-h-[80vh] overflow-y-auto lg:overflow-visible">
+                    max-h-[80vh] overflow-y-auto lg:overflow-visible"
+      >
         <ul className="w-full">
           {categories.map((category, index) => (
             <li
@@ -120,30 +155,41 @@ function MegaMenu() {
                   e.stopPropagation();
                   setOpenCategory(openCategory === index ? null : index);
                 } else {
-                  navigate(`/collections/all?category=${category.id.toLowerCase()}`);
+                  navigate(
+                    `/collections/all?category=${category.id.toLowerCase()}`,
+                  );
                 }
               }}
             >
               <div className="flex items-center justify-between px-4 py-4 hover:bg-gray-100 lg:hover:bg-gray-200 hover:text-[#004225] transition-colors">
                 <div className="flex items-center space-x-3">
                   <div className="w-6 h-6 flex items-center justify-center">
-                    <img src={category.icon} alt={category.name} className="w-full h-full object-contain grayscale group-hover/item:grayscale-0 transition-all" />
+                    <img
+                      src={category.icon}
+                      alt={category.name}
+                      className="w-full h-full object-contain grayscale group-hover/item:grayscale-0 transition-all"
+                    />
                   </div>
                   <span className="font-medium">{category.name}</span>
                 </div>
                 {category.hasSub && (
-                  <ChevronRight size={16} className={`text-gray-400 transition-transform duration-300 lg:group-hover/item:rotate-0 ${openCategory === index ? "rotate-90" : ""}`} />
+                  <ChevronRight
+                    size={16}
+                    className={`text-gray-400 transition-transform duration-300 lg:group-hover/item:rotate-0 ${openCategory === index ? "rotate-90" : ""}`}
+                  />
                 )}
               </div>
 
               {category.hasSub && (
-                <div className={`
+                <div
+                  className={`
                   lg:absolute lg:top-0 lg:left-full lg:w-[900px] lg:min-h-[400px] lg:grid lg:grid-cols-4 lg:gap-x-6 lg:p-8 
                   lg:opacity-0 lg:invisible lg:group-hover/item:opacity-100 lg:group-hover/item:visible 
                   lg:border-l lg:border-gray-100 lg:transition-all lg:duration-200
                   bg-white lg:bg-gray-50 overflow-hidden transition-all duration-300
                   ${openCategory === index ? "max-h-[2000px] py-4 px-8" : "max-h-0 lg:max-h-none py-0 lg:py-8"}
-                `}>
+                `}
+                >
                   {category.subCategories.map((sub, subIdx) => (
                     <div key={subIdx} className="mb-6 lg:mb-0">
                       <h3 className="font-bold text-[#004225] lg:text-black mb-4 border-b border-gray-200 lg:border-gray-200 pb-2 uppercase text-[12px] tracking-widest">
@@ -164,7 +210,9 @@ function MegaMenu() {
                             </li>
                           ))
                         ) : (
-                          <li className="text-gray-300 italic text-[11px]">Đang cập nhật...</li>
+                          <li className="text-gray-300 italic text-[11px]">
+                            Đang cập nhật...
+                          </li>
                         )}
                       </ul>
                     </div>
@@ -174,7 +222,9 @@ function MegaMenu() {
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        navigate(`/collections/all?category=${category.id.toLowerCase()}`);
+                        navigate(
+                          `/collections/all?category=${category.id.toLowerCase()}`,
+                        );
                         setOpenCategory(null);
                       }}
                       className="w-full py-3 mt-2 bg-green-50 text-green-800 text-xs hover:bg-green-600 font-bold uppercase rounded-lg border border-green-100"
@@ -183,7 +233,6 @@ function MegaMenu() {
                     </button>
                   </div>
                 </div>
-                
               )}
             </li>
           ))}

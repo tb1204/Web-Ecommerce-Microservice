@@ -6,7 +6,8 @@ import { useAuth } from "@clerk/clerk-react";
 import { CheckCircle } from "lucide-react";
 
 const PaymentSuccess = () => {
-  const BASE_URL = "http://localhost:8085";
+  // const BASE_URL = "http://localhost:8085";
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const [params] = useSearchParams();
   const navigate = useNavigate();
   const { getToken } = useAuth();
