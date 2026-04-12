@@ -12,7 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+// import org.springframework.core.ParameterizedTypeReference;
+import com.b2204925.userservice.service.ClerkService;
 import org.springframework.web.client.RestTemplate;
 
 import org.springframework.http.HttpMethod;
@@ -30,6 +33,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final RestTemplate restTemplate;
+    private final ClerkService clerkService;
 
     // ─── Queries ──────────────────────────────────────────────────────────────
     public List<User> getAllUsers() {
@@ -74,9 +78,21 @@ public class UserService {
         });
     }
 
+    //membership
+    public void addSpending(String clerkId, double amount) {
+    User user = getUserOrThrow(clerkId);
+    user.addOrder(amount);   // đã tăng purchaseCount + totalSpent + updateMembership()
+    user.setUpdatedAt(Instant.now());
+    userRepository.save(user);
+    log.info("User {} | +{}đ | Hạng mới: {}", clerkId, amount, user.getMembership());
+}
+
+
     // ─── Update profile (user tự cập nhật) ───────────────────────────────────
     public User updateUserProfile(String clerkId, UserUpdateDto dto) {
         User user = getUserOrThrow(clerkId);
+        log.info("=== updateUserProfile called: clerkId={}, username={}, firstName={}",
+                clerkId, dto.getUsername(), dto.getFirstName());
         if (dto.getFirstName() != null) {
             user.setFirstName(dto.getFirstName());
         }
@@ -95,13 +111,26 @@ public class UserService {
         if (dto.getEmail() != null) {
             user.setEmail(dto.getEmail());
         }
+        if (dto.getUsername() != null) {
+            user.setUsername(dto.getUsername());
+        }
         user.setUpdatedAt(Instant.now());
         return userRepository.save(user);
     }
 
-    // ─── Delete ───────────────────────────────────────────────────────────────
+    // // ─── Delete ───────────────────────────────────────────────────────────────
+    // public void deleteUser(String clerkId) {
+    //     userRepository.deleteByClerkId(clerkId);
+    // }
     public void deleteUser(String clerkId) {
+
+        // 1. Xóa trên Clerk
+        clerkService.deleteUser(clerkId);
+
+        // 2. Xóa DB (hoặc để webhook lo)
         userRepository.deleteByClerkId(clerkId);
+
+        log.info("Deleted user: {}", clerkId);
     }
 
     // ─── Ban / Unban (isActive) ───────────────────────────────────────────────
@@ -234,10 +263,9 @@ public class UserService {
     }
 
     // ================== ADDRESS MANAGEMENT ==================
-
     /**
-     * Thêm địa chỉ mới (tối đa 4 địa chỉ/user).
-     * Nếu là địa chỉ đầu tiên thì tự động set default.
+     * Thêm địa chỉ mới (tối đa 4 địa chỉ/user). Nếu là địa chỉ đầu tiên thì tự
+     * động set default.
      */
     public List<com.b2204925.userservice.entity.Address> addAddress(
             String clerkId,
@@ -261,8 +289,8 @@ public class UserService {
     }
 
     /**
-     * Xoá địa chỉ theo id.
-     * Nếu xoá địa chỉ default thì set địa chỉ đầu tiên còn lại làm default.
+     * Xoá địa chỉ theo id. Nếu xoá địa chỉ default thì set địa chỉ đầu tiên còn
+     * lại làm default.
      */
     public List<com.b2204925.userservice.entity.Address> removeAddress(
             String clerkId, String addressId) {
@@ -293,9 +321,8 @@ public class UserService {
     }
 
     /**
-     * Lưu địa chỉ từ Checkout.
-     * - Chỉ lưu nếu chưa có địa chỉ trùng (street + province) và chưa đủ 4.
-     * - Cập nhật phone nếu user chưa có.
+     * Lưu địa chỉ từ Checkout. - Chỉ lưu nếu chưa có địa chỉ trùng (street +
+     * province) và chưa đủ 4. - Cập nhật phone nếu user chưa có.
      */
     public User saveCheckoutAddress(
             String clerkId,
@@ -311,11 +338,11 @@ public class UserService {
         }
 
         // Kiểm tra xem địa chỉ đã tồn tại chưa (theo street + province)
-        boolean exists = user.getAddresses().stream().anyMatch(a ->
-                address.getStreet() != null &&
-                address.getStreet().equalsIgnoreCase(a.getStreet()) &&
-                address.getProvince() != null &&
-                address.getProvince().equalsIgnoreCase(a.getProvince()));
+        boolean exists = user.getAddresses().stream().anyMatch(a
+                -> address.getStreet() != null
+                && address.getStreet().equalsIgnoreCase(a.getStreet())
+                && address.getProvince() != null
+                && address.getProvince().equalsIgnoreCase(a.getProvince()));
 
         if (!exists && user.getAddresses().size() < 4) {
             address.setId(java.util.UUID.randomUUID().toString());
@@ -330,4 +357,3 @@ public class UserService {
         return user;
     }
 }
-

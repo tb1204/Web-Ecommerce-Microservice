@@ -23,7 +23,7 @@ export interface Cart {
 interface CartState {
   cart: Cart;
   selectedItems: string[];
-  checkoutItems: CartProduct[]; // ← THÊM: items đang checkout
+  checkoutItems: CartProduct[];
   isBuyNow: boolean; // ← THÊM: phân biệt mua ngay vs từ giỏ
   loading: boolean;
   error: string | null;

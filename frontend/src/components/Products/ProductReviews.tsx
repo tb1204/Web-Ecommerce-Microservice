@@ -193,9 +193,10 @@ interface ProductReviewsProps {
 }
 
 // const REVIEW_API = "http://localhost:8088/api/reviews";
-const REVIEW_API = import.meta.env.VITE_REVIEW_API_BASE_URL + "/api/reviews";
+const REVIEW_API = import.meta.env.VITE_API_BASE_URL + "/api/reviews";
 
 function ProductReviews({ productId }: ProductReviewsProps) {
+
   const { user, isSignedIn } = useUser();
   const [reviews, setReviews] = useState<ReviewResponse[]>([]);
   const [averageRating, setAverageRating] = useState(0);

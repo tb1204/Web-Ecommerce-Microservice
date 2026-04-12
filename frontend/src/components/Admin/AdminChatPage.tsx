@@ -260,7 +260,7 @@ const AdminChatPage: React.FC = () => {
       if (conv.status === "WAITING") {
         stompClientRef.current?.publish({
           destination: "/app/chat.join",
-          body: JSON.stringify(conv.id),
+          body: conv.id,
         });
         // Cập nhật local status
         setSummaries((prev) =>

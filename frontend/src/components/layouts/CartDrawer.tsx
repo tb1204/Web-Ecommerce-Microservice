@@ -525,9 +525,6 @@
 import { useState, useMemo, useEffect } from "react";
 import { IoMdClose } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
-// import CartContents from "../Cart/CartContents";
-// import type { CartItem } from "../Cart/CartContents";
-// import CartItem from "../Cart/CartContents";
 import CartContents, { type CartProduct } from "../Cart/CartContents";
 import { setCheckoutItems } from "../../store/slices/cartSlice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";

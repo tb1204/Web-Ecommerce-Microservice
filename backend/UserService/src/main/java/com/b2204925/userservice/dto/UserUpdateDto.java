@@ -19,4 +19,6 @@ public class UserUpdateDto {
 
     private String avatarUrl;
     private String email;
+    @Size(max = 50)
+    private String username;
 }

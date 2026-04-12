@@ -592,6 +592,12 @@ const CheckoutPage = () => {
   // Modal điều kiện: lưu voucher đang xem
   const [conditionModal, setConditionModal] = useState<any | null>(null);
 
+  // Membership
+const [userMembership, setUserMembership] = useState<string>("MEMBER");
+
+
+
+
   const [formData, setFormData] = useState({
     fullName: "",
     phone: "",
@@ -628,6 +634,7 @@ const CheckoutPage = () => {
         });
         const u = res.data;
         const addrs: any[] = u.addresses || [];
+        setUserMembership(u.membership || "MEMBER");
         setSavedAddresses(addrs);
 
         // Điền thông tin cơ bản
@@ -741,22 +748,76 @@ const CheckoutPage = () => {
     setAvailableWards([]);
   };
 
+//   // ✅ Tính tiền từ Redux checkoutItems
+//   const subtotal = checkoutItems.reduce(
+//     (acc, item) => acc + (item.price ?? 0) * (item.quantity ?? 1),
+//     0,
+//   );
+//   const MEMBERSHIP_DISCOUNT: Record<string, number> = {
+//   MEMBER: 0,
+//   SILVER: 0.03,   // 3%
+//   GOLD: 0.07,     // 7%
+//   DIAMOND: 0.12,  // 12%
+// };
+
+// const memberDiscountRate = MEMBERSHIP_DISCOUNT[userMembership] ?? 0;
+//   const baseShippingFee = subtotal >= 3_000_000 ? 0 : 30_000;
+//   const actualShippingDiscount = Math.min(
+//     shippingDiscountAmount,
+//     baseShippingFee,
+//   );
+//   const actualProductDiscount = Math.min(productDiscountAmount, subtotal);
+//   const shippingFee = baseShippingFee - actualShippingDiscount;
+
+  
+//   //membership
+//   const memberDiscountAmount = Math.round(subtotal * memberDiscountRate);
+//   // const totalPayment = Math.max(
+//   //   0,
+//   //   subtotal - actualProductDiscount + shippingFee,
+//   // );
+//   const totalPayment = Math.max(
+//   0,
+//   subtotal - actualProductDiscount - memberDiscountAmount + shippingFee,
+// );
+
+
+
+//thay thế
   // ✅ Tính tiền từ Redux checkoutItems
   const subtotal = checkoutItems.reduce(
     (acc, item) => acc + (item.price ?? 0) * (item.quantity ?? 1),
     0,
   );
+
+  // ==================== MEMBERSHIP DISCOUNT ====================
+  const MEMBERSHIP_DISCOUNT: Record<string, number> = {
+    MEMBER: 0,
+    SILVER: 0.03,   // 3%
+    GOLD: 0.07,     // 7%
+    DIAMOND: 0.12,  // 12%
+  };
+
+  const memberDiscountRate = MEMBERSHIP_DISCOUNT[userMembership] ?? 0;
+  const memberDiscountAmount = Math.round(subtotal * memberDiscountRate);
+  // ============================================================
+
   const baseShippingFee = subtotal >= 3_000_000 ? 0 : 30_000;
+
   const actualShippingDiscount = Math.min(
     shippingDiscountAmount,
     baseShippingFee,
   );
   const actualProductDiscount = Math.min(productDiscountAmount, subtotal);
+
   const shippingFee = baseShippingFee - actualShippingDiscount;
+
+  // Tổng thanh toán cuối cùng
   const totalPayment = Math.max(
     0,
-    subtotal - actualProductDiscount + shippingFee,
+    subtotal - actualProductDiscount - memberDiscountAmount + shippingFee,
   );
+
 
   // ✅ Áp dụng voucher
   const handleApplyVoucher = async () => {
@@ -1038,7 +1099,7 @@ const CheckoutPage = () => {
                 {isSignedIn && savedAddresses.length > 0 && (
                   <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
                     <p className="text-[11px] font-black uppercase tracking-widest text-blue-600 dark:text-blue-400 mb-2">
-                      📍 Địa chỉ đã lưu ({savedAddresses.length}/4)
+                       Địa chỉ đã lưu ({savedAddresses.length}/4)
                     </p>
                     <select
                       value={selectedAddressId}
@@ -1049,7 +1110,6 @@ const CheckoutPage = () => {
                         <option key={addr.id} value={addr.id}>
                           {addr.isDefault || addr.defaultAddress ? " " : ""}
                           {addr.street}, {addr.province}
-                          {addr.receiverName ? ` (${addr.receiverName})` : ""}
                         </option>
                       ))}
                       <option value="new"> Nhập địa chỉ mới...</option>
@@ -1815,6 +1875,14 @@ const CheckoutPage = () => {
                     <span>Giảm voucher (Sản phẩm)</span>
                     <span>
                       -{actualProductDiscount.toLocaleString("vi-VN")}₫
+                    </span>
+                  </div>
+                )}
+                {memberDiscountAmount > 0 && (
+                  <div className="flex justify-between text-purple-600 dark:text-purple-500">
+                    <span>Giảm thành viên ({userMembership})</span>
+                    <span>
+                      -{memberDiscountAmount.toLocaleString("vi-VN")}₫
                     </span>
                   </div>
                 )}

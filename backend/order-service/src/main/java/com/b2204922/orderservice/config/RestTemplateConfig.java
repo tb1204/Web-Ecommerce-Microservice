@@ -14,7 +14,7 @@ public class RestTemplateConfig {
 
     @Bean
     @LoadBalanced // chạy eruka
-    public RestTemplate loadBalancedRestTemplate() {
+    public RestTemplate restTemplate() {
         // Khởi tạo factory của Apache HttpClient 5 để hỗ trợ PATCH
         HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
 

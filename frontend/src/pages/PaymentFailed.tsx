@@ -62,13 +62,21 @@ const PaymentFailed = () => {
 
         {/* Thông tin đơn hàng */}
         {orderId && (
-          <div className="border-t border-b border-gray-100 py-4">
+          <div className="border-t border-b border-gray-100 py-4 space-y-2">
             <div className="flex justify-between text-sm">
               <span className="text-gray-500">Mã đơn hàng</span>
               <span className="font-medium text-gray-800 truncate ml-4">
-                {orderId}
+                {payment?.orderNumber || orderId}
               </span>
             </div>
+            {payment?.note && (
+              <div className="flex justify-between text-sm">
+                <span className="text-gray-500 min-w-[80px]">Ghi chú</span>
+                <span className="font-medium text-gray-800 text-right ml-4 italic line-clamp-2">
+                  {payment.note}
+                </span>
+              </div>
+            )}
           </div>
         )}
 

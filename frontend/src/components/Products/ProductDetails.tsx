@@ -613,7 +613,7 @@ const ProductDetails = () => {
     try {
       await addProductToCart();
       toast.success("Đã thêm vào giỏ hàng!");
-      dispatch(openCartDrawer());
+      // dispatch(openCartDrawer());
     } catch (err: any) {
       toast.error(err?.message ?? "Thêm vào giỏ thất bại!");
     } finally {

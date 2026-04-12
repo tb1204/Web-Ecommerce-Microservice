@@ -104,7 +104,11 @@ public class WebhookController {
             existing.setEmail(mapped.getEmail());
             existing.setFirstName(mapped.getFirstName());
             existing.setLastName(mapped.getLastName());
-            existing.setUsername(mapped.getUsername());
+            // existing.setUsername(mapped.getUsername());
+            // fix user thay đổi username
+            // if (mapped.getUsername() != null && !mapped.getUsername().isBlank()) {
+            //     existing.setUsername(mapped.getUsername());
+            // }
             existing.setPhone(mapped.getPhone());
             existing.setGender(mapped.getGender());
             existing.setAvatarUrl(mapped.getAvatarUrl());
@@ -130,13 +134,21 @@ public class WebhookController {
         }
     }
 
+    private String getJsonText(JsonNode node, String fieldName) {
+        JsonNode fieldNode = node.path(fieldName);
+        if (fieldNode.isMissingNode() || fieldNode.isNull()) {
+            return null;
+        }
+        return fieldNode.asText(null);
+    }
+
     private User mapClerkDataToUser(JsonNode data) {
         User user = new User();
 
         // ── EMAIL ────────────────────────────────────────────────────────
         JsonNode emails = data.path("email_addresses");
         if (emails.isArray() && !emails.isEmpty()) {
-            user.setEmail(emails.get(0).path("email_address").asText());
+            user.setEmail(getJsonText(emails.get(0), "email_address"));
         }
 
         // ── EXTERNAL ACCOUNTS (Google / Facebook) ────────────────────────
@@ -145,7 +157,7 @@ public class WebhookController {
 
         if (externalAccounts.isArray() && !externalAccounts.isEmpty()) {
             JsonNode extAccount = externalAccounts.get(0);
-            String extProvider = extAccount.path("provider").asText(null);
+            String extProvider = getJsonText(extAccount, "provider");
 
             if (extProvider != null) {
                 if (extProvider.contains("google")) {
@@ -156,33 +168,33 @@ public class WebhookController {
             }
 
             // Avatar: ưu tiên từ external account (URL gốc, chất lượng cao hơn)
-            String extAvatar = extAccount.path("avatar_url").asText(null);
+            String extAvatar = getJsonText(extAccount, "avatar_url");
             if (extAvatar != null && !extAvatar.isBlank()) {
                 user.setAvatarUrl(extAvatar);
             } else {
-                user.setAvatarUrl(data.path("image_url").asText(null));
+                user.setAvatarUrl(getJsonText(data, "image_url"));
             }
 
         } else {
-            user.setAvatarUrl(data.path("image_url").asText(null));
+            user.setAvatarUrl(getJsonText(data, "image_url"));
         }
 
         // ── CÁC FIELD CƠ BẢN ────────────────────────────────────────────
-        user.setFirstName(data.path("first_name").asText(null));
-        user.setLastName(data.path("last_name").asText(null));
-        user.setGender(data.path("gender").asText(null)); // thường null với OAuth
+        user.setFirstName(getJsonText(data, "first_name"));
+        user.setLastName(getJsonText(data, "last_name"));
+        user.setGender(getJsonText(data, "gender")); // thường null với OAuth
 
         // Username: Clerk OAuth thường null → fallback sang email prefix
-        String username = data.path("username").asText(null);
-        if (username == null && user.getEmail() != null) {
-            username = user.getEmail().split("@")[0];
-        }
+        String username = getJsonText(data, "username");
+        // if (username == null && user.getEmail() != null) { fix sửa username
+        //     username = user.getEmail().split("@")[0];
+        // }
         user.setUsername(username);
 
         // Phone: thường null với OAuth
         JsonNode phones = data.path("phone_numbers");
         if (phones.isArray() && !phones.isEmpty()) {
-            user.setPhone(phones.get(0).path("phone_number").asText());
+            user.setPhone(getJsonText(phones.get(0), "phone_number"));
         }
 
         // ── PROVIDER & DEFAULT FLAGS ─────────────────────────────────────

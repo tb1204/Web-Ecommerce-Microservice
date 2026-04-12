@@ -79,6 +79,10 @@ public class AdminUserService {
         if (dto.getAvatarUrl() != null) {
             user.setAvatarUrl(dto.getAvatarUrl());
         }
+        // Trong AdminUserService.updateUser(), sau dòng xử lý avatarUrl:
+if (dto.getUsername() != null) {
+    user.setUsername(dto.getUsername());
+}
 
         if (dto.getRoles() != null) {
             user.setRoles(dto.getRoles());

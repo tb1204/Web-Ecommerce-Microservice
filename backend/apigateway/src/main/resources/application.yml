@@ -4,6 +4,10 @@ server:
 spring:
   application:
     name: api-gateway
+  # Spring Cloud Gateway dùng WebFlux (reactive)
+  # Dùng spring.codec thay vì spring.servlet.multipart
+  codec:
+    max-in-memory-size: 110MB
   data:
     redis:
       host: redis
@@ -139,10 +143,30 @@ spring:
                 fallbackUri: forward:/fallback/voucherservice
 
         # Ví dụ cho chatservice (limit chặt vì nhạy cảm)
-        - id: chatservice
+        #chuẩn code ban đầu 
+        # - id: chatservice
+        #   uri: lb://chat-service
+        #   predicates:
+        #     - Path=/api/chat/**, /ws/**
+        #   filters:
+        #     - name: RequestRateLimiter
+        #       args:
+        #         redis-rate-limiter.replenishRate: 15
+        #         redis-rate-limiter.burstCapacity: 30
+        #         key-resolver: "#{@ipKeyResolver}"
+        #     - name: CircuitBreaker
+        #       args:
+        #         name: defaultCB
+        #         fallbackUri: forward:/fallback/chatservice
+
+
+#
+#
+# 1. Route cho HTTP API (REST + SockJS info)
+        - id: chatservice-http
           uri: lb://chat-service
           predicates:
-            - Path=/api/chat/**, /ws/**
+            - Path=/api/chat/**
           filters:
             - name: RequestRateLimiter
               args:
@@ -153,6 +177,16 @@ spring:
               args:
                 name: defaultCB
                 fallbackUri: forward:/fallback/chatservice
+
+        # 2. Route riêng cho WebSocket (SockJS handshake + upgrade)
+        - id: chatservice-ws
+          uri: lb:ws://chat-service
+          predicates:
+            - Path=/ws/**
+          # Không dùng CircuitBreaker hay RateLimiter cho WebSocket
+
+#
+#                
         # Ví dụ cho reviewservice (limit chặt vì nhạy cảm)
         - id: reviewservice
           uri: lb://review-service
@@ -215,6 +249,10 @@ resilience4j:
         waitDurationInOpenState: 10s #sau 10s chạy lại
         permittedNumberOfCallsInHalfOpenState: 5
         slidingWindowSize: 100 # số request gần nhất để tính tỷ lệ lỗi
+  timelimiter:
+    instances:
+      defaultCB:
+        timeoutDuration: 20s # Tăng thời gian chờ lên 20s (upload ảnh/video tốn time)
 # Eureka client (nếu bạn có discovery server)
 eureka:
   client:

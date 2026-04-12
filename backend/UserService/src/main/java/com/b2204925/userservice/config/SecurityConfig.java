@@ -105,6 +105,8 @@ public class SecurityConfig {
                 .requestMatchers("/api/admin/sliders/list").permitAll()
                 .requestMatchers("/api/admin/sliders/banners/**").permitAll()
                 .requestMatchers("/api/users/statistics/**").permitAll()
+                // ✅ Internal call từ order-service (không có JWT) — phải permitAll
+                .requestMatchers("/api/users/*/add-spending").permitAll()
                 // Các route /api/admin/** còn lại yêu cầu ADMIN role
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
 

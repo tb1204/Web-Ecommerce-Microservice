@@ -430,6 +430,22 @@ public class OrderServiceImpl implements IOrderService {
 
         Order savedOrder = orderRepository.save(order);
 
+        //membership
+        // Nếu chuyển sang DELIVERED → cộng spending cho user
+        if ("DELIVERED".equals(savedOrder.getOrderStatus()) && savedOrder.getUserId() != null) {
+            try {
+                String userServiceUrl = "http://user-service/api/users/"
+                        + savedOrder.getUserId() + "/add-spending";
+                Map<String, Double> spendingBody = Map.of("amount", savedOrder.getSummary().getTotalAmount());
+                restTemplate.put(userServiceUrl, spendingBody);
+                log.info("Đã cộng {}đ vào spending cho user {}",
+                        savedOrder.getSummary().getTotalAmount(), savedOrder.getUserId());
+            } catch (Exception e) {
+                log.error("Lỗi gọi user-service cộng spending: {}", e.getMessage());
+            }
+        }
+
+
         //4 GỬI THÔNG BÁO CẬP NHẬT TRẠNG THÁI / GIAO HÀNG THÀNH CÔNG
         try {
             String title = "Cập nhật đơn hàng";

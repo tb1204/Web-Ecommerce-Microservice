@@ -34,11 +34,14 @@ interface Membership {
   discountRate?: number;
 }
 interface Address {
-  address_name: string;
-  fullAddress: string;
+  _id?: string;
+  receiverName: string;
   phone: string;
-  is_default: boolean;
-  is_active: boolean;
+  street: string;
+  ward?: string;
+  district?: string;
+  province?: string;
+  defaultAddress: boolean;
 }
 
 interface User {
@@ -170,7 +173,7 @@ const AdminUsersPage = () => {
       phone: user.phone,
       gender: user.gender,
       roles: user.roles.length > 0 ? user.roles : ["USER"],
-      membership: user.membership,
+      membership: user.membership ? { tierName: normalizeTierName(user.membership) } : undefined,
       isActive: user.isActive,
       username: user.username || "",
     });
@@ -370,12 +373,6 @@ const AdminUsersPage = () => {
 
   // Khóa / Mở khóa (chỉ Clerk, không lưu DB)
   const handleLockChange = async (user: User, shouldLock: boolean) => {
-    // update UI trước
-    // setUsers((prev) =>
-    //   prev.map((u) =>
-    //     u.clerkId === user.clerkId ? { ...u, isLocked: shouldLock } : u,
-    //   ),
-    // );
     setUsers((prev) =>
       prev.map((u) =>
         u.clerkId === user.clerkId ? { ...u, isBlocked: shouldLock } : u,
@@ -976,7 +973,7 @@ const AdminUsersPage = () => {
         <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center z-[999] p-4 transition-all">
           <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden flex flex-col border border-white/20">
             {/* Header with Gradient Background */}
-            <div className="relative h-32 bg-gradient-to-r from-cyan-900 via-blue-900 to-indigo-900 p-6 overflow-hidden">
+            <div className="relative h-32 flex-shrink-0 bg-gradient-to-r from-cyan-900 via-blue-900 to-indigo-900 p-6 overflow-hidden">
               <button
                 onClick={handleCloseDetailModal}
                 className="absolute top-4 right-4 p-2 bg-black/20 hover:bg-black/30 text-white rounded-full transition-colors z-50"
@@ -1159,17 +1156,17 @@ const AdminUsersPage = () => {
                   <div className="grid grid-cols-1 gap-3">
                     {selectedUser.addresses.map((addr, index) => (
                       <div
-                        key={index}
+                        key={addr._id ?? index}
                         className={`p-5 rounded-2xl border transition-all hover:shadow-md ${
-                          addr.is_default
+                          addr.defaultAddress
                             ? "bg-indigo-50 border-indigo-200"
                             : "bg-white border-slate-200"
                         }`}
                       >
                         <div className="flex justify-between items-start mb-2">
                           <p className="font-bold text-slate-800 flex items-center gap-2">
-                            {addr.address_name}
-                            {addr.is_default && (
+                            {addr.receiverName || "—"}
+                            {addr.defaultAddress && (
                               <span className="text-[10px] bg-indigo-600 text-white px-2 py-0.5 rounded font-medium">
                                 Mặc định
                               </span>
@@ -1179,8 +1176,10 @@ const AdminUsersPage = () => {
                             {addr.phone}
                           </span>
                         </div>
-                        <p className="text-slate-600 leading-relaxed">
-                          "{addr.fullAddress}"
+                        <p className="text-slate-600 leading-relaxed text-sm">
+                          {[addr.street, addr.ward, addr.district, addr.province]
+                            .filter(Boolean)
+                            .join(", ")}
                         </p>
                       </div>
                     ))}

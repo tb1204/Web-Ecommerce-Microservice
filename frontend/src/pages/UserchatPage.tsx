@@ -920,9 +920,9 @@ interface Conversation {
 }
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080";
 const API_BASE = `${BASE_URL}/api/chat`;
-// Tự động thay thế http:// thành ws:// (hoặc https:// thành wss://) cho WebSocket
-const WS_URL = BASE_URL.replace(/^http/, "ws") + "/ws";
-
+// SockJS KHÔNG dùng ws:// — nó tự nâng cấp WebSocket nội bộ từ http://
+// Giữ nguyên http:// (hoặc https://), SockJS sẽ tự connect qua /ws endpoint
+const WS_URL = `${BASE_URL}/ws`;
 const formatTime = (iso: string) =>
   new Date(iso).toLocaleTimeString("vi-VN", {
     hour: "2-digit",
@@ -1026,6 +1026,7 @@ const UserChatPage: React.FC<UserChatPageProps> = ({
         connectHeaders: { Authorization: `Bearer ${token}` },
         reconnectDelay: 5000,
         onConnect: () => {
+          console.log("✅ STOMP Connected successfully!");
           client.subscribe(`/topic/conversation.${convId}`, (frame) => {
             try {
               const incoming = JSON.parse(frame.body);

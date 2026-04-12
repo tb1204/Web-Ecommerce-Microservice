@@ -153,6 +153,8 @@ public class ChatWebSocketHandler {
             // Nếu Dialogflow lỗi → chuyển sang admin
             try {
                 conversationService.adminJoin(conv.getId(), null);
+                messagingTemplate.convertAndSend("/topic/admin.newConversation",
+                        conversationService.getById(conv.getId()));
             } catch (Exception ex) {
                 log.error("Handoff to admin failed", ex);
             }

@@ -1,5 +1,6 @@
 import { useUser, useClerk, useAuth } from "@clerk/clerk-react";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   FiCamera,
@@ -12,10 +13,12 @@ import {
 } from "react-icons/fi";
 
 import { toast } from "sonner";
+import { ChevronRight } from "lucide-react";
 
 const CustomProfile = () => {
   // const BASE_URL = "http://localhost:8081";
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  const navigate = useNavigate();
   const { isLoaded, isSignedIn, user } = useUser();
   const { signOut } = useClerk();
   const { getToken } = useAuth();
@@ -74,7 +77,8 @@ const CustomProfile = () => {
     };
 
     fetchProfile();
-  }, [isLoaded, user]);
+  }, [isLoaded]);
+  // [isLoaded, user]); ghi đè uername
 
   if (!isLoaded || loadingProfile)
     return (
@@ -111,11 +115,18 @@ const CustomProfile = () => {
   const handleSaveAll = async () => {
     try {
       const token = await getToken({ template: "my-backend" });
-
+      console.log("USERNAME TRƯỚC KHI SAVE:", username);
       // Chỉ cập nhật DB — đủ rồi
       await axios.put(
         `${BASE_URL}/api/users/me`,
-        { firstName, lastName, phone, gender, avatarUrl: user?.imageUrl },
+        {
+          firstName,
+          lastName,
+          phone,
+          gender,
+          avatarUrl: user?.imageUrl,
+          username,
+        },
         { headers: { Authorization: `Bearer ${token}` } },
       );
 
@@ -229,14 +240,32 @@ const CustomProfile = () => {
     }
   };
 
+  // const handleDeleteAccount = async () => {
+  //   if (!window.confirm("Xác nhận xóa tài khoản VĨNH VIỄN?")) return;
+  //   try {
+  //     await user?.delete();
+  //     await signOut();
+  //     window.location.href = "/";
+  //   } catch (err) {
+  //     toast.error("Lỗi khi xóa.");
+  //   }
+  // };
+  //fix xóa user an toàn cả backend và clerk
   const handleDeleteAccount = async () => {
     if (!window.confirm("Xác nhận xóa tài khoản VĨNH VIỄN?")) return;
+
     try {
-      await user?.delete();
+      const token = await getToken({ template: "my-backend" });
+
+      await axios.delete(`${BASE_URL}/api/users/me`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
       await signOut();
       window.location.href = "/";
     } catch (err) {
-      toast.error("Lỗi khi xóa.");
+      console.error(err);
+      toast.error("Lỗi khi xóa tài khoản.");
     }
   };
 
@@ -286,11 +315,17 @@ const CustomProfile = () => {
             </div>
 
             <div className="mt-2 md:mt-0 md:mb-5">
-              <span
-                className={`inline-flex items-center px-5 py-2.5 rounded-full text-xs font-black uppercase tracking-widest shadow-sm ${getTierBadgeClass(membership)}`}
+              <button
+                onClick={() => navigate("/my-stats")}
+                title="Xem thống kê mua hàng"
+                className={`group inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-black uppercase tracking-widest shadow-sm transition-all duration-200 hover:scale-105 hover:shadow-md active:scale-95 ${getTierBadgeClass(membership)}`}
               >
                 Hạng: {membership}
-              </span>
+       <ChevronRight
+  size={12}
+  className="opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all"
+/>
+              </button>
             </div>
           </div>
         </div>
@@ -527,7 +562,7 @@ const CustomProfile = () => {
         </div>
 
         {/* Bottom Actions */}
-        <div className="flex flex-col md:flex-row gap-5 pt-8 pb-12">
+        {/* <div className="flex flex-col md:flex-row gap-5 pt-8 pb-12">
           <button
             onClick={handleSaveAll}
             className="flex-1 flex items-center justify-center gap-3 py-5 bg-gradient-to-r from-emerald-700 to-[#14532d] hover:from-emerald-800 hover:to-green-950 text-white rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl shadow-[#14532d]/20 transition-all transform hover:-translate-y-1 active:translate-y-0 active:scale-95"
@@ -537,6 +572,20 @@ const CustomProfile = () => {
           <button
             onClick={handleDeleteAccount}
             className="md:w-auto px-8 flex items-center justify-center gap-3 py-5 bg-white dark:bg-gray-800 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-700 border-2 border-red-100 dark:border-red-900/50 rounded-2xl font-bold text-sm shadow-sm transition-all transform active:scale-95"
+          >
+            <FiTrash2 size={18} /> Xóa tài khoản vĩnh viễn
+          </button>
+        </div> */}
+        <div className="flex flex-col sm:flex-row gap-4 pt-8 pb-12">
+          <button
+            onClick={handleSaveAll}
+            className="flex-1 flex items-center justify-center gap-3 py-4 bg-gradient-to-r from-emerald-700 to-[#14532d] hover:from-emerald-800 hover:to-green-950 text-white rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl shadow-[#14532d]/20 transition-all active:scale-95"
+          >
+            <FiSave size={18} /> Lưu tất cả thay đổi
+          </button>
+          <button
+            onClick={handleDeleteAccount}
+            className="flex-1 sm:flex-none sm:w-64 flex items-center justify-center gap-3 py-4 bg-white dark:bg-gray-800 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-700 border-2 border-red-100 dark:border-red-900/50 rounded-2xl font-bold text-sm shadow-sm transition-all active:scale-95"
           >
             <FiTrash2 size={18} /> Xóa tài khoản vĩnh viễn
           </button>

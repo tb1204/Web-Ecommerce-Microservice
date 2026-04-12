@@ -128,7 +128,7 @@ function MegaMenu() {
   };
 
   return (
-    <div className="flex items-center space-x-2 bg-[#004225] px-4 md:px-6 py-3 md:py-4 cursor-pointer group relative text-white w-full lg:w-fit transition-all duration-300">
+    <div className="flex items-center space-x-2 bg-[#004225] dark:bg-gray-800 px-4 md:px-6 py-3 md:py-4 cursor-pointer group relative text-white w-full lg:w-fit transition-all duration-300 border-b dark:border-gray-800 lg:border-b-0">
       <LayoutGrid size={18} />
       <span className="font-bold tracking-wide text-[13px] md:text-[15px] uppercase flex-1 lg:flex-none">
         Danh mục sản phẩm
@@ -139,15 +139,15 @@ function MegaMenu() {
       />
 
       <div
-        className="absolute top-full -left-2 lg:-left-2 w-full lg:w-72 bg-white text-gray-800 shadow-xl opacity-0 invisible 
-                    group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[100] border-t-2 border-[#004225]
+        className="absolute top-full -left-2 lg:-left-2 w-full lg:w-72 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 shadow-xl opacity-0 invisible 
+                    group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[100] border-t-2 border-[#004225] dark:border-gray-700
                     max-h-[80vh] overflow-y-auto lg:overflow-visible"
       >
         <ul className="w-full">
           {categories.map((category, index) => (
             <li
               key={index}
-              className="group/item border-b border-gray-50 last:border-0"
+              className="group/item border-b border-gray-50 dark:border-gray-700 last:border-0"
               onClick={(e) => {
                 if (category.id === "khuyen-mai") {
                   navigate("/flashsale");
@@ -161,7 +161,7 @@ function MegaMenu() {
                 }
               }}
             >
-              <div className="flex items-center justify-between px-4 py-4 hover:bg-gray-100 lg:hover:bg-gray-200 hover:text-[#004225] transition-colors">
+              <div className="flex items-center justify-between px-4 py-4 hover:bg-gray-100 lg:hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-[#004225] dark:hover:text-green-400 transition-colors">
                 <div className="flex items-center space-x-3">
                   <div className="w-6 h-6 flex items-center justify-center">
                     <img
@@ -185,17 +185,17 @@ function MegaMenu() {
                   className={`
                   lg:absolute lg:top-0 lg:left-full lg:w-[900px] lg:min-h-[400px] lg:grid lg:grid-cols-4 lg:gap-x-6 lg:p-8 
                   lg:opacity-0 lg:invisible lg:group-hover/item:opacity-100 lg:group-hover/item:visible 
-                  lg:border-l lg:border-gray-100 lg:transition-all lg:duration-200
-                  bg-white lg:bg-gray-50 overflow-hidden transition-all duration-300
+                  lg:border-l lg:border-gray-100 lg:dark:border-gray-700 lg:transition-all lg:duration-200
+                  bg-white lg:bg-gray-50 dark:bg-gray-800 lg:dark:bg-gray-900 overflow-hidden transition-all duration-300
                   ${openCategory === index ? "max-h-[2000px] py-4 px-8" : "max-h-0 lg:max-h-none py-0 lg:py-8"}
                 `}
                 >
                   {category.subCategories.map((sub, subIdx) => (
                     <div key={subIdx} className="mb-6 lg:mb-0">
-                      <h3 className="font-bold text-[#004225] lg:text-black mb-4 border-b border-gray-200 lg:border-gray-200 pb-2 uppercase text-[12px] tracking-widest">
+                      <h3 className="font-bold text-[#004225] dark:text-green-400 lg:text-black lg:dark:text-gray-100 mb-4 border-b border-gray-200 dark:border-gray-700 pb-2 uppercase text-[12px] tracking-widest">
                         {sub.title}
                       </h3>
-                      <ul className="space-y-2.5 text-[14px] text-gray-600">
+                      <ul className="space-y-2.5 text-[14px] text-gray-600 dark:text-gray-400">
                         {sub.items.length > 0 ? (
                           sub.items.map((text, textIdx) => (
                             <li
@@ -204,13 +204,13 @@ function MegaMenu() {
                                 e.stopPropagation();
                                 handleItemClick(category.id, sub.key, text);
                               }}
-                              className="hover:text-[#004225] hover:font-medium hover:translate-x-1 transition-all cursor-pointer py-0.5"
+                              className="hover:text-[#004225] dark:hover:text-green-400 hover:font-medium hover:translate-x-1 transition-all cursor-pointer py-0.5"
                             >
                               {text}
                             </li>
                           ))
                         ) : (
-                          <li className="text-gray-300 italic text-[11px]">
+                          <li className="text-gray-300 dark:text-gray-500 italic text-[11px]">
                             Đang cập nhật...
                           </li>
                         )}
@@ -218,7 +218,7 @@ function MegaMenu() {
                     </div>
                   ))}
                   {/*  NÚT XEM TẤT CẢ */}
-                  <div className="col-span-full mt-6 pt-4 border-t border-gray-100 lg:hidden">
+                  <div className="col-span-full mt-6 pt-4 border-t border-gray-100 dark:border-gray-700 lg:hidden">
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
@@ -227,7 +227,7 @@ function MegaMenu() {
                         );
                         setOpenCategory(null);
                       }}
-                      className="w-full py-3 mt-2 bg-green-50 text-green-800 text-xs hover:bg-green-600 font-bold uppercase rounded-lg border border-green-100"
+                      className="w-full py-3 mt-2 bg-green-50 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs hover:bg-green-600 dark:hover:bg-green-800 hover:text-white font-bold uppercase rounded-lg border border-green-100 dark:border-green-800/50 transition-colors"
                     >
                       Xem tất cả {category.name}
                     </button>

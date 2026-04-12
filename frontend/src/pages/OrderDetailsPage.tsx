@@ -321,11 +321,13 @@
 // export default OrderDetailsPage;
 
 //test
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "@clerk/clerk-react";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
+import { useReactToPrint } from "react-to-print";
+import { PrintInvoice } from "../components/Admin/PrintInvoice";
 
 // const BASE_URL = "http://localhost:8084";
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -364,6 +366,7 @@ interface Order {
   };
   orderStatus: string;
   cancelReason?: string;
+  note?: string;
   items: OrderItem[];
   createdAt: string;
   updatedAt: string;
@@ -411,6 +414,12 @@ const OrderDetailsPage: React.FC = () => {
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const contentRef = useRef<HTMLDivElement>(null);
+  const reactToPrintFn = useReactToPrint({
+    contentRef,
+    documentTitle: `Hoa_Don_${order?.orderNumber || "Artisano"}`,
+  });
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -489,9 +498,14 @@ const OrderDetailsPage: React.FC = () => {
               {order.orderNumber}
             </span>
           </p>
-          <p className="text-gray-500 dark:text-gray-400 text-sm">
+          <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
             Ngày đặt: {new Date(order.createdAt).toLocaleDateString("vi-VN")}
           </p>
+          {order.note && (
+            <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
+              Ghi chú: <span className="italic text-gray-800 dark:text-gray-200">{order.note}</span>
+            </p>
+          )}
         </div>
 
         <div className="flex flex-col sm:items-end gap-2">
@@ -730,13 +744,19 @@ const OrderDetailsPage: React.FC = () => {
             </div>
 
             <button
-              onClick={() => window.print()}
+              onClick={() => {
+                if (order) reactToPrintFn();
+              }}
               className="w-full mt-5 bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 text-white py-3.5 rounded-2xl font-bold transition active:scale-95 shadow-lg text-sm"
             >
               In hóa đơn
             </button>
           </div>
         </div>
+      </div>
+
+      <div style={{ display: "none" }}>
+        <PrintInvoice ref={contentRef} orderList={order ? [(order as any)] : []} />
       </div>
     </div>
   );

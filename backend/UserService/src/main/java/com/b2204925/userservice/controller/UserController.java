@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -37,34 +36,55 @@ public class UserController {
         return ResponseEntity.ok(userService.updateUserProfile(jwt.getSubject(), dto));
     }
 
- // ================== WISHLIST ENDPOINTS ==================
-
+    // ================== WISHLIST ENDPOINTS ==================
 // GET /api/users/me/wishlist  → trả về full thông tin sản phẩm
-@GetMapping("/me/wishlist")
-public ResponseEntity<List<Map<String, Object>>> getWishlist(
-        @AuthenticationPrincipal Jwt jwt) {
-    return ResponseEntity.ok(userService.getWishlist(jwt.getSubject()));
-}
+    @GetMapping("/me/wishlist")
+    public ResponseEntity<List<Map<String, Object>>> getWishlist(
+            @AuthenticationPrincipal Jwt jwt) {
+        return ResponseEntity.ok(userService.getWishlist(jwt.getSubject()));
+    }
 
 // POST /api/users/me/wishlist/{productId}  → vẫn trả về List<String> (IDs)
-@PostMapping("/me/wishlist/{productId}")
-public ResponseEntity<List<String>> addToWishlist(
-        @AuthenticationPrincipal Jwt jwt,
-        @PathVariable String productId) {
-    return ResponseEntity.ok(userService.addToWishlist(jwt.getSubject(), productId));
-}
+    @PostMapping("/me/wishlist/{productId}")
+    public ResponseEntity<List<String>> addToWishlist(
+            @AuthenticationPrincipal Jwt jwt,
+            @PathVariable String productId) {
+        return ResponseEntity.ok(userService.addToWishlist(jwt.getSubject(), productId));
+    }
 
 // DELETE /api/users/me/wishlist/{productId} → vẫn trả về List<String> (IDs)
-@DeleteMapping("/me/wishlist/{productId}")
-public ResponseEntity<List<String>> removeFromWishlist(
-        @AuthenticationPrincipal Jwt jwt,
-        @PathVariable String productId) {
-    return ResponseEntity.ok(userService.removeFromWishlist(jwt.getSubject(), productId));
+    @DeleteMapping("/me/wishlist/{productId}")
+    public ResponseEntity<List<String>> removeFromWishlist(
+            @AuthenticationPrincipal Jwt jwt,
+            @PathVariable String productId) {
+        return ResponseEntity.ok(userService.removeFromWishlist(jwt.getSubject(), productId));
+    }
+
+    //membership
+    // PUT /api/users/{clerkId}/add-spending
+@PutMapping("/{clerkId}/add-spending")
+public ResponseEntity<?> addSpending(
+    @PathVariable String clerkId,
+    @RequestBody Map<String, Double> body) {
+    double amount = body.getOrDefault("amount", 0.0);
+    userService.addSpending(clerkId, amount);
+    return ResponseEntity.ok(Map.of("message", "OK"));
 }
+
+
     // POST /api/users/logout
     @PostMapping("/logout")
     public ResponseEntity<String> logout() {
         return ResponseEntity.ok("Logout thành công từ phía client.");
+    }
+
+    //user xóa acc
+    @DeleteMapping("/me")
+    public ResponseEntity<?> deleteMyAccount(@AuthenticationPrincipal Jwt jwt) {
+        String clerkId = jwt.getSubject();
+
+        userService.deleteUser(clerkId);
+        return ResponseEntity.ok("Deleted");
     }
 
     //Tong khach hang
@@ -77,8 +97,9 @@ public ResponseEntity<List<String>> removeFromWishlist(
     }
 
     // ================== ADDRESS ENDPOINTS ==================
-
-    /** POST /api/users/me/addresses — Thêm địa chỉ mới (max 4) */
+    /**
+     * POST /api/users/me/addresses — Thêm địa chỉ mới (max 4)
+     */
     @PostMapping("/me/addresses")
     public ResponseEntity<?> addAddress(
             @AuthenticationPrincipal org.springframework.security.oauth2.jwt.Jwt jwt,
@@ -90,7 +111,9 @@ public ResponseEntity<List<String>> removeFromWishlist(
         }
     }
 
-    /** DELETE /api/users/me/addresses/{addressId} — Xoá địa chỉ theo id */
+    /**
+     * DELETE /api/users/me/addresses/{addressId} — Xoá địa chỉ theo id
+     */
     @DeleteMapping("/me/addresses/{addressId}")
     public ResponseEntity<List<com.b2204925.userservice.entity.Address>> removeAddress(
             @AuthenticationPrincipal org.springframework.security.oauth2.jwt.Jwt jwt,
@@ -98,7 +121,9 @@ public ResponseEntity<List<String>> removeFromWishlist(
         return ResponseEntity.ok(userService.removeAddress(jwt.getSubject(), addressId));
     }
 
-    /** PUT /api/users/me/addresses/{addressId}/default — Set địa chỉ mặc định */
+    /**
+     * PUT /api/users/me/addresses/{addressId}/default — Set địa chỉ mặc định
+     */
     @PutMapping("/me/addresses/{addressId}/default")
     public ResponseEntity<List<com.b2204925.userservice.entity.Address>> setDefaultAddress(
             @AuthenticationPrincipal org.springframework.security.oauth2.jwt.Jwt jwt,
@@ -107,9 +132,8 @@ public ResponseEntity<List<String>> removeFromWishlist(
     }
 
     /**
-     * POST /api/users/me/save-checkout-address
-     * Lưu địa chỉ sau khi đặt hàng thành công.
-     * Body: { address: {...}, phone: "..." }
+     * POST /api/users/me/save-checkout-address Lưu địa chỉ sau khi đặt hàng
+     * thành công. Body: { address: {...}, phone: "..." }
      */
     @PostMapping("/me/save-checkout-address")
     public ResponseEntity<User> saveCheckoutAddress(
@@ -120,8 +144,8 @@ public ResponseEntity<List<String>> removeFromWishlist(
             Map<String, String> addrMap = (Map<String, String>) body.get("address");
             String phone = (String) body.get("phone");
 
-            com.b2204925.userservice.entity.Address address =
-                    new com.b2204925.userservice.entity.Address();
+            com.b2204925.userservice.entity.Address address
+                    = new com.b2204925.userservice.entity.Address();
             if (addrMap != null) {
                 address.setReceiverName(addrMap.get("receiverName"));
                 address.setPhone(addrMap.get("phone"));
@@ -140,4 +164,3 @@ public ResponseEntity<List<String>> removeFromWishlist(
     }
 
 }
-

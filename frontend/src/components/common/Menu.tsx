@@ -178,7 +178,7 @@ function Menu() {
                           className={`mb-8 last:mb-0 ${catIdx !== 0 ? "pt-8 border-t border-gray-100" : ""}`}
                         >
                           <div
-                            className="flex items-center space-x-2 mb-6 cursor-pointer hover:text-green-700 w-fit"
+                            className="flex items-center space-x-2 mb-6 cursor-pointer hover:text-green-700 dark:hover:text-green-400 w-fit"
                             onClick={() => handleNavigate(cat.id)}
                           >
                             {cat.icon && (
@@ -210,7 +210,7 @@ function Menu() {
                                               subItem,
                                             )
                                           }
-                                          className="text-sm block text-gray-500 hover:text-green-700 hover:translate-x-1 transition-all text-left"
+                                          className="text-sm block text-gray-500 dark:text-gray-400 hover:text-green-700 dark:hover:text-green-400 hover:translate-x-1 transition-all text-left"
                                         >
                                           {subItem}
                                         </button>
@@ -245,7 +245,7 @@ function Menu() {
             className={`fixed top-0 right-0 h-full w-[85%] max-w-[320px] bg-white dark:bg-gray-800 shadow-2xl transition-transform duration-300 flex flex-col ${isMobileMenuOpen ? "translate-x-0" : "translate-x-full"}`}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="p-4 bg-[#05472a] text-white flex justify-between items-center shrink-0">
+            <div className="p-4 bg-[#05472a] dark:bg-gray-900 border-b dark:border-gray-700 text-white flex justify-between items-center shrink-0">
               <span className="font-bold text-xl uppercase tracking-wider">
                 Danh mục
               </span>
@@ -295,14 +295,14 @@ function Menu() {
                     </div>
 
                     {item.hasDropdown && activeMobileSub === item.label && (
-                      <div className="bg-gray-50">
+                      <div className="bg-gray-50 dark:bg-gray-800/50">
                         {categoriesData.map((cat, cIdx) => (
                           <div
                             key={cIdx}
                             className="border-b border-gray-200/50 last:border-0"
                           >
                             <div
-                              className="flex items-center justify-between px-6 py-4 cursor-pointer"
+                              className="flex items-center justify-between px-6 py-4 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800"
                               onClick={() =>
                                 setActiveMobileDeepSub(
                                   activeMobileDeepSub === cat.id
@@ -330,10 +330,10 @@ function Menu() {
                             </div>
 
                             {activeMobileDeepSub === cat.id && (
-                              <div className="bg-white px-8 pb-4 space-y-4">
+                              <div className="bg-white dark:bg-gray-800 px-8 pb-4 space-y-4">
                                 {cat.subCategories.map((sub, sIdx) => (
                                   <div key={sIdx} className="py-2">
-                                    <h4 className="text-[11px] font-black text-green-900 uppercase mb-3 tracking-widest border-l-2 border-green-700 pl-2">
+                                    <h4 className="text-[11px] font-black text-green-900 dark:text-green-400 uppercase mb-3 tracking-widest border-l-2 border-green-700 dark:border-green-500 pl-2">
                                       {sub.title}
                                     </h4>
                                     <div className="flex flex-col gap-2">
@@ -357,7 +357,7 @@ function Menu() {
                                 ))}
                                 <button
                                   onClick={() => handleNavigate(cat.id)}
-                                  className="w-full py-3 mt-2 bg-green-50 text-green-800 text-xs font-bold uppercase rounded-lg border border-green-100"
+                                  className="w-full py-3 mt-2 bg-green-50 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs font-bold uppercase rounded-lg border border-green-100 dark:border-green-800/50 hover:bg-green-100 dark:hover:bg-green-900/50 transition-colors"
                                 >
                                   Xem tất cả {cat.name}
                                 </button>
@@ -371,9 +371,9 @@ function Menu() {
                 ))}
               </ul>
             </div>
-            <div className="p-4 border-t border-gray-100 bg-gray-50 text-center shrink-0">
+            <div className="p-4 border-t border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-center shrink-0">
               <p className="text-[11px] text-gray-400 uppercase tracking-widest font-bold">
-                Artisano © 2026
+                Artisano © {new Date().getFullYear()}
               </p>
             </div>
           </div>

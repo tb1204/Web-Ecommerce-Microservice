@@ -40,6 +40,7 @@ import ProtectedRoute from "./components/common/ProtectedRoute";
 import AuthRedirect from "./pages/AuthRedirect";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentFailed from "./pages/PaymentFailed";
+import MyStatsPage from "./pages/MyStatsPage";
 
 import store from "./store";
 import { Provider } from "react-redux";
@@ -93,6 +94,7 @@ function App() {
                 <Route path="order/:id" element={<OrderDetailsPage />} />
                 <Route path="wishlist" element={<WishlistPage />} />
                 <Route path="profile" element={<CustomProfile />} />
+                <Route path="my-stats" element={<MyStatsPage />} />
                 <Route path="/auth-redirect" element={<AuthRedirect />} />
                 <Route path="*" element={<NotFound />} />
               </Route>
