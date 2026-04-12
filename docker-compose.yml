@@ -306,6 +306,10 @@ services:
       EUREKA_CLIENT_FETCH_REGISTRY: "true"
       EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
       # Đổi localhost:8084 → container name
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: "5672"
+      SPRING_RABBITMQ_USERNAME: guest
+      SPRING_RABBITMQ_PASSWORD: guest
       ORDER_SERVICE_URL: http://order-service:8084
       CLERK_JWKS_URL: https://pro-oryx-45.clerk.accounts.dev/.well-known/jwks.json
       CLERK_ISSUER: https://pro-oryx-45.clerk.accounts.dev
