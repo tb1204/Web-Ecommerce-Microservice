@@ -21,6 +21,7 @@ public class OrderRequest {
 
     private String variantId;
     private List<OrderItemRequest> items;
+    private String membershipTier;
 
     private String paymentMethod;
 

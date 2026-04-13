@@ -148,8 +148,28 @@ const AdminOrderPage = () => {
         );
       }
 
-      fetchOrders();
-      toast.success(`Cập nhật thành công!`);
+      // fetchOrders();
+      // toast.success(`Cập nhật thành công!`);
+      setOrders((prevOrders) =>
+        prevOrders.map((order) => {
+          if (order.id === id) {
+            // Nếu hủy đơn mà đơn đã thanh toán (PAID), ta đổi luôn trạng thái thanh toán thành REFUNDED
+            const isRefunded = newStatus === "CANCELLED" && order.payment.status === "PAID";
+            
+            return {
+              ...order,
+              orderStatus: newStatus,
+              payment: {
+                ...order.payment,
+                status: isRefunded ? "REFUNDED" : order.payment.status
+              }
+            } as Order;
+          }
+          return order;
+        })
+      );
+
+    toast.success(`Cập nhật thành công!`);
     } catch (error: any) {
       console.error("Lỗi cập nhật:", error.response?.data);
       toast.error(error.response?.data?.message || "Thao tác thất bại");
@@ -202,7 +222,7 @@ const AdminOrderPage = () => {
     const token = await getToken({ template: "my-backend" });
 
     try {
-      await axios.patch(
+      const response = await axios.patch(
         //  ĐỔI TẠI ĐÂY: Dùng orderId thay vì orderNumber
         `${BASE_URL}/api/payments/order/${orderId}/confirm-cod`,
         {},
@@ -210,8 +230,23 @@ const AdminOrderPage = () => {
           headers: { Authorization: `Bearer ${token}` },
         },
       );
+      // toast.success("Xác nhận thanh toán thành công!");
+      // fetchOrders();
+      if (response.status === 200) {
+      
+      setOrders((prevOrders) =>
+        prevOrders.map((order) =>
+          order.id === orderId
+            ? { 
+                ...order, 
+                payment: { ...order.payment, status: "PAID" } 
+              }
+            : order
+        )
+      );
+      
       toast.success("Xác nhận thanh toán thành công!");
-      fetchOrders();
+    }
     } catch (error: unknown) {
       console.error("Lỗi:", error);
 

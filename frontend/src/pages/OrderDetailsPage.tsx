@@ -328,6 +328,7 @@ import axios from "axios";
 import { Loader2 } from "lucide-react";
 import { useReactToPrint } from "react-to-print";
 import { PrintInvoice } from "../components/Admin/PrintInvoice";
+import Swal from 'sweetalert2';
 
 // const BASE_URL = "http://localhost:8084";
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -414,6 +415,7 @@ const OrderDetailsPage: React.FC = () => {
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isCancelling, setIsCancelling] = useState(false);
 
   const contentRef = useRef<HTMLDivElement>(null);
   const reactToPrintFn = useReactToPrint({
@@ -477,6 +479,59 @@ const OrderDetailsPage: React.FC = () => {
   const shippingFee = order.summary?.shippingFee ?? 0;
   const totalPayable = order.summary?.totalAmount ?? 0;
 
+  //  Hàm xử lý Hủy đơn hàng
+  const handleCancelOrder = async () => {
+    if (!order || order.orderStatus !== "PENDING") return;
+
+    // Hiển thị hộp thoại nhập lý do
+    const { value: reason } = await Swal.fire({
+      title: 'Hủy đơn hàng',
+      input: 'textarea',
+      inputLabel: 'Lý do hủy đơn',
+      inputPlaceholder: 'Nhập lý do của bạn vào đây...',
+      inputAttributes: {
+        'aria-label': 'Type your message here'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Xác nhận hủy',
+      cancelButtonText: 'Đóng',
+      confirmButtonColor: '#d33', 
+      inputValidator: (value) => {
+        if (!value) {
+          return 'Bạn cần nhập lý do để hủy đơn hàng!';
+        }
+      }
+    });
+
+    if (reason) {
+      try {
+        setIsCancelling(true);
+        const token = await getToken({ template: "my-backend" });
+        
+        // Gọi API cập nhật trạng thái đơn hàng 
+        await axios.put(
+          `${BASE_URL}/api/orders/cancel/${order.id}`, 
+          { cancelReason: reason }, 
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+
+        Swal.fire('Thành công!', 'Đơn hàng đã được hủy.', 'success');
+        
+        // Cập nhật lại state local để UI thay đổi ngay lập tức
+        setOrder({
+          ...order,
+          orderStatus: "CANCELLED",
+          cancelReason: reason
+        });
+      } catch (err: any) {
+        console.error("Lỗi khi hủy đơn:", err);
+        Swal.fire('Lỗi!', 'Không thể hủy đơn hàng lúc này.', 'error');
+      } finally {
+        setIsCancelling(false);
+      }
+    }
+  };
+
   return (
     <div className="max-w-6xl mx-auto p-4 md:p-10 bg-gray-50 dark:bg-gray-900 min-h-screen transition-colors duration-300">
       <Link
@@ -514,6 +569,17 @@ const OrderDetailsPage: React.FC = () => {
           >
             {getStatusLabel(order.orderStatus)}
           </span>
+          {order.orderStatus === "PENDING" && (
+            <button
+              onClick={handleCancelOrder}
+              disabled={isCancelling}
+              className="mt-2 px-4 py-1.5 border border-red-500 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 text-xs font-bold rounded-full transition-all active:scale-95 flex items-center gap-1"
+            >
+              {isCancelling ? <Loader2 size={12} className="animate-spin" /> : null}
+              Hủy đơn hàng
+            </button>
+          )}
+
           <span
             className={`px-4 py-1 rounded-full text-xs font-bold uppercase ${
               order.payment?.status === "PAID"
