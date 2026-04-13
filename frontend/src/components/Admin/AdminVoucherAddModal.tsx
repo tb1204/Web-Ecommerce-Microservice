@@ -66,14 +66,41 @@ const AdminVoucherAddModal: React.FC<AdminVoucherAddModalProps> = ({
     setFormData({ ...formData, discountValue: finalValue });
   };
 
+  // const handleSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   if (!formData.code || !formData.name) {
+  //     toast.error("Vui lòng nhập đầy đủ thông tin!");
+  //     return;
+  //   }
+  //   onAdd(formData);
+  //   setFormData(initialVoucher);
+  // };
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.code || !formData.name) {
-      toast.error("Vui lòng nhập đầy đủ thông tin!");
-      return;
-    }
-    onAdd(formData);
-    setFormData(initialVoucher);
+      e.preventDefault();
+      
+      // Tạo object mới, ép kiểu số và đảm bảo format ngày chuẩn ISO
+      const payload = {
+          code: formData.code.toUpperCase().trim(),
+          name: formData.name,
+          voucherType: formData.voucherType,
+          discountType: formData.discountType,
+          discountValue: Number(formData.discountValue),
+          maxDiscountAmount: Number(formData.maxDiscountAmount),
+          minOrderAmount: Number(formData.minOrderAmount),
+          usageLimit: {
+              total: Number(formData.usageLimit.total),
+              perUser: Number(formData.usageLimit.perUser)
+          },
+          validity: {
+              // Đảm bảo gửi chuỗi ISO chuẩn (vd: 2026-04-13T10:00:00Z)
+              start: new Date(formData.validity.start).toISOString(),
+              end: new Date(formData.validity.end).toISOString()
+          },
+          isStackable: formData.isStackable
+      };
+
+      onAdd(payload as any);
+      onClose();
   };
 
   return (
