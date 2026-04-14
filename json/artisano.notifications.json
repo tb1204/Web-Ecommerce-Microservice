@@ -1,0 +1,1525 @@
+[{
+  "_id": {
+    "$oid": "69d530ca74fdc86e2fde22a9"
+  },
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "orderId": "69d4c306c1a3755db096fa00",
+  "orderNumber": "ORD20260407154038",
+  "title": "Cập nhật đơn hàng",
+  "message": "Đơn hàng #ORD20260407154038 đã chuyển sang trạng thái: SHIPPING",
+  "type": "ORDER_STATUS",
+  "status": "READ",
+  "createdAt": {
+    "$date": "2026-04-07T16:28:58.169Z"
+  },
+  "readAt": {
+    "$date": "2026-04-07T16:29:06.867Z"
+  },
+  "customerName": "cooo baaaa",
+  "customerEmail": "hellocoba@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69d5311374fdc86e2fde22aa"
+  },
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "orderId": "69d4c306c1a3755db096fa00",
+  "orderNumber": "ORD20260407154038",
+  "title": "Giao hàng thành công",
+  "message": "Bạn đã nhận được hàng? Hãy chia sẻ cảm nhận với Artisano nhé!",
+  "type": "ORDER_STATUS",
+  "productId": "69cffd986ee12c22921926e8",
+  "status": "READ",
+  "createdAt": {
+    "$date": "2026-04-07T16:30:11.537Z"
+  },
+  "readAt": {
+    "$date": "2026-04-07T16:30:23.325Z"
+  },
+  "customerName": "cooo baaaa",
+  "customerEmail": "hellocoba@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69d5332074fdc86e2fde22ab"
+  },
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "title": "Phản hồi từ Artisano",
+  "message": "Admin đã trả lời đánh giá của bạn. Xem ngay nhé!",
+  "type": "COMMENT",
+  "productId": "69cfef446ee12c22921926e0",
+  "status": "READ",
+  "createdAt": {
+    "$date": "2026-04-07T16:38:56.473Z"
+  },
+  "readAt": {
+    "$date": "2026-04-07T16:44:28.505Z"
+  },
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69d5eae02019f210018582f2"
+  },
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "orderId": "69d5eadfe6d47a231ca0e233",
+  "orderNumber": "ORD20260408124255",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "READ",
+  "createdAt": {
+    "$date": "2026-04-08T05:42:56.461Z"
+  },
+  "readAt": {
+    "$date": "2026-04-08T06:07:58.979Z"
+  },
+  "customerName": "cooo baaaa",
+  "customerEmail": "hellocoba@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69d5f9f52019f210018582f3"
+  },
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "orderId": "69d5f9f5e6d47a231ca0e234",
+  "orderNumber": "ORD20260408134716",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "READ",
+  "createdAt": {
+    "$date": "2026-04-08T06:47:17.206Z"
+  },
+  "readAt": {
+    "$date": "2026-04-08T09:03:50.511Z"
+  },
+  "customerName": "cooo baaaa",
+  "customerEmail": "hellocoba@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69d5fdf82019f210018582f4"
+  },
+  "orderId": "69d5fdf7e6d47a231ca0e235",
+  "orderNumber": "ORD20260408140423",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-08T07:04:24.044Z"
+  },
+  "customerName": "xuanbang",
+  "customerEmail": "xuanbang@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69d5fe532019f210018582f5"
+  },
+  "orderId": "69d5fe53e6d47a231ca0e236",
+  "orderNumber": "ORD20260408140555",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-08T07:05:55.136Z"
+  },
+  "customerName": "xuanbang",
+  "customerEmail": "xuanbang@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69d601602019f210018582f6"
+  },
+  "orderId": "69d60160e6d47a231ca0e237",
+  "orderNumber": "ORD20260408141856",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-08T07:18:56.736Z"
+  },
+  "customerName": "xuanbang",
+  "customerEmail": "xuanbang@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69d7617ae7fd012b4a00428b"
+  },
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "orderId": "69d2c9a95f6178693eb99136",
+  "orderNumber": "ORD20260406034425",
+  "title": "Cập nhật đơn hàng",
+  "message": "Đơn hàng #ORD20260406034425 đã chuyển sang trạng thái: PROCESSING",
+  "type": "ORDER_STATUS",
+  "status": "READ",
+  "createdAt": {
+    "$date": "2026-04-09T08:21:14.230Z"
+  },
+  "readAt": {
+    "$date": "2026-04-11T07:49:43.910Z"
+  },
+  "customerName": "cooo baaaa",
+  "customerEmail": "hellocoba@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69d7792caec03b5ac7b561ad"
+  },
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "orderId": "69d2c9a95f6178693eb99136",
+  "orderNumber": "ORD20260406034425",
+  "title": "Cập nhật đơn hàng",
+  "message": "Đơn hàng #ORD20260406034425 đã chuyển sang trạng thái: SHIPPING",
+  "type": "ORDER_STATUS",
+  "status": "READ",
+  "createdAt": {
+    "$date": "2026-04-09T10:02:20.409Z"
+  },
+  "readAt": {
+    "$date": "2026-04-11T07:49:42.936Z"
+  },
+  "customerName": "cooo baaaa",
+  "customerEmail": "hellocoba@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69d7cc64466f666aa04cb233"
+  },
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "orderId": "69d7cc648f7f0b4f7b283803",
+  "orderNumber": "ORD20260409155724",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-09T15:57:24.604Z"
+  },
+  "customerName": "cong bang",
+  "customerEmail": "congbang@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69d7cc6d466f666aa04cb234"
+  },
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "orderId": "69d7cc6d8f7f0b4f7b283804",
+  "orderNumber": "ORD20260409155733",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-09T15:57:33.836Z"
+  },
+  "customerName": "cong bang",
+  "customerEmail": "congbang@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69d7d057466f666aa04cb235"
+  },
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "orderId": "69d7d0578f7f0b4f7b283805",
+  "orderNumber": "ORD20260409161415",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-09T16:14:15.882Z"
+  },
+  "customerName": "cong bang",
+  "customerEmail": "congbang@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69d7d0a9466f666aa04cb236"
+  },
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "orderId": "69d7d0a98f7f0b4f7b283806",
+  "orderNumber": "ORD20260409161537",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "READ",
+  "createdAt": {
+    "$date": "2026-04-09T16:15:37.100Z"
+  },
+  "readAt": {
+    "$date": "2026-04-13T14:25:20.877Z"
+  },
+  "customerName": "cong bang",
+  "customerEmail": "congbang@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69d7d5a2466f666aa04cb237"
+  },
+  "orderId": "69d7d5a28f7f0b4f7b283807",
+  "orderNumber": "ORD20260409163650",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-09T16:36:50.509Z"
+  },
+  "customerName": "xuan cong bang",
+  "customerEmail": "xuanbangb22@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69d7d61a466f666aa04cb238"
+  },
+  "orderId": "69d7d61a8f7f0b4f7b283808",
+  "orderNumber": "ORD20260409163850",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-09T16:38:50.421Z"
+  },
+  "customerName": "klklk",
+  "customerEmail": "lklklk",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69d7d728466f666aa04cb239"
+  },
+  "orderId": "69d7d7288f7f0b4f7b283809",
+  "orderNumber": "ORD20260409164320",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-09T16:43:20.938Z"
+  },
+  "customerName": "greyd",
+  "customerEmail": "greyd@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69d7def4466f666aa04cb23a"
+  },
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "orderId": "69d7def48f7f0b4f7b28380a",
+  "orderNumber": "ORD20260409171636",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "READ",
+  "createdAt": {
+    "$date": "2026-04-09T17:16:36.763Z"
+  },
+  "readAt": {
+    "$date": "2026-04-09T17:17:00.527Z"
+  },
+  "customerName": "grey ji",
+  "customerEmail": "greyd@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69d7df20466f666aa04cb23b"
+  },
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "orderId": "69d7def48f7f0b4f7b28380a",
+  "orderNumber": "ORD20260409171636",
+  "title": "Cập nhật đơn hàng",
+  "message": "Đơn hàng #ORD20260409171636 đã chuyển sang trạng thái: PROCESSING",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-09T17:17:20.346Z"
+  },
+  "customerName": "grey ji",
+  "customerEmail": "greyd@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69d7df24466f666aa04cb23c"
+  },
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "orderId": "69d7def48f7f0b4f7b28380a",
+  "orderNumber": "ORD20260409171636",
+  "title": "Cập nhật đơn hàng",
+  "message": "Đơn hàng #ORD20260409171636 đã chuyển sang trạng thái: SHIPPING",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-09T17:17:24.967Z"
+  },
+  "customerName": "grey ji",
+  "customerEmail": "greyd@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69d7ea8727f9db6a56642988"
+  },
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "orderId": "69d7ea8706dda72bf9cc5e0a",
+  "orderNumber": "ORD20260409180558",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-09T18:05:59.835Z"
+  },
+  "customerName": "grey ji",
+  "customerEmail": "greyd@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69d7ea8e27f9db6a56642989"
+  },
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "orderId": "69d7ea8e06dda72bf9cc5e0b",
+  "orderNumber": "ORD20260409180606",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-09T18:06:06.241Z"
+  },
+  "customerName": "grey ji",
+  "customerEmail": "greyd@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69d7ea9727f9db6a5664298a"
+  },
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "orderId": "69d7ea9706dda72bf9cc5e0c",
+  "orderNumber": "ORD20260409180615",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-09T18:06:15.050Z"
+  },
+  "customerName": "grey ji",
+  "customerEmail": "greyd@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69d7ee4227f9db6a5664298b"
+  },
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "orderId": "69d7ea8e06dda72bf9cc5e0b",
+  "orderNumber": "ORD20260409180606",
+  "title": "Giao hàng thành công",
+  "message": "Bạn đã nhận được hàng? Hãy chia sẻ cảm nhận với Artisano nhé!",
+  "type": "ORDER_STATUS",
+  "productId": "69d09e25be5d18bb2f488f29",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-09T18:21:54.344Z"
+  },
+  "customerName": "grey ji",
+  "customerEmail": "greyd@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69d7ee4627f9db6a5664298c"
+  },
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "orderId": "69d7ea9706dda72bf9cc5e0c",
+  "orderNumber": "ORD20260409180615",
+  "title": "Giao hàng thành công",
+  "message": "Bạn đã nhận được hàng? Hãy chia sẻ cảm nhận với Artisano nhé!",
+  "type": "ORDER_STATUS",
+  "productId": "69d09e25be5d18bb2f488f29",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-09T18:21:58.676Z"
+  },
+  "customerName": "grey ji",
+  "customerEmail": "greyd@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69d7ee4a27f9db6a5664298d"
+  },
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "orderId": "69d7ea8706dda72bf9cc5e0a",
+  "orderNumber": "ORD20260409180558",
+  "title": "Giao hàng thành công",
+  "message": "Bạn đã nhận được hàng? Hãy chia sẻ cảm nhận với Artisano nhé!",
+  "type": "ORDER_STATUS",
+  "productId": "69d09e25be5d18bb2f488f29",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-09T18:22:02.941Z"
+  },
+  "customerName": "grey ji",
+  "customerEmail": "greyd@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69d7ee9927f9db6a5664298e"
+  },
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "title": "Phản hồi từ Artisano",
+  "message": "Admin đã trả lời đánh giá của bạn. Xem ngay nhé!",
+  "type": "COMMENT",
+  "productId": "69d09e25be5d18bb2f488f29",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-09T18:23:21.190Z"
+  },
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69d7ef0627f9db6a5664298f"
+  },
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "orderId": "69d7ef0606dda72bf9cc5e0d",
+  "orderNumber": "ORD20260409182510",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-09T18:25:10.746Z"
+  },
+  "customerName": "grey ji",
+  "customerEmail": "greyd@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69d7ef3927f9db6a56642990"
+  },
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "orderId": "69d7ef3806dda72bf9cc5e0e",
+  "orderNumber": "ORD20260409182600",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-09T18:26:01.032Z"
+  },
+  "customerName": "grey ji",
+  "customerEmail": "greyd@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69d7ef6827f9db6a56642991"
+  },
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "orderId": "69d7ef6806dda72bf9cc5e0f",
+  "orderNumber": "ORD20260409182648",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-09T18:26:48.136Z"
+  },
+  "customerName": "grey ji",
+  "customerEmail": "greyd@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69d7efba27f9db6a56642992"
+  },
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "orderId": "69d7efba06dda72bf9cc5e10",
+  "orderNumber": "ORD20260409182810",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-09T18:28:10.208Z"
+  },
+  "customerName": "grey ji",
+  "customerEmail": "greyd@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69d9ecda9219c16cf8089962"
+  },
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "orderId": "69d9ecdaa4b38b3435feda7c",
+  "orderNumber": "ORD20260411064026",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-11T06:40:26.327Z"
+  },
+  "customerName": "grey ji",
+  "customerEmail": "greyd@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69d9ece09219c16cf8089963"
+  },
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "orderId": "69d9ece0a4b38b3435feda7d",
+  "orderNumber": "ORD20260411064032",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-11T06:40:32.768Z"
+  },
+  "customerName": "grey ji",
+  "customerEmail": "greyd@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69d9f33b9219c16cf8089964"
+  },
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "orderId": "69d9ece0a4b38b3435feda7d",
+  "orderNumber": "ORD20260411064032",
+  "title": "Giao hàng thành công",
+  "message": "Bạn đã nhận được hàng? Hãy chia sẻ cảm nhận với Artisano nhé!",
+  "type": "ORDER_STATUS",
+  "productId": "69cfef446ee12c22921926e0",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-11T07:07:39.247Z"
+  },
+  "customerName": "grey ji",
+  "customerEmail": "greyd@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69da1300fadf797f2550e9a8"
+  },
+  "userId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "orderId": "69da130090e1de14d44b2262",
+  "orderNumber": "ORD20260411092312",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-11T09:23:12.638Z"
+  },
+  "customerName": "name user2",
+  "customerEmail": "user2@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69da1308fadf797f2550e9a9"
+  },
+  "userId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "orderId": "69da130890e1de14d44b2263",
+  "orderNumber": "ORD20260411092320",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "READ",
+  "createdAt": {
+    "$date": "2026-04-11T09:23:20.380Z"
+  },
+  "readAt": {
+    "$date": "2026-04-11T20:41:38.471Z"
+  },
+  "customerName": "name user2",
+  "customerEmail": "user2@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69da132afadf797f2550e9aa"
+  },
+  "userId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "orderId": "69da132990e1de14d44b2264",
+  "orderNumber": "ORD20260411092353",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "READ",
+  "createdAt": {
+    "$date": "2026-04-11T09:23:54.033Z"
+  },
+  "readAt": {
+    "$date": "2026-04-11T20:41:39.448Z"
+  },
+  "customerName": "name user2",
+  "customerEmail": "user2@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69da13a6fadf797f2550e9ab"
+  },
+  "userId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "orderId": "69da132990e1de14d44b2264",
+  "orderNumber": "ORD20260411092353",
+  "title": "Cập nhật đơn hàng",
+  "message": "Đơn hàng #ORD20260411092353 đã chuyển sang trạng thái: SHIPPING",
+  "type": "ORDER_STATUS",
+  "status": "READ",
+  "createdAt": {
+    "$date": "2026-04-11T09:25:58.147Z"
+  },
+  "readAt": {
+    "$date": "2026-04-11T20:41:37.241Z"
+  },
+  "customerName": "name user2",
+  "customerEmail": "user2@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69da8e911399105100ce6dc9"
+  },
+  "userId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "orderId": "69da132990e1de14d44b2264",
+  "orderNumber": "ORD20260411092353",
+  "title": "Giao hàng thành công",
+  "message": "Bạn đã nhận được hàng? Hãy chia sẻ cảm nhận với Artisano nhé!",
+  "type": "ORDER_STATUS",
+  "productId": "69cffd986ee12c22921926e7",
+  "status": "READ",
+  "createdAt": {
+    "$date": "2026-04-11T18:10:25.046Z"
+  },
+  "readAt": {
+    "$date": "2026-04-11T20:41:36.394Z"
+  },
+  "customerName": "name user2",
+  "customerEmail": "user2@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69da92e11399105100ce6dca"
+  },
+  "userId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "orderId": "69da92e11ecb6f5f107ad5c2",
+  "orderNumber": "ORD20260411182848",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "READ",
+  "createdAt": {
+    "$date": "2026-04-11T18:28:49.225Z"
+  },
+  "readAt": {
+    "$date": "2026-04-11T20:41:35.501Z"
+  },
+  "customerName": "name user2",
+  "customerEmail": "user2@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69da92e51399105100ce6dcb"
+  },
+  "userId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "orderId": "69da92e51ecb6f5f107ad5c3",
+  "orderNumber": "ORD20260411182853",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "READ",
+  "createdAt": {
+    "$date": "2026-04-11T18:28:53.503Z"
+  },
+  "readAt": {
+    "$date": "2026-04-11T20:41:35.926Z"
+  },
+  "customerName": "name user2",
+  "customerEmail": "user2@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69da92fa1399105100ce6dcc"
+  },
+  "userId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "orderId": "69da92e51ecb6f5f107ad5c3",
+  "orderNumber": "ORD20260411182853",
+  "title": "Giao hàng thành công",
+  "message": "Bạn đã nhận được hàng? Hãy chia sẻ cảm nhận với Artisano nhé!",
+  "type": "ORDER_STATUS",
+  "productId": "69cffd986ee12c22921926e7",
+  "status": "READ",
+  "createdAt": {
+    "$date": "2026-04-11T18:29:14.730Z"
+  },
+  "readAt": {
+    "$date": "2026-04-11T20:41:33.852Z"
+  },
+  "customerName": "name user2",
+  "customerEmail": "user2@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69da94e61399105100ce6dcd"
+  },
+  "userId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "orderId": "69da94e61ecb6f5f107ad5c4",
+  "orderNumber": "ORD20260411183726",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "READ",
+  "createdAt": {
+    "$date": "2026-04-11T18:37:26.706Z"
+  },
+  "readAt": {
+    "$date": "2026-04-11T20:41:44.150Z"
+  },
+  "customerName": "name user2",
+  "customerEmail": "user2@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69da94f71399105100ce6dce"
+  },
+  "userId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "orderId": "69da94e61ecb6f5f107ad5c4",
+  "orderNumber": "ORD20260411183726",
+  "title": "Giao hàng thành công",
+  "message": "Bạn đã nhận được hàng? Hãy chia sẻ cảm nhận với Artisano nhé!",
+  "type": "ORDER_STATUS",
+  "productId": "69d4b3332fdd2c1b7c72c694",
+  "status": "READ",
+  "createdAt": {
+    "$date": "2026-04-11T18:37:43.609Z"
+  },
+  "readAt": {
+    "$date": "2026-04-11T20:41:32.760Z"
+  },
+  "customerName": "name user2",
+  "customerEmail": "user2@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69da95711399105100ce6dcf"
+  },
+  "userId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "orderId": "69da95711ecb6f5f107ad5c5",
+  "orderNumber": "ORD20260411183945",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "READ",
+  "createdAt": {
+    "$date": "2026-04-11T18:39:45.295Z"
+  },
+  "readAt": {
+    "$date": "2026-04-11T20:41:31.527Z"
+  },
+  "customerName": "name user2",
+  "customerEmail": "user2@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69da95881399105100ce6dd0"
+  },
+  "userId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "orderId": "69da95711ecb6f5f107ad5c5",
+  "orderNumber": "ORD20260411183945",
+  "title": "Giao hàng thành công",
+  "message": "Bạn đã nhận được hàng? Hãy chia sẻ cảm nhận với Artisano nhé!",
+  "type": "ORDER_STATUS",
+  "productId": "69d4b3332fdd2c1b7c72c694",
+  "status": "READ",
+  "createdAt": {
+    "$date": "2026-04-11T18:40:08.472Z"
+  },
+  "readAt": {
+    "$date": "2026-04-11T20:41:45.176Z"
+  },
+  "customerName": "name user2",
+  "customerEmail": "user2@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69da95ab1399105100ce6dd1"
+  },
+  "userId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "orderId": "69da95ab1ecb6f5f107ad5c6",
+  "orderNumber": "ORD20260411184043",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "READ",
+  "createdAt": {
+    "$date": "2026-04-11T18:40:43.190Z"
+  },
+  "readAt": {
+    "$date": "2026-04-11T20:41:51.340Z"
+  },
+  "customerName": "name user2",
+  "customerEmail": "user2@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69da95b51399105100ce6dd2"
+  },
+  "userId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "orderId": "69da95ab1ecb6f5f107ad5c6",
+  "orderNumber": "ORD20260411184043",
+  "title": "Giao hàng thành công",
+  "message": "Bạn đã nhận được hàng? Hãy chia sẻ cảm nhận với Artisano nhé!",
+  "type": "ORDER_STATUS",
+  "productId": "69d4b3332fdd2c1b7c72c694",
+  "status": "READ",
+  "createdAt": {
+    "$date": "2026-04-11T18:40:53.738Z"
+  },
+  "readAt": {
+    "$date": "2026-04-11T20:41:46.534Z"
+  },
+  "customerName": "name user2",
+  "customerEmail": "user2@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69da962f1399105100ce6dd3"
+  },
+  "userId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "orderId": "69da962f1ecb6f5f107ad5c7",
+  "orderNumber": "ORD20260411184255",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "READ",
+  "createdAt": {
+    "$date": "2026-04-11T18:42:55.883Z"
+  },
+  "readAt": {
+    "$date": "2026-04-11T20:41:46.904Z"
+  },
+  "customerName": "name user2",
+  "customerEmail": "user2@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69da96391399105100ce6dd4"
+  },
+  "userId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "orderId": "69da962f1ecb6f5f107ad5c7",
+  "orderNumber": "ORD20260411184255",
+  "title": "Giao hàng thành công",
+  "message": "Bạn đã nhận được hàng? Hãy chia sẻ cảm nhận với Artisano nhé!",
+  "type": "ORDER_STATUS",
+  "productId": "69cffd986ee12c22921926e7",
+  "status": "READ",
+  "createdAt": {
+    "$date": "2026-04-11T18:43:05.508Z"
+  },
+  "readAt": {
+    "$date": "2026-04-11T20:41:49.704Z"
+  },
+  "customerName": "name user2",
+  "customerEmail": "user2@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69daa34d71b80249a7c3f5c8"
+  },
+  "orderId": "69daa34bd3cd052cb392e741",
+  "orderNumber": "ORD20260411193851",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-11T19:38:53.108Z"
+  },
+  "customerName": "tranxuancongbang",
+  "customerEmail": "xuanbang2k4@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69daa35571b80249a7c3f5c9"
+  },
+  "orderId": "69daa34fd3cd052cb392e742",
+  "orderNumber": "ORD20260411193855",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-11T19:39:01.842Z"
+  },
+  "customerName": "tranxuancongbang",
+  "customerEmail": "xuanbang2k4@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69daa35a71b80249a7c3f5ca"
+  },
+  "orderId": "69daa355d3cd052cb392e743",
+  "orderNumber": "ORD20260411193901",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-11T19:39:06.262Z"
+  },
+  "customerName": "tranxuancongbang",
+  "customerEmail": "xuanbang2k4@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69daa35e71b80249a7c3f5cb"
+  },
+  "orderId": "69daa35ed3cd052cb392e744",
+  "orderNumber": "ORD20260411193910",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-11T19:39:10.380Z"
+  },
+  "customerName": "tranxuancongbang",
+  "customerEmail": "xuanbang2k4@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69daa38971b80249a7c3f5cc"
+  },
+  "orderId": "69daa389d3cd052cb392e745",
+  "orderNumber": "ORD20260411193953",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-11T19:39:53.683Z"
+  },
+  "customerName": "tranxuanbang",
+  "customerEmail": "xuanbang2k4@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69daa40c71b80249a7c3f5cd"
+  },
+  "orderId": "69daa389d3cd052cb392e745",
+  "orderNumber": "ORD20260411193953",
+  "title": "Giao hàng thành công",
+  "message": "Bạn đã nhận được hàng? Hãy chia sẻ cảm nhận với Artisano nhé!",
+  "type": "ORDER_STATUS",
+  "productId": "69cffe076ee12c22921926ec",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-11T19:42:04.617Z"
+  },
+  "customerName": "tranxuanbang",
+  "customerEmail": "xuanbang2k4@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69dab47a0af51446def832d4"
+  },
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "orderId": "69d2c9fe5f6178693eb99137",
+  "orderNumber": "ORD20260406034550",
+  "title": "Cập nhật đơn hàng",
+  "message": "Đơn hàng #ORD20260406034550 đã chuyển sang trạng thái: PROCESSING",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-11T20:52:10.497Z"
+  },
+  "customerName": "cooo baaaa",
+  "customerEmail": "hellocoba@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69dc94eb7b61dd4549464838"
+  },
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "orderId": "69dc94ea5dcae0213ba8c1a3",
+  "orderNumber": "ORD20260413070201",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-13T07:02:02.870Z"
+  },
+  "customerName": "cong bang",
+  "customerEmail": "congbang@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69dc94f17b61dd4549464839"
+  },
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "orderId": "69dc94ec5dcae0213ba8c1a4",
+  "orderNumber": "ORD20260413070204",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-13T07:02:09.372Z"
+  },
+  "customerName": "cong bang",
+  "customerEmail": "congbang@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69dc94f67b61dd454946483a"
+  },
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "orderId": "69dc94ee5dcae0213ba8c1a5",
+  "orderNumber": "ORD20260413070206",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-13T07:02:14.044Z"
+  },
+  "customerName": "cong bang",
+  "customerEmail": "congbang@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69dc94fa7b61dd454946483b"
+  },
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "orderId": "69dc94f15dcae0213ba8c1a6",
+  "orderNumber": "ORD20260413070209",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-13T07:02:18.639Z"
+  },
+  "customerName": "cong bang",
+  "customerEmail": "congbang@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69dc94fe7b61dd454946483c"
+  },
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "orderId": "69dc94f25dcae0213ba8c1a7",
+  "orderNumber": "ORD20260413070210",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-13T07:02:22.551Z"
+  },
+  "customerName": "cong bang",
+  "customerEmail": "congbang@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69dc95027b61dd454946483d"
+  },
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "orderId": "69dc94f25dcae0213ba8c1a8",
+  "orderNumber": "ORD20260413070210",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-13T07:02:26.605Z"
+  },
+  "customerName": "cong bang",
+  "customerEmail": "congbang@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69dc95077b61dd454946483e"
+  },
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "orderId": "69dc94f35dcae0213ba8c1a9",
+  "orderNumber": "ORD20260413070211",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-13T07:02:31.303Z"
+  },
+  "customerName": "cong bang",
+  "customerEmail": "congbang@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69dc950b7b61dd454946483f"
+  },
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "orderId": "69dc94f45dcae0213ba8c1aa",
+  "orderNumber": "ORD20260413070212",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-13T07:02:35.404Z"
+  },
+  "customerName": "cong bang",
+  "customerEmail": "congbang@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69dc950f7b61dd4549464840"
+  },
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "orderId": "69dc94f45dcae0213ba8c1ab",
+  "orderNumber": "ORD20260413070212",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-13T07:02:39.510Z"
+  },
+  "customerName": "cong bang",
+  "customerEmail": "congbang@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69dc95127b61dd4549464841"
+  },
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "orderId": "69dc94f55dcae0213ba8c1ac",
+  "orderNumber": "ORD20260413070213",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-13T07:02:42.865Z"
+  },
+  "customerName": "cong bang",
+  "customerEmail": "congbang@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69dc95167b61dd4549464842"
+  },
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "orderId": "69dc94f65dcae0213ba8c1ad",
+  "orderNumber": "ORD20260413070214",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-13T07:02:46.427Z"
+  },
+  "customerName": "cong bang",
+  "customerEmail": "congbang@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69dc951a7b61dd4549464843"
+  },
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "orderId": "69dc94f75dcae0213ba8c1ae",
+  "orderNumber": "ORD20260413070215",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-13T07:02:50.906Z"
+  },
+  "customerName": "cong bang",
+  "customerEmail": "congbang@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69dc951f7b61dd4549464844"
+  },
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "orderId": "69dc94f85dcae0213ba8c1af",
+  "orderNumber": "ORD20260413070216",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-13T07:02:55.543Z"
+  },
+  "customerName": "cong bang",
+  "customerEmail": "congbang@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69dc95237b61dd4549464845"
+  },
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "orderId": "69dc94f85dcae0213ba8c1b0",
+  "orderNumber": "ORD20260413070216",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-13T07:02:59.405Z"
+  },
+  "customerName": "cong bang",
+  "customerEmail": "congbang@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69dc95277b61dd4549464846"
+  },
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "orderId": "69dc94fa5dcae0213ba8c1b1",
+  "orderNumber": "ORD20260413070218",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-13T07:03:03.831Z"
+  },
+  "customerName": "cong bang",
+  "customerEmail": "congbang@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69dca0f47b61dd4549464847"
+  },
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "orderId": "69dca0f35dcae0213ba8c1b2",
+  "orderNumber": "ORD20260413075323",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-13T07:53:24.067Z"
+  },
+  "customerName": "cong bang",
+  "customerEmail": "congbangctu@gmai.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69dca14d7b61dd4549464848"
+  },
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "orderId": "69dca14d5dcae0213ba8c1b3",
+  "orderNumber": "ORD20260413075453",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-13T07:54:53.704Z"
+  },
+  "customerName": "cong bang",
+  "customerEmail": "congbang@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69dca1a67b61dd4549464849"
+  },
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "orderId": "69dca1a65dcae0213ba8c1b4",
+  "orderNumber": "ORD20260413075622",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-13T07:56:22.517Z"
+  },
+  "customerName": "cong bang",
+  "customerEmail": "congbang@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69dcb13d7b61dd454946484a"
+  },
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "orderId": "69dcb13d5dcae0213ba8c1b5",
+  "orderNumber": "ORD20260413090253",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-13T09:02:53.643Z"
+  },
+  "customerName": "cong bang",
+  "customerEmail": "congbang@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69dcb1947b61dd454946484b"
+  },
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "orderId": "69dcb1945dcae0213ba8c1b6",
+  "orderNumber": "ORD20260413090420",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-13T09:04:20.090Z"
+  },
+  "customerName": "cong bang",
+  "customerEmail": "congbang@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69dcbcbf7b61dd454946484c"
+  },
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "orderId": "69dca1a65dcae0213ba8c1b4",
+  "orderNumber": "ORD20260413075622",
+  "title": "Cập nhật đơn hàng",
+  "message": "Đơn hàng #ORD20260413075622 đã chuyển sang trạng thái: PROCESSING",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-13T09:51:59.017Z"
+  },
+  "customerName": "cong bang",
+  "customerEmail": "congbang@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69dcdcce9f9fa81848d69d22"
+  },
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "orderId": "69dcdccd277e8d0cf3d69799",
+  "orderNumber": "ORD20260413120845",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-13T12:08:46.004Z"
+  },
+  "customerName": "cong bang",
+  "customerEmail": "congbang@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69dcf21d9f9fa81848d69d23"
+  },
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "orderId": "69dcf21d277e8d0cf3d6979a",
+  "orderNumber": "ORD20260413133940",
+  "title": "Đặt hàng thành công",
+  "message": "Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận.",
+  "type": "ORDER_STATUS",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-13T13:39:41.063Z"
+  },
+  "customerName": "cong bang",
+  "customerEmail": "congbang@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+},
+{
+  "_id": {
+    "$oid": "69dcf2269f9fa81848d69d24"
+  },
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "orderId": "69dcf21d277e8d0cf3d6979a",
+  "orderNumber": "ORD20260413133940",
+  "title": "Giao hàng thành công",
+  "message": "Bạn đã nhận được hàng? Hãy chia sẻ cảm nhận với Artisano nhé!",
+  "type": "ORDER_STATUS",
+  "productId": "69cfef446ee12c22921926e0",
+  "status": "UNREAD",
+  "createdAt": {
+    "$date": "2026-04-13T13:39:50.076Z"
+  },
+  "customerName": "cong bang",
+  "customerEmail": "congbang@gmail.com",
+  "_class": "com.b2204922.notificationservice.entity.Notification"
+}]

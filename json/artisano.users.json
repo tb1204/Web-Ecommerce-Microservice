@@ -1,0 +1,361 @@
+[{
+  "_id": {
+    "$oid": "69aa5fc192de5a078aa2c467"
+  },
+  "clerkId": "user_3AYdCwEXm2wC5xrs4jiGpXEmHa7",
+  "email": "luuduong@gmail.com",
+  "username": "duong",
+  "firstName": "luuduongll",
+  "lastName": "luuduongrrr",
+  "avatarUrl": "https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvdXBsb2FkZWQvaW1nXzNCMTNSZktudU9rYWRianNUbmFsbDZONndZUiJ9",
+  "totalSpent": "0",
+  "membership": "MEMBER",
+  "purchaseCount": 0,
+  "provider": "clerk",
+  "roles": [
+    "ADMIN"
+  ],
+  "addresses": [],
+  "wishlist": [],
+  "isActive": true,
+  "isBlocked": false,
+  "createdAt": {
+    "$date": "2026-03-06T05:01:53.850Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-11T21:53:36.033Z"
+  },
+  "_class": "com.b2204925.userservice.entity.User"
+},
+{
+  "_id": {
+    "$oid": "69b03ce60bfe1d6e99893006"
+  },
+  "clerkId": "user_3AlC7xt0XtRV4gdjQ9CU8uZaHS8",
+  "email": "luanvandvb2004@gmail.com",
+  "username": "luanvandvb",
+  "firstName": "van",
+  "lastName": "luan",
+  "gender": "male",
+  "avatarUrl": "https://lh3.googleusercontent.com/a/ACg8ocKyktAgKKLElZ2UJ_tdgo0vzl2E-Ncyx_zY4lP6x_t1c3hkVwY=s1000-c",
+  "totalSpent": "0",
+  "membership": "MEMBER",
+  "purchaseCount": 0,
+  "provider": "google",
+  "roles": [
+    "USER"
+  ],
+  "addresses": [],
+  "wishlist": [],
+  "isActive": true,
+  "isBlocked": false,
+  "createdAt": {
+    "$date": "2026-03-10T15:46:46.924Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-14T04:21:16.127Z"
+  },
+  "_class": "com.b2204925.userservice.entity.User"
+},
+{
+  "_id": {
+    "$oid": "69b5306a15bab16db3522b16"
+  },
+  "clerkId": "user_3AvcVzvB1GEa0YtDODgkr5neEvX",
+  "email": "chuaco@gmail.com",
+  "username": "user812",
+  "firstName": "houser823",
+  "lastName": "tenuser834",
+  "avatarUrl": "https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18zOEMycHF6MkRobWxIM1hMOE1EQno4Y1Z4VnciLCJyaWQiOiJ1c2VyXzNBdmNWenZCMUdFYTBZdERPRGdrcjVuZUV2WCIsImluaXRpYWxzIjoiSFQifQ",
+  "totalSpent": "0",
+  "membership": "MEMBER",
+  "purchaseCount": 0,
+  "provider": "clerk",
+  "roles": [
+    "USER"
+  ],
+  "addresses": [],
+  "isActive": true,
+  "isBlocked": false,
+  "createdAt": {
+    "$date": "2026-03-14T09:54:50.310Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-14T09:54:50.310Z"
+  },
+  "_class": "com.b2204925.userservice.entity.User"
+},
+{
+  "_id": {
+    "$oid": "69cd3dca858ba30446e3ce74"
+  },
+  "clerkId": "user_3BjCTpyQRVxULP7AWMP0zH9NEVe",
+  "email": "xuanbang1302@gmail.com",
+  "username": "xuanbang1302",
+  "firstName": "Bang",
+  "lastName": "Xuan",
+  "avatarUrl": "https://lh3.googleusercontent.com/a/ACg8ocKXDskQf2RCQvjIeM51jwJ6FLcrTiBRNMEtLtdhqZmyObVVaA=s1000-c",
+  "totalSpent": "0",
+  "membership": "MEMBER",
+  "purchaseCount": 0,
+  "provider": "google",
+  "roles": [
+    "USER"
+  ],
+  "addresses": [],
+  "wishlist": [],
+  "isActive": true,
+  "isBlocked": false,
+  "createdAt": {
+    "$date": "2026-04-01T15:46:18.049Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-01T15:46:19.212Z"
+  },
+  "_class": "com.b2204925.userservice.entity.User"
+},
+{
+  "_id": {
+    "$oid": "69d35498be9ded66e24146bd"
+  },
+  "clerkId": "user_3ByNclCanH5PCZUNlQHfrxnZ32W",
+  "email": "bctran135@gmail.com",
+  "username": "bctran135",
+  "firstName": "Tran",
+  "lastName": "B",
+  "avatarUrl": "https://lh3.googleusercontent.com/a/ACg8ocKmGcR7_7Xii6GrREmoZA-CZtZHeV96Um-F9w2-IfqNiRUa_Q=s1000-c",
+  "totalSpent": "0",
+  "membership": "MEMBER",
+  "purchaseCount": 0,
+  "provider": "google",
+  "roles": [
+    "USER"
+  ],
+  "addresses": [],
+  "wishlist": [],
+  "isActive": true,
+  "isBlocked": false,
+  "createdAt": {
+    "$date": "2026-04-06T06:37:12.519Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T07:53:20.873Z"
+  },
+  "_class": "com.b2204925.userservice.entity.User"
+},
+{
+  "_id": {
+    "$oid": "69d4c4daf1b11764d4cf0fce"
+  },
+  "clerkId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "email": "congbang@gmail.com",
+  "username": "xuanbang",
+  "firstName": "cong",
+  "lastName": "bang",
+  "phone": "0987654321",
+  "gender": "",
+  "avatarUrl": "https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18zOEMycHF6MkRobWxIM1hMOE1EQno4Y1Z4VnciLCJyaWQiOiJ1c2VyXzNDMVNodnlscmY0dUlBQ1hzUlZsWDNtekpnQiIsImluaXRpYWxzIjoiQ0IifQ",
+  "totalSpent": "3299000.0",
+  "membership": "SILVER",
+  "purchaseCount": 1,
+  "provider": "clerk",
+  "roles": [
+    "USER"
+  ],
+  "addresses": [
+    {
+      "_id": "0e4ba24d-e5da-49b2-8f3a-f57ded095f0c",
+      "receiverName": "cong bang",
+      "phone": "0987654321",
+      "street": "nha 4b",
+      "ward": "Phường Hoàn Kiếm",
+      "district": "",
+      "province": "Thành phố Hà Nội",
+      "defaultAddress": true
+    },
+    {
+      "_id": "2a62012f-9680-4010-9038-3a334282a8ba",
+      "receiverName": "cong bang",
+      "phone": "0987654321",
+      "street": "nhà 3b",
+      "ward": "Phường Hoàn Kiếm",
+      "district": "",
+      "province": "Thành phố Hà Nội",
+      "defaultAddress": false
+    }
+  ],
+  "wishlist": [
+    "69cfef446ee12c22921926df",
+    "69cfef446ee12c22921926e0",
+    "69cfef446ee12c22921926e1",
+    "69cfef446ee12c22921926e2"
+  ],
+  "isActive": true,
+  "isBlocked": false,
+  "createdAt": {
+    "$date": "2026-04-07T08:48:26.022Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-13T13:39:49.893Z"
+  },
+  "_class": "com.b2204925.userservice.entity.User"
+},
+{
+  "_id": {
+    "$oid": "69d4d9e3f1b11764d4cf0fd0"
+  },
+  "clerkId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "email": "user2@gmail.com",
+  "username": "mynameuser2",
+  "firstName": "name",
+  "lastName": "user2",
+  "avatarUrl": "https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18zOEMycHF6MkRobWxIM1hMOE1EQno4Y1Z4VnciLCJyaWQiOiJ1c2VyXzNDMWRjbkI4VDZXRmZaODBEMVVLOFJqbVFubyIsImluaXRpYWxzIjoiTlUifQ",
+  "totalSpent": "19259000.0",
+  "membership": "DIAMOND",
+  "purchaseCount": 4,
+  "provider": "clerk",
+  "roles": [
+    "USER"
+  ],
+  "addresses": [
+    {
+      "_id": "a26c5480-4efb-4d24-ae9f-6a8a40974eb0",
+      "receiverName": "name user2",
+      "phone": "0987465784",
+      "street": "nhà 4b",
+      "ward": "Phường Mỹ Hào",
+      "district": "",
+      "province": "Tỉnh Hưng Yên",
+      "defaultAddress": true
+    },
+    {
+      "_id": "8bc67e7c-d1e2-4cb5-9896-190632ca120b",
+      "receiverName": "name user2",
+      "phone": "0987465784",
+      "street": "nhà 3a",
+      "ward": "Phường Hoàn Kiếm",
+      "district": "",
+      "province": "Thành phố Hà Nội",
+      "defaultAddress": false
+    }
+  ],
+  "wishlist": [
+    "69cffd986ee12c22921926e7"
+  ],
+  "isActive": true,
+  "isBlocked": false,
+  "createdAt": {
+    "$date": "2026-04-07T10:18:11.555Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-13T07:31:16.118Z"
+  },
+  "_class": "com.b2204925.userservice.entity.User"
+},
+{
+  "_id": {
+    "$oid": "69d77627ad9902564abdba67"
+  },
+  "clerkId": "user_3C7ENTlwnoYihbQ45R1mhyHnUkX",
+  "email": "congbangb22@gmail.com",
+  "username": "congbangb22",
+  "firstName": "xuan",
+  "lastName": "bang",
+  "gender": "male",
+  "avatarUrl": "https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18zOEMycHF6MkRobWxIM1hMOE1EQno4Y1Z4VnciLCJyaWQiOiJ1c2VyXzNDN0VOVGx3bm9ZaWhiUTQ1UjFtaHlIblVrWCIsImluaXRpYWxzIjoiWEIifQ",
+  "totalSpent": "0",
+  "membership": "DIAMOND",
+  "purchaseCount": 0,
+  "provider": "clerk",
+  "roles": [
+    "USER"
+  ],
+  "addresses": [],
+  "wishlist": [],
+  "isActive": true,
+  "isBlocked": false,
+  "createdAt": {
+    "$date": "2026-04-09T09:49:27.363Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T09:49:56.299Z"
+  },
+  "_class": "com.b2204925.userservice.entity.User"
+},
+{
+  "_id": {
+    "$oid": "69d7d74af7964b7cf761f317"
+  },
+  "clerkId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "email": "greyd@gmail.com",
+  "username": "namegreydi1",
+  "firstName": "grey",
+  "lastName": "ji",
+  "phone": "0987456123",
+  "gender": "male",
+  "avatarUrl": "https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18zOEMycHF6MkRobWxIM1hMOE1EQno4Y1Z4VnciLCJyaWQiOiJ1c2VyXzNDODJxdzY0dm50VUs3eVBzOWVWM001VlA5WCIsImluaXRpYWxzIjoiR0oifQ",
+  "totalSpent": "0",
+  "membership": "SILVER",
+  "purchaseCount": 0,
+  "provider": "clerk",
+  "roles": [
+    "USER"
+  ],
+  "addresses": [
+    {
+      "_id": "ca21ebce-442a-41d1-866e-89cfe57739bb",
+      "receiverName": "grey ji",
+      "phone": "0987465784",
+      "street": "nhà 3a",
+      "ward": "Phường Hồng Hà",
+      "district": "",
+      "province": "Thành phố Hà Nội",
+      "defaultAddress": true
+    },
+    {
+      "_id": "e3889e58-ab4e-49a9-98bf-b1c970e36f8c",
+      "receiverName": "grey ji",
+      "phone": "0987465784",
+      "street": "nhà 6b",
+      "ward": "Xã Thất Khê",
+      "district": "",
+      "province": "Tỉnh Lạng Sơn",
+      "defaultAddress": false
+    },
+    {
+      "_id": "614fff50-06f5-4b3e-b174-15a37806aa5c",
+      "receiverName": "grey ji",
+      "phone": "0987465784",
+      "street": "nhà 7b",
+      "ward": "Phường Ninh Kiều",
+      "district": "",
+      "province": "Thành phố Cần Thơ",
+      "defaultAddress": false
+    },
+    {
+      "_id": "60ab0da2-00b1-4ed1-9433-eeba75d99dfc",
+      "receiverName": "grey ji",
+      "phone": "0987465784",
+      "street": "nhà 8b",
+      "ward": "Phường Vũng Tàu",
+      "district": "",
+      "province": "Thành phố Hồ Chí Minh",
+      "defaultAddress": false
+    }
+  ],
+  "wishlist": [
+    "69d4b3332fdd2c1b7c72c695",
+    "69cffd986ee12c22921926e7",
+    "69cfef446ee12c22921926e0",
+    "69cfef446ee12c22921926e1"
+  ],
+  "isActive": true,
+  "isBlocked": false,
+  "createdAt": {
+    "$date": "2026-04-09T16:43:54.687Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-11T19:30:53.947Z"
+  },
+  "_class": "com.b2204925.userservice.entity.User"
+}]

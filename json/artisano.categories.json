@@ -1,0 +1,243 @@
+[{
+  "_id": {
+    "$oid": "69cf38f80bd84b1e7cf691a4"
+  },
+  "name": "Nệm",
+  "code": "NEM",
+  "parentName": null,
+  "parentCode": null
+},
+{
+  "_id": {
+    "$oid": "69cf38f80bd84b1e7cf691a5"
+  },
+  "name": "Chăn ga",
+  "code": "CHAN-GA",
+  "parentName": null,
+  "parentCode": null
+},
+{
+  "_id": {
+    "$oid": "69cf38f80bd84b1e7cf691a6"
+  },
+  "name": "Gối",
+  "code": "GOI",
+  "parentName": null,
+  "parentCode": null
+},
+{
+  "_id": {
+    "$oid": "69cf38f80bd84b1e7cf691a7"
+  },
+  "name": "Phụ kiện",
+  "code": "PHU-KIEN",
+  "parentName": null,
+  "parentCode": null
+},
+{
+  "_id": {
+    "$oid": "69cf3c225ca67982d136c2a6"
+  },
+  "name": "Bộ chăn ga",
+  "code": "BO-CHAN-GA",
+  "parentName": "Chăn ga",
+  "parentCode": "CHAN-GA"
+},
+{
+  "_id": {
+    "$oid": "69cf3c225ca67982d136c2a7"
+  },
+  "name": "Chăn và vỏ chăn",
+  "code": "CHAN-VA-VO-CHAN",
+  "parentName": "Chăn ga",
+  "parentCode": "CHAN-GA"
+},
+{
+  "_id": {
+    "$oid": "69cf3c225ca67982d136c2a8"
+  },
+  "name": "Ga lẻ",
+  "code": "GA-LE",
+  "parentName": "Chăn ga",
+  "parentCode": "CHAN-GA"
+},
+{
+  "_id": {
+    "$oid": "69cf3c225ca67982d136c2a9"
+  },
+  "name": "Vỏ gối lẻ",
+  "code": "VO-GOI-LE",
+  "parentName": "Chăn ga",
+  "parentCode": "CHAN-GA"
+},
+{
+  "_id": {
+    "$oid": "69cf3c225ca67982d136c2aa"
+  },
+  "name": "Chăn ga gối trẻ em",
+  "code": "CHAN-GA-GOI-TRE-EM",
+  "parentName": "Chăn ga",
+  "parentCode": "CHAN-GA"
+},
+{
+  "_id": {
+    "$oid": "69cf3c225ca67982d136c2ab"
+  },
+  "name": "Bộ ga chun",
+  "code": "BO-GA-CHUN",
+  "parentName": "Chăn ga",
+  "parentCode": "CHAN-GA"
+},
+{
+  "_id": {
+    "$oid": "69cf3c225ca67982d136c2ac"
+  },
+  "name": "Bộ ga phủ",
+  "code": "BO-GA-PHU",
+  "parentName": "Chăn ga",
+  "parentCode": "CHAN-GA"
+},
+{
+  "_id": {
+    "$oid": "69cf3c225ca67982d136c2ad"
+  },
+  "name": "Vỏ chăn lẻ",
+  "code": "VO-CHAN-LE",
+  "parentName": "Chăn ga",
+  "parentCode": "CHAN-GA"
+},
+{
+  "_id": {
+    "$oid": "69cf3c225ca67982d136c2ae"
+  },
+  "name": "Chăn lẻ",
+  "code": "CHAN-LE",
+  "parentName": "Chăn ga",
+  "parentCode": "CHAN-GA"
+},
+{
+  "_id": {
+    "$oid": "69cf3c225ca67982d136c2af"
+  },
+  "name": "Bộ ga chun chần",
+  "code": "BO-GA-CHUN-CHAN",
+  "parentName": "Chăn ga",
+  "parentCode": "CHAN-GA"
+},
+{
+  "_id": {
+    "$oid": "69cf3c785ca67982d136c2b1"
+  },
+  "name": "Gối bông",
+  "code": "GOI-BONG",
+  "parentName": "Gối",
+  "parentCode": "GOI"
+},
+{
+  "_id": {
+    "$oid": "69cf3c785ca67982d136c2b2"
+  },
+  "name": "Gối Foam",
+  "code": "GOI-FOAM",
+  "parentName": "Gối",
+  "parentCode": "GOI"
+},
+{
+  "_id": {
+    "$oid": "69cf3c785ca67982d136c2b3"
+  },
+  "name": "Gối cao su",
+  "code": "GOI-CAO-SU",
+  "parentName": "Gối",
+  "parentCode": "GOI"
+},
+{
+  "_id": {
+    "$oid": "69cf3c785ca67982d136c2b4"
+  },
+  "name": "Gối lông vũ",
+  "code": "GOI-LONG-VU",
+  "parentName": "Gối",
+  "parentCode": "GOI"
+},
+{
+  "_id": {
+    "$oid": "69cf3c785ca67982d136c2b5"
+  },
+  "name": "Gối làm mát",
+  "code": "GOI-LAM-MAT",
+  "parentName": "Gối",
+  "parentCode": "GOI"
+},
+{
+  "_id": {
+    "$oid": "69cf3c785ca67982d136c2b6"
+  },
+  "name": "Gối giảm đau vai gáy",
+  "code": "GOI-GIAM-DAU-VAI-GAY",
+  "parentName": "Gối",
+  "parentCode": "GOI"
+},
+{
+  "_id": {
+    "$oid": "69cf3cd05ca67982d136c2b8"
+  },
+  "name": "Nệm bông ép",
+  "code": "NEM-BONG-EP",
+  "parentName": "Nệm",
+  "parentCode": "NEM"
+},
+{
+  "_id": {
+    "$oid": "69cf3cd05ca67982d136c2b9"
+  },
+  "name": "Nệm cao su",
+  "code": "NEM-CAO-SU",
+  "parentName": "Nệm",
+  "parentCode": "NEM"
+},
+{
+  "_id": {
+    "$oid": "69cf3cd05ca67982d136c2ba"
+  },
+  "name": "Nệm lò xo",
+  "code": "NEM-LO-XO",
+  "parentName": "Nệm",
+  "parentCode": "NEM"
+},
+{
+  "_id": {
+    "$oid": "69cf3cd05ca67982d136c2bb"
+  },
+  "name": "Nệm Foam",
+  "code": "NEM-FOAM",
+  "parentName": "Nệm",
+  "parentCode": "NEM"
+},
+{
+  "_id": {
+    "$oid": "69cf3d215ca67982d136c2bd"
+  },
+  "name": "Topper nệm",
+  "code": "TOPPER-NEM",
+  "parentName": "Phụ kiện",
+  "parentCode": "PHU-KIEN"
+},
+{
+  "_id": {
+    "$oid": "69cf3d215ca67982d136c2be"
+  },
+  "name": "Tấm bảo vệ nệm",
+  "code": "TAM-BAO-VE-NEM",
+  "parentName": "Phụ kiện",
+  "parentCode": "PHU-KIEN"
+},
+{
+  "_id": {
+    "$oid": "69cf3d215ca67982d136c2bf"
+  },
+  "name": "Bảo vệ gối",
+  "code": "BAO-VE-GOI",
+  "parentName": "Phụ kiện",
+  "parentCode": "PHU-KIEN"
+}]

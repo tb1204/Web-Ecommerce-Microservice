@@ -1,0 +1,455 @@
+[{
+  "_id": {
+    "$oid": "69da8be20b22553bb631aaa7"
+  },
+  "conversationId": "69da8bcf0b22553bb631aaa6",
+  "senderId": "user_3AYdCwEXm2wC5xrs4jiGpXEmHa7",
+  "senderRole": "ADMIN",
+  "type": "TEXT",
+  "content": "hi",
+  "metadata": {
+    "isBotResponse": false,
+    "botFallback": false
+  },
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2026-04-11T17:58:58.892Z"
+  },
+  "_class": "com.b2204925.chatservice.entity.Message"
+},
+{
+  "_id": {
+    "$oid": "69daa24e0b22553bb631aaa9"
+  },
+  "conversationId": "69daa23d0b22553bb631aaa8",
+  "senderId": "user_3AYdCwEXm2wC5xrs4jiGpXEmHa7",
+  "senderRole": "ADMIN",
+  "type": "TEXT",
+  "content": "hi",
+  "metadata": {
+    "isBotResponse": false,
+    "botFallback": false
+  },
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2026-04-11T19:34:38.116Z"
+  },
+  "_class": "com.b2204925.chatservice.entity.Message"
+},
+{
+  "_id": {
+    "$oid": "69daa6270b22553bb631aaaa"
+  },
+  "conversationId": "69daa23d0b22553bb631aaa8",
+  "senderId": "user_3AYdCwEXm2wC5xrs4jiGpXEmHa7",
+  "senderRole": "ADMIN",
+  "type": "TEXT",
+  "content": "hi",
+  "metadata": {
+    "isBotResponse": false,
+    "botFallback": false
+  },
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2026-04-11T19:51:03.278Z"
+  },
+  "_class": "com.b2204925.chatservice.entity.Message"
+},
+{
+  "_id": {
+    "$oid": "69daa62e0b22553bb631aaab"
+  },
+  "conversationId": "69daa23d0b22553bb631aaa8",
+  "senderId": "user_3AYdCwEXm2wC5xrs4jiGpXEmHa7",
+  "senderRole": "ADMIN",
+  "type": "TEXT",
+  "content": "hi",
+  "metadata": {
+    "isBotResponse": false,
+    "botFallback": false
+  },
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2026-04-11T19:51:10.255Z"
+  },
+  "_class": "com.b2204925.chatservice.entity.Message"
+},
+{
+  "_id": {
+    "$oid": "69daab6599a783508a12386a"
+  },
+  "conversationId": "69da8bcf0b22553bb631aaa6",
+  "senderId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "senderRole": "USER",
+  "type": "TEXT",
+  "content": "hi",
+  "metadata": {
+    "isBotResponse": false,
+    "botFallback": false
+  },
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2026-04-11T20:13:25.884Z"
+  },
+  "_class": "com.b2204925.chatservice.entity.Message"
+},
+{
+  "_id": {
+    "$oid": "69daab6699a783508a12386b"
+  },
+  "conversationId": "69da8bcf0b22553bb631aaa6",
+  "senderId": "SYSTEM",
+  "senderRole": "BOT",
+  "type": "SYSTEM",
+  "content": "Admin đã tham gia cuộc trò chuyện",
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2026-04-11T20:13:26.392Z"
+  },
+  "_class": "com.b2204925.chatservice.entity.Message"
+},
+{
+  "_id": {
+    "$oid": "69daab7399a783508a12386c"
+  },
+  "conversationId": "69da8bcf0b22553bb631aaa6",
+  "senderId": "user_3AYdCwEXm2wC5xrs4jiGpXEmHa7",
+  "senderRole": "ADMIN",
+  "type": "TEXT",
+  "content": "chào user",
+  "metadata": {
+    "isBotResponse": false,
+    "botFallback": false
+  },
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2026-04-11T20:13:39.469Z"
+  },
+  "_class": "com.b2204925.chatservice.entity.Message"
+},
+{
+  "_id": {
+    "$oid": "69daabbb99a783508a12386d"
+  },
+  "conversationId": "69da8bcf0b22553bb631aaa6",
+  "senderId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "senderRole": "USER",
+  "type": "TEXT",
+  "content": "có nệm nào đang sale không shop",
+  "metadata": {
+    "isBotResponse": false,
+    "botFallback": false
+  },
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2026-04-11T20:14:51.920Z"
+  },
+  "_class": "com.b2204925.chatservice.entity.Message"
+},
+{
+  "_id": {
+    "$oid": "69daabc799a783508a12386e"
+  },
+  "conversationId": "69da8bcf0b22553bb631aaa6",
+  "senderId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "senderRole": "USER",
+  "type": "TEXT",
+  "content": "có không ạ",
+  "metadata": {
+    "isBotResponse": false,
+    "botFallback": false
+  },
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2026-04-11T20:15:03.835Z"
+  },
+  "_class": "com.b2204925.chatservice.entity.Message"
+},
+{
+  "_id": {
+    "$oid": "69daabe699a783508a12386f"
+  },
+  "conversationId": "69da8bcf0b22553bb631aaa6",
+  "senderId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "senderRole": "USER",
+  "type": "TEXT",
+  "content": "có không shop",
+  "metadata": {
+    "isBotResponse": false,
+    "botFallback": false
+  },
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2026-04-11T20:15:34.654Z"
+  },
+  "_class": "com.b2204925.chatservice.entity.Message"
+},
+{
+  "_id": {
+    "$oid": "69dab10388803f43df31e981"
+  },
+  "conversationId": "69da8bcf0b22553bb631aaa6",
+  "senderId": "user_3AYdCwEXm2wC5xrs4jiGpXEmHa7",
+  "senderRole": "ADMIN",
+  "type": "IMAGE",
+  "mediaUrl": "https://res.cloudinary.com/dkmzqfc8j/image/upload/w_800,q_auto,f_auto/v1775939843/chat/images/ou2r9zsjdpmeb0jt4cyr.webp",
+  "thumbnailUrl": "https://res.cloudinary.com/dkmzqfc8j/image/upload/c_thumb,w_200,h_200,q_auto,f_auto/v1775939843/chat/images/ou2r9zsjdpmeb0jt4cyr.webp",
+  "mimeType": "image/webp",
+  "mediaSize": {
+    "$numberLong": "180790"
+  },
+  "metadata": {
+    "isBotResponse": false,
+    "botFallback": false
+  },
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2026-04-11T20:37:23.620Z"
+  },
+  "_class": "com.b2204925.chatservice.entity.Message"
+},
+{
+  "_id": {
+    "$oid": "69dab12688803f43df31e983"
+  },
+  "conversationId": "69da8bcf0b22553bb631aaa6",
+  "senderId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "senderRole": "USER",
+  "type": "TEXT",
+  "content": "đẹp nhe shop ơi",
+  "metadata": {
+    "isBotResponse": false,
+    "botFallback": false
+  },
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2026-04-11T20:37:58.652Z"
+  },
+  "_class": "com.b2204925.chatservice.entity.Message"
+},
+{
+  "_id": {
+    "$oid": "69dab12688803f43df31e982"
+  },
+  "conversationId": "69da8bcf0b22553bb631aaa6",
+  "senderId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "senderRole": "USER",
+  "type": "IMAGE",
+  "mediaUrl": "https://res.cloudinary.com/dkmzqfc8j/image/upload/w_800,q_auto,f_auto/v1775939878/chat/images/t0bi4qkfkwflqbfeqnsn.webp",
+  "thumbnailUrl": "https://res.cloudinary.com/dkmzqfc8j/image/upload/c_thumb,w_200,h_200,q_auto,f_auto/v1775939878/chat/images/t0bi4qkfkwflqbfeqnsn.webp",
+  "mimeType": "image/webp",
+  "mediaSize": {
+    "$numberLong": "180790"
+  },
+  "metadata": {
+    "isBotResponse": false,
+    "botFallback": false
+  },
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2026-04-11T20:37:58.652Z"
+  },
+  "_class": "com.b2204925.chatservice.entity.Message"
+},
+{
+  "_id": {
+    "$oid": "69dab15388803f43df31e984"
+  },
+  "conversationId": "69daa23d0b22553bb631aaa8",
+  "senderId": "SYSTEM",
+  "senderRole": "BOT",
+  "type": "SYSTEM",
+  "content": "Admin đã tham gia cuộc trò chuyện",
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2026-04-11T20:38:43.971Z"
+  },
+  "_class": "com.b2204925.chatservice.entity.Message"
+},
+{
+  "_id": {
+    "$oid": "69dac7d388803f43df31e987"
+  },
+  "conversationId": "69dac7cf88803f43df31e986",
+  "senderId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "senderRole": "USER",
+  "type": "TEXT",
+  "content": "hi shop",
+  "metadata": {
+    "isBotResponse": false,
+    "botFallback": false
+  },
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2026-04-11T22:14:43.925Z"
+  },
+  "_class": "com.b2204925.chatservice.entity.Message"
+},
+{
+  "_id": {
+    "$oid": "69dac7d488803f43df31e988"
+  },
+  "conversationId": "69dac7cf88803f43df31e986",
+  "senderId": "SYSTEM",
+  "senderRole": "BOT",
+  "type": "SYSTEM",
+  "content": "Admin đã tham gia cuộc trò chuyện",
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2026-04-11T22:14:44.607Z"
+  },
+  "_class": "com.b2204925.chatservice.entity.Message"
+},
+{
+  "_id": {
+    "$oid": "69dac7e288803f43df31e989"
+  },
+  "conversationId": "69dac7cf88803f43df31e986",
+  "senderId": "user_3AYdCwEXm2wC5xrs4jiGpXEmHa7",
+  "senderRole": "ADMIN",
+  "type": "TEXT",
+  "content": "chào bạn",
+  "metadata": {
+    "isBotResponse": false,
+    "botFallback": false
+  },
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2026-04-11T22:14:58.875Z"
+  },
+  "_class": "com.b2204925.chatservice.entity.Message"
+},
+{
+  "_id": {
+    "$oid": "69dac7ee88803f43df31e98a"
+  },
+  "conversationId": "69dac7cf88803f43df31e986",
+  "senderId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "senderRole": "USER",
+  "type": "TEXT",
+  "content": "vâng ạ",
+  "metadata": {
+    "isBotResponse": false,
+    "botFallback": false
+  },
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2026-04-11T22:15:10.560Z"
+  },
+  "_class": "com.b2204925.chatservice.entity.Message"
+},
+{
+  "_id": {
+    "$oid": "69dac80488803f43df31e98b"
+  },
+  "conversationId": "69dac7cf88803f43df31e986",
+  "senderId": "user_3AYdCwEXm2wC5xrs4jiGpXEmHa7",
+  "senderRole": "ADMIN",
+  "type": "TEXT",
+  "content": "shop có thể",
+  "metadata": {
+    "isBotResponse": false,
+    "botFallback": false
+  },
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2026-04-11T22:15:32.340Z"
+  },
+  "_class": "com.b2204925.chatservice.entity.Message"
+},
+{
+  "_id": {
+    "$oid": "69dac80788803f43df31e98c"
+  },
+  "conversationId": "69dac7cf88803f43df31e986",
+  "senderId": "user_3AYdCwEXm2wC5xrs4jiGpXEmHa7",
+  "senderRole": "ADMIN",
+  "type": "TEXT",
+  "content": "giúp gì cho bạn",
+  "metadata": {
+    "isBotResponse": false,
+    "botFallback": false
+  },
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2026-04-11T22:15:35.810Z"
+  },
+  "_class": "com.b2204925.chatservice.entity.Message"
+},
+{
+  "_id": {
+    "$oid": "69dac8eb88803f43df31e98d"
+  },
+  "conversationId": "69dac7b188803f43df31e985",
+  "senderId": "SYSTEM",
+  "senderRole": "BOT",
+  "type": "SYSTEM",
+  "content": "Admin đã tham gia cuộc trò chuyện",
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2026-04-11T22:19:23.106Z"
+  },
+  "_class": "com.b2204925.chatservice.entity.Message"
+},
+{
+  "_id": {
+    "$oid": "69dc6c4d617bb437e7b1f9be"
+  },
+  "conversationId": "69dac7cf88803f43df31e986",
+  "senderId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "senderRole": "USER",
+  "type": "TEXT",
+  "content": "tìm nệm êm ạ",
+  "metadata": {
+    "isBotResponse": false,
+    "botFallback": false
+  },
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2026-04-13T04:08:45.485Z"
+  },
+  "_class": "com.b2204925.chatservice.entity.Message"
+},
+{
+  "_id": {
+    "$oid": "69dcb9a1617bb437e7b1f9c0"
+  },
+  "conversationId": "69dac7cf88803f43df31e986",
+  "senderId": "user_3AYdCwEXm2wC5xrs4jiGpXEmHa7",
+  "senderRole": "ADMIN",
+  "type": "TEXT",
+  "content": "shop gửi ảnh bạn tham khảo ạ",
+  "metadata": {
+    "isBotResponse": false,
+    "botFallback": false
+  },
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2026-04-13T09:38:41.213Z"
+  },
+  "_class": "com.b2204925.chatservice.entity.Message"
+},
+{
+  "_id": {
+    "$oid": "69dcb9a1617bb437e7b1f9bf"
+  },
+  "conversationId": "69dac7cf88803f43df31e986",
+  "senderId": "user_3AYdCwEXm2wC5xrs4jiGpXEmHa7",
+  "senderRole": "ADMIN",
+  "type": "IMAGE",
+  "mediaUrl": "https://res.cloudinary.com/dkmzqfc8j/image/upload/w_800,q_auto,f_auto/v1776073120/chat/images/iyvntu88097a2orfxowm.webp",
+  "thumbnailUrl": "https://res.cloudinary.com/dkmzqfc8j/image/upload/c_thumb,w_200,h_200,q_auto,f_auto/v1776073120/chat/images/iyvntu88097a2orfxowm.webp",
+  "mimeType": "image/webp",
+  "mediaSize": {
+    "$numberLong": "180790"
+  },
+  "metadata": {
+    "isBotResponse": false,
+    "botFallback": false
+  },
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2026-04-13T09:38:41.214Z"
+  },
+  "_class": "com.b2204925.chatservice.entity.Message"
+}]

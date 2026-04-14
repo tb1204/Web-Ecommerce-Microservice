@@ -1,0 +1,4450 @@
+[{
+  "_id": {
+    "$oid": "69d2c9a95f6178693eb99136"
+  },
+  "orderNumber": "ORD20260406034425",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "customerInfo": {
+    "name": "cooo baaaa",
+    "phone": "090909090909",
+    "email": "hellocoba@gmail.com",
+    "shippingAddress": "sdsdsdsd, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 2529000,
+    "shippingFee": 30000,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "UNPAID",
+    "transactionId": ""
+  },
+  "orderStatus": "SHIPPING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926df",
+      "productName": "Nệm bông ép Wonjun Pure & Fresh dày 9cm gấp 3",
+      "quantity": 1,
+      "price": 2499000,
+      "lineTotal": 2499000
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-05T20:44:25.624Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T10:02:19.713Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d2c9fe5f6178693eb99137"
+  },
+  "orderNumber": "ORD20260406034550",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "customerInfo": {
+    "name": "cooo baaaa",
+    "phone": "090909090909",
+    "email": "hellocoba@gmail.com",
+    "shippingAddress": "sdsdsdsd, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 2529000,
+    "shippingFee": 30000,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "UNPAID",
+    "transactionId": ""
+  },
+  "orderStatus": "PROCESSING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926df",
+      "productName": "Nệm bông ép Wonjun Pure & Fresh dày 9cm gấp 3",
+      "quantity": 1,
+      "price": 2499000,
+      "lineTotal": 2499000
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-05T20:45:50.596Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-11T20:52:09.927Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d2ca2b5f6178693eb99138"
+  },
+  "orderNumber": "ORD20260406034635",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "customerInfo": {
+    "name": "cooo baaaa",
+    "phone": "090909090909",
+    "email": "hellocoba@gmail.com",
+    "shippingAddress": "sdsdsdsd, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 6827999,
+    "shippingFee": 30000,
+    "totalQty": 2
+  },
+  "payment": {
+    "method": "COD",
+    "status": "UNPAID",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926df",
+      "productName": "Nệm bông ép Wonjun Pure & Fresh dày 9cm gấp 3",
+      "quantity": 1,
+      "price": 2499000,
+      "lineTotal": 2499000
+    },
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "quantity": 1,
+      "price": 4298999,
+      "lineTotal": 4298999
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-05T20:46:35.503Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-05T20:46:35.503Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d2cb245f6178693eb99139"
+  },
+  "orderNumber": "ORD20260406035043",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "customerInfo": {
+    "name": "cooo baaaa",
+    "phone": "090909090909",
+    "email": "hellocoba@gmail.com",
+    "shippingAddress": "sdsdsdsd, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 6827999,
+    "shippingFee": 30000,
+    "totalQty": 2
+  },
+  "payment": {
+    "method": "COD",
+    "status": "UNPAID",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926df",
+      "productName": "Nệm bông ép Wonjun Pure & Fresh dày 9cm gấp 3",
+      "quantity": 1,
+      "price": 2499000,
+      "lineTotal": 2499000
+    },
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "quantity": 1,
+      "price": 4298999,
+      "lineTotal": 4298999
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-05T20:50:44.002Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-05T20:50:44.002Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d337d5d76ea04c993a0c24"
+  },
+  "orderNumber": "ORD20260406113429",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "customerInfo": {
+    "name": "cooo baaaa",
+    "phone": "0987654321",
+    "email": "hellocoba@gmail.com",
+    "shippingAddress": "nha 3a, Phường Cái Khế, Thành phố Cần Thơ"
+  },
+  "summary": {
+    "totalAmount": 12624999,
+    "shippingFee": 30000,
+    "totalQty": 5
+  },
+  "payment": {
+    "method": "COD",
+    "status": "UNPAID",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926df",
+      "productName": "Nệm bông ép Wonjun Pure & Fresh dày 9cm gấp 3",
+      "quantity": 2,
+      "price": 2499000,
+      "lineTotal": 4998000
+    },
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "quantity": 1,
+      "price": 4298999,
+      "lineTotal": 4298999
+    },
+    {
+      "productId": "69d09271be5d18bb2f488f27",
+      "productName": "Gối lông vũ tự nhiên Goodnight Flow",
+      "quantity": 1,
+      "price": 799000,
+      "lineTotal": 799000
+    },
+    {
+      "productId": "69cfef446ee12c22921926df",
+      "productName": "Nệm bông ép Wonjun Pure & Fresh dày 9cm gấp 3",
+      "quantity": 1,
+      "price": 2499000,
+      "lineTotal": 2499000
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-06T04:34:29.502Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-06T04:34:29.502Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d34a0670e6b113763ffe55"
+  },
+  "orderNumber": "ORD20260406125205",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "customerInfo": {
+    "name": "cooo baaaa",
+    "phone": "0987654321",
+    "email": "hellocoba@gmail.com",
+    "shippingAddress": "nha 6b, Phường Ninh Kiều, Thành phố Cần Thơ"
+  },
+  "summary": {
+    "totalAmount": 21222997,
+    "shippingFee": 30000,
+    "totalQty": 7
+  },
+  "payment": {
+    "method": "COD",
+    "status": "UNPAID",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926df",
+      "productName": "Nệm bông ép Wonjun Pure & Fresh dày 9cm gấp 3",
+      "quantity": 2,
+      "price": 2499000,
+      "lineTotal": 4998000
+    },
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "quantity": 1,
+      "price": 4298999,
+      "lineTotal": 4298999
+    },
+    {
+      "productId": "69d09271be5d18bb2f488f27",
+      "productName": "Gối lông vũ tự nhiên Goodnight Flow",
+      "quantity": 1,
+      "price": 799000,
+      "lineTotal": 799000
+    },
+    {
+      "productId": "69cfef446ee12c22921926df",
+      "productName": "Nệm bông ép Wonjun Pure & Fresh dày 9cm gấp 3",
+      "quantity": 1,
+      "price": 2499000,
+      "lineTotal": 2499000
+    },
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "quantity": 2,
+      "price": 4298999,
+      "lineTotal": 8597998
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-06T05:52:06.025Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-06T05:52:06.025Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d351265755ea3457e051fd"
+  },
+  "orderNumber": "ORD20260406132230",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "customerInfo": {
+    "name": "cooo baaaa",
+    "phone": "0987654321",
+    "email": "hellocoba@gmail.com",
+    "shippingAddress": "nha 6b, Phường Vũng Tàu, Thành phố Hồ Chí Minh"
+  },
+  "summary": {
+    "totalAmount": 12897000,
+    "shippingFee": 0,
+    "totalQty": 3
+  },
+  "payment": {
+    "method": "COD",
+    "status": "UNPAID",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 2,
+      "price": 4299000,
+      "lineTotal": 8598000,
+      "size": "160 x 200",
+      "thickness": "10cm",
+      "color": ""
+    },
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 1,
+      "price": 4299000,
+      "lineTotal": 4299000,
+      "size": "120 x 200",
+      "thickness": "10cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-06T06:22:30.424Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-06T06:22:30.424Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d46ea0601d3025488b958a"
+  },
+  "orderNumber": "ORD20260407094031",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "customerInfo": {
+    "name": "cooo baaaa",
+    "phone": "0987654321",
+    "email": "hellocoba@gmail.com",
+    "shippingAddress": "nhà 3b, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 19695000,
+    "shippingFee": 0,
+    "totalQty": 5
+  },
+  "payment": {
+    "method": "COD",
+    "status": "UNPAID",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "variantId": "ff817899-6256-4d09-b012-e0f74730a428",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 2,
+      "price": 4299000,
+      "lineTotal": 8598000,
+      "size": "160 x 200",
+      "thickness": "10cm",
+      "color": ""
+    },
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "variantId": "v6-160",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 2,
+      "price": 4299000,
+      "lineTotal": 8598000,
+      "size": "120 x 200",
+      "thickness": "10cm",
+      "color": ""
+    },
+    {
+      "productId": "69cfef446ee12c22921926e1",
+      "variantId": "v7-160",
+      "productName": "Nệm bông ép Goodnight Nova gấp 3 9cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241471/artisano/products/vkpclrtlbxh2wgknnbno.webp",
+      "quantity": 1,
+      "price": 2499000,
+      "lineTotal": 2499000,
+      "size": "140 x 200",
+      "thickness": "9cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-07T02:40:31.990Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T02:40:31.990Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d4809c601d3025488b958c"
+  },
+  "orderNumber": "ORD20260407105716",
+  "customerInfo": {
+    "name": "luu duong",
+    "phone": "0987654321",
+    "email": "duong@gmail.com",
+    "shippingAddress": "nha 5b, Phường Cửa Nam, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 4299000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "UNPAID",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "variantId": "v6-160",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 1,
+      "price": 4299000,
+      "lineTotal": 4299000,
+      "size": "120 x 200",
+      "thickness": "10cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-07T03:57:16.552Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T03:57:16.552Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d480a5601d3025488b958d"
+  },
+  "orderNumber": "ORD20260407105725",
+  "customerInfo": {
+    "name": "luu duong",
+    "phone": "0987654321",
+    "email": "duong@gmail.com",
+    "shippingAddress": "nha 5b, Phường Cửa Nam, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 4299000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "UNPAID",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "variantId": "v6-160",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 1,
+      "price": 4299000,
+      "lineTotal": 4299000,
+      "size": "120 x 200",
+      "thickness": "10cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-07T03:57:25.340Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T03:57:25.340Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d480b4601d3025488b958e"
+  },
+  "orderNumber": "ORD20260407105740",
+  "customerInfo": {
+    "name": "luu duong",
+    "phone": "0987654321",
+    "email": "duong123@gmail.com",
+    "shippingAddress": "nha 5b, Phường Cửa Nam, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 4299000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "UNPAID",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "variantId": "v6-160",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 1,
+      "price": 4299000,
+      "lineTotal": 4299000,
+      "size": "120 x 200",
+      "thickness": "10cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-07T03:57:40.865Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T03:57:40.865Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d480b7601d3025488b958f"
+  },
+  "orderNumber": "ORD20260407105743",
+  "customerInfo": {
+    "name": "luu duong",
+    "phone": "0987654321",
+    "email": "duong123@gmail.com",
+    "shippingAddress": "nha 5b, Phường Cửa Nam, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 4299000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "UNPAID",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "variantId": "v6-160",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 1,
+      "price": 4299000,
+      "lineTotal": 4299000,
+      "size": "120 x 200",
+      "thickness": "10cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-07T03:57:43.277Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T03:57:43.277Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d48339601d3025488b9591"
+  },
+  "orderNumber": "ORD20260407110825",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "customerInfo": {
+    "name": "cooo baaaa",
+    "phone": "098765432",
+    "email": "hellocoba@gmail.com",
+    "shippingAddress": "nha3b, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 4299000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "UNPAID",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "variantId": "v6-180",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 1,
+      "price": 4299000,
+      "lineTotal": 4299000,
+      "size": "140 x 200",
+      "thickness": "10cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-07T04:08:25.023Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T04:08:25.023Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d48e07601d3025488b9593"
+  },
+  "orderNumber": "ORD20260407115431",
+  "customerInfo": {
+    "name": "luu duon",
+    "phone": "0987465784",
+    "email": "luu@gmail.com",
+    "shippingAddress": "nha 4b, Xã Sơn Động, Tỉnh Bắc Ninh"
+  },
+  "summary": {
+    "totalAmount": 2529000,
+    "shippingFee": 30000,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "UNPAID",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e1",
+      "variantId": "v7-160",
+      "productName": "Nệm bông ép Goodnight Nova gấp 3 9cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241471/artisano/products/vkpclrtlbxh2wgknnbno.webp",
+      "quantity": 1,
+      "price": 2499000,
+      "lineTotal": 2499000,
+      "size": "140 x 200",
+      "thickness": "9cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-07T04:54:31.082Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T04:54:31.082Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d48e0c601d3025488b9594"
+  },
+  "orderNumber": "ORD20260407115436",
+  "customerInfo": {
+    "name": "luu duon",
+    "phone": "0987465784",
+    "email": "luu@gmail.com",
+    "shippingAddress": "nha 4b, Xã Sơn Động, Tỉnh Bắc Ninh"
+  },
+  "summary": {
+    "totalAmount": 2529000,
+    "shippingFee": 30000,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "UNPAID",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e1",
+      "variantId": "v7-160",
+      "productName": "Nệm bông ép Goodnight Nova gấp 3 9cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241471/artisano/products/vkpclrtlbxh2wgknnbno.webp",
+      "quantity": 1,
+      "price": 2499000,
+      "lineTotal": 2499000,
+      "size": "140 x 200",
+      "thickness": "9cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-07T04:54:36.600Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T04:54:36.600Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d48e0e601d3025488b9595"
+  },
+  "orderNumber": "ORD20260407115438",
+  "customerInfo": {
+    "name": "luu duon",
+    "phone": "0987465784",
+    "email": "luu@gmail.com",
+    "shippingAddress": "nha 4b, Xã Sơn Động, Tỉnh Bắc Ninh"
+  },
+  "summary": {
+    "totalAmount": 2529000,
+    "shippingFee": 30000,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "UNPAID",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e1",
+      "variantId": "v7-160",
+      "productName": "Nệm bông ép Goodnight Nova gấp 3 9cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241471/artisano/products/vkpclrtlbxh2wgknnbno.webp",
+      "quantity": 1,
+      "price": 2499000,
+      "lineTotal": 2499000,
+      "size": "140 x 200",
+      "thickness": "9cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-07T04:54:38.408Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T04:54:38.408Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d48e0f601d3025488b9596"
+  },
+  "orderNumber": "ORD20260407115439",
+  "customerInfo": {
+    "name": "luu duon",
+    "phone": "0987465784",
+    "email": "luu@gmail.com",
+    "shippingAddress": "nha 4b, Xã Sơn Động, Tỉnh Bắc Ninh"
+  },
+  "summary": {
+    "totalAmount": 2529000,
+    "shippingFee": 30000,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "UNPAID",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e1",
+      "variantId": "v7-160",
+      "productName": "Nệm bông ép Goodnight Nova gấp 3 9cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241471/artisano/products/vkpclrtlbxh2wgknnbno.webp",
+      "quantity": 1,
+      "price": 2499000,
+      "lineTotal": 2499000,
+      "size": "140 x 200",
+      "thickness": "9cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-07T04:54:39.167Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T04:54:39.167Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d48e0f601d3025488b9597"
+  },
+  "orderNumber": "ORD20260407115439",
+  "customerInfo": {
+    "name": "luu duon",
+    "phone": "0987465784",
+    "email": "luu@gmail.com",
+    "shippingAddress": "nha 4b, Xã Sơn Động, Tỉnh Bắc Ninh"
+  },
+  "summary": {
+    "totalAmount": 2529000,
+    "shippingFee": 30000,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "UNPAID",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e1",
+      "variantId": "v7-160",
+      "productName": "Nệm bông ép Goodnight Nova gấp 3 9cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241471/artisano/products/vkpclrtlbxh2wgknnbno.webp",
+      "quantity": 1,
+      "price": 2499000,
+      "lineTotal": 2499000,
+      "size": "140 x 200",
+      "thickness": "9cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-07T04:54:39.783Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T04:54:39.783Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d48e10601d3025488b9598"
+  },
+  "orderNumber": "ORD20260407115440",
+  "customerInfo": {
+    "name": "luu duon",
+    "phone": "0987465784",
+    "email": "luu@gmail.com",
+    "shippingAddress": "nha 4b, Xã Sơn Động, Tỉnh Bắc Ninh"
+  },
+  "summary": {
+    "totalAmount": 2529000,
+    "shippingFee": 30000,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "UNPAID",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e1",
+      "variantId": "v7-160",
+      "productName": "Nệm bông ép Goodnight Nova gấp 3 9cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241471/artisano/products/vkpclrtlbxh2wgknnbno.webp",
+      "quantity": 1,
+      "price": 2499000,
+      "lineTotal": 2499000,
+      "size": "140 x 200",
+      "thickness": "9cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-07T04:54:40.255Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T04:54:40.255Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d48e10601d3025488b9599"
+  },
+  "orderNumber": "ORD20260407115440",
+  "customerInfo": {
+    "name": "luu duon",
+    "phone": "0987465784",
+    "email": "luu@gmail.com",
+    "shippingAddress": "nha 4b, Xã Sơn Động, Tỉnh Bắc Ninh"
+  },
+  "summary": {
+    "totalAmount": 2529000,
+    "shippingFee": 30000,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "UNPAID",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e1",
+      "variantId": "v7-160",
+      "productName": "Nệm bông ép Goodnight Nova gấp 3 9cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241471/artisano/products/vkpclrtlbxh2wgknnbno.webp",
+      "quantity": 1,
+      "price": 2499000,
+      "lineTotal": 2499000,
+      "size": "140 x 200",
+      "thickness": "9cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-07T04:54:40.760Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T04:54:40.760Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d48e11601d3025488b959a"
+  },
+  "orderNumber": "ORD20260407115441",
+  "customerInfo": {
+    "name": "luu duon",
+    "phone": "0987465784",
+    "email": "luu@gmail.com",
+    "shippingAddress": "nha 4b, Xã Sơn Động, Tỉnh Bắc Ninh"
+  },
+  "summary": {
+    "totalAmount": 2529000,
+    "shippingFee": 30000,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "UNPAID",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e1",
+      "variantId": "v7-160",
+      "productName": "Nệm bông ép Goodnight Nova gấp 3 9cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241471/artisano/products/vkpclrtlbxh2wgknnbno.webp",
+      "quantity": 1,
+      "price": 2499000,
+      "lineTotal": 2499000,
+      "size": "140 x 200",
+      "thickness": "9cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-07T04:54:41.429Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T04:54:41.429Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d48e11601d3025488b959b"
+  },
+  "orderNumber": "ORD20260407115441",
+  "customerInfo": {
+    "name": "luu duon",
+    "phone": "0987465784",
+    "email": "luu@gmail.com",
+    "shippingAddress": "nha 4b, Xã Sơn Động, Tỉnh Bắc Ninh"
+  },
+  "summary": {
+    "totalAmount": 2529000,
+    "shippingFee": 30000,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "UNPAID",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e1",
+      "variantId": "v7-160",
+      "productName": "Nệm bông ép Goodnight Nova gấp 3 9cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241471/artisano/products/vkpclrtlbxh2wgknnbno.webp",
+      "quantity": 1,
+      "price": 2499000,
+      "lineTotal": 2499000,
+      "size": "140 x 200",
+      "thickness": "9cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-07T04:54:41.859Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T04:54:41.859Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d48e12601d3025488b959c"
+  },
+  "orderNumber": "ORD20260407115442",
+  "customerInfo": {
+    "name": "luu duon",
+    "phone": "0987465784",
+    "email": "luu@gmail.com",
+    "shippingAddress": "nha 4b, Xã Sơn Động, Tỉnh Bắc Ninh"
+  },
+  "summary": {
+    "totalAmount": 2529000,
+    "shippingFee": 30000,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "UNPAID",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e1",
+      "variantId": "v7-160",
+      "productName": "Nệm bông ép Goodnight Nova gấp 3 9cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241471/artisano/products/vkpclrtlbxh2wgknnbno.webp",
+      "quantity": 1,
+      "price": 2499000,
+      "lineTotal": 2499000,
+      "size": "140 x 200",
+      "thickness": "9cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-07T04:54:42.080Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T04:54:42.080Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d4900d601d3025488b959d"
+  },
+  "orderNumber": "ORD20260407120309",
+  "customerInfo": {
+    "name": "luu duon",
+    "phone": "0987465784",
+    "email": "luu@gmail.com",
+    "shippingAddress": "nha 4b, Xã Sơn Động, Tỉnh Bắc Ninh"
+  },
+  "summary": {
+    "totalAmount": 2529000,
+    "shippingFee": 30000,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "UNPAID",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e1",
+      "variantId": "v7-160",
+      "productName": "Nệm bông ép Goodnight Nova gấp 3 9cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241471/artisano/products/vkpclrtlbxh2wgknnbno.webp",
+      "quantity": 1,
+      "price": 2499000,
+      "lineTotal": 2499000,
+      "size": "140 x 200",
+      "thickness": "9cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-07T05:03:09.250Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T05:03:09.250Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d4900e601d3025488b959e"
+  },
+  "orderNumber": "ORD20260407120310",
+  "customerInfo": {
+    "name": "luu duon",
+    "phone": "0987465784",
+    "email": "luu@gmail.com",
+    "shippingAddress": "nha 4b, Xã Sơn Động, Tỉnh Bắc Ninh"
+  },
+  "summary": {
+    "totalAmount": 2529000,
+    "shippingFee": 30000,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "UNPAID",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e1",
+      "variantId": "v7-160",
+      "productName": "Nệm bông ép Goodnight Nova gấp 3 9cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241471/artisano/products/vkpclrtlbxh2wgknnbno.webp",
+      "quantity": 1,
+      "price": 2499000,
+      "lineTotal": 2499000,
+      "size": "140 x 200",
+      "thickness": "9cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-07T05:03:10.760Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T05:03:10.760Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d492d0601d3025488b959f"
+  },
+  "orderNumber": "ORD20260407121456",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "customerInfo": {
+    "name": "cooo baaaa",
+    "phone": "0987465784",
+    "email": "hellocoba@gmail.com",
+    "shippingAddress": "nhà 4b, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 8999000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "UNPAID",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cffd986ee12c22921926e9",
+      "variantId": "ncs3-160",
+      "productName": "Nệm cao su thiên nhiên Kim Cương Happy Gold dày 10/15cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775244557/artisano/products/z9csp4jfkzj6affxgs5p.webp",
+      "quantity": 1,
+      "price": 8999000,
+      "lineTotal": 8999000,
+      "size": "120 x 200",
+      "thickness": "10cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-07T05:14:56.177Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T05:14:56.177Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d493e9601d3025488b95a1"
+  },
+  "orderNumber": "ORD20260407121937",
+  "customerInfo": {
+    "name": "luu duong",
+    "phone": "0987465784",
+    "email": "duong@gmail.com",
+    "shippingAddress": "nhà 4b, Phường Đông Triều, Tỉnh Quảng Ninh"
+  },
+  "summary": {
+    "totalAmount": 8597998,
+    "shippingFee": 0,
+    "totalQty": 2
+  },
+  "payment": {
+    "method": "COD",
+    "status": "UNPAID",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "variantId": "6d3105ab-a895-4896-97ac-c556d28066a9",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 2,
+      "price": 4298999,
+      "lineTotal": 8597998,
+      "size": "180 x 200",
+      "thickness": "10cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-07T05:19:37.885Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T05:19:37.885Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d493ef601d3025488b95a2"
+  },
+  "orderNumber": "ORD20260407121943",
+  "customerInfo": {
+    "name": "luu duong",
+    "phone": "0987465784",
+    "email": "duong@gmail.com",
+    "shippingAddress": "nhà 4b, Phường Đông Triều, Tỉnh Quảng Ninh"
+  },
+  "summary": {
+    "totalAmount": 8597998,
+    "shippingFee": 0,
+    "totalQty": 2
+  },
+  "payment": {
+    "method": "COD",
+    "status": "UNPAID",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "variantId": "6d3105ab-a895-4896-97ac-c556d28066a9",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 2,
+      "price": 4298999,
+      "lineTotal": 8597998,
+      "size": "180 x 200",
+      "thickness": "10cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-07T05:19:43.493Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T05:19:43.493Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d49447601d3025488b95a3"
+  },
+  "orderNumber": "ORD20260407122111",
+  "customerInfo": {
+    "name": "luu duong",
+    "phone": "0987465784",
+    "email": "duong@gmail.com",
+    "shippingAddress": "nhà 4b, Phường Đông Triều, Tỉnh Quảng Ninh"
+  },
+  "summary": {
+    "totalAmount": 8597998,
+    "shippingFee": 0,
+    "totalQty": 2
+  },
+  "payment": {
+    "method": "COD",
+    "status": "UNPAID",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "variantId": "6d3105ab-a895-4896-97ac-c556d28066a9",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 2,
+      "price": 4298999,
+      "lineTotal": 8597998,
+      "size": "180 x 200",
+      "thickness": "10cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-07T05:21:11.149Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T05:21:11.149Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d4976e601d3025488b95a4"
+  },
+  "orderNumber": "ORD20260407123438",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "customerInfo": {
+    "name": "cooo baaaa",
+    "phone": "0987465784",
+    "email": "hellocoba@gmail.com",
+    "shippingAddress": "nhà 4b, Xã Đại Sơn, Tỉnh Bắc Ninh"
+  },
+  "summary": {
+    "totalAmount": 4299000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "UNPAID",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "variantId": "ff817899-6256-4d09-b012-e0f74730a428",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 1,
+      "price": 4299000,
+      "lineTotal": 4299000,
+      "size": "160 x 200",
+      "thickness": "10cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-07T05:34:38.272Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T05:34:38.272Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d4984d601d3025488b95a5"
+  },
+  "orderNumber": "ORD20260407123821",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "customerInfo": {
+    "name": "cooo baaaa",
+    "phone": "0987465784",
+    "email": "hellocoba@gmail.com",
+    "shippingAddress": "nhà 4b, Phường Cửa Nam, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 7699000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "VNPAY",
+    "status": "PAID",
+    "transactionId": ""
+  },
+  "orderStatus": "DELIVERED",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e2",
+      "variantId": "548a3da0-dd04-4e48-a18e-640ad70e6a81",
+      "productName": "Nệm bông ép cao cấp Wonjun Pure Premium nâng đỡ vững chắc dày 12cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775242184/artisano/products/z1c2xqf9hukmcb6c414a.webp",
+      "quantity": 1,
+      "price": 7699000,
+      "lineTotal": 7699000,
+      "size": "220 x 200",
+      "thickness": "12cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-07T05:38:21.429Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T06:37:35.874Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d49d7dc1a3755db096f9fe"
+  },
+  "orderNumber": "ORD20260407130028",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "customerInfo": {
+    "name": "cooo baaaa",
+    "phone": "0987465784",
+    "email": "hellocoba@gmail.com",
+    "shippingAddress": "nhà 4b, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 4299000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "VNPAY",
+    "status": "PAID",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "variantId": "v6-160",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 1,
+      "price": 4299000,
+      "lineTotal": 4299000,
+      "size": "120 x 200",
+      "thickness": "10cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-07T06:00:29.007Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T06:00:29.007Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d4ba23c1a3755db096f9ff"
+  },
+  "orderNumber": "ORD20260407150243",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "customerInfo": {
+    "name": "cooo baaaa",
+    "phone": "0987465784",
+    "email": "hellocoba@gmail.com",
+    "shippingAddress": "nhà 5b, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 229000,
+    "shippingFee": 30000,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69d09271be5d18bb2f488f21",
+      "variantId": "g1-50x70",
+      "productName": "Gối bông Doona Promo",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775287300/artisano/products/j7ffx425epwgmyhcxjfz.webp",
+      "quantity": 1,
+      "price": 199000,
+      "lineTotal": 199000,
+      "size": "50 x 70",
+      "thickness": "15cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-07T08:02:43.810Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T08:02:43.810Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d4c306c1a3755db096fa00"
+  },
+  "orderNumber": "ORD20260407154038",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "customerInfo": {
+    "name": "cooo baaaa",
+    "phone": "0987465784",
+    "email": "hellocoba@gmail.com",
+    "shippingAddress": "nhà 4b, Phường Cửa Nam, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 12499000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "DELIVERED",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cffd986ee12c22921926e8",
+      "variantId": "ncs2-160",
+      "productName": "Nệm cao su thiên nhiên Liên Á Classic dày 10cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775243769/artisano/products/vznrrn9aqlgsgmih3qsl.webp",
+      "quantity": 1,
+      "price": 12499000,
+      "lineTotal": 12499000,
+      "size": "120 x 200",
+      "thickness": "10cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-07T08:40:38.454Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T16:30:11.528Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d4c49dc1a3755db096fa01"
+  },
+  "orderNumber": "ORD20260407154725",
+  "customerInfo": {
+    "name": "cong bang",
+    "phone": "0987465784",
+    "email": "congbang@gmail.com",
+    "shippingAddress": "nhà 3b, Xã Sơn Động, Tỉnh Bắc Ninh"
+  },
+  "summary": {
+    "totalAmount": 4299000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "variantId": "v6-160",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 1,
+      "price": 4299000,
+      "lineTotal": 4299000,
+      "size": "120 x 200",
+      "thickness": "10cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-07T08:47:25.727Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T08:47:25.727Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d4d79faeb53e75be602d65"
+  },
+  "orderNumber": "ORD20260407170831",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "customerInfo": {
+    "name": "cooo baaaa",
+    "phone": "0987465784",
+    "email": "hellocoba@gmail.com",
+    "shippingAddress": "nhà 4b, Xã Đại Sơn, Tỉnh Bắc Ninh"
+  },
+  "summary": {
+    "totalAmount": 6797999,
+    "shippingFee": 0,
+    "totalQty": 2
+  },
+  "payment": {
+    "method": "COD",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e1",
+      "variantId": "v7-160",
+      "productName": "Nệm bông ép Goodnight Nova gấp 3 9cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241471/artisano/products/vkpclrtlbxh2wgknnbno.webp",
+      "quantity": 1,
+      "price": 2499000,
+      "lineTotal": 2499000,
+      "size": "140 x 200",
+      "thickness": "9cm",
+      "color": ""
+    },
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "variantId": "6d3105ab-a895-4896-97ac-c556d28066a9",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 1,
+      "price": 4298999,
+      "lineTotal": 4298999,
+      "size": "180 x 200",
+      "thickness": "10cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-07T10:08:31.692Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T10:08:31.692Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d4d7c7aeb53e75be602d66"
+  },
+  "orderNumber": "ORD20260407170911",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "customerInfo": {
+    "name": "cooo baaaa",
+    "phone": "0987465784",
+    "email": "hellocoba@gmail.com",
+    "shippingAddress": "nhà 4b, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 4299002,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "variantId": "034eb6a7-f73c-4834-9d66-823513a05b8b",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 1,
+      "price": 4299002,
+      "lineTotal": 4299002,
+      "size": "220 x 200",
+      "thickness": "10cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-07T10:09:11.296Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T10:09:11.296Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d4d7ecaeb53e75be602d67"
+  },
+  "orderNumber": "ORD20260407170948",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "customerInfo": {
+    "name": "cooo baaaa",
+    "phone": "0987465784",
+    "email": "hellocoba@gmail.com",
+    "shippingAddress": "nhà 4b, Xã Đại Sơn, Tỉnh Bắc Ninh"
+  },
+  "summary": {
+    "totalAmount": 12597000,
+    "shippingFee": 0,
+    "totalQty": 3
+  },
+  "payment": {
+    "method": "VNPAY",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "variantId": "ff817899-6256-4d09-b012-e0f74730a428",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 1,
+      "price": 4299000,
+      "lineTotal": 4299000,
+      "size": "160 x 200",
+      "thickness": "10cm",
+      "color": ""
+    },
+    {
+      "productId": "69d4b3332fdd2c1b7c72c695",
+      "variantId": "stretchwick-5070",
+      "productName": "Bảo vệ gối Bedgear Stretchwick",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775547711/artisano/products/pmhgpzdpp1zctrzhe5gt.webp",
+      "quantity": 1,
+      "price": 599000,
+      "lineTotal": 599000,
+      "size": "50 x 70",
+      "color": "Trắng"
+    },
+    {
+      "productId": "69cfef446ee12c22921926e2",
+      "variantId": "548a3da0-dd04-4e48-a18e-640ad70e6a81",
+      "productName": "Nệm bông ép cao cấp Wonjun Pure Premium nâng đỡ vững chắc dày 12cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775242184/artisano/products/z1c2xqf9hukmcb6c414a.webp",
+      "quantity": 1,
+      "price": 7699000,
+      "lineTotal": 7699000,
+      "size": "220 x 200",
+      "thickness": "12cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-07T10:09:48.534Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T10:09:48.534Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d4d8dbaeb53e75be602d68"
+  },
+  "orderNumber": "ORD20260407171347",
+  "customerInfo": {
+    "name": "name user1",
+    "phone": "0987465784",
+    "email": "user1@gmail.com",
+    "shippingAddress": "nhà 4b an khánh, Phường Ninh Kiều, Thành phố Cần Thơ"
+  },
+  "summary": {
+    "totalAmount": 4299000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "variantId": "v6-160",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 1,
+      "price": 4299000,
+      "lineTotal": 4299000,
+      "size": "120 x 200",
+      "thickness": "10cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-07T10:13:47.444Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T10:13:47.444Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d4d97faeb53e75be602d69"
+  },
+  "orderNumber": "ORD20260407171631",
+  "customerInfo": {
+    "name": "name user2",
+    "phone": "0987465784",
+    "email": "user2@gmail.com",
+    "shippingAddress": "nhà 5b an khánh, Phường Ninh Kiều, Thành phố Cần Thơ"
+  },
+  "summary": {
+    "totalAmount": 4299000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "VNPAY",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "variantId": "v6-160",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 1,
+      "price": 4299000,
+      "lineTotal": 4299000,
+      "size": "120 x 200",
+      "thickness": "10cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-07T10:16:31.471Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T10:16:31.471Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d5eadfe6d47a231ca0e233"
+  },
+  "orderNumber": "ORD20260408124255",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "note": "",
+  "customerInfo": {
+    "name": "cooo baaaa",
+    "phone": "0987465784",
+    "email": "hellocoba@gmail.com",
+    "shippingAddress": "nhà 4b, Xã Sơn Động, Tỉnh Bắc Ninh"
+  },
+  "summary": {
+    "totalAmount": 4299000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "VNPAY",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "variantId": "ff817899-6256-4d09-b012-e0f74730a428",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 1,
+      "price": 4299000,
+      "lineTotal": 4299000,
+      "size": "160 x 200",
+      "thickness": "10cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-08T05:42:55.797Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-08T05:42:55.797Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d5f9f5e6d47a231ca0e234"
+  },
+  "orderNumber": "ORD20260408134716",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "note": "",
+  "customerInfo": {
+    "name": "cooo baaaa",
+    "phone": "0987654321",
+    "email": "hellocoba@gmail.com",
+    "shippingAddress": "nhà 5b, Phường Cửa Nam, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 8598000,
+    "shippingFee": 0,
+    "totalQty": 2
+  },
+  "payment": {
+    "method": "VNPAY",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "variantId": "v6-160",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 2,
+      "price": 4299000,
+      "lineTotal": 8598000,
+      "size": "120 x 200",
+      "thickness": "10cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-08T06:47:17.075Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-08T06:47:17.075Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d5fdf7e6d47a231ca0e235"
+  },
+  "orderNumber": "ORD20260408140423",
+  "note": "10h",
+  "customerInfo": {
+    "name": "xuanbang",
+    "phone": "0987465784",
+    "email": "xuanbang@gmail.com",
+    "shippingAddress": "nha 4b, Phường Cửa Nam, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 4299000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "VNPAY",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "variantId": "v6-160",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 1,
+      "price": 4299000,
+      "lineTotal": 4299000,
+      "size": "120 x 200",
+      "thickness": "10cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-08T07:04:23.834Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-08T07:04:23.834Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d5fe53e6d47a231ca0e236"
+  },
+  "orderNumber": "ORD20260408140555",
+  "note": "",
+  "customerInfo": {
+    "name": "xuanbang",
+    "phone": "0987465784",
+    "email": "xuanbang@gmail.com",
+    "shippingAddress": "nha3b, Phường Đông Triều, Tỉnh Quảng Ninh"
+  },
+  "summary": {
+    "totalAmount": 4299000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "VNPAY",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "variantId": "v6-160",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 1,
+      "price": 4299000,
+      "lineTotal": 4299000,
+      "size": "120 x 200",
+      "thickness": "10cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-08T07:05:55.113Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-08T07:05:55.113Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d60160e6d47a231ca0e237"
+  },
+  "orderNumber": "ORD20260408141856",
+  "note": "10h",
+  "customerInfo": {
+    "name": "xuanbang",
+    "phone": "0987465784",
+    "email": "xuanbang@gmail.com",
+    "shippingAddress": "nhà 4b, Phường Cửa Nam, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 4299000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "VNPAY",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "variantId": "v6-160",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 1,
+      "price": 4299000,
+      "lineTotal": 4299000,
+      "size": "120 x 200",
+      "thickness": "10cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-08T07:18:56.540Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-08T07:18:56.540Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d7cc648f7f0b4f7b283803"
+  },
+  "orderNumber": "ORD20260409155724",
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "note": "",
+  "customerInfo": {
+    "name": "cong bang",
+    "phone": "0987654321",
+    "email": "congbang@gmail.com",
+    "shippingAddress": "nha 4b, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 4299000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "variantId": "ff817899-6256-4d09-b012-e0f74730a428",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 1,
+      "price": 4299000,
+      "lineTotal": 4299000,
+      "size": "160 x 200",
+      "thickness": "10cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-09T15:57:24.264Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T15:57:24.264Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d7cc6d8f7f0b4f7b283804"
+  },
+  "orderNumber": "ORD20260409155733",
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "note": "",
+  "customerInfo": {
+    "name": "cong bang",
+    "phone": "0987654321",
+    "email": "congbang@gmail.com",
+    "shippingAddress": "nha 4b, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 4299000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "VNPAY",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "variantId": "ff817899-6256-4d09-b012-e0f74730a428",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 1,
+      "price": 4299000,
+      "lineTotal": 4299000,
+      "size": "160 x 200",
+      "thickness": "10cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-09T15:57:33.808Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T15:57:33.808Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d7d0578f7f0b4f7b283805"
+  },
+  "orderNumber": "ORD20260409161415",
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "note": "10h",
+  "customerInfo": {
+    "name": "cong bang",
+    "phone": "0987654321",
+    "email": "congbang@gmail.com",
+    "shippingAddress": "nha 4b, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 12897000,
+    "shippingFee": 0,
+    "totalQty": 3
+  },
+  "payment": {
+    "method": "COD",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "variantId": "v6-180",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 1,
+      "price": 4299000,
+      "lineTotal": 4299000,
+      "size": "140 x 200",
+      "thickness": "10cm",
+      "color": ""
+    },
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "variantId": "ff817899-6256-4d09-b012-e0f74730a428",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 2,
+      "price": 4299000,
+      "lineTotal": 8598000,
+      "size": "160 x 200",
+      "thickness": "10cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-09T16:14:15.756Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T16:14:15.756Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d7d0a98f7f0b4f7b283806"
+  },
+  "orderNumber": "ORD20260409161537",
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "note": "",
+  "customerInfo": {
+    "name": "cong bang",
+    "phone": "0987654321",
+    "email": "congbang@gmail.com",
+    "shippingAddress": "nhà 3b, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 7699000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e2",
+      "variantId": "v8-160",
+      "productName": "Nệm bông ép cao cấp Wonjun Pure Premium nâng đỡ vững chắc dày 12cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775242184/artisano/products/z1c2xqf9hukmcb6c414a.webp",
+      "quantity": 1,
+      "price": 7699000,
+      "lineTotal": 7699000,
+      "size": "140 x 200",
+      "thickness": "12cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-09T16:15:37.079Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T16:15:37.079Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d7d5a28f7f0b4f7b283807"
+  },
+  "orderNumber": "ORD20260409163650",
+  "note": "giao lẹ lẹ",
+  "customerInfo": {
+    "name": "xuan cong bang",
+    "phone": "0987654321",
+    "email": "xuanbangb22@gmail.com",
+    "shippingAddress": "nha 4b, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 2529000,
+    "shippingFee": 30000,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "VNPAY",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e1",
+      "variantId": "v7-160",
+      "productName": "Nệm bông ép Goodnight Nova gấp 3 9cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241471/artisano/products/vkpclrtlbxh2wgknnbno.webp",
+      "quantity": 1,
+      "price": 2499000,
+      "lineTotal": 2499000,
+      "size": "140 x 200",
+      "thickness": "9cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-09T16:36:50.444Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T16:36:50.444Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d7d61a8f7f0b4f7b283808"
+  },
+  "orderNumber": "ORD20260409163850",
+  "note": "",
+  "customerInfo": {
+    "name": "klklk",
+    "phone": "llklklkl",
+    "email": "lklklk",
+    "shippingAddress": "nhà 4b, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 2529000,
+    "shippingFee": 30000,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "VNPAY",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e1",
+      "variantId": "v7-160",
+      "productName": "Nệm bông ép Goodnight Nova gấp 3 9cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241471/artisano/products/vkpclrtlbxh2wgknnbno.webp",
+      "quantity": 1,
+      "price": 2499000,
+      "lineTotal": 2499000,
+      "size": "140 x 200",
+      "thickness": "9cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-09T16:38:50.390Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T16:38:50.390Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d7d7288f7f0b4f7b283809"
+  },
+  "orderNumber": "ORD20260409164320",
+  "note": "10h",
+  "customerInfo": {
+    "name": "greyd",
+    "phone": "0987465784",
+    "email": "greyd@gmail.com",
+    "shippingAddress": "nhà 4b, Phường Thục Phán, Tỉnh Cao Bằng"
+  },
+  "summary": {
+    "totalAmount": 910000,
+    "shippingFee": 30000,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69d4b65b2fdd2c1b7c72c698",
+      "variantId": "doona-3d-120",
+      "productName": "Bảo vệ nệm Doona 3D Safe Sleep thoát ẩm tốt, kháng khuẩn cao",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775548694/artisano/products/yk8g074ne73qady0zz7m.webp",
+      "quantity": 1,
+      "price": 880000,
+      "lineTotal": 880000,
+      "size": "120 x 200",
+      "color": "Trắng"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-09T16:43:20.917Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T16:43:20.917Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d7def48f7f0b4f7b28380a"
+  },
+  "orderNumber": "ORD20260409171636",
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "note": "",
+  "customerInfo": {
+    "name": "grey ji",
+    "phone": "0987465784",
+    "email": "greyd@gmail.com",
+    "shippingAddress": "nhà 3a, Phường Hồng Hà, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 629000,
+    "shippingFee": 30000,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "SHIPPING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69d09271be5d18bb2f488f26",
+      "variantId": "g6-50x70",
+      "productName": "Gối Cao su Dreamland nâng đỡ vai gáy",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775278148/artisano/products/mciu5cgwxyi5c3lzear8.webp",
+      "quantity": 1,
+      "price": 599000,
+      "lineTotal": 599000,
+      "size": "40 x 60",
+      "thickness": "11cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-09T17:16:36.674Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T17:17:24.958Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d7ea8706dda72bf9cc5e0a"
+  },
+  "orderNumber": "ORD20260409180558",
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "note": "",
+  "customerInfo": {
+    "name": "grey ji",
+    "phone": "0987465784",
+    "email": "greyd@gmail.com",
+    "shippingAddress": "nhà 6b, Xã Thất Khê, Tỉnh Lạng Sơn"
+  },
+  "summary": {
+    "totalAmount": 729000,
+    "shippingFee": 30000,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "DELIVERED",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69d09e25be5d18bb2f488f29",
+      "variantId": "cg1-200x220",
+      "productName": "Chăn Amando Azami công nghệ làm mát",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775288582/artisano/products/sa7dxsgf8t1alqx1bvur.webp",
+      "quantity": 1,
+      "price": 699000,
+      "lineTotal": 699000,
+      "size": "200 x 220",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-09T18:05:59.181Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T18:22:01.818Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d7ea8e06dda72bf9cc5e0b"
+  },
+  "orderNumber": "ORD20260409180606",
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "note": "",
+  "customerInfo": {
+    "name": "grey ji",
+    "phone": "0987465784",
+    "email": "greyd@gmail.com",
+    "shippingAddress": "nhà 6b, Xã Thất Khê, Tỉnh Lạng Sơn"
+  },
+  "summary": {
+    "totalAmount": 729000,
+    "shippingFee": 30000,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "DELIVERED",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69d09e25be5d18bb2f488f29",
+      "variantId": "cg1-200x220",
+      "productName": "Chăn Amando Azami công nghệ làm mát",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775288582/artisano/products/sa7dxsgf8t1alqx1bvur.webp",
+      "quantity": 1,
+      "price": 699000,
+      "lineTotal": 699000,
+      "size": "200 x 220",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-09T18:06:06.219Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T18:21:54.050Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d7ea9706dda72bf9cc5e0c"
+  },
+  "orderNumber": "ORD20260409180615",
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "note": "",
+  "customerInfo": {
+    "name": "grey ji",
+    "phone": "0987465784",
+    "email": "greyd@gmail.com",
+    "shippingAddress": "nhà 6b, Xã Thất Khê, Tỉnh Lạng Sơn"
+  },
+  "summary": {
+    "totalAmount": 729000,
+    "shippingFee": 30000,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "DELIVERED",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69d09e25be5d18bb2f488f29",
+      "variantId": "cg1-200x220",
+      "productName": "Chăn Amando Azami công nghệ làm mát",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775288582/artisano/products/sa7dxsgf8t1alqx1bvur.webp",
+      "quantity": 1,
+      "price": 699000,
+      "lineTotal": 699000,
+      "size": "200 x 220",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-09T18:06:15.032Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T18:21:56.634Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d7ef0606dda72bf9cc5e0d"
+  },
+  "orderNumber": "ORD20260409182510",
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "note": "giao nhanh nhe shop",
+  "customerInfo": {
+    "name": "grey ji",
+    "phone": "0987465784",
+    "email": "greyd@gmail.com",
+    "shippingAddress": "nhà 7b, Phường Ninh Kiều, Thành phố Cần Thơ"
+  },
+  "summary": {
+    "totalAmount": 559000,
+    "shippingFee": 30000,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69d09271be5d18bb2f488f25",
+      "variantId": "g5-50x70",
+      "productName": "Gối cao su Gummi Cookie 100% thiên nhiên nâng đỡ cổ vai gáy",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775277984/artisano/products/gpojms76je1or3bpvohe.webp",
+      "quantity": 1,
+      "price": 529000,
+      "lineTotal": 529000,
+      "size": "30 x 50",
+      "thickness": "9cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-09T18:25:10.678Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T18:25:10.679Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d7ef3806dda72bf9cc5e0e"
+  },
+  "orderNumber": "ORD20260409182600",
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "note": "mình muốn nhận ngay",
+  "customerInfo": {
+    "name": "grey ji",
+    "phone": "0987465784",
+    "email": "greyd@gmail.com",
+    "shippingAddress": "nhà 8b, Phường Vũng Tàu, Thành phố Hồ Chí Minh"
+  },
+  "summary": {
+    "totalAmount": 499800,
+    "shippingFee": 30000,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69d4b65b2fdd2c1b7c72c697",
+      "variantId": "doona-120",
+      "productName": "Bảo vệ nệm Doona Tencel",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775548414/artisano/products/cferyj5sk4x8lns0bsuj.webp",
+      "quantity": 1,
+      "price": 469800,
+      "lineTotal": 469800,
+      "size": "120 x 200",
+      "color": "Trắng"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-09T18:26:00.990Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T18:26:00.990Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d7ef6806dda72bf9cc5e0f"
+  },
+  "orderNumber": "ORD20260409182648",
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "note": "",
+  "customerInfo": {
+    "name": "grey ji",
+    "phone": "0987465784",
+    "email": "greyd@gmail.com",
+    "shippingAddress": "nhà 9b, Xã Tân Thuận, Tỉnh Cà Mau"
+  },
+  "summary": {
+    "totalAmount": 629000,
+    "shippingFee": 30000,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69d4b3332fdd2c1b7c72c695",
+      "variantId": "stretchwick-5070",
+      "productName": "Bảo vệ gối Bedgear Stretchwick",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775547711/artisano/products/pmhgpzdpp1zctrzhe5gt.webp",
+      "quantity": 1,
+      "price": 599000,
+      "lineTotal": 599000,
+      "size": "50 x 70",
+      "color": "Trắng"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-09T18:26:48.110Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T18:26:48.110Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d7efba06dda72bf9cc5e10"
+  },
+  "orderNumber": "ORD20260409182810",
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "note": "",
+  "customerInfo": {
+    "name": "grey ji",
+    "phone": "0987465784",
+    "email": "greyd@gmail.com",
+    "shippingAddress": "nhà 9b, Xã Đại Sơn, Tỉnh Bắc Ninh"
+  },
+  "summary": {
+    "totalAmount": 229000,
+    "shippingFee": 30000,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69d09271be5d18bb2f488f21",
+      "variantId": "g1-50x70",
+      "productName": "Gối bông Doona Promo",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775287300/artisano/products/j7ffx425epwgmyhcxjfz.webp",
+      "quantity": 1,
+      "price": 199000,
+      "lineTotal": 199000,
+      "size": "50 x 70",
+      "thickness": "15cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-09T18:28:10.181Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T18:28:10.181Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d9ecdaa4b38b3435feda7c"
+  },
+  "orderNumber": "ORD20260411064026",
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "note": "",
+  "customerInfo": {
+    "name": "grey ji",
+    "phone": "0987465784",
+    "email": "greyd@gmail.com",
+    "shippingAddress": "nhà 8b, Phường Vũng Tàu, Thành phố Hồ Chí Minh"
+  },
+  "summary": {
+    "totalAmount": 3299000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "variantId": "v6-160",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 1,
+      "price": 3299000,
+      "lineTotal": 3299000,
+      "size": "120 x 200",
+      "thickness": "10cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-11T06:40:26.134Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-11T06:40:26.134Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69d9ece0a4b38b3435feda7d"
+  },
+  "orderNumber": "ORD20260411064032",
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "note": "",
+  "customerInfo": {
+    "name": "grey ji",
+    "phone": "0987465784",
+    "email": "greyd@gmail.com",
+    "shippingAddress": "nhà 8b, Phường Vũng Tàu, Thành phố Hồ Chí Minh"
+  },
+  "summary": {
+    "totalAmount": 3299000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "DELIVERED",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "variantId": "v6-160",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 1,
+      "price": 3299000,
+      "lineTotal": 3299000,
+      "size": "120 x 200",
+      "thickness": "10cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-11T06:40:32.748Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-11T07:07:39.132Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69da130090e1de14d44b2262"
+  },
+  "orderNumber": "ORD20260411092312",
+  "userId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "note": "giao lẹ lẹ",
+  "customerInfo": {
+    "name": "name user2",
+    "phone": "0987465784",
+    "email": "user2@gmail.com",
+    "shippingAddress": "nhà 4b, Phường Mỹ Hào, Tỉnh Hưng Yên"
+  },
+  "summary": {
+    "totalAmount": 4299002,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "VNPAY",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "variantId": "034eb6a7-f73c-4834-9d66-823513a05b8b",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 1,
+      "price": 4299002,
+      "lineTotal": 4299002,
+      "size": "220 x 200",
+      "thickness": "10cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-11T09:23:12.462Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-11T09:23:12.463Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69da130890e1de14d44b2263"
+  },
+  "orderNumber": "ORD20260411092320",
+  "userId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "note": "giao lẹ lẹ",
+  "customerInfo": {
+    "name": "name user2",
+    "phone": "0987465784",
+    "email": "user2@gmail.com",
+    "shippingAddress": "nhà 4b, Phường Mỹ Hào, Tỉnh Hưng Yên"
+  },
+  "summary": {
+    "totalAmount": 4299002,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "VNPAY",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "variantId": "034eb6a7-f73c-4834-9d66-823513a05b8b",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 1,
+      "price": 4299002,
+      "lineTotal": 4299002,
+      "size": "220 x 200",
+      "thickness": "10cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-11T09:23:20.356Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-11T09:23:20.356Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69da94e61ecb6f5f107ad5c4"
+  },
+  "orderNumber": "ORD20260411183726",
+  "userId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "note": "",
+  "customerInfo": {
+    "name": "name user2",
+    "phone": "0987465784",
+    "email": "user2@gmail.com",
+    "shippingAddress": "nhà 4b, Phường Mỹ Hào, Tỉnh Hưng Yên"
+  },
+  "summary": {
+    "totalAmount": 920000,
+    "shippingFee": 30000,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "DELIVERED",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69d4b3332fdd2c1b7c72c694",
+      "variantId": "dritec-5070",
+      "productName": "Bảo vệ gối Bedgear Dri-Tec",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775547609/artisano/products/dcvt4r4vzfa68tbaolei.webp",
+      "quantity": 1,
+      "price": 890000,
+      "lineTotal": 890000,
+      "size": "50 x 70",
+      "color": "Trắng"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-11T18:37:26.678Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-11T18:37:43.582Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69da95711ecb6f5f107ad5c5"
+  },
+  "orderNumber": "ORD20260411183945",
+  "userId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "note": "",
+  "customerInfo": {
+    "name": "name user2",
+    "phone": "0987465784",
+    "email": "user2@gmail.com",
+    "shippingAddress": "nhà 4b, Phường Mỹ Hào, Tỉnh Hưng Yên"
+  },
+  "summary": {
+    "totalAmount": 920000,
+    "shippingFee": 30000,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "DELIVERED",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69d4b3332fdd2c1b7c72c694",
+      "variantId": "dritec-5070",
+      "productName": "Bảo vệ gối Bedgear Dri-Tec",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775547609/artisano/products/dcvt4r4vzfa68tbaolei.webp",
+      "quantity": 1,
+      "price": 890000,
+      "lineTotal": 890000,
+      "size": "50 x 70",
+      "color": "Trắng"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-11T18:39:45.270Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-11T18:40:08.445Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69da95ab1ecb6f5f107ad5c6"
+  },
+  "orderNumber": "ORD20260411184043",
+  "userId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "note": "",
+  "customerInfo": {
+    "name": "name user2",
+    "phone": "0987465784",
+    "email": "user2@gmail.com",
+    "shippingAddress": "nhà 4b, Phường Mỹ Hào, Tỉnh Hưng Yên"
+  },
+  "summary": {
+    "totalAmount": 920000,
+    "shippingFee": 30000,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "DELIVERED",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69d4b3332fdd2c1b7c72c694",
+      "variantId": "dritec-5070",
+      "productName": "Bảo vệ gối Bedgear Dri-Tec",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775547609/artisano/products/dcvt4r4vzfa68tbaolei.webp",
+      "quantity": 1,
+      "price": 890000,
+      "lineTotal": 890000,
+      "size": "50 x 70",
+      "color": "Trắng"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-11T18:40:43.158Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-11T18:40:53.712Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69da962f1ecb6f5f107ad5c7"
+  },
+  "orderNumber": "ORD20260411184255",
+  "userId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "note": "",
+  "customerInfo": {
+    "name": "name user2",
+    "phone": "0987465784",
+    "email": "user2@gmail.com",
+    "shippingAddress": "nhà 3a, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 16499000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "DELIVERED",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cffd986ee12c22921926e7",
+      "variantId": "eb8be4fe-0898-48ff-9489-9f5f9bb6715f",
+      "productName": "Nệm cao su thiên nhiên Gummi Premium detox giấc ngủ dày 10cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775242955/artisano/products/ljjigylz7m1uadgoc3kn.webp",
+      "quantity": 1,
+      "price": 16499000,
+      "lineTotal": 16499000,
+      "size": "160 x 200",
+      "thickness": "10cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-11T18:42:55.860Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-11T18:43:05.485Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69daa34bd3cd052cb392e741"
+  },
+  "orderNumber": "ORD20260411193851",
+  "note": "",
+  "customerInfo": {
+    "name": "tranxuancongbang",
+    "phone": "0987654321",
+    "email": "xuanbang2k4@gmail.com",
+    "shippingAddress": "nhà 9b, Phường Tân Thành, Tỉnh Cà Mau"
+  },
+  "summary": {
+    "totalAmount": 2529000,
+    "shippingFee": 30000,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "VNPAY",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e1",
+      "variantId": "v7-180",
+      "productName": "Nệm bông ép Goodnight Nova gấp 3 9cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241471/artisano/products/vkpclrtlbxh2wgknnbno.webp",
+      "quantity": 1,
+      "price": 2499000,
+      "lineTotal": 2499000,
+      "size": "180 x 200",
+      "thickness": "9cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-11T19:38:51.324Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-11T19:38:51.324Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69daa34fd3cd052cb392e742"
+  },
+  "orderNumber": "ORD20260411193855",
+  "note": "",
+  "customerInfo": {
+    "name": "tranxuancongbang",
+    "phone": "0987654321",
+    "email": "xuanbang2k4@gmail.com",
+    "shippingAddress": "nhà 9b, Phường Tân Thành, Tỉnh Cà Mau"
+  },
+  "summary": {
+    "totalAmount": 2529000,
+    "shippingFee": 30000,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "VNPAY",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e1",
+      "variantId": "v7-180",
+      "productName": "Nệm bông ép Goodnight Nova gấp 3 9cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241471/artisano/products/vkpclrtlbxh2wgknnbno.webp",
+      "quantity": 1,
+      "price": 2499000,
+      "lineTotal": 2499000,
+      "size": "180 x 200",
+      "thickness": "9cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-11T19:38:55.801Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-11T19:38:55.801Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69daa355d3cd052cb392e743"
+  },
+  "orderNumber": "ORD20260411193901",
+  "note": "",
+  "customerInfo": {
+    "name": "tranxuancongbang",
+    "phone": "0987654321",
+    "email": "xuanbang2k4@gmail.com",
+    "shippingAddress": "nhà 9b, Phường Tân Thành, Tỉnh Cà Mau"
+  },
+  "summary": {
+    "totalAmount": 2529000,
+    "shippingFee": 30000,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "VNPAY",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e1",
+      "variantId": "v7-180",
+      "productName": "Nệm bông ép Goodnight Nova gấp 3 9cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241471/artisano/products/vkpclrtlbxh2wgknnbno.webp",
+      "quantity": 1,
+      "price": 2499000,
+      "lineTotal": 2499000,
+      "size": "180 x 200",
+      "thickness": "9cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-11T19:39:01.643Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-11T19:39:01.643Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69daa35ed3cd052cb392e744"
+  },
+  "orderNumber": "ORD20260411193910",
+  "note": "",
+  "customerInfo": {
+    "name": "tranxuancongbang",
+    "phone": "0987654321",
+    "email": "xuanbang2k4@gmail.com",
+    "shippingAddress": "nhà 9b, Phường Tân Thành, Tỉnh Cà Mau"
+  },
+  "summary": {
+    "totalAmount": 2529000,
+    "shippingFee": 30000,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "VNPAY",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e1",
+      "variantId": "v7-180",
+      "productName": "Nệm bông ép Goodnight Nova gấp 3 9cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241471/artisano/products/vkpclrtlbxh2wgknnbno.webp",
+      "quantity": 1,
+      "price": 2499000,
+      "lineTotal": 2499000,
+      "size": "180 x 200",
+      "thickness": "9cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-11T19:39:10.218Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-11T19:39:10.218Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69daa389d3cd052cb392e745"
+  },
+  "orderNumber": "ORD20260411193953",
+  "note": "",
+  "customerInfo": {
+    "name": "tranxuanbang",
+    "phone": "0987465784",
+    "email": "xuanbang2k4@gmail.com",
+    "shippingAddress": "nhà 9b, Phường Tân Thành, Tỉnh Cà Mau"
+  },
+  "summary": {
+    "totalAmount": 20999000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "DELIVERED",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cffe076ee12c22921926ec",
+      "variantId": "nf2-160",
+      "productName": "Nệm foam Amando LAmore cao cấp 20cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775246278/artisano/products/blfe6wpqu4pmpmru0d66.webp",
+      "quantity": 1,
+      "price": 20999000,
+      "lineTotal": 20999000,
+      "size": "160 x 200",
+      "thickness": "20cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-11T19:39:53.652Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-11T19:42:04.588Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69dc94ea5dcae0213ba8c1a3"
+  },
+  "orderNumber": "ORD20260413070201",
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "note": "",
+  "customerInfo": {
+    "name": "cong bang",
+    "phone": "0987654321",
+    "email": "congbang@gmail.com",
+    "shippingAddress": "nha 4b, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 23499000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "VNPAY",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cffe076ee12c22921926eb",
+      "variantId": "nf1-180",
+      "productName": "Nệm foam Nhật Bản Aeroflow Fit Plus kháng khuẩn dày 20cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775245818/artisano/products/b8fcasnotntyq8r09lld.webp",
+      "quantity": 1,
+      "price": 23499000,
+      "lineTotal": 23499000,
+      "size": "160 x 200",
+      "thickness": "20cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-13T07:02:02.100Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-13T07:02:02.100Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69dc94ec5dcae0213ba8c1a4"
+  },
+  "orderNumber": "ORD20260413070204",
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "note": "",
+  "customerInfo": {
+    "name": "cong bang",
+    "phone": "0987654321",
+    "email": "congbang@gmail.com",
+    "shippingAddress": "nha 4b, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 23499000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "VNPAY",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cffe076ee12c22921926eb",
+      "variantId": "nf1-180",
+      "productName": "Nệm foam Nhật Bản Aeroflow Fit Plus kháng khuẩn dày 20cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775245818/artisano/products/b8fcasnotntyq8r09lld.webp",
+      "quantity": 1,
+      "price": 23499000,
+      "lineTotal": 23499000,
+      "size": "160 x 200",
+      "thickness": "20cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-13T07:02:04.565Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-13T07:02:04.565Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69dc94ee5dcae0213ba8c1a5"
+  },
+  "orderNumber": "ORD20260413070206",
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "note": "",
+  "customerInfo": {
+    "name": "cong bang",
+    "phone": "0987654321",
+    "email": "congbang@gmail.com",
+    "shippingAddress": "nha 4b, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 23499000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "VNPAY",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cffe076ee12c22921926eb",
+      "variantId": "nf1-180",
+      "productName": "Nệm foam Nhật Bản Aeroflow Fit Plus kháng khuẩn dày 20cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775245818/artisano/products/b8fcasnotntyq8r09lld.webp",
+      "quantity": 1,
+      "price": 23499000,
+      "lineTotal": 23499000,
+      "size": "160 x 200",
+      "thickness": "20cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-13T07:02:06.068Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-13T07:02:06.068Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69dc94f15dcae0213ba8c1a6"
+  },
+  "orderNumber": "ORD20260413070209",
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "note": "",
+  "customerInfo": {
+    "name": "cong bang",
+    "phone": "0987654321",
+    "email": "congbang@gmail.com",
+    "shippingAddress": "nha 4b, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 23499000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "VNPAY",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cffe076ee12c22921926eb",
+      "variantId": "nf1-180",
+      "productName": "Nệm foam Nhật Bản Aeroflow Fit Plus kháng khuẩn dày 20cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775245818/artisano/products/b8fcasnotntyq8r09lld.webp",
+      "quantity": 1,
+      "price": 23499000,
+      "lineTotal": 23499000,
+      "size": "160 x 200",
+      "thickness": "20cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-13T07:02:09.630Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-13T07:02:09.630Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69dc94f25dcae0213ba8c1a7"
+  },
+  "orderNumber": "ORD20260413070210",
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "note": "",
+  "customerInfo": {
+    "name": "cong bang",
+    "phone": "0987654321",
+    "email": "congbang@gmail.com",
+    "shippingAddress": "nha 4b, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 23499000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "VNPAY",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cffe076ee12c22921926eb",
+      "variantId": "nf1-180",
+      "productName": "Nệm foam Nhật Bản Aeroflow Fit Plus kháng khuẩn dày 20cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775245818/artisano/products/b8fcasnotntyq8r09lld.webp",
+      "quantity": 1,
+      "price": 23499000,
+      "lineTotal": 23499000,
+      "size": "160 x 200",
+      "thickness": "20cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-13T07:02:10.210Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-13T07:02:10.210Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69dc94f25dcae0213ba8c1a8"
+  },
+  "orderNumber": "ORD20260413070210",
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "note": "",
+  "customerInfo": {
+    "name": "cong bang",
+    "phone": "0987654321",
+    "email": "congbang@gmail.com",
+    "shippingAddress": "nha 4b, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 23499000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "VNPAY",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cffe076ee12c22921926eb",
+      "variantId": "nf1-180",
+      "productName": "Nệm foam Nhật Bản Aeroflow Fit Plus kháng khuẩn dày 20cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775245818/artisano/products/b8fcasnotntyq8r09lld.webp",
+      "quantity": 1,
+      "price": 23499000,
+      "lineTotal": 23499000,
+      "size": "160 x 200",
+      "thickness": "20cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-13T07:02:10.789Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-13T07:02:10.789Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69dc94f35dcae0213ba8c1a9"
+  },
+  "orderNumber": "ORD20260413070211",
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "note": "",
+  "customerInfo": {
+    "name": "cong bang",
+    "phone": "0987654321",
+    "email": "congbang@gmail.com",
+    "shippingAddress": "nha 4b, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 23499000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "VNPAY",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cffe076ee12c22921926eb",
+      "variantId": "nf1-180",
+      "productName": "Nệm foam Nhật Bản Aeroflow Fit Plus kháng khuẩn dày 20cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775245818/artisano/products/b8fcasnotntyq8r09lld.webp",
+      "quantity": 1,
+      "price": 23499000,
+      "lineTotal": 23499000,
+      "size": "160 x 200",
+      "thickness": "20cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-13T07:02:11.582Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-13T07:02:11.582Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69dc94f45dcae0213ba8c1aa"
+  },
+  "orderNumber": "ORD20260413070212",
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "note": "",
+  "customerInfo": {
+    "name": "cong bang",
+    "phone": "0987654321",
+    "email": "congbang@gmail.com",
+    "shippingAddress": "nha 4b, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 23499000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "VNPAY",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cffe076ee12c22921926eb",
+      "variantId": "nf1-180",
+      "productName": "Nệm foam Nhật Bản Aeroflow Fit Plus kháng khuẩn dày 20cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775245818/artisano/products/b8fcasnotntyq8r09lld.webp",
+      "quantity": 1,
+      "price": 23499000,
+      "lineTotal": 23499000,
+      "size": "160 x 200",
+      "thickness": "20cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-13T07:02:12.121Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-13T07:02:12.121Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69dc94f45dcae0213ba8c1ab"
+  },
+  "orderNumber": "ORD20260413070212",
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "note": "",
+  "customerInfo": {
+    "name": "cong bang",
+    "phone": "0987654321",
+    "email": "congbang@gmail.com",
+    "shippingAddress": "nha 4b, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 23499000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "VNPAY",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cffe076ee12c22921926eb",
+      "variantId": "nf1-180",
+      "productName": "Nệm foam Nhật Bản Aeroflow Fit Plus kháng khuẩn dày 20cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775245818/artisano/products/b8fcasnotntyq8r09lld.webp",
+      "quantity": 1,
+      "price": 23499000,
+      "lineTotal": 23499000,
+      "size": "160 x 200",
+      "thickness": "20cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-13T07:02:12.858Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-13T07:02:12.858Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69dc94f55dcae0213ba8c1ac"
+  },
+  "orderNumber": "ORD20260413070213",
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "note": "",
+  "customerInfo": {
+    "name": "cong bang",
+    "phone": "0987654321",
+    "email": "congbang@gmail.com",
+    "shippingAddress": "nha 4b, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 23499000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "VNPAY",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cffe076ee12c22921926eb",
+      "variantId": "nf1-180",
+      "productName": "Nệm foam Nhật Bản Aeroflow Fit Plus kháng khuẩn dày 20cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775245818/artisano/products/b8fcasnotntyq8r09lld.webp",
+      "quantity": 1,
+      "price": 23499000,
+      "lineTotal": 23499000,
+      "size": "160 x 200",
+      "thickness": "20cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-13T07:02:13.648Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-13T07:02:13.648Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69dc94f65dcae0213ba8c1ad"
+  },
+  "orderNumber": "ORD20260413070214",
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "note": "",
+  "customerInfo": {
+    "name": "cong bang",
+    "phone": "0987654321",
+    "email": "congbang@gmail.com",
+    "shippingAddress": "nha 4b, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 23499000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "VNPAY",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cffe076ee12c22921926eb",
+      "variantId": "nf1-180",
+      "productName": "Nệm foam Nhật Bản Aeroflow Fit Plus kháng khuẩn dày 20cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775245818/artisano/products/b8fcasnotntyq8r09lld.webp",
+      "quantity": 1,
+      "price": 23499000,
+      "lineTotal": 23499000,
+      "size": "160 x 200",
+      "thickness": "20cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-13T07:02:14.214Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-13T07:02:14.214Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69dc94f75dcae0213ba8c1ae"
+  },
+  "orderNumber": "ORD20260413070215",
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "note": "",
+  "customerInfo": {
+    "name": "cong bang",
+    "phone": "0987654321",
+    "email": "congbang@gmail.com",
+    "shippingAddress": "nha 4b, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 23499000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "VNPAY",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cffe076ee12c22921926eb",
+      "variantId": "nf1-180",
+      "productName": "Nệm foam Nhật Bản Aeroflow Fit Plus kháng khuẩn dày 20cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775245818/artisano/products/b8fcasnotntyq8r09lld.webp",
+      "quantity": 1,
+      "price": 23499000,
+      "lineTotal": 23499000,
+      "size": "160 x 200",
+      "thickness": "20cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-13T07:02:15.092Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-13T07:02:15.092Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69dc94f85dcae0213ba8c1af"
+  },
+  "orderNumber": "ORD20260413070216",
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "note": "",
+  "customerInfo": {
+    "name": "cong bang",
+    "phone": "0987654321",
+    "email": "congbang@gmail.com",
+    "shippingAddress": "nha 4b, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 23499000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "VNPAY",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cffe076ee12c22921926eb",
+      "variantId": "nf1-180",
+      "productName": "Nệm foam Nhật Bản Aeroflow Fit Plus kháng khuẩn dày 20cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775245818/artisano/products/b8fcasnotntyq8r09lld.webp",
+      "quantity": 1,
+      "price": 23499000,
+      "lineTotal": 23499000,
+      "size": "160 x 200",
+      "thickness": "20cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-13T07:02:16.024Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-13T07:02:16.024Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69dc94f85dcae0213ba8c1b0"
+  },
+  "orderNumber": "ORD20260413070216",
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "note": "",
+  "customerInfo": {
+    "name": "cong bang",
+    "phone": "0987654321",
+    "email": "congbang@gmail.com",
+    "shippingAddress": "nha 4b, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 23499000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "VNPAY",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cffe076ee12c22921926eb",
+      "variantId": "nf1-180",
+      "productName": "Nệm foam Nhật Bản Aeroflow Fit Plus kháng khuẩn dày 20cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775245818/artisano/products/b8fcasnotntyq8r09lld.webp",
+      "quantity": 1,
+      "price": 23499000,
+      "lineTotal": 23499000,
+      "size": "160 x 200",
+      "thickness": "20cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-13T07:02:16.864Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-13T07:02:16.864Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69dc94fa5dcae0213ba8c1b1"
+  },
+  "orderNumber": "ORD20260413070218",
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "note": "",
+  "customerInfo": {
+    "name": "cong bang",
+    "phone": "0987654321",
+    "email": "congbang@gmail.com",
+    "shippingAddress": "nha 4b, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 23499000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "VNPAY",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cffe076ee12c22921926eb",
+      "variantId": "nf1-180",
+      "productName": "Nệm foam Nhật Bản Aeroflow Fit Plus kháng khuẩn dày 20cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775245818/artisano/products/b8fcasnotntyq8r09lld.webp",
+      "quantity": 1,
+      "price": 23499000,
+      "lineTotal": 23499000,
+      "size": "160 x 200",
+      "thickness": "20cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-13T07:02:18.018Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-13T07:02:18.018Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69dca0f35dcae0213ba8c1b2"
+  },
+  "orderNumber": "ORD20260413075323",
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "note": "",
+  "customerInfo": {
+    "name": "cong bang",
+    "phone": "0987465784",
+    "email": "congbangctu@gmai.com",
+    "shippingAddress": "nha 4b, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 23499000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cffe076ee12c22921926eb",
+      "variantId": "nf1-180",
+      "productName": "Nệm foam Nhật Bản Aeroflow Fit Plus kháng khuẩn dày 20cm",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775245818/artisano/products/b8fcasnotntyq8r09lld.webp",
+      "quantity": 1,
+      "price": 23499000,
+      "lineTotal": 23499000,
+      "size": "160 x 200",
+      "thickness": "20cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-13T07:53:23.909Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-13T07:53:23.909Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69dca14d5dcae0213ba8c1b3"
+  },
+  "orderNumber": "ORD20260413075453",
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "note": "",
+  "customerInfo": {
+    "name": "cong bang",
+    "phone": "0987654321",
+    "email": "congbang@gmail.com",
+    "shippingAddress": "nha 4b, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 7699000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e2",
+      "variantId": "v8-180",
+      "productName": "Nệm bông ép cao cấp Wonjun Pure Premium nâng đỡ vững chắc dày 12cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775242184/artisano/products/z1c2xqf9hukmcb6c414a.webp",
+      "quantity": 1,
+      "price": 7699000,
+      "lineTotal": 7699000,
+      "size": "180 x 200",
+      "thickness": "12cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-13T07:54:53.348Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-13T07:54:53.348Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69dca1a65dcae0213ba8c1b4"
+  },
+  "orderNumber": "ORD20260413075622",
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "note": "",
+  "customerInfo": {
+    "name": "cong bang",
+    "phone": "0987654321",
+    "email": "congbang@gmail.com",
+    "shippingAddress": "nha 4b, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 7699000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PROCESSING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e2",
+      "variantId": "v8-180",
+      "productName": "Nệm bông ép cao cấp Wonjun Pure Premium nâng đỡ vững chắc dày 12cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775242184/artisano/products/z1c2xqf9hukmcb6c414a.webp",
+      "quantity": 1,
+      "price": 7699000,
+      "lineTotal": 7699000,
+      "size": "180 x 200",
+      "thickness": "12cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-13T07:56:22.489Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-13T09:51:58.650Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69dcb13d5dcae0213ba8c1b5"
+  },
+  "orderNumber": "ORD20260413090253",
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "note": "",
+  "customerInfo": {
+    "name": "cong bang",
+    "phone": "0987654321",
+    "email": "congbang@gmail.com",
+    "shippingAddress": "nha 4b, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 1228000,
+    "shippingFee": 30000,
+    "totalQty": 2
+  },
+  "payment": {
+    "method": "VNPAY",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69d09271be5d18bb2f488f22",
+      "variantId": "b900a64b-f2c0-42d6-a8c2-56c65a61ab18",
+      "productName": "Gối bông nhân tạo Doona Microfiber kháng khuẩn",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775277110/artisano/products/exidbeqncc7b6mua5g4c.webp",
+      "quantity": 2,
+      "price": 599000,
+      "lineTotal": 1198000,
+      "size": "50 x 70",
+      "thickness": "",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-13T09:02:53.439Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-13T09:02:53.439Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69dcb1945dcae0213ba8c1b6"
+  },
+  "orderNumber": "ORD20260413090420",
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "note": "",
+  "customerInfo": {
+    "name": "cong bang",
+    "phone": "0987654321",
+    "email": "congbang@gmail.com",
+    "shippingAddress": "nha 4b, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 4299000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "VNPAY",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "PENDING",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "variantId": "ff817899-6256-4d09-b012-e0f74730a428",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 1,
+      "price": 4299000,
+      "lineTotal": 4299000,
+      "size": "160 x 200",
+      "thickness": "10cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-13T09:04:20.054Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-13T09:04:20.054Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+},
+{
+  "_id": {
+    "$oid": "69dcf21d277e8d0cf3d6979a"
+  },
+  "orderNumber": "ORD20260413133940",
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "note": "",
+  "customerInfo": {
+    "name": "cong bang",
+    "phone": "0987654321",
+    "email": "congbang@gmail.com",
+    "shippingAddress": "nha 4b, Phường Hoàn Kiếm, Thành phố Hà Nội"
+  },
+  "summary": {
+    "totalAmount": 3299000,
+    "shippingFee": 0,
+    "totalQty": 1
+  },
+  "payment": {
+    "method": "COD",
+    "status": "PENDING",
+    "transactionId": ""
+  },
+  "orderStatus": "DELIVERED",
+  "cancelReason": "",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "variantId": "v6-160",
+      "productName": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "productImage": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 1,
+      "price": 3299000,
+      "lineTotal": 3299000,
+      "size": "120 x 200",
+      "thickness": "10cm",
+      "color": ""
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-13T13:39:41.000Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-13T13:39:49.704Z"
+  },
+  "_class": "com.b2204922.orderservice.entity.Order"
+}]

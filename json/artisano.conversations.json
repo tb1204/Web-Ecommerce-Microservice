@@ -1,0 +1,88 @@
+[{
+  "_id": {
+    "$oid": "69da8bcf0b22553bb631aaa6"
+  },
+  "userId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "status": "ACTIVE",
+  "lastMessage": "đẹp nhe shop ơi",
+  "lastMessageAt": {
+    "$date": "2026-04-11T20:37:58.666Z"
+  },
+  "lastSenderRole": "USER",
+  "adminLastReadAt": {
+    "$date": "2026-04-14T04:23:30.472Z"
+  },
+  "userDisplayName": "name user2",
+  "userAvatarUrl": "https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18zOEMycHF6MkRobWxIM1hMOE1EQno4Y1Z4VnciLCJyaWQiOiJ1c2VyXzNDMWRjbkI4VDZXRmZaODBEMVVLOFJqbVFubyIsImluaXRpYWxzIjoiTlUifQ",
+  "isPinned": false,
+  "isMuted": false,
+  "botEnabled": false,
+  "handoffToAdmin": true,
+  "botSessionId": "e121938d-1d33-4930-a73a-619e0ab4c16f",
+  "createdAt": {
+    "$date": "2026-04-11T17:58:38.944Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-14T04:23:30.472Z"
+  },
+  "_class": "com.b2204925.chatservice.entity.Conversation"
+},
+{
+  "_id": {
+    "$oid": "69daa23d0b22553bb631aaa8"
+  },
+  "userId": "user_3CE1j5Rvgvx28ZyoEB9FJGGSdiM",
+  "adminId": "user_3AYdCwEXm2wC5xrs4jiGpXEmHa7",
+  "status": "ACTIVE",
+  "lastMessage": "hi",
+  "lastMessageAt": {
+    "$date": "2026-04-11T19:51:10.263Z"
+  },
+  "lastSenderRole": "ADMIN",
+  "adminLastReadAt": {
+    "$date": "2026-04-14T04:23:30.072Z"
+  },
+  "userDisplayName": "xuan bang",
+  "userAvatarUrl": "https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18zOEMycHF6MkRobWxIM1hMOE1EQno4Y1Z4VnciLCJyaWQiOiJ1c2VyXzNDRTFqNVJ2Z3Z4MjhaeW9FQjlGSkdHU2RpTSIsImluaXRpYWxzIjoiWEIifQ",
+  "isPinned": false,
+  "isMuted": false,
+  "botEnabled": false,
+  "handoffToAdmin": true,
+  "botSessionId": "04d20f06-5983-4cf0-a818-5da098b615ca",
+  "createdAt": {
+    "$date": "2026-04-11T19:34:21.538Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-14T04:23:30.072Z"
+  },
+  "_class": "com.b2204925.chatservice.entity.Conversation"
+},
+{
+  "_id": {
+    "$oid": "69dac7cf88803f43df31e986"
+  },
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "status": "ACTIVE",
+  "lastMessage": "[Hình ảnh]",
+  "lastMessageAt": {
+    "$date": "2026-04-13T09:38:41.229Z"
+  },
+  "lastSenderRole": "ADMIN",
+  "adminLastReadAt": {
+    "$date": "2026-04-14T04:23:31.088Z"
+  },
+  "userDisplayName": "cong bang",
+  "userAvatarUrl": "https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18zOEMycHF6MkRobWxIM1hMOE1EQno4Y1Z4VnciLCJyaWQiOiJ1c2VyXzNDMVNodnlscmY0dUlBQ1hzUlZsWDNtekpnQiIsImluaXRpYWxzIjoiQ0IifQ",
+  "isPinned": false,
+  "isMuted": false,
+  "botEnabled": false,
+  "handoffToAdmin": true,
+  "botSessionId": "ce4dacd1-7b64-4d98-8253-f839674a976f",
+  "createdAt": {
+    "$date": "2026-04-11T22:14:39.446Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-14T04:23:31.088Z"
+  },
+  "_class": "com.b2204925.chatservice.entity.Conversation"
+}]

@@ -1,0 +1,3310 @@
+[{
+  "_id": {
+    "$oid": "69cfef446ee12c22921926e0"
+  },
+  "name": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+  "productCode": "N006",
+  "category": {
+    "name": "Nệm bông ép",
+    "code": "NEM-BONG-EP",
+    "parentCode": "NEM",
+    "parentName": "Nệm"
+  },
+  "brand": "Wonjun",
+  "origin": "Việt Nam",
+  "price": 3299000,
+  "specifications": {
+    "material": "Bông ép kháng khuẩn",
+    "weight": "15kg",
+    "firmness": "Mềm",
+    "design": "2 mặt sử dụng",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "v6-160",
+      "sku": "N006-120X200",
+      "size": "120 x 200",
+      "thickness": "10cm",
+      "color": "",
+      "price": 3299000,
+      "originalPrice": 5200000,
+      "stockQuantity": 7,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "v6-180",
+      "sku": "N006-140X200",
+      "size": "140 x 200",
+      "thickness": "10cm",
+      "color": "",
+      "price": 4299000,
+      "originalPrice": 5400000,
+      "stockQuantity": 19,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "ff817899-6256-4d09-b012-e0f74730a428",
+      "sku": "N006-160X200",
+      "size": "160 x 200",
+      "thickness": "10cm",
+      "color": "",
+      "price": 4299000,
+      "originalPrice": 5600000,
+      "stockQuantity": 10,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "6d3105ab-a895-4896-97ac-c556d28066a9",
+      "sku": "N006-180X200",
+      "size": "180 x 200",
+      "thickness": "10cm",
+      "color": "",
+      "price": 4298999,
+      "originalPrice": 5800000,
+      "stockQuantity": 13,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "034eb6a7-f73c-4834-9d66-823513a05b8b",
+      "sku": "N006-220X200",
+      "size": "220 x 200",
+      "thickness": "10cm",
+      "color": "",
+      "price": 4299002,
+      "originalPrice": 6000000,
+      "stockQuantity": 15,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 64,
+  "tags": [
+    "hanvico",
+    "nano-silver",
+    "khang-khuan"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241784/artisano/products/fcgzq2yskpe4vciscme3.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241786/artisano/products/hxtqx5aovhg1px4pgip0.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241788/artisano/products/yivfaktcns7dlbrgxmho.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241790/artisano/products/m5gpulblhn0nvx2iwgsp.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241792/artisano/products/fyksolj4mjxnj76mgq56.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Nệm bông ép Hanvico Nano Silver kháng khuẩn vượt trội, êm ái, bền đẹp, phù hợp gia đình có trẻ nhỏ.",
+  "createdAt": {
+    "$date": "2026-04-03T03:00:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-13T06:00:37.688Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69cfef446ee12c22921926e1"
+  },
+  "name": "Nệm bông ép Goodnight Nova gấp 3 9cm",
+  "productCode": "N007",
+  "category": {
+    "name": "Nệm bông ép",
+    "code": "NEM-BONG-EP",
+    "parentCode": "NEM",
+    "parentName": "Nệm"
+  },
+  "brand": "Goodnight",
+  "origin": "Nhật Bản",
+  "price": 2499000,
+  "specifications": {
+    "material": "Bông ép cao cấp 3 lớp",
+    "weight": "15kg",
+    "firmness": "Trung Bình ",
+    "design": "2 mặt sử dụng",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "v7-160",
+      "sku": "N007-140X200",
+      "size": "140 x 200",
+      "thickness": "9cm",
+      "color": "",
+      "price": 2499000,
+      "originalPrice": 4200000,
+      "stockQuantity": 9,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "v7-180",
+      "sku": "N007-180X200",
+      "size": "180 x 200",
+      "thickness": "9cm",
+      "color": "",
+      "price": 2499000,
+      "originalPrice": 4400000,
+      "stockQuantity": 16,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "eda2b46a-9ebb-419a-895b-c1d7b1a9a316",
+      "sku": "N007-220X200",
+      "size": "220 x 200",
+      "thickness": "9cm",
+      "color": "",
+      "price": 2499000,
+      "originalPrice": 4600000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 45,
+  "tags": [
+    "van-thanh",
+    "gia-re",
+    "fantasy"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241471/artisano/products/vkpclrtlbxh2wgknnbno.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241473/artisano/products/p2rzddd94o7bfpn0jbow.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241474/artisano/products/fdschsfffvvzjqt3idc0.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241476/artisano/products/xqq0jdmyvyfxmvlnnhqy.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241478/artisano/products/fqopmn4dpixq7ntro7ww.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Nệm bông ép Vạn Thành Fantasy giá tốt, êm ái, thoáng mát, rất được ưa chuộng trong phân khúc giá rẻ.",
+  "createdAt": {
+    "$date": "2026-04-03T03:00:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-11T21:49:13.602Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69cfef446ee12c22921926e2"
+  },
+  "name": "Nệm bông ép cao cấp Wonjun Pure Premium nâng đỡ vững chắc dày 12cm gấp 2",
+  "productCode": "N008",
+  "category": {
+    "name": "Nệm bông ép",
+    "code": "NEM-BONG-EP",
+    "parentCode": "NEM",
+    "parentName": "Nệm"
+  },
+  "brand": "Wonjun",
+  "origin": "Việt Nam",
+  "price": 7699000,
+  "specifications": {
+    "material": "Bông ép  cao cấp",
+    "weight": "17kg",
+    "firmness": "Mềm",
+    "design": "2 mặt sử dụng",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "v8-160",
+      "sku": "N008-140X200",
+      "size": "140 x 200",
+      "thickness": "12cm",
+      "color": "",
+      "price": 7699000,
+      "originalPrice": 9000000,
+      "stockQuantity": 19,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "v8-180",
+      "sku": "N008-180X200",
+      "size": "180 x 200",
+      "thickness": "12cm",
+      "color": "",
+      "price": 7699000,
+      "originalPrice": 9200000,
+      "stockQuantity": 0,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "548a3da0-dd04-4e48-a18e-640ad70e6a81",
+      "sku": "N008-220X200",
+      "size": "220 x 200",
+      "thickness": "12cm",
+      "color": "",
+      "price": 7699000,
+      "originalPrice": 9400000,
+      "stockQuantity": 18,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 37,
+  "tags": [
+    "edena",
+    "premium",
+    "bong-ep"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775242184/artisano/products/z1c2xqf9hukmcb6c414a.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775242186/artisano/products/jllhyaxuqvvev1hutj92.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775242188/artisano/products/m0fqsfy9skrfqmjunqhs.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775242189/artisano/products/iafjlrikalnjynyj6t0w.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775242191/artisano/products/q2hnz8o9d9riezg97g4v.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Nệm bông ép Edena Premium sử dụng bông , êm ái, bền đẹp, phù hợp mọi không gian sống.",
+  "createdAt": {
+    "$date": "2026-04-03T03:00:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-13T07:56:04.098Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69cffd986ee12c22921926e7"
+  },
+  "name": "Nệm cao su thiên nhiên Gummi Premium detox giấc ngủ dày 10cm",
+  "productCode": "NCS001",
+  "category": {
+    "name": "Nệm cao su",
+    "code": "NEM-CAO-SU",
+    "parentCode": "NEM",
+    "parentName": "Nệm"
+  },
+  "brand": "Gummi",
+  "origin": "Việt Nam",
+  "price": 12499000,
+  "specifications": {
+    "material": "Cao su thiên nhiên 100%",
+    "weight": "25-35kg",
+    "firmness": "Mềm",
+    "design": "Thoáng khí tối ưu, đàn hồi cao",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "ncs1-160",
+      "sku": "NCS001-160X200",
+      "size": "120 x 200",
+      "thickness": "10cm",
+      "color": "",
+      "price": 12499000,
+      "originalPrice": 14499000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "ncs1-180",
+      "sku": "NCS001-180X200",
+      "size": "140 x 200",
+      "thickness": "10cm",
+      "color": "",
+      "price": 14499000,
+      "originalPrice": 16499000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "eb8be4fe-0898-48ff-9489-9f5f9bb6715f",
+      "sku": "Tự tạo...",
+      "size": "160 x 200",
+      "thickness": "10cm",
+      "color": "",
+      "price": 16499000,
+      "originalPrice": 18499000,
+      "stockQuantity": 19,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "62749ed4-4195-474d-85c2-b10e43ffbc12",
+      "sku": "Tự tạo...",
+      "size": "180 x 200",
+      "thickness": "10cm",
+      "color": "",
+      "price": 18499000,
+      "originalPrice": 20499000,
+      "stockQuantity": 19,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "49d93b54-b073-4fa7-9e0a-cdbfa366dbab",
+      "sku": "Tự tạo...",
+      "size": "220 x 200",
+      "thickness": "10cm",
+      "color": "",
+      "price": 20999000,
+      "originalPrice": 22499000,
+      "stockQuantity": 18,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 96,
+  "tags": [
+    "gummi",
+    "cao-su-thien-nhien",
+    "classic",
+    "thoang-khi"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775242955/artisano/products/ljjigylz7m1uadgoc3kn.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775242956/artisano/products/wgnngmwtjoh0qt2pobaq.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775242958/artisano/products/mls1sam0wfs2030dwsex.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775242961/artisano/products/rvgf61wrqu563ggghf7f.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775242963/artisano/products/cjrzu92gimntwclvliya.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Nệm cao su thiên nhiên Gummi Classic thế hệ mới với độ đàn hồi vượt trội, thoáng khí tối ưu, nâng đỡ đường cong cơ thể hoàn hảo. Bán chạy nhất với hơn 44.000 đơn hàng.",
+  "createdAt": {
+    "$date": "2026-04-03T03:00:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-04T09:41:41.271Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69cffd986ee12c22921926e8"
+  },
+  "name": "Nệm cao su thiên nhiên Liên Á Classic dày 10cm",
+  "productCode": "NCS002",
+  "category": {
+    "name": "Nệm cao su",
+    "code": "NEM-CAO-SU",
+    "parentCode": "NEM",
+    "parentName": "Nệm"
+  },
+  "brand": "Liên Á",
+  "origin": "Việt Nam",
+  "price": 12499000,
+  "specifications": {
+    "material": "Cao su thiên nhiên kết hợp tinh chất than hoạt tính",
+    "weight": "28-38kg",
+    "firmness": "Mềm",
+    "design": "Công nghệ detox giấc ngủ",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "ncs2-160",
+      "sku": "NCS002-160X200",
+      "size": "120 x 200",
+      "thickness": "10cm",
+      "color": "",
+      "price": 12499000,
+      "originalPrice": 14499000,
+      "stockQuantity": 18,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "ncs2-180",
+      "sku": "NCS002-180X200",
+      "size": "140 x 200",
+      "thickness": "10cm",
+      "color": "",
+      "price": 13499000,
+      "originalPrice": 15499000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "a4ba1f48-0c5b-467b-94cd-ab4dc96e66af",
+      "sku": "Tự tạo...",
+      "size": "160 x 200",
+      "thickness": "10cm",
+      "color": "",
+      "price": 14498999,
+      "originalPrice": 16499000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "839a3d10-a110-4b2a-bf5c-0f1060259e26",
+      "sku": "Tự tạo...",
+      "size": "180 x 200",
+      "thickness": "10cm",
+      "color": "",
+      "price": 15499000,
+      "originalPrice": 18498999,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "1698253e-483f-4d0b-8db0-d2110749fe1e",
+      "sku": "Tự tạo...",
+      "size": "220 x 200",
+      "thickness": "10cm",
+      "color": "",
+      "price": 16499000,
+      "originalPrice": 20499000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 98,
+  "tags": [
+    "gummi",
+    "premium",
+    "detox",
+    "cao-su-thien-nhien"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775243769/artisano/products/vznrrn9aqlgsgmih3qsl.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775243770/artisano/products/vrpe7ilzg2ytumgbtzs0.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775243772/artisano/products/tpocgo1evswvj2g99y7u.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775243774/artisano/products/edgfcqw3gasstz8kvnk1.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775243776/artisano/products/saeqwpww9bz4yzly6mzb.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775243778/artisano/products/hoorabqsynf7bw8rbbkv.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Nệm cao su thiên nhiên Gummi Premium Detox giấc ngủ với tinh chất than hoạt tính, kháng khuẩn vượt trội, mang lại giấc ngủ sâu và sạch hơn.",
+  "createdAt": {
+    "$date": "2026-04-03T03:00:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-04T09:41:48.657Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69cffd986ee12c22921926e9"
+  },
+  "name": "Nệm cao su thiên nhiên Kim Cương Happy Gold dày 10/15cm",
+  "productCode": "NCS003",
+  "category": {
+    "name": "Nệm cao su",
+    "code": "NEM-CAO-SU",
+    "parentCode": "NEM",
+    "parentName": "Nệm"
+  },
+  "brand": "Kim Cương",
+  "origin": "Việt Nam",
+  "price": 8999000,
+  "specifications": {
+    "material": "Cao su đa tầng cao cấp",
+    "weight": "20kg",
+    "firmness": "Mềm",
+    "design": "Đa tầng nâng đỡ",
+    "certificationNumber": "QCVN 3:2018"
+  },
+  "variants": [
+    {
+      "variantId": "ncs3-160",
+      "sku": "NCS003-160X200",
+      "size": "120 x 200",
+      "thickness": "10cm",
+      "color": "",
+      "price": 8999000,
+      "originalPrice": 10990000,
+      "stockQuantity": 18,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "d6cbf253-9dbe-4ea4-8289-635d575fd6e0",
+      "sku": "Tự tạo...",
+      "size": "180 x 200",
+      "thickness": "10cm",
+      "color": "",
+      "price": 9999000,
+      "originalPrice": 12999000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "d2f2b790-b74f-4f77-9358-8f406c2ae5fb",
+      "sku": "Tự tạo...",
+      "size": "220 x 200",
+      "thickness": "10cm",
+      "color": "",
+      "price": 10999000,
+      "originalPrice": 14999000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "e9c8f0ba-4c8c-4b99-98ad-e475a8c72e5a",
+      "sku": "Tự tạo...",
+      "size": "120 x 200",
+      "thickness": "15cm",
+      "color": "",
+      "price": 12999000,
+      "originalPrice": 16999000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "d5f0db63-a4ad-46e8-9b4e-1d65fb4dcf72",
+      "sku": "Tự tạo...",
+      "size": "180 x 200",
+      "thickness": "15cm",
+      "color": "",
+      "price": 13999000,
+      "originalPrice": 18998999,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "349adca3-d51f-4f02-8176-42e05057dd05",
+      "sku": "Tự tạo...",
+      "size": "220 x 200",
+      "thickness": "15cm",
+      "color": "",
+      "price": 14999000,
+      "originalPrice": 20999000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 118,
+  "tags": [
+    "kim-cuong",
+    "da-tang",
+    "cao-su",
+    "ben-biet"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775244557/artisano/products/z9csp4jfkzj6affxgs5p.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775244558/artisano/products/xnwu8hscq3xsym6iwnhh.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775244560/artisano/products/jhwdolxdwhuxm2l8gr74.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775244561/artisano/products/vrt2gmnxgriwlsyc9myf.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775244563/artisano/products/gu7bwwswvhwoqs5dyotv.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775244565/artisano/products/dw0cdo3il8ieginzqtm6.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Nệm cao su đa tầng Kim Cương Stella mang lại sự nâng đỡ chắc chắn, êm ái và bền bỉ theo thời gian.",
+  "createdAt": {
+    "$date": "2026-04-03T03:00:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-04T09:41:55.580Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69cffd986ee12c22921926ea"
+  },
+  "name": "Nệm cao su Gummi 7zones nhập khẩu dày 12cm",
+  "productCode": "NCS004",
+  "category": {
+    "name": "Nệm cao su",
+    "code": "NEM-CAO-SU",
+    "parentCode": "NEM",
+    "parentName": "Nệm"
+  },
+  "brand": "Gummi",
+  "origin": "Việt Nam",
+  "price": 16999000,
+  "specifications": {
+    "material": "Cao su thiên nhiên nhập khẩu",
+    "weight": "20kg",
+    "firmness": "Mềm",
+    "design": "7 vùng hỗ trợ cơ thể",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "ncs4-160",
+      "sku": "NCS004-160X200",
+      "size": "120 x 200",
+      "thickness": "12cm",
+      "color": "",
+      "price": 16999000,
+      "originalPrice": 21999000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "ncs4-180",
+      "sku": "NCS004-180X200",
+      "size": "160 x 200",
+      "thickness": "12cm",
+      "color": "",
+      "price": 18999000,
+      "originalPrice": 23999000,
+      "stockQuantity": 19,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "8ee05afc-885a-4865-bd74-b7e43cc6c355",
+      "sku": "Tự tạo...",
+      "size": "180 x 200",
+      "thickness": "12cm",
+      "color": "",
+      "price": 23999000,
+      "originalPrice": 28999000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 59,
+  "tags": [
+    "gummi",
+    "7-zones",
+    "nhap-khau",
+    "cao-cap"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775245214/artisano/products/tpztrej8bxpxfsrcbloi.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775245216/artisano/products/wo6tqbnc3qjhymwnmjxm.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775245218/artisano/products/zvhynv6nno2hagsazzyu.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775245219/artisano/products/eezdmcrhztx7vsdxkoge.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775245221/artisano/products/avs6sbtjddzlcbuuqkm2.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775245223/artisano/products/del2k8mnedw4ubgbegay.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Nệm cao su Gummi 7 Zones nhập khẩu với công nghệ phân vùng hỗ trợ 7 vùng cơ thể, mang lại tư thế nằm chuẩn và giấc ngủ chất lượng cao.",
+  "createdAt": {
+    "$date": "2026-04-03T03:00:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-04T09:42:03.090Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69cffe076ee12c22921926eb"
+  },
+  "name": "Nệm foam Nhật Bản Aeroflow Fit Plus kháng khuẩn dày 20cm",
+  "productCode": "NF001",
+  "category": {
+    "name": "Nệm Foam",
+    "code": "NEM-FOAM",
+    "parentCode": "NEM",
+    "parentName": "Nệm"
+  },
+  "brand": "Aeroflow",
+  "origin": "Nhật Bản",
+  "price": 20499000,
+  "specifications": {
+    "material": "Foam siêu đàn hồi cao cấp",
+    "weight": "22kg",
+    "firmness": "Mềm",
+    "design": "Siêu đàn hồi, thoáng khí",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "nf1-160",
+      "sku": "NF001-160X200",
+      "size": "140 x 200",
+      "thickness": "20cm",
+      "color": "",
+      "price": 20499000,
+      "originalPrice": 24499000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "nf1-180",
+      "sku": "NF001-180X200",
+      "size": "160 x 200",
+      "thickness": "20cm",
+      "color": "",
+      "price": 23499000,
+      "originalPrice": 26499000,
+      "stockQuantity": 3,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "9e594342-c6b9-4c63-ada9-82936143685b",
+      "sku": "Tự tạo...",
+      "size": "220 x 200",
+      "thickness": "20cm",
+      "color": "",
+      "price": 26499000,
+      "originalPrice": 30499000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 43,
+  "tags": [
+    "comfy",
+    "cloud-2.0",
+    "sieudanhoi",
+    "nem-foam"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775245818/artisano/products/b8fcasnotntyq8r09lld.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775245821/artisano/products/gwoncxuuqvos6sb6agic.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775245822/artisano/products/do1d9ulmph8cqyoydnk9.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775245825/artisano/products/ezy94l12kidsvjkpyktx.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775245827/artisano/products/gbmp7swx0pj2ahpjcfed.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Nệm foam Comfy Cloud 2.0 siêu đàn hồi dày 15cm, đã bán hơn 24.000 sản phẩm. Mang lại cảm giác êm ái, nâng đỡ tốt, thoáng khí và đàn hồi cao như nệm cao su.",
+  "createdAt": {
+    "$date": "2026-04-03T03:00:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-04T09:42:12.158Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69cffe076ee12c22921926ec"
+  },
+  "name": "Nệm foam Amando LAmore cao cấp 20cm",
+  "productCode": "NF002",
+  "category": {
+    "name": "Nệm Foam",
+    "code": "NEM-FOAM",
+    "parentCode": "NEM",
+    "parentName": "Nệm"
+  },
+  "brand": "Amando",
+  "origin": "Việt Nam",
+  "price": 20999000,
+  "specifications": {
+    "material": "Foam cao cấp 7 thành phần",
+    "weight": "25kg",
+    "firmness": "Trung Bình",
+    "design": "Nâng đỡ 5 vùng, làm mát & kháng khuẩn",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "nf2-160",
+      "sku": "NF002-160X200",
+      "size": "160 x 200",
+      "thickness": "20cm",
+      "color": "",
+      "price": 20999000,
+      "originalPrice": 22999000,
+      "stockQuantity": 19,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 19,
+  "tags": [
+    "comfy",
+    "lux-1.0",
+    "lam-mat",
+    "khang-khuan",
+    "nem-foam"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775246278/artisano/products/blfe6wpqu4pmpmru0d66.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775246280/artisano/products/dtam6egn0tevl7coefgp.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775246281/artisano/products/rpt3uudktle8hkmt2h7s.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775246283/artisano/products/fmldjazkzx4uig0trzne.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775246285/artisano/products/fqyfpzhxis9hjlt30znn.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Nệm foam  1.0 cao cấp với công nghệ làm mát và kháng khuẩn kép, nâng đỡ 5 vùng cơ thể, mang lại giấc ngủ sâu và thoải mái suốt đêm.",
+  "createdAt": {
+    "$date": "2026-04-03T03:00:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-04T09:42:17.535Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69cffe076ee12c22921926ed"
+  },
+  "name": "Nệm foam Bedgear S3 Sport phục hồi năng lượng",
+  "productCode": "NF003",
+  "category": {
+    "name": "Nệm Foam",
+    "code": "NEM-FOAM",
+    "parentCode": "NEM",
+    "parentName": "Nệm"
+  },
+  "brand": "Bedgear",
+  "origin": "Mỹ",
+  "price": 30999000,
+  "specifications": {
+    "material": "Foam cao cấp",
+    "weight": "25kg",
+    "firmness": "Mềm",
+    "design": "Điều hòa thân nhiệt, thoáng khí",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "bd676db0-a79b-4ec4-8ece-cb02eb199ca4",
+      "sku": "Tự tạo...",
+      "size": "160 x 200",
+      "thickness": "25cm",
+      "color": "",
+      "price": 30999000,
+      "originalPrice": 30999000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "5653426c-09f5-4ab8-83b7-ea77dea41724",
+      "sku": "Tự tạo...",
+      "size": "180 x 200",
+      "thickness": "25cm",
+      "color": "",
+      "price": 33999000,
+      "originalPrice": 33999000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "cb85e996-1bfd-4c23-b615-c3bb6dbe4dd5",
+      "sku": "Tự tạo...",
+      "size": "220 x 200",
+      "thickness": "25cm",
+      "color": "",
+      "price": 35999000,
+      "originalPrice": 35999000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 60,
+  "tags": [
+    "icomfy",
+    "coolax-plus",
+    "dieu-hoa-nhiet",
+    "nem-foam"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775248740/artisano/products/ul9mjf9fbb6r79sz4mnb.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775248741/artisano/products/h010mxsk6iz1rwxczaag.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775248743/artisano/products/ga9l7zglh5tq25xz19rm.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Nệm foam iComfy Coolax Plus nâng cấp công nghệ điều hòa thân nhiệt, giúp giữ mát mẻ vào mùa hè và ấm áp vào mùa đông, rất phù hợp khí hậu Việt Nam.",
+  "createdAt": {
+    "$date": "2026-04-03T03:00:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-04T09:42:22.739Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69cffe076ee12c22921926ee"
+  },
+  "name": "Nệm foam Comfy Lux 2.0 cao cấp kháng khuẩn kép dày 22cm",
+  "productCode": "NF004",
+  "category": {
+    "name": "Nệm Foam",
+    "code": "NEM-FOAM",
+    "parentCode": "NEM",
+    "parentName": "Nệm"
+  },
+  "brand": "Comfy",
+  "origin": "Việt Nam",
+  "price": 23999000,
+  "specifications": {
+    "material": "Foam công nghệ Mỹ Hybrid",
+    "weight": "20kg",
+    "firmness": "Trung Bình",
+    "design": "Hybrid đàn hồi cao",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "nf4-160",
+      "sku": "NF004-160X200",
+      "size": "160 x 200",
+      "thickness": "22cm",
+      "color": "",
+      "price": 23999000,
+      "originalPrice": 23999000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "nf4-180",
+      "sku": "NF004-180X200",
+      "size": "180 x 200",
+      "thickness": "22cm",
+      "color": "",
+      "price": 25999000,
+      "originalPrice": 25999000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "9c858ccb-0843-4095-8036-c117edb36b2c",
+      "sku": "Tự tạo...",
+      "size": "220 x 200",
+      "thickness": "22cm",
+      "color": "",
+      "price": 26999000,
+      "originalPrice": 26999000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 60,
+  "tags": [
+    "goodnight",
+    "active-hybrid",
+    "cong-nghe-duc",
+    "nem-foam"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775249211/artisano/products/e4qu9oq25my6ac44n1qy.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775249213/artisano/products/iixpvsshdcsbqpesvogw.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775249215/artisano/products/z154bst1y6f2bcw9td4c.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775249217/artisano/products/mwq2r1wjxrfop2qwknb8.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775249220/artisano/products/gev4b9zarpa4lgef0mef.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775249222/artisano/products/kkxpwdtvdectnicozql4.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775249225/artisano/products/gtpq85jlwxbptrbpljtr.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Nệm foam Goodnight Active Hybrid công nghệ Đức dày 20cm, kết hợp ưu điểm của foam và hybrid, đàn hồi tốt, thoáng khí và hỗ trợ cột sống hiệu quả.",
+  "createdAt": {
+    "$date": "2026-04-03T03:00:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-04T09:42:28.205Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69cffe6b6ee12c22921926ef"
+  },
+  "name": "Nệm lò xo giảm đau lưng Amando Goodnight Magic",
+  "productCode": "NLX001",
+  "category": {
+    "name": "Nệm lò xo",
+    "code": "NEM-LO-XO",
+    "parentCode": "NEM",
+    "parentName": "Nệm"
+  },
+  "brand": "Amando",
+  "origin": "Việt Nam",
+  "price": 4999000,
+  "specifications": {
+    "material": "Lò xo túi độc lập cao cấp + foam và vải kháng khuẩn",
+    "weight": "25kg",
+    "firmness": "Trung Bình",
+    "design": "Túi độc lập tiêu chuẩn khách sạn 5 sao",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "nlx1-160",
+      "sku": "NLX001-160X200",
+      "size": "120 x 200",
+      "thickness": "20cm",
+      "color": "",
+      "price": 4999000,
+      "originalPrice": 4999000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "nlx1-180",
+      "sku": "NLX001-180X200",
+      "size": "140 x 200",
+      "thickness": "20cm",
+      "color": "",
+      "price": 6999000,
+      "originalPrice": 6999000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "3c4c980f-54b8-4f48-8922-cc44f0e9f9c2",
+      "sku": "Tự tạo...",
+      "size": "160 x 200",
+      "thickness": "20cm",
+      "color": "",
+      "price": 8999000,
+      "originalPrice": 8999000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "0a4dcfae-eb4d-428a-af46-b4f13820368c",
+      "sku": "Tự tạo...",
+      "size": "180 x 200",
+      "thickness": "20cm",
+      "color": "",
+      "price": 10999000,
+      "originalPrice": 10999000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "da023262-f142-422c-bd50-135f9814bed1",
+      "sku": "Tự tạo...",
+      "size": "220 x 200",
+      "thickness": "20cm",
+      "color": "",
+      "price": 11999000,
+      "originalPrice": 11999000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 100,
+  "tags": [
+    "amando",
+    "elite-original",
+    "tui-doc-lap",
+    "khach-san-5-sao",
+    "nem-lo-xo"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775249712/artisano/products/nofag6ctncgotcq7fjsu.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775249713/artisano/products/g1btfsq6rpv88u1dzrky.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775249715/artisano/products/ov8q9wnfijjfrqcvy2f7.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775249717/artisano/products/bsq13l5ipdbsc8l1i5ds.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775249719/artisano/products/kivnrvjewg5j8ibrzfh4.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Nệm lò xo Amando Elite Original túi độc lập tiêu chuẩn khách sạn 5 sao, hạn chế rung lắc, không gây tiếng ồn, thoáng khí tốt. Best seller với hơn 37.000 đơn hàng, phù hợp cho cặp đôi và gia đình.",
+  "createdAt": {
+    "$date": "2026-04-03T03:00:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-04T09:42:33.956Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69cffe6b6ee12c22921926f0"
+  },
+  "name": "Nệm lò xo túi độc lập Dunlopillo William dày 29cm",
+  "productCode": "NLX002",
+  "category": {
+    "name": "Nệm lò xo",
+    "code": "NEM-LO-XO",
+    "parentCode": "NEM",
+    "parentName": "Nệm"
+  },
+  "brand": "Dunlopillo",
+  "origin": "Anh",
+  "price": 40999000,
+  "specifications": {
+    "material": "Lò xo túi độc lập cao cấp + foam kháng khuẩn",
+    "weight": "30kg",
+    "firmness": "Mềm",
+    "design": "Giảm tiếng ồn tối đa",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "nlx2-160",
+      "sku": "NLX002-160X200",
+      "size": "160 x 200",
+      "thickness": "29cm",
+      "color": "",
+      "price": 40999000,
+      "originalPrice": 4599000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 20,
+  "tags": [
+    "amando",
+    "elite-plus",
+    "giam-tieng-on",
+    "nem-lo-xo",
+    "cao-cap"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775250004/artisano/products/bblebyfuzfqspuwentu8.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775250005/artisano/products/ijmjuo2jfqr1jc5jp8xv.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775250007/artisano/products/kmloemh1105zmdpmsahm.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775250008/artisano/products/x4dlm2mes8riafuw8qdv.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775250010/artisano/products/vdcqgizocr0nmvz8tvwe.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Nệm lò xo Amando Elite Plus túi độc lập cao cấp dày 25cm, công nghệ giảm tiếng ồn vượt trội, nâng đỡ đa vùng, phù hợp cho gia đình cần sự yên tĩnh và êm ái.",
+  "createdAt": {
+    "$date": "2026-04-03T03:00:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-04T09:42:40.650Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69cffe6b6ee12c22921926f1"
+  },
+  "name": "Nệm lò xo Amando Faro 5 vùng giảm đau lưng dày 35cm",
+  "productCode": "NLX003",
+  "category": {
+    "name": "Nệm lò xo",
+    "code": "NEM-LO-XO",
+    "parentCode": "NEM",
+    "parentName": "Nệm"
+  },
+  "brand": "Amando",
+  "origin": "Việt Nam",
+  "price": 12999001,
+  "specifications": {
+    "material": "Lò xo túi độc lập Hybrid công nghệ hiện đại hơn",
+    "weight": "25kg",
+    "firmness": "Mềm",
+    "design": "sang nhất, cao cấp nhất",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "nlx3-160",
+      "sku": "NLX003-160X200",
+      "size": "120x200",
+      "thickness": "35cm",
+      "color": "",
+      "price": 12999001,
+      "originalPrice": 15999000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 20,
+  "tags": [
+    "goodnight",
+    "sleepwave",
+    "hybrid",
+    "gia-re",
+    "nem-lo-xo"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775250357/artisano/products/rexermg8hj8vmpy3jfqg.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775250359/artisano/products/td4xo5s5vwmq0mwohjek.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775250360/artisano/products/dbfsyq0qjksnaovh1f0s.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775250362/artisano/products/cwhikb9hcfc0cn2o6mwm.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775250364/artisano/products/wiye5tftq742ox6spd3u.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Nệm lò xo Goodnight SleepWave Hybrid dày 20cm, công nghệ túi độc lập giảm tiếng ồn, giá tốt, phù hợp cho gia đình trẻ và người mới bắt đầu dùng nệm lò xo.",
+  "createdAt": {
+    "$date": "2026-04-03T03:00:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-04T09:42:47.146Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69d09271be5d18bb2f488f21"
+  },
+  "name": "Gối bông Doona Promo",
+  "productCode": "G001",
+  "category": {
+    "name": "Gối bông",
+    "code": "GOI-BONG",
+    "parentCode": "GOI",
+    "parentName": "Gối"
+  },
+  "brand": "Doona",
+  "origin": "Việt Nam",
+  "price": 199000,
+  "specifications": {
+    "material": "Bông microfiber",
+    "weight": "1kg",
+    "firmness": "Mềm",
+    "design": "1 mặt",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "g1-50x70",
+      "sku": "G001-50x70",
+      "size": "50 x 70",
+      "thickness": "15cm",
+      "color": "",
+      "price": 199000,
+      "originalPrice": 299000,
+      "stockQuantity": 48,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 48,
+  "tags": [
+    "goi-bong",
+    "mem",
+    "gia-re"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775287300/artisano/products/j7ffx425epwgmyhcxjfz.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775287301/artisano/products/mqxazu34erjqpbufhlpc.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775287303/artisano/products/x64noq0xs1y4odzpgfsk.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775287304/artisano/products/ovlnwmdkkhjj7qodvahx.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Gối bông microfiber mềm mại, thoáng khí, phù hợp mọi đối tượng.",
+  "updatedAt": {
+    "$date": "2026-04-04T09:42:56.825Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69d09271be5d18bb2f488f22"
+  },
+  "name": "Gối bông nhân tạo Doona Microfiber kháng khuẩn",
+  "productCode": "G002",
+  "category": {
+    "name": "Gối bông",
+    "code": "GOI-BONG",
+    "parentCode": "GOI",
+    "parentName": "Gối"
+  },
+  "brand": "Doona",
+  "origin": "Việt Nam",
+  "price": 499000,
+  "specifications": {
+    "material": "Bông ép PE",
+    "weight": "1.2kg",
+    "firmness": "Mềm",
+    "design": "2 mặt",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "g2-50x70",
+      "sku": "G002-50x70",
+      "size": "45 x 65",
+      "thickness": "",
+      "color": "",
+      "price": 499000,
+      "originalPrice": 599000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "b900a64b-f2c0-42d6-a8c2-56c65a61ab18",
+      "sku": "Tự tạo...",
+      "size": "50 x 70",
+      "thickness": "",
+      "color": "",
+      "price": 599000,
+      "originalPrice": 699000,
+      "stockQuantity": 18,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 38,
+  "tags": [
+    "goi-bong",
+    "thoang-khi"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775277110/artisano/products/exidbeqncc7b6mua5g4c.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775277112/artisano/products/ii3hg4xfndg9uu8ujlvi.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775277114/artisano/products/qzvuihylndscv3e0wpth.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775277115/artisano/products/na1dv1mnngvkwr6djpnc.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775277117/artisano/products/r7wrx7eonxsn7tzeq688.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775277119/artisano/products/xu33ur91m6tnhl9aevyl.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Gối bông ép giữ form tốt, không xẹp lún.",
+  "updatedAt": {
+    "$date": "2026-04-04T09:43:05.657Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69d09271be5d18bb2f488f23"
+  },
+  "name": "Gối foam Comfy Nami công thái học",
+  "productCode": "G003",
+  "category": {
+    "name": "Gối Foam",
+    "code": "GOI-FOAM",
+    "parentCode": "GOI",
+    "parentName": "Gối"
+  },
+  "brand": "Comfy",
+  "origin": "Việt Nam",
+  "price": 599000,
+  "specifications": {
+    "material": "Memory foam + gel mát",
+    "weight": "1.3kg",
+    "firmness": "Mềm",
+    "design": "Công thái học",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "g3-50x70",
+      "sku": "G003-50x70",
+      "size": "40 x 60",
+      "thickness": "11cm",
+      "color": "",
+      "price": 599000,
+      "originalPrice": 799000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 20,
+  "tags": [
+    "goi-foam",
+    "memory",
+    "cooling"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775277407/artisano/products/ruhfwnblkjjr9gnypvpd.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775277409/artisano/products/gqtrqnujqlxtgisazkbo.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775277411/artisano/products/klhjfkyyuoywhhwuylln.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775277413/artisano/products/enxunjjacrwrzxizdz3u.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775277415/artisano/products/mfcvhsaxzlstljccusuc.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Gối foam memory ôm đầu, giảm đau cổ vai gáy.",
+  "updatedAt": {
+    "$date": "2026-04-04T09:43:14.409Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69d09271be5d18bb2f488f24"
+  },
+  "name": "Gối Foam Dreamland Carbon hoạt tính",
+  "productCode": "G004",
+  "category": {
+    "name": "Gối Foam",
+    "code": "GOI-FOAM",
+    "parentCode": "GOI",
+    "parentName": "Gối"
+  },
+  "brand": "Dreamland",
+  "origin": "Việt Nam",
+  "price": 699000,
+  "specifications": {
+    "material": "Memory foam",
+    "weight": "1.4kg",
+    "firmness": "Trung Bình",
+    "design": "Công thái học",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "g4-50x70",
+      "sku": "G004-50x70",
+      "size": "38 x 60",
+      "thickness": "11cm",
+      "color": "",
+      "price": 699000,
+      "originalPrice": 899000,
+      "stockQuantity": 25,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 25,
+  "tags": [
+    "goi-foam",
+    "ergonomic"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775277708/artisano/products/ltkz6vp6uauinsrl9orf.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775277710/artisano/products/ysmikogpgqipfv6y5ggn.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775277712/artisano/products/soega01euhr7u7x4oqtn.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Gối foam thiết kế công thái học hỗ trợ cột sống cổ.",
+  "updatedAt": {
+    "$date": "2026-04-04T09:43:20.042Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69d09271be5d18bb2f488f25"
+  },
+  "name": "Gối cao su Gummi Cookie 100% thiên nhiên nâng đỡ cổ vai gáy",
+  "productCode": "G005",
+  "category": {
+    "name": "Gối cao su",
+    "code": "GOI-CAO-SU",
+    "parentCode": "GOI",
+    "parentName": "Gối"
+  },
+  "brand": "Gummi",
+  "origin": "Việt Nam",
+  "price": 529000,
+  "specifications": {
+    "material": "Cao su thiên nhiên",
+    "weight": "1.5kg",
+    "firmness": "Trung Bình",
+    "design": "Thoáng khí",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "g5-50x70",
+      "sku": "G005-50x70",
+      "size": "30 x 50",
+      "thickness": "9cm",
+      "color": "",
+      "price": 529000,
+      "originalPrice": 599000,
+      "stockQuantity": 19,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 19,
+  "tags": [
+    "goi-cao-su",
+    "thoang-khi"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775277984/artisano/products/gpojms76je1or3bpvohe.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775277986/artisano/products/hcsbc1hgggkwncrbkiiz.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775277988/artisano/products/s3zpwdmrerhbhcb2lhgi.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775277990/artisano/products/snxrd0uw93ejmptwckpt.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775277992/artisano/products/uhccyjkejenlhnxchpmn.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Gối cao su thiên nhiên đàn hồi tốt, thoáng khí.",
+  "updatedAt": {
+    "$date": "2026-04-04T09:43:25.722Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69d09271be5d18bb2f488f26"
+  },
+  "name": "Gối Cao su Dreamland nâng đỡ vai gáy",
+  "productCode": "G006",
+  "category": {
+    "name": "Gối cao su",
+    "code": "GOI-CAO-SU",
+    "parentCode": "GOI",
+    "parentName": "Gối"
+  },
+  "brand": "Dreamland",
+  "origin": "Việt Nam",
+  "price": 599000,
+  "specifications": {
+    "material": "Cao su thiên nhiên",
+    "weight": "1.2kg",
+    "firmness": "Mềm",
+    "design": "2 mặt",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "g6-50x70",
+      "sku": "G006-50x70",
+      "size": "40 x 60",
+      "thickness": "11cm",
+      "color": "",
+      "price": 599000,
+      "originalPrice": 799000,
+      "stockQuantity": 29,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 29,
+  "tags": [
+    "goi-cao-su",
+    "ben"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775278148/artisano/products/mciu5cgwxyi5c3lzear8.webp",
+      "isPrimary": true
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Gối cao su nâng đỡ tốt, độ bền cao.",
+  "updatedAt": {
+    "$date": "2026-04-04T09:43:32.887Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69d09271be5d18bb2f488f27"
+  },
+  "name": "Gối lông vũ tự nhiên Goodnight Flow",
+  "productCode": "G007",
+  "category": {
+    "name": "Gối lông vũ",
+    "code": "GOI-LONG-VU",
+    "parentCode": "GOI",
+    "parentName": "Gối"
+  },
+  "brand": "Goodnight",
+  "origin": "Việt Nam",
+  "price": 799000,
+  "specifications": {
+    "material": "Lông vũ tự nhiên",
+    "weight": "1kg",
+    "firmness": "Mềm",
+    "design": "Luxury",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "g7-50x70",
+      "sku": "G007-50x70",
+      "size": "40 x 65",
+      "thickness": "15cm",
+      "color": "",
+      "price": 799000,
+      "originalPrice": 999000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 20,
+  "tags": [
+    "goi-long-vu",
+    "luxury"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775278494/artisano/products/uq7isks4eeww83fwbmrq.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775278496/artisano/products/ador314gnicyk3dcnwuf.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775278497/artisano/products/g1ldcemm17cirekxdxqt.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775278500/artisano/products/lwrak6lh5ooumrjguacn.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775278502/artisano/products/klms3pdn5erfidggoy3n.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Gối lông vũ mềm mại, chuẩn khách sạn cao cấp.",
+  "updatedAt": {
+    "$date": "2026-04-04T09:43:39.979Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69d09e25be5d18bb2f488f29"
+  },
+  "name": "Chăn Amando Azami công nghệ làm mát",
+  "productCode": "CG001",
+  "category": {
+    "name": "Bộ chăn ga",
+    "code": "BO-CHAN-GA",
+    "parentCode": "CHAN-GA",
+    "parentName": "Chăn ga"
+  },
+  "brand": "Amando",
+  "origin": "Việt Nam",
+  "price": 699000,
+  "specifications": {
+    "material": "Vải cooling",
+    "weight": "1.5kg",
+    "design": "Làm mát",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "cg1-200x220",
+      "sku": "CG001-200x220",
+      "size": "200 x 220",
+      "color": "",
+      "price": 699000,
+      "originalPrice": 999000,
+      "stockQuantity": 17,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 17,
+  "tags": [
+    "chan",
+    "cooling"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775288582/artisano/products/sa7dxsgf8t1alqx1bvur.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775288584/artisano/products/mhn5iivbhmjpgqgqmbll.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775288585/artisano/products/ner9t3bopsv7pbg4ggiu.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775288587/artisano/products/lhzprwzecdpkige25qrf.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775288589/artisano/products/psj1mfqaak59ksac2du1.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Chăn Amando Azami tích hợp công nghệ làm mát, mang lại cảm giác dễ chịu khi ngủ.",
+  "updatedAt": {
+    "$date": "2026-04-04T09:43:56.718Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69d09e25be5d18bb2f488f2a"
+  },
+  "name": "Bộ ga chun tencel Amando Celia 4 chi tiết TP006",
+  "productCode": "CG002",
+  "category": {
+    "name": "Bộ chăn ga",
+    "code": "BO-CHAN-GA",
+    "parentCode": "CHAN-GA",
+    "parentName": "Chăn ga"
+  },
+  "brand": "Amando",
+  "origin": "Việt Nam",
+  "price": 999000,
+  "specifications": {
+    "material": "Tencel",
+    "weight": "1.6kg",
+    "design": "Chần bông",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "cg2-200x220",
+      "sku": "CG002-200X220",
+      "size": "200 x 220",
+      "color": "",
+      "price": 999000,
+      "originalPrice": 1299000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 20,
+  "tags": [
+    "chan",
+    "tencel"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775289044/artisano/products/xgpultp1qsfn6o39ocq3.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775289046/artisano/products/pwwkqbhsis115rfcnrlw.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775289048/artisano/products/cjmibxihtlrmjmdrea5a.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775289050/artisano/products/cvlbfkxmedugtkkfkiyu.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Chăn Tencel Amando Celia mềm mại, thoáng khí, nhiều màu sắc.",
+  "updatedAt": {
+    "$date": "2026-04-13T12:10:03.304Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69d09e25be5d18bb2f488f2b"
+  },
+  "name": "Vỏ chăn chần Tencel Amando Bliss sang trọng",
+  "productCode": "CG003",
+  "category": {
+    "name": "Vỏ chăn",
+    "code": "VO_CHAN",
+    "parentCode": "CHAN_GA",
+    "parentName": "Chăn ga"
+  },
+  "brand": "Amando",
+  "origin": "Việt Nam",
+  "price": 799000,
+  "specifications": {
+    "material": "Tencel",
+    "design": "Chần bông",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "cg3-200x220",
+      "sku": "CG003-200x220",
+      "size": "200 x 220",
+      "price": 799000,
+      "originalPrice": 1199000,
+      "stockQuantity": 15,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 15,
+  "tags": [
+    "vo-chan",
+    "tencel"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775289269/artisano/products/zbkyqtqg5rbyepnveg1k.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775289271/artisano/products/rambpkzeswsdsjobmsp7.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775289272/artisano/products/ua2ojgouu3crbtcemves.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775289274/artisano/products/fnajyagxd0knh8rqfs4t.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775289276/artisano/products/xpvbnsvj3gpv5gwwww6i.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Vỏ chăn Tencel Amando Bliss cao cấp, mềm mại và sang trọng.",
+  "updatedAt": {
+    "$date": "2026-04-04T07:54:36.363Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69d09e25be5d18bb2f488f2c"
+  },
+  "name": "Vỏ chăn Cotton Satin AMD The Essentials đơn sắc",
+  "productCode": "CG004",
+  "category": {
+    "name": "Chăn và vỏ chăn",
+    "code": "CHAN-VA-VO-CHAN",
+    "parentCode": "CHAN-GA",
+    "parentName": "Chăn ga"
+  },
+  "brand": "Amando",
+  "origin": "Việt Nam",
+  "price": 599000,
+  "specifications": {
+    "material": "Cotton Satin",
+    "design": "Đơn sắc",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "cg4-200x220",
+      "sku": "CG004-200x220",
+      "size": "200 x 220",
+      "color": "",
+      "price": 599000,
+      "originalPrice": 899000,
+      "stockQuantity": 15,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 15,
+  "tags": [
+    "vo-chan",
+    "cotton"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775289445/artisano/products/deu4yj8p9xbupgpkuieb.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775289448/artisano/products/yo76lvxfwscbn17kegfg.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775289450/artisano/products/ck1nfp77hek7yoo1ll0g.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775289451/artisano/products/bmdngtm4nwgvkutb2lkt.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775289453/artisano/products/sad6qrfzhuaefgar9tjx.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Vỏ chăn cotton satin mềm mịn, thiết kế đơn giản.",
+  "updatedAt": {
+    "$date": "2026-04-04T09:44:39.698Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69d09e25be5d18bb2f488f2d"
+  },
+  "name": "Vỏ gối Tencel Amando Celia",
+  "productCode": "CG005",
+  "category": {
+    "name": "Vỏ gối lẻ",
+    "code": "VO-GOI-LE",
+    "parentCode": "CHAN-GA",
+    "parentName": "Chăn ga"
+  },
+  "brand": "Amando",
+  "origin": "Việt Nam",
+  "price": 199000,
+  "specifications": {
+    "material": "Tencel",
+    "design": "Mềm mại",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "cg5-50x70",
+      "sku": "CG005-50x70",
+      "size": "50 x 70",
+      "color": "",
+      "price": 199000,
+      "originalPrice": 299000,
+      "stockQuantity": 30,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 30,
+  "tags": [
+    "vo-goi",
+    "tencel"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775289830/artisano/products/jcljmu4sk7dxtnugfu08.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775289832/artisano/products/eohh4wu5wt106fif5pqm.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775289834/artisano/products/rkintrwlaxmpc7fggzby.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Vỏ gối Tencel mềm mại, thoáng khí.",
+  "updatedAt": {
+    "$date": "2026-04-04T09:45:12.148Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69d09e25be5d18bb2f488f2e"
+  },
+  "name": "Vỏ gối Amando Wellness Tencel Luxe",
+  "productCode": "CG006",
+  "category": {
+    "name": "Vỏ gối lẻ",
+    "code": "VO-GOI-LE",
+    "parentCode": "CHAN-GA",
+    "parentName": "Chăn ga"
+  },
+  "brand": "Amando",
+  "origin": "Việt Nam",
+  "price": 249000,
+  "specifications": {
+    "material": "Tencel cao cấp",
+    "design": "Luxury",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "cg6-50x70",
+      "sku": "CG006-50x70",
+      "size": "50 x 70",
+      "color": "",
+      "price": 249000,
+      "originalPrice": 349000,
+      "stockQuantity": 30,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 30,
+  "tags": [
+    "vo-goi",
+    "luxury"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775290115/artisano/products/af0jbmervskogzsc7jmz.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775290117/artisano/products/dxwo0ihiosdfynynkza4.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775290120/artisano/products/xa5al7p3pouns7vfbxco.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775290121/artisano/products/swskh4raax3dvsgsxo8z.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775290123/artisano/products/ddqtjvhtogobahkmm2zw.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Vỏ gối Tencel Luxe mềm mại, cao cấp.",
+  "updatedAt": {
+    "$date": "2026-04-04T09:45:19.180Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69d09e25be5d18bb2f488f2f"
+  },
+  "name": "Bộ chăn ga phủ chần lụa Tencel Amando Élan 5 chi tiết TC003",
+  "productCode": "CG007",
+  "category": {
+    "name": "Bộ ga phủ",
+    "code": "BO-GA-PHU",
+    "parentCode": "CHAN-GA",
+    "parentName": "Chăn ga"
+  },
+  "brand": "Amando",
+  "origin": "Việt Nam",
+  "price": 3499000,
+  "specifications": {
+    "material": "Lụa Tencel",
+    "design": "5 chi tiết",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "cg7-160x200",
+      "sku": "CG007-160x200",
+      "size": "160 x 200",
+      "color": "",
+      "price": 3499000,
+      "originalPrice": 4999000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 20,
+  "tags": [
+    "bo-ga-phu",
+    "tencel"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775290284/artisano/products/nxqrpak2yiuoyjzzsqrw.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775290286/artisano/products/cl4reacxhepe0icw3gco.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775290288/artisano/products/lxcztpevmxverx1xdhb6.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Bộ chăn ga phủ Tencel cao cấp, thiết kế sang trọng.",
+  "updatedAt": {
+    "$date": "2026-04-06T15:35:00.249Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69d09e25be5d18bb2f488f30"
+  },
+  "name": "Bộ chăn ga lụa Tencel cao cấp Amando Soulmate 7 chi tiết màu xanh",
+  "productCode": "CG008",
+  "category": {
+    "name": "Bộ chăn ga",
+    "code": "BO-CHAN-GA",
+    "parentCode": "CHAN-GA",
+    "parentName": "Chăn ga"
+  },
+  "brand": "Amando",
+  "origin": "Việt Nam",
+  "price": 4199000,
+  "specifications": {
+    "material": "Lụa Tencel",
+    "design": "7 chi tiết",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "cg8-160x200",
+      "sku": "CG008-160x200",
+      "size": "160 x 200",
+      "color": "",
+      "price": 4199000,
+      "originalPrice": 5999000,
+      "stockQuantity": 10,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 10,
+  "tags": [
+    "bo-ga-phu",
+    "cao-cap"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775290396/artisano/products/iulgdul8yfxqhnzaohcp.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775290398/artisano/products/y8gwfaowcwidqodaa8wn.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775290400/artisano/products/immgt3dgz6zmthruv0zd.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775290402/artisano/products/robfvy9g1cptyydsks2w.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Bộ chăn ga Tencel Soulmate cao cấp, mềm mại, sang trọng.",
+  "updatedAt": {
+    "$date": "2026-04-04T09:45:40.706Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69d0a31cbe5d18bb2f488f31"
+  },
+  "name": "Bộ chăn ga chun sợi gỗ thiên nhiên Amando Jamila 5 chi tiết LC012",
+  "productCode": "CG009",
+  "category": {
+    "name": "Bộ chăn ga",
+    "code": "BO-CHAN-GA",
+    "parentCode": "CHAN-GA",
+    "parentName": "Chăn ga"
+  },
+  "brand": "Amando",
+  "origin": "Việt Nam",
+  "price": 2799000,
+  "specifications": {
+    "material": "Sợi gỗ thiên nhiên (Tencel)",
+    "design": "5 chi tiết",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "cg9-160x200",
+      "sku": "CG009-160x200",
+      "size": "160 x 200",
+      "color": "",
+      "price": 2799000,
+      "originalPrice": 3999000,
+      "stockQuantity": 10,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 10,
+  "tags": [
+    "bo-ga-chun-chan",
+    "tencel"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775291137/artisano/products/iipnpg8nveci4lsgpnzu.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775291139/artisano/products/rsupxypc11as9wwikpkj.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775291141/artisano/products/snhnao5mzbkggnhpjtan.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775291142/artisano/products/msptzeifyvg6nlrncon9.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775291144/artisano/products/xhcbt6kfslbnxptaj2wo.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Bộ chăn ga chun chần Jamila chất liệu sợi gỗ thiên nhiên mềm mại, thoáng khí.",
+  "updatedAt": {
+    "$date": "2026-04-06T15:25:05.733Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69d0a31cbe5d18bb2f488f32"
+  },
+  "name": "Bộ ga chun chăn chần Amando thêu cotton satin màu xám",
+  "productCode": "CG010",
+  "category": {
+    "name": "Bộ ga chun chần",
+    "code": "BO-GA-CHUN-CHAN",
+    "parentCode": "CHAN-GA",
+    "parentName": "Chăn ga"
+  },
+  "brand": "Amando",
+  "origin": "Việt Nam",
+  "price": 1999000,
+  "specifications": {
+    "material": "Cotton Satin",
+    "design": "Thêu cao cấp",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "cg10-160x200",
+      "sku": "CG010-160x200",
+      "size": "160 x 200",
+      "color": "",
+      "price": 1999000,
+      "originalPrice": 2999000,
+      "stockQuantity": 10,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 10,
+  "tags": [
+    "bo-ga-chun-chan",
+    "cotton"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775291268/artisano/products/nxgme87fm4ppydjp0ogs.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775291270/artisano/products/einmydoqdhw6qyquraft.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775291272/artisano/products/r8n8x7qnfslbvkp1kdec.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775291274/artisano/products/qhzb98qflt8juqa9ecyi.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775291276/artisano/products/jl3xwqpwxmcarxaxsqvp.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Bộ ga chun chần cotton satin thêu sang trọng, mềm mịn.",
+  "updatedAt": {
+    "$date": "2026-04-04T09:45:50.795Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69d0a31cbe5d18bb2f488f33"
+  },
+  "name": "Bộ chăn ga lụa Tencel cao cấp Amando Lagom 5 chi tiết màu nâu",
+  "productCode": "CG011",
+  "category": {
+    "name": "Bộ ga chun",
+    "code": "BO-GA-CHUN",
+    "parentCode": "CHAN-GA",
+    "parentName": "Chăn ga"
+  },
+  "brand": "Amando",
+  "origin": "Việt Nam",
+  "price": 3199000,
+  "specifications": {
+    "material": "Lụa Tencel",
+    "design": "5 chi tiết",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "cg11-160x200",
+      "sku": "CG011-160x200",
+      "size": "160 x 200",
+      "color": "",
+      "price": 3199000,
+      "originalPrice": 4599000,
+      "stockQuantity": 10,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 10,
+  "tags": [
+    "bo-chan-ga-chun",
+    "tencel"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775291553/artisano/products/wka40dognkflt4g3e6mu.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775291557/artisano/products/zgcyu6k9uzlpeust7zss.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775291558/artisano/products/zhnf8zntpwtqec4z1cga.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775291560/artisano/products/cpuauzkskgtfxljvo0kc.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Bộ chăn ga Tencel Lagom mềm mại, thoáng mát, cao cấp.",
+  "updatedAt": {
+    "$date": "2026-04-04T09:46:05.635Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69d0a31cbe5d18bb2f488f34"
+  },
+  "name": "Bộ chăn ga lụa Tencel cao cấp Amando Lagom 5 chi tiết",
+  "productCode": "CG012",
+  "category": {
+    "name": "Bộ ga chun chần",
+    "code": "BO-GA-CHUN-CHAN",
+    "parentCode": "CHAN-GA",
+    "parentName": "Chăn ga"
+  },
+  "brand": "Amando",
+  "origin": "Việt Nam",
+  "price": 3199000,
+  "specifications": {
+    "material": "Lụa Tencel",
+    "design": "5 chi tiết",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "cg12-160x200",
+      "sku": "CG012-160x200",
+      "size": "160 x 200",
+      "color": "",
+      "price": 3199000,
+      "originalPrice": 4599000,
+      "stockQuantity": 10,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 10,
+  "tags": [
+    "bo-chan-ga-chun",
+    "tencel"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775291958/artisano/products/pxq3yqatsf2xwgd7ljfc.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775291960/artisano/products/setpt63clsgi85vmcuhy.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775291962/artisano/products/bbrddnokgouvantoq9eq.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775291964/artisano/products/hc1s6l07xkj6abqpibp8.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775291966/artisano/products/guiezuof1sivadkysutg.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Bộ chăn ga Tencel Lagom màu sáng thanh lịch, mềm mại.",
+  "updatedAt": {
+    "$date": "2026-04-04T09:46:16.328Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69d4ae1f602ecde91f5881bb"
+  },
+  "name": "Topper memory foam nâng đỡ êm ái Comfy Noah",
+  "productCode": "TOPPER-COMFY-NOAH",
+  "category": {
+    "name": "Topper nệm",
+    "code": "TOPPER-NEM",
+    "parentCode": "PHU-KIEN",
+    "parentName": "Phụ kiện"
+  },
+  "brand": "Comfy",
+  "origin": "Việt Nam",
+  "price": 2268000,
+  "specifications": {
+    "material": "Memory Foam cao cấp",
+    "weight": "12.kg",
+    "firmness": "Mềm",
+    "design": "Ôm sát cơ thể, giảm áp lực",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "noah-120",
+      "sku": "TOPPER-NOAH-120X200",
+      "size": "120 x 200",
+      "thickness": "5cm",
+      "color": "Trắng",
+      "price": 2268000,
+      "originalPrice": 3000000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "noah-160",
+      "sku": "TOPPER-NOAH-160X200",
+      "size": "160 x 200",
+      "thickness": "5cm",
+      "color": "Trắng",
+      "price": 2960000,
+      "originalPrice": 3600000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 40,
+  "tags": [
+    "topper",
+    "memory-foam",
+    "mem",
+    "em-ai"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775546361/artisano/products/xrgi5xvljkzxfn7bwvh9.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775546362/artisano/products/tph0mk4s6dhl4ipt7qqg.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775546364/artisano/products/rfysa6ylq0qnjjje9ipo.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775546366/artisano/products/vdvi2pufv1gpasdmmlp6.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775546368/artisano/products/rmoitsxpexspbytnraup.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775546370/artisano/products/cj9xhxdfvqzzyonjfqrf.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Topper memory foam giúp nâng đỡ cơ thể, giảm áp lực và cải thiện độ êm ái của nệm.",
+  "updatedAt": {
+    "$date": "2026-04-07T07:19:30.925Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69d4ae1f602ecde91f5881bc"
+  },
+  "name": "Topper lông vũ nhân tạo Doona Microfiber êm ái",
+  "productCode": "TOPPER-DOONA-MICROFIBER",
+  "category": {
+    "name": "Topper nệm",
+    "code": "TOPPER-NEM",
+    "parentCode": "PHU-KIEN",
+    "parentName": "Phụ kiện"
+  },
+  "brand": "Doona",
+  "origin": "Việt Nam",
+  "price": 2232000,
+  "specifications": {
+    "material": "Sợi Microfiber (lông vũ nhân tạo)",
+    "firmness": "Mềm",
+    "design": "Nhẹ, thoáng khí, êm ái",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "doona-120",
+      "sku": "TOPPER-DOONA-120X200",
+      "size": "120 x 200",
+      "thickness": "5cm",
+      "color": "Trắng",
+      "price": 2232000,
+      "originalPrice": 2900000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 20,
+  "tags": [
+    "topper",
+    "microfiber",
+    "gia-re",
+    "thoang-khi"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775546493/artisano/products/nqi2fgpuqc6c9x13cdyk.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775546495/artisano/products/dskdoy0ak3bmatzvbjto.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775546496/artisano/products/gwgepdjgvhsbwsaekddn.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775546498/artisano/products/mfadgsrdql4oxtidd0w4.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Topper microfiber mềm mại, tạo cảm giác êm ái như lông vũ, thoáng khí tốt.",
+  "updatedAt": {
+    "$date": "2026-04-07T07:21:38.836Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69d4ae1f602ecde91f5881bd"
+  },
+  "name": "Topper đa năng Aeroflow",
+  "productCode": "TOPPER-AEROFLOW",
+  "category": {
+    "name": "Topper nệm",
+    "code": "TOPPER-NEM",
+    "parentCode": "PHU-KIEN",
+    "parentName": "Phụ kiện"
+  },
+  "brand": "Aeroflow",
+  "origin": "Nhật Bản",
+  "price": 4833000,
+  "specifications": {
+    "material": "PU Foam cao cấp",
+    "firmness": "Trung bình",
+    "design": "Thoáng khí, nâng đỡ cột sống",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "aero-120",
+      "sku": "TOPPER-AERO-120X200",
+      "size": "120 x 200",
+      "thickness": "5cm",
+      "color": "Trắng",
+      "price": 4833000,
+      "originalPrice": 6000000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "aero-160",
+      "sku": "TOPPER-AERO-160X200",
+      "size": "160 x 200",
+      "thickness": "5cm",
+      "color": "Trắng",
+      "price": 6500000,
+      "originalPrice": 7800000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 40,
+  "tags": [
+    "topper",
+    "foam",
+    "cao-cap",
+    "thoang-khi"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775546654/artisano/products/lkgya3n6lqry9v1dyljw.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775546655/artisano/products/rfln1tnlbto6fqptwaiq.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775546657/artisano/products/vnzhaufuzhmfc0wtgjpj.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775546659/artisano/products/bdsxmfsnz4hyffjwyjf2.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Topper foam cao cấp từ Nhật Bản, giúp nâng đỡ cơ thể và tăng độ êm ái cho nệm.",
+  "updatedAt": {
+    "$date": "2026-04-07T07:24:19.602Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69d4b3332fdd2c1b7c72c693"
+  },
+  "name": "Bảo vệ gối Doona TENCEL chống thấm mềm mại",
+  "productCode": "BAO-VE-GOI-DOONA-TENCEL",
+  "category": {
+    "name": "Bảo vệ gối",
+    "code": "BAO-VE-GOI",
+    "parentCode": "PHU-KIEN",
+    "parentName": "Phụ kiện"
+  },
+  "brand": "Doona",
+  "origin": "Việt Nam",
+  "price": 240000,
+  "specifications": {
+    "material": "Vải Tencel + lớp chống thấm",
+    "design": "Khóa kéo tiện lợi",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "doona-5070",
+      "sku": "GOI-DOONA-50X70",
+      "size": "50 x 70",
+      "color": "Trắng",
+      "price": 240000,
+      "originalPrice": 300000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 20,
+  "tags": [
+    "bao-ve-goi",
+    "tencel",
+    "chong-tham",
+    "mem-mai"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775547450/artisano/products/lxqiwlvekwocjsvsz6zw.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775547452/artisano/products/xw7unlw3jfuhbulzoaaq.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775547453/artisano/products/ec7ch07hshiiafhho7h5.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775547455/artisano/products/txz2d3yrobzepbhyascf.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775547457/artisano/products/onfocd3iyb6m9gc0irjg.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Bảo vệ gối Doona Tencel có bề mặt mềm mịn, khả năng chống thấm và thoáng khí tốt, giúp bảo vệ gối khỏi bụi bẩn và mồ hôi.",
+  "updatedAt": {
+    "$date": "2026-04-07T07:42:57.697Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69d4b3332fdd2c1b7c72c694"
+  },
+  "name": "Bảo vệ gối Bedgear Dri-Tec",
+  "productCode": "BAO-VE-GOI-BEDGEAR-DRITEC",
+  "category": {
+    "name": "Bảo vệ gối",
+    "code": "BAO-VE-GOI",
+    "parentCode": "PHU-KIEN",
+    "parentName": "Phụ kiện"
+  },
+  "brand": "Doona",
+  "origin": "Việt Nam",
+  "price": 890000,
+  "specifications": {
+    "material": "Vải Dri-Tec độc quyền",
+    "design": "Công nghệ làm mát",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "dritec-5070",
+      "sku": "GOI-BEDGEAR-DRITEC-50X70",
+      "size": "50 x 70",
+      "color": "Trắng",
+      "price": 890000,
+      "originalPrice": 1200000,
+      "stockQuantity": 17,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 17,
+  "tags": [
+    "bao-ve-goi",
+    "cao-cap",
+    "lam-mat",
+    "thoang-khi"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775547609/artisano/products/dcvt4r4vzfa68tbaolei.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775547611/artisano/products/d0sa7893ldo2cnxmdwsi.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775547612/artisano/products/xvkgltgyhzrt8eiptot3.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775547614/artisano/products/on6jtworjvuddnhyfito.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775547617/artisano/products/t5k4lffgqgajyrvzzw8q.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Bảo vệ gối Bedgear Dri-Tec ứng dụng công nghệ vải làm mát, giúp tản nhiệt và thoáng khí vượt trội.",
+  "updatedAt": {
+    "$date": "2026-04-07T07:43:03.438Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69d4b3332fdd2c1b7c72c695"
+  },
+  "name": "Bảo vệ gối Bedgear Stretchwick",
+  "productCode": "BAO-VE-GOI-BEDGEAR-STRETCHWICK",
+  "category": {
+    "name": "Bảo vệ gối",
+    "code": "BAO-VE-GOI",
+    "parentCode": "PHU-KIEN",
+    "parentName": "Phụ kiện"
+  },
+  "brand": "Bedgear",
+  "origin": "Mỹ",
+  "price": 599000,
+  "specifications": {
+    "material": "Vải Stretchwick co giãn",
+    "design": "Đàn hồi cao",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "stretchwick-5070",
+      "sku": "GOI-BEDGEAR-STRETCH-50X70",
+      "size": "50 x 70",
+      "color": "Trắng",
+      "price": 599000,
+      "originalPrice": 800000,
+      "stockQuantity": 18,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 18,
+  "tags": [
+    "bao-ve-goi",
+    "co-gian",
+    "cao-cap",
+    "bedgear"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775547711/artisano/products/pmhgpzdpp1zctrzhe5gt.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775547713/artisano/products/epxadjqd3nwzpaltltgo.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775547715/artisano/products/raup9svs8qjno0parryo.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775547716/artisano/products/fwzeqw9niixtdcbr92td.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Bảo vệ gối Bedgear Stretchwick có độ co giãn cao, ôm sát gối và tăng độ thoáng khí khi sử dụng.",
+  "updatedAt": {
+    "$date": "2026-04-07T07:43:12.632Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69d4b65b2fdd2c1b7c72c696"
+  },
+  "name": "Ga chống thấm Goodnight Sumi mềm mại, kháng khuẩn, thông thoáng",
+  "productCode": "GA-CHONG-THAM-GOODNIGHT-SUMI",
+  "category": {
+    "name": "Tấm bảo vệ nệm",
+    "code": "TAM-BAO-VE-NEM",
+    "parentCode": "PHU-KIEN",
+    "parentName": "Phụ kiện"
+  },
+  "brand": "Goodnight",
+  "origin": "Việt Nam",
+  "price": 444000,
+  "specifications": {
+    "material": "Vải cotton + lớp chống thấm TPU",
+    "design": "Bo chun 4 góc",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "sumi-120",
+      "sku": "SUMI-120X200",
+      "size": "120 x 200",
+      "color": "Trắng",
+      "price": 444000,
+      "originalPrice": 600000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "sumi-160",
+      "sku": "SUMI-160X200",
+      "size": "160 x 200",
+      "color": "Trắng",
+      "price": 520000,
+      "originalPrice": 700000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 40,
+  "tags": [
+    "bao-ve-nem",
+    "chong-tham",
+    "gia-re",
+    "khang-khuan"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775548246/artisano/products/dgys0hgcfkktsycym44a.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775548247/artisano/products/ngw3vl8r0q5b55gvidj0.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775548249/artisano/products/kjiudco4ubbpqsc33fn8.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775548250/artisano/products/vehwpps8zthklepijq7y.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775548252/artisano/products/cgynbt0ngqvnirbifd5c.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Ga chống thấm Goodnight Sumi giúp bảo vệ nệm khỏi chất lỏng, vi khuẩn và bụi bẩn, đồng thời vẫn đảm bảo thoáng khí.",
+  "updatedAt": {
+    "$date": "2026-04-07T11:29:23.643Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69d4b65b2fdd2c1b7c72c697"
+  },
+  "name": "Bảo vệ nệm Doona Tencel",
+  "productCode": "BAO-VE-NEM-DOONA-TENCEL",
+  "category": {
+    "name": "Tấm bảo vệ nệm",
+    "code": "TAM-BAO-VE-NEM",
+    "parentCode": "PHU-KIEN",
+    "parentName": "Phụ kiện"
+  },
+  "brand": "Doona",
+  "origin": "Việt Nam",
+  "price": 469800,
+  "specifications": {
+    "material": "Vải Tencel + lớp chống thấm",
+    "design": "Bo chun ôm nệm",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "doona-120",
+      "sku": "DOONA-TENCEL-120X200",
+      "size": "120 x 200",
+      "color": "Trắng",
+      "price": 469800,
+      "originalPrice": 580000,
+      "stockQuantity": 19,
+      "status": "ACTIVE"
+    },
+    {
+      "variantId": "doona-160",
+      "sku": "DOONA-TENCEL-160X200",
+      "size": "160 x 200",
+      "color": "Trắng",
+      "price": 580000,
+      "originalPrice": 700000,
+      "stockQuantity": 20,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 39,
+  "tags": [
+    "bao-ve-nem",
+    "tencel",
+    "chong-tham",
+    "thoang-khi"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775548414/artisano/products/cferyj5sk4x8lns0bsuj.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775548415/artisano/products/stpwmkcpo6p61lvodmir.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775548417/artisano/products/lquodecneywwogkyd6ku.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775548419/artisano/products/bnsezodhxzjz5gczpfjw.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775548420/artisano/products/a08z9d4u3mpxdrgmbin3.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Bảo vệ nệm Doona Tencel giúp giữ nệm sạch sẽ, chống ẩm mốc và tăng tuổi thọ sử dụng.",
+  "updatedAt": {
+    "$date": "2026-04-07T11:29:28.351Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+},
+{
+  "_id": {
+    "$oid": "69d4b65b2fdd2c1b7c72c698"
+  },
+  "name": "Bảo vệ nệm Doona 3D Safe Sleep thoát ẩm tốt, kháng khuẩn cao",
+  "productCode": "BAO-VE-NEM-DOONA-3D",
+  "category": {
+    "name": "Tấm bảo vệ nệm",
+    "code": "TAM-BAO-VE-NEM",
+    "parentCode": "PHU-KIEN",
+    "parentName": "Phụ kiện"
+  },
+  "brand": "Doona",
+  "origin": "Việt Nam",
+  "price": 880000,
+  "specifications": {
+    "material": "Vải 3D thoáng khí + lớp chống thấm",
+    "design": "Cấu trúc 3D thông thoáng",
+    "certificationNumber": ""
+  },
+  "variants": [
+    {
+      "variantId": "doona-3d-120",
+      "sku": "DOONA-3D-120X200",
+      "size": "120 x 200",
+      "color": "Trắng",
+      "price": 880000,
+      "originalPrice": 1100000,
+      "stockQuantity": 19,
+      "status": "ACTIVE"
+    }
+  ],
+  "totalStockQuantity": 19,
+  "tags": [
+    "bao-ve-nem",
+    "3d",
+    "cao-cap",
+    "thoang-khi"
+  ],
+  "images": [
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775548694/artisano/products/yk8g074ne73qady0zz7m.webp",
+      "isPrimary": true
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775548696/artisano/products/sstfhey1nkzwgzmfchi7.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775548697/artisano/products/nqbqbyalkuoxjk4xymw0.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775548699/artisano/products/lqzwpkaar1cpeyxp6wcg.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775548701/artisano/products/dg9jtr3dpiw3hcg5romx.webp",
+      "isPrimary": false
+    },
+    {
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775548703/artisano/products/boltyzp21av7naplyetp.webp",
+      "isPrimary": false
+    }
+  ],
+  "status": "AVAILABLE",
+  "description": "Bảo vệ nệm Doona 3D Safe Sleep giúp tăng độ thoáng khí, hạn chế ẩm mốc và bảo vệ sức khỏe người dùng.",
+  "updatedAt": {
+    "$date": "2026-04-07T11:29:32.215Z"
+  },
+  "_class": "com.b2204922.productservice.entity.Product"
+}]

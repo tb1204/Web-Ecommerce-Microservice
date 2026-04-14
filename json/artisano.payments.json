@@ -1,0 +1,2278 @@
+[{
+  "_id": {
+    "$oid": "69bb8137f58d9f278116f0b6"
+  },
+  "orderId": "order_001",
+  "userId": "user_3AYdCwEXm2wC5xrs4jiGpXEmHa7",
+  "paymentMethod": "COD",
+  "paymentStatus": "PAID",
+  "amount": {
+    "$numberLong": "850000"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "paidAt": {
+    "$date": "2026-03-19T04:58:24.309Z"
+  },
+  "createdAt": {
+    "$date": "2026-03-19T04:53:11.048Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-19T04:58:24.309Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69bb8180f58d9f278116f0b7"
+  },
+  "orderId": "order_002",
+  "userId": "user_3AYdCwEXm2wC5xrs4jiGpXEmHa7",
+  "paymentMethod": "VNPAY",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "850000"
+  },
+  "currency": "VND",
+  "paymentUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=85000000&vnp_Command=pay&vnp_CreateDate=20260319045424&vnp_CurrCode=VND&vnp_ExpireDate=20260319050924&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+order_002&vnp_OrderType=other&vnp_ReturnUrl=https%3A%2F%2Fdeedee-unimmunised-dorthey.ngrok-free.dev%2Fapi%2Fpayments%2Fvnpay%2Freturn&vnp_TmnCode=3TNWGZ10&vnp_TxnRef=order_002&vnp_Version=2.1.0&vnp_SecureHash=acd9fef152ca1c4bb268857a565cbf157616c6eef57b2641a8905849c23aa3c582abfbfe7a3f74e231663dcecb9eddcdf4f557d9ced0aedce9c8ea76fdea7c51",
+  "expiresAt": {
+    "$date": "2026-03-19T05:09:24.930Z"
+  },
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-03-19T04:54:24.925Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-19T04:54:24.925Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69bb81baf58d9f278116f0b8"
+  },
+  "orderId": "order_003",
+  "userId": "user_3AYdCwEXm2wC5xrs4jiGpXEmHa7",
+  "paymentMethod": "VNPAY",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "850000"
+  },
+  "currency": "VND",
+  "paymentUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=85000000&vnp_Command=pay&vnp_CreateDate=20260319045522&vnp_CurrCode=VND&vnp_ExpireDate=20260319051022&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+order_003&vnp_OrderType=other&vnp_ReturnUrl=https%3A%2F%2Fdeedee-unimmunised-dorthey.ngrok-free.dev%2Fapi%2Fpayments%2Fvnpay%2Freturn&vnp_TmnCode=3TNWGZ10&vnp_TxnRef=order_003&vnp_Version=2.1.0&vnp_SecureHash=d8ae36cc4feeaab6fd86063bc4bb1ff6e7170c2d274c8a1817a383e31d4148e1c3f7581b47e2f9cb1bf6cb35fc3f45a2567a2e49aa6b2a1f0532b324198cb9b2",
+  "expiresAt": {
+    "$date": "2026-03-19T05:10:22.962Z"
+  },
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-03-19T04:55:22.950Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-19T04:55:22.950Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69bb82c0f58d9f278116f0b9"
+  },
+  "orderId": "order_004",
+  "userId": "user_3AYdCwEXm2wC5xrs4jiGpXEmHa7",
+  "paymentMethod": "VNPAY",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "8500000"
+  },
+  "currency": "VND",
+  "paymentUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=850000000&vnp_Command=pay&vnp_CreateDate=20260319045944&vnp_CurrCode=VND&vnp_ExpireDate=20260319051444&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+order_004&vnp_OrderType=other&vnp_ReturnUrl=https%3A%2F%2Fdeedee-unimmunised-dorthey.ngrok-free.dev%2Fapi%2Fpayments%2Fvnpay%2Freturn&vnp_TmnCode=3TNWGZ10&vnp_TxnRef=order_004&vnp_Version=2.1.0&vnp_SecureHash=5cda5f12e86d6196a4137053e51550d18fcd7751a4be121901f9383c564d7c393ef4d57f23f17eed3741a723f80dae2c66a2defff7e2ea87e77552213437bd66",
+  "expiresAt": {
+    "$date": "2026-03-19T05:14:44.445Z"
+  },
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-03-19T04:59:44.443Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-19T04:59:44.443Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69bb864928da1f001c4f4189"
+  },
+  "orderId": "order_005",
+  "userId": "user_3AYdCwEXm2wC5xrs4jiGpXEmHa7",
+  "paymentMethod": "VNPAY",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "8500000"
+  },
+  "currency": "VND",
+  "paymentUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=850000000&vnp_Command=pay&vnp_CreateDate=20260319121449&vnp_CurrCode=VND&vnp_ExpireDate=20260319122949&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+order_005&vnp_OrderType=other&vnp_ReturnUrl=https%3A%2F%2Fdeedee-unimmunised-dorthey.ngrok-free.dev%2Fapi%2Fpayments%2Fvnpay%2Freturn&vnp_TmnCode=3TNWGZ10&vnp_TxnRef=order_005&vnp_Version=2.1.0&vnp_SecureHash=b502b818a26e2a238e739958554aefc4893afaec07f8a551ffc8bac5884320bfdcd8e01b364776e45fad0648c8a8460eab22375f203d68f467c250efe7eb5351",
+  "expiresAt": {
+    "$date": "2026-03-19T05:29:49.374Z"
+  },
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-03-19T05:14:49.368Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-19T05:14:49.368Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69bb896b0f834e74764bf3c8"
+  },
+  "orderId": "order_007",
+  "userId": "user_3AYdCwEXm2wC5xrs4jiGpXEmHa7",
+  "paymentMethod": "VNPAY",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "8500000"
+  },
+  "currency": "VND",
+  "paymentUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=850000000&vnp_Command=pay&vnp_CreateDate=20260319122811&vnp_CurrCode=VND&vnp_ExpireDate=20260319124311&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+order_007&vnp_OrderType=other&vnp_ReturnUrl=http%3A%2F%2Flocalhost%3A8085%2Fapi%2Fpayments%2Fvnpay%2Freturn&vnp_TmnCode=3TNWGZ10&vnp_TxnRef=order_007&vnp_Version=2.1.0&vnp_SecureHash=043853639a7d1242933e575d856eeefaac23c1a70e360785322e4c6090ed26d16cd94172a3ed35cca832026f9c00c40050253becdd1aa85446d7498a55717d9e",
+  "expiresAt": {
+    "$date": "2026-03-19T05:43:11.085Z"
+  },
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-03-19T05:28:11.078Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-19T05:28:11.078Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69bb89cff29f8555fe6cfec7"
+  },
+  "orderId": "order_008",
+  "userId": "user_3AYdCwEXm2wC5xrs4jiGpXEmHa7",
+  "paymentMethod": "VNPAY",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "8500000"
+  },
+  "currency": "VND",
+  "paymentUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=850000000&vnp_Command=pay&vnp_CreateDate=20260319122951&vnp_CurrCode=VND&vnp_ExpireDate=20260319124451&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+order_008&vnp_OrderType=other&vnp_ReturnUrl=http%3A%2F%2Flocalhost%3A8085%2Fapi%2Fpayments%2Fvnpay%2Freturn&vnp_TmnCode=3TNWGZ10&vnp_TxnRef=order_008&vnp_Version=2.1.0&vnp_SecureHash=25fb4d5daa46a1d0b3afa430fb9a54628ed8281fddac9868fad346b09c62d07a090c9749e72404d6c78982afa5cf64fb369b1a1bad8dace016a6f0f681f95d58",
+  "expiresAt": {
+    "$date": "2026-03-19T05:44:51.645Z"
+  },
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-03-19T05:29:51.640Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-19T05:29:51.640Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69bb99fed61c4c67e4d3c358"
+  },
+  "orderId": "order_009",
+  "userId": "user_3AYdCwEXm2wC5xrs4jiGpXEmHa7",
+  "paymentMethod": "VNPAY",
+  "paymentStatus": "FAILED",
+  "amount": {
+    "$numberLong": "8500000"
+  },
+  "currency": "VND",
+  "transactionId": "15457834",
+  "paymentUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=850000000&vnp_Command=pay&vnp_CreateDate=20260319133854&vnp_CurrCode=VND&vnp_ExpireDate=20260319135354&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+order_009&vnp_OrderType=other&vnp_ReturnUrl=http%3A%2F%2Flocalhost%3A8085%2Fapi%2Fpayments%2Fvnpay%2Freturn&vnp_TmnCode=7HUUV8OZ&vnp_TxnRef=order_009&vnp_Version=2.1.0&vnp_SecureHash=0fc20e9260add4ef00a8293520cfb19827bc0a8c63c60b17149467fb01221f1617db055482c0d02189d80a60ddd733c772d7ca6074013ed0bd3add90d784c0cc",
+  "responseCode": "24",
+  "expiresAt": {
+    "$date": "2026-03-19T06:53:54.722Z"
+  },
+  "paymentGatewayResponse": "{vnp_Amount=850000000, vnp_BankCode=NCB, vnp_CardType=ATM, vnp_OrderInfo=Thanh toan don hang order_009, vnp_PayDate=20260319134154, vnp_ResponseCode=24, vnp_TmnCode=7HUUV8OZ, vnp_TransactionNo=15457834, vnp_TransactionStatus=02, vnp_TxnRef=order_009, vnp_SecureHash=9c7c2380c64583af4153adff7a0010651f21ddb5476c81c4115b0030ab400979446d62df363077c1966570abeedd1bfcc7c4b9c92d593cf582134f482242d9bb}",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "failedReason": "VNPay response code: 24",
+  "createdAt": {
+    "$date": "2026-03-19T06:38:54.719Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-19T06:43:58.303Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69bb9b5ad61c4c67e4d3c359"
+  },
+  "orderId": "order_0010",
+  "userId": "user_3AYdCwEXm2wC5xrs4jiGpXEmHa7",
+  "paymentMethod": "VNPAY",
+  "paymentStatus": "PAID",
+  "amount": {
+    "$numberLong": "8500000"
+  },
+  "currency": "VND",
+  "transactionId": "15457845",
+  "paymentUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=850000000&vnp_Command=pay&vnp_CreateDate=20260319134442&vnp_CurrCode=VND&vnp_ExpireDate=20260319135942&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+order_0010&vnp_OrderType=other&vnp_ReturnUrl=http%3A%2F%2Flocalhost%3A8085%2Fapi%2Fpayments%2Fvnpay%2Freturn&vnp_TmnCode=7HUUV8OZ&vnp_TxnRef=order_0010&vnp_Version=2.1.0&vnp_SecureHash=68c116a23088c74ecd59f141eb7636a5dee56beaba5516fe497c504503b7f7832288243c782311256f536c618a5da00e40fd9d77c1f15e1e3b2145f3c821c099",
+  "responseCode": "00",
+  "expiresAt": {
+    "$date": "2026-03-19T06:59:42.330Z"
+  },
+  "paymentGatewayResponse": "{vnp_Amount=850000000, vnp_BankCode=NCB, vnp_BankTranNo=VNP15457845, vnp_CardType=ATM, vnp_OrderInfo=Thanh toan don hang order_0010, vnp_PayDate=20260319134526, vnp_ResponseCode=00, vnp_TmnCode=7HUUV8OZ, vnp_TransactionNo=15457845, vnp_TransactionStatus=00, vnp_TxnRef=order_0010, vnp_SecureHash=a388be8cda2ea25b459d3818876bdd1f965a4363bcf5fc5b9c43953ec37e53e575c882d41dc9343431b08c07ad796bd642d6660385a5540ab2f559350b0d194f}",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "paidAt": {
+    "$date": "2026-03-19T06:45:32.402Z"
+  },
+  "createdAt": {
+    "$date": "2026-03-19T06:44:42.327Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-19T06:45:32.399Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69cb5a5c22dff22d223a932d"
+  },
+  "orderId": "69cb59f00c5d36e14007809e",
+  "userId": "user_3AXcxCP6YqwTrnmSN9PDHUTCCch",
+  "paymentMethod": "VNPAY",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "230000"
+  },
+  "currency": "VND",
+  "paymentUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=23000000&vnp_Command=pay&vnp_CreateDate=20260331122340&vnp_CurrCode=VND&vnp_ExpireDate=20260331123840&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+69cb59f00c5d36e14007809e&vnp_OrderType=other&vnp_ReturnUrl=http%3A%2F%2Flocalhost%3A8085%2Fapi%2Fpayments%2Fvnpay%2Freturn&vnp_TmnCode=7HUUV8OZ&vnp_TxnRef=69cb59f00c5d36e14007809e&vnp_Version=2.1.0&vnp_SecureHash=933db8251d09633a9500fb5e3d99bea9fa200b5fa2652c296694a441db1bc4ba6e9019a093eb98ffc3b7d27b2f48782c216feee382207a4a90f1a08a63f4da80",
+  "expiresAt": {
+    "$date": "2026-03-31T05:38:40.480Z"
+  },
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-03-31T05:23:40.472Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-31T05:23:40.472Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69cb5d0b34c3dd47f1907c42"
+  },
+  "orderId": "69cb5cd472125d198445d1cc",
+  "userId": "user_3AXcxCP6YqwTrnmSN9PDHUTCCch",
+  "paymentMethod": "VNPAY",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "230000"
+  },
+  "currency": "VND",
+  "paymentUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=23000000&vnp_Command=pay&vnp_CreateDate=20260331123507&vnp_CurrCode=VND&vnp_ExpireDate=20260331125007&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+69cb5cd472125d198445d1cc&vnp_OrderType=other&vnp_ReturnUrl=http%3A%2F%2Flocalhost%3A8085%2Fapi%2Fpayments%2Fvnpay%2Freturn&vnp_TmnCode=7HUUV8OZ&vnp_TxnRef=69cb5cd472125d198445d1cc&vnp_Version=2.1.0&vnp_SecureHash=05e38bcd688e9d0d606dce0197d9db92c38b6931a0301405dab0ae9b19d4aab7a24814ad5ebc356f96bb32072c63d9083b54f501b04a47b7697d65136d151600",
+  "expiresAt": {
+    "$date": "2026-03-31T05:50:07.141Z"
+  },
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-03-31T05:35:07.136Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-31T05:35:07.136Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d2cb252645a875fdd96bcb"
+  },
+  "orderId": "69d2cb245f6178693eb99139",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "paymentMethod": "COD",
+  "paymentStatus": "PAID",
+  "amount": {
+    "$numberLong": "6798000"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "paidAt": {
+    "$date": "2026-04-09T10:02:31.929Z"
+  },
+  "createdAt": {
+    "$date": "2026-04-05T20:50:45.494Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T10:02:31.929Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d2cb832645a875fdd96bcc"
+  },
+  "orderId": "69d2cb835f6178693eb9913a",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "paymentMethod": "VNPAY",
+  "paymentStatus": "PAID",
+  "amount": {
+    "$numberLong": "6798000"
+  },
+  "currency": "VND",
+  "transactionId": "15483361",
+  "paymentUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=679800000&vnp_Command=pay&vnp_CreateDate=20260406035219&vnp_CurrCode=VND&vnp_ExpireDate=20260406040719&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+69d2cb835f6178693eb9913a&vnp_OrderType=other&vnp_ReturnUrl=http%3A%2F%2Flocalhost%3A8085%2Fapi%2Fpayments%2Fvnpay%2Freturn&vnp_TmnCode=7HUUV8OZ&vnp_TxnRef=69d2cb835f6178693eb9913a&vnp_Version=2.1.0&vnp_SecureHash=19ffe3d58d1a27c3022e3cfb0af027fe4faca29740d1ba647a3844a8337a6d775a187ef13052744e067ea044a33b11e5d4c35845848782b0f397ca0e7e090b8b",
+  "responseCode": "00",
+  "expiresAt": {
+    "$date": "2026-04-05T21:07:19.376Z"
+  },
+  "paymentGatewayResponse": "{vnp_Amount=679800000, vnp_BankCode=NCB, vnp_BankTranNo=VNP15483361, vnp_CardType=ATM, vnp_OrderInfo=Thanh toan don hang 69d2cb835f6178693eb9913a, vnp_PayDate=20260406035444, vnp_ResponseCode=00, vnp_TmnCode=7HUUV8OZ, vnp_TransactionNo=15483361, vnp_TransactionStatus=00, vnp_TxnRef=69d2cb835f6178693eb9913a, vnp_SecureHash=3072ff9a62610593852a195f7140e7334174818eb0cc98a16d5e7474e2d51efce79f499aeb0377d379e82e55f324f002dc122cb08d8d41a02257084d6a7ea932}",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "paidAt": {
+    "$date": "2026-04-05T20:54:50.830Z"
+  },
+  "createdAt": {
+    "$date": "2026-04-05T20:52:19.362Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-05T20:54:50.829Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d2dbcc2645a875fdd96bcd"
+  },
+  "orderId": "69d2dbcb5f6178693eb9913b",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "paymentMethod": "VNPAY",
+  "paymentStatus": "PAID",
+  "amount": {
+    "$numberLong": "7597000"
+  },
+  "currency": "VND",
+  "transactionId": "15483379",
+  "paymentUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=759700000&vnp_Command=pay&vnp_CreateDate=20260406050148&vnp_CurrCode=VND&vnp_ExpireDate=20260406051648&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+69d2dbcb5f6178693eb9913b&vnp_OrderType=other&vnp_ReturnUrl=http%3A%2F%2Flocalhost%3A8085%2Fapi%2Fpayments%2Fvnpay%2Freturn&vnp_TmnCode=7HUUV8OZ&vnp_TxnRef=69d2dbcb5f6178693eb9913b&vnp_Version=2.1.0&vnp_SecureHash=89cf32fa84dc746af73f58d84bc4ab8a42846576a8c2a8a20889a33d16396dd18951ef37d7b205fc05df725cf583d2842fb0aa48d7b6ccb571cc4e3e4ac1c02a",
+  "responseCode": "00",
+  "expiresAt": {
+    "$date": "2026-04-05T22:16:48.265Z"
+  },
+  "paymentGatewayResponse": "{vnp_Amount=759700000, vnp_BankCode=NCB, vnp_BankTranNo=VNP15483379, vnp_CardType=ATM, vnp_OrderInfo=Thanh toan don hang 69d2dbcb5f6178693eb9913b, vnp_PayDate=20260406050225, vnp_ResponseCode=00, vnp_TmnCode=7HUUV8OZ, vnp_TransactionNo=15483379, vnp_TransactionStatus=00, vnp_TxnRef=69d2dbcb5f6178693eb9913b, vnp_SecureHash=55d418214c4a928a56f864888232e2c25f1c033e11a8a266ea00e81a8636d438c46a9661a3566926fe9460677700c5622e6fd970a0c1773926b9d8cd8396f8fe}",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "paidAt": {
+    "$date": "2026-04-05T22:02:31.429Z"
+  },
+  "createdAt": {
+    "$date": "2026-04-05T22:01:48.261Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-05T22:02:31.428Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d337d654c3190110152c4a"
+  },
+  "orderId": "69d337d5d76ea04c993a0c24",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "paymentMethod": "COD",
+  "paymentStatus": "PAID",
+  "amount": {
+    "$numberLong": "12595000"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "paidAt": {
+    "$date": "2026-04-09T10:02:38.525Z"
+  },
+  "createdAt": {
+    "$date": "2026-04-06T04:34:30.862Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T10:02:38.525Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d338d754c3190110152c4b"
+  },
+  "orderId": "69d338d7d76ea04c993a0c25",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "paymentMethod": "VNPAY",
+  "paymentStatus": "PAID",
+  "amount": {
+    "$numberLong": "12595000"
+  },
+  "currency": "VND",
+  "transactionId": "15483770",
+  "paymentUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=1259500000&vnp_Command=pay&vnp_CreateDate=20260406113847&vnp_CurrCode=VND&vnp_ExpireDate=20260406115347&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+69d338d7d76ea04c993a0c25&vnp_OrderType=other&vnp_ReturnUrl=http%3A%2F%2Flocalhost%3A8085%2Fapi%2Fpayments%2Fvnpay%2Freturn&vnp_TmnCode=7HUUV8OZ&vnp_TxnRef=69d338d7d76ea04c993a0c25&vnp_Version=2.1.0&vnp_SecureHash=1d38c50fee825977ddb1c5fb4c9a397b10e569cdf736acd43175a8e23ff897339e59d9921c2faa07fec20bb379dd356b6da5e12631df01d837b5c4f9ca473037",
+  "responseCode": "00",
+  "expiresAt": {
+    "$date": "2026-04-06T04:53:47.831Z"
+  },
+  "paymentGatewayResponse": "{vnp_Amount=1259500000, vnp_BankCode=NCB, vnp_BankTranNo=VNP15483770, vnp_CardType=ATM, vnp_OrderInfo=Thanh toan don hang 69d338d7d76ea04c993a0c25, vnp_PayDate=20260406113928, vnp_ResponseCode=00, vnp_TmnCode=7HUUV8OZ, vnp_TransactionNo=15483770, vnp_TransactionStatus=00, vnp_TxnRef=69d338d7d76ea04c993a0c25, vnp_SecureHash=c274bf9baacf14df5f4e9260db9ac4192ac17f0a6d3c9b820214720df8837d14131e48efb386efde8328babf5651f8bfce424f44a1c299f9b93e3071be437d31}",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "paidAt": {
+    "$date": "2026-04-06T04:39:34.891Z"
+  },
+  "createdAt": {
+    "$date": "2026-04-06T04:38:47.819Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-06T04:39:34.890Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d34a0654c3190110152c4c"
+  },
+  "orderId": "69d34a0670e6b113763ffe55",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "paymentMethod": "COD",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "21193000"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-06T05:52:06.761Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-06T05:52:06.761Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d3512654c3190110152c4d"
+  },
+  "orderId": "69d351265755ea3457e051fd",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "paymentMethod": "COD",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "12897000"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-06T06:22:30.805Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-06T06:22:30.805Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d46ea234d37d4dc4361ec5"
+  },
+  "orderId": "69d46ea0601d3025488b958a",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "paymentMethod": "COD",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "19695000"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-07T02:40:34.621Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T02:40:34.621Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d46eb834d37d4dc4361ec6"
+  },
+  "orderId": "69d46eb8601d3025488b958b",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "paymentMethod": "VNPAY",
+  "paymentStatus": "PAID",
+  "amount": {
+    "$numberLong": "8598000"
+  },
+  "currency": "VND",
+  "transactionId": "15485229",
+  "paymentUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=859800000&vnp_Command=pay&vnp_CreateDate=20260407094056&vnp_CurrCode=VND&vnp_ExpireDate=20260407095556&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+69d46eb8601d3025488b958b&vnp_OrderType=other&vnp_ReturnUrl=http%3A%2F%2Flocalhost%3A8085%2Fapi%2Fpayments%2Fvnpay%2Freturn&vnp_TmnCode=7HUUV8OZ&vnp_TxnRef=69d46eb8601d3025488b958b&vnp_Version=2.1.0&vnp_SecureHash=04783a80d20cc359debff83c7d25ff05ec48fe4b03d4da03ba29c7d38ff90eb2cecd24bfb3c4e652ff8d0f40348c31d9ed8d5b02d9cdbedaf96ee830bc59e3b5",
+  "responseCode": "00",
+  "expiresAt": {
+    "$date": "2026-04-07T02:55:56.967Z"
+  },
+  "paymentGatewayResponse": "{vnp_Amount=859800000, vnp_BankCode=NCB, vnp_BankTranNo=VNP15485229, vnp_CardType=ATM, vnp_OrderInfo=Thanh toan don hang 69d46eb8601d3025488b958b, vnp_PayDate=20260407094145, vnp_ResponseCode=00, vnp_TmnCode=7HUUV8OZ, vnp_TransactionNo=15485229, vnp_TransactionStatus=00, vnp_TxnRef=69d46eb8601d3025488b958b, vnp_SecureHash=3bad195438dc62dc366cd4666ab10682bdaea02c3167d268dd071741f3a9ce1b22e1bdd1de4d64eff6c5d337e31670dc4618ec0934f34ce72d4c7e31b3eaf750}",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "paidAt": {
+    "$date": "2026-04-07T02:41:50.031Z"
+  },
+  "createdAt": {
+    "$date": "2026-04-07T02:40:56.952Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T02:41:50.029Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d4833934d37d4dc4361ec7"
+  },
+  "orderId": "69d48339601d3025488b9591",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "paymentMethod": "COD",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "4299000"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-07T04:08:25.540Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T04:08:25.540Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d4836c34d37d4dc4361ec8"
+  },
+  "orderId": "69d4836c601d3025488b9592",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "paymentMethod": "VNPAY",
+  "paymentStatus": "PAID",
+  "amount": {
+    "$numberLong": "8999000"
+  },
+  "currency": "VND",
+  "transactionId": "15485420",
+  "paymentUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=899900000&vnp_Command=pay&vnp_CreateDate=20260407110916&vnp_CurrCode=VND&vnp_ExpireDate=20260407112416&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+69d4836c601d3025488b9592&vnp_OrderType=other&vnp_ReturnUrl=http%3A%2F%2Flocalhost%3A8085%2Fapi%2Fpayments%2Fvnpay%2Freturn&vnp_TmnCode=7HUUV8OZ&vnp_TxnRef=69d4836c601d3025488b9592&vnp_Version=2.1.0&vnp_SecureHash=595fd7c7c438a98de1f3c54b7bb36cf92fc447b2ad925dda2fc3bbc81c4ec69d533a4b09f2691ca9a757ae413590db1a181fc03a7afbf34645a0932ed268a694",
+  "responseCode": "00",
+  "expiresAt": {
+    "$date": "2026-04-07T04:24:16.931Z"
+  },
+  "paymentGatewayResponse": "{vnp_Amount=899900000, vnp_BankCode=NCB, vnp_BankTranNo=VNP15485420, vnp_CardType=ATM, vnp_OrderInfo=Thanh toan don hang 69d4836c601d3025488b9592, vnp_PayDate=20260407110951, vnp_ResponseCode=00, vnp_TmnCode=7HUUV8OZ, vnp_TransactionNo=15485420, vnp_TransactionStatus=00, vnp_TxnRef=69d4836c601d3025488b9592, vnp_SecureHash=16688f1f2fc3b68f06906e10b740c7ff6888e13ca346bbf3ec6fac008a58f34b1b2a5236a9c4f062a2ebcf1d027ea4c42db1c1edbe3c9c88e2d6e4bebd48d49d}",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "paidAt": {
+    "$date": "2026-04-07T04:09:56.252Z"
+  },
+  "createdAt": {
+    "$date": "2026-04-07T04:09:16.926Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T04:09:56.250Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d492d034d37d4dc4361ec9"
+  },
+  "orderId": "69d492d0601d3025488b959f",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "paymentMethod": "COD",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "8999000"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-07T05:14:56.594Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T05:14:56.594Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d492eb34d37d4dc4361eca"
+  },
+  "orderId": "69d492eb601d3025488b95a0",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "paymentMethod": "VNPAY",
+  "paymentStatus": "PAID",
+  "amount": {
+    "$numberLong": "12499000"
+  },
+  "currency": "VND",
+  "transactionId": "15485502",
+  "paymentUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=1249900000&vnp_Command=pay&vnp_CreateDate=20260407121523&vnp_CurrCode=VND&vnp_ExpireDate=20260407123023&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+69d492eb601d3025488b95a0&vnp_OrderType=other&vnp_ReturnUrl=http%3A%2F%2Flocalhost%3A8085%2Fapi%2Fpayments%2Fvnpay%2Freturn&vnp_TmnCode=7HUUV8OZ&vnp_TxnRef=69d492eb601d3025488b95a0&vnp_Version=2.1.0&vnp_SecureHash=908ffeed004a27efd4f996e98b80edb22e00a376f6959af62f0260d301fcec3d6f395f6d5f1b231fe0f69d38dcf50f527c43e0eee5beba41b949751a35d84c33",
+  "responseCode": "00",
+  "expiresAt": {
+    "$date": "2026-04-07T05:30:23.741Z"
+  },
+  "paymentGatewayResponse": "{vnp_Amount=1249900000, vnp_BankCode=NCB, vnp_BankTranNo=VNP15485502, vnp_CardType=ATM, vnp_OrderInfo=Thanh toan don hang 69d492eb601d3025488b95a0, vnp_PayDate=20260407121551, vnp_ResponseCode=00, vnp_TmnCode=7HUUV8OZ, vnp_TransactionNo=15485502, vnp_TransactionStatus=00, vnp_TxnRef=69d492eb601d3025488b95a0, vnp_SecureHash=063a478657147987540f0ecbd243fdb134bb7c0c1c79af819cd9130a7885937aa244c308a00d8345646610b7302653b24b39460d1688a30e2bf892a6f4718e07}",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "paidAt": {
+    "$date": "2026-04-07T05:15:57.481Z"
+  },
+  "createdAt": {
+    "$date": "2026-04-07T05:15:23.739Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T05:15:57.481Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d494473c37cd2b69366a38"
+  },
+  "orderId": "69d49447601d3025488b95a3",
+  "userId": "guest",
+  "paymentMethod": "COD",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "8597998"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-07T05:21:11.655Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T05:21:11.655Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d4976f3c37cd2b69366a39"
+  },
+  "orderId": "69d4976e601d3025488b95a4",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "paymentMethod": "COD",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "4299000"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-07T05:34:39.299Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T05:34:39.299Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d4984d3c37cd2b69366a3a"
+  },
+  "orderId": "69d4984d601d3025488b95a5",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "paymentMethod": "VNPAY",
+  "paymentStatus": "PAID",
+  "amount": {
+    "$numberLong": "7699000"
+  },
+  "currency": "VND",
+  "transactionId": "15485514",
+  "paymentUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=769900000&vnp_Command=pay&vnp_CreateDate=20260407123821&vnp_CurrCode=VND&vnp_ExpireDate=20260407125321&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+69d4984d601d3025488b95a5&vnp_OrderType=other&vnp_ReturnUrl=http%3A%2F%2Flocalhost%3A8085%2Fapi%2Fpayments%2Fvnpay%2Freturn&vnp_TmnCode=7HUUV8OZ&vnp_TxnRef=69d4984d601d3025488b95a5&vnp_Version=2.1.0&vnp_SecureHash=2d05b7ed7fa41009b339702b3aeaeb92f3460cbf17582b83539bbd16bb073ab3febee0348add898c919aa96260468ea29ad228ada1d0444321ab92e82b6d7e82",
+  "responseCode": "00",
+  "expiresAt": {
+    "$date": "2026-04-07T05:53:21.498Z"
+  },
+  "paymentGatewayResponse": "{vnp_Amount=769900000, vnp_BankCode=NCB, vnp_BankTranNo=VNP15485514, vnp_CardType=ATM, vnp_OrderInfo=Thanh toan don hang 69d4984d601d3025488b95a5, vnp_PayDate=20260407123849, vnp_ResponseCode=00, vnp_TmnCode=7HUUV8OZ, vnp_TransactionNo=15485514, vnp_TransactionStatus=00, vnp_TxnRef=69d4984d601d3025488b95a5, vnp_SecureHash=2db0b271a2b189e916f39d262b805ffff672c48ce4760ffc3d3a9cdd45fc841af6eed0741fd33686e00b969736243f60864a35e9c6c1a0a9f0bb1bd1a5e58df3}",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "paidAt": {
+    "$date": "2026-04-07T05:38:54.527Z"
+  },
+  "createdAt": {
+    "$date": "2026-04-07T05:38:21.485Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T05:38:54.525Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d49d7d3c37cd2b69366a3b"
+  },
+  "orderId": "69d49d7dc1a3755db096f9fe",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "paymentMethod": "VNPAY",
+  "paymentStatus": "PAID",
+  "amount": {
+    "$numberLong": "4299000"
+  },
+  "currency": "VND",
+  "transactionId": "15485536",
+  "paymentUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=429900000&vnp_Command=pay&vnp_CreateDate=20260407130029&vnp_CurrCode=VND&vnp_ExpireDate=20260407131529&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+69d49d7dc1a3755db096f9fe&vnp_OrderType=other&vnp_ReturnUrl=http%3A%2F%2Flocalhost%3A8085%2Fapi%2Fpayments%2Fvnpay%2Freturn&vnp_TmnCode=7HUUV8OZ&vnp_TxnRef=69d49d7dc1a3755db096f9fe&vnp_Version=2.1.0&vnp_SecureHash=ec867512f99456d5044d9ce0dc1dbb46b846275c32d4a68a69288ac2016d9243b6f72f11025dfbfc36702ae923ef026ca6b2f6c828b38f0fb978e8938cbcfaa9",
+  "responseCode": "00",
+  "expiresAt": {
+    "$date": "2026-04-07T06:15:29.541Z"
+  },
+  "paymentGatewayResponse": "{vnp_Amount=429900000, vnp_BankCode=NCB, vnp_BankTranNo=VNP15485536, vnp_CardType=ATM, vnp_OrderInfo=Thanh toan don hang 69d49d7dc1a3755db096f9fe, vnp_PayDate=20260407130100, vnp_ResponseCode=00, vnp_TmnCode=7HUUV8OZ, vnp_TransactionNo=15485536, vnp_TransactionStatus=00, vnp_TxnRef=69d49d7dc1a3755db096f9fe, vnp_SecureHash=db6f4fe4fbba393e569c886bd64341044c6e478d41ca87e15c1ceab1c13d4f77ae3e610a4dd2d0238bbdd7197b8241d42ef3bd781e7c6ee63f8257a3dbb281b3}",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "paidAt": {
+    "$date": "2026-04-07T06:01:05.760Z"
+  },
+  "createdAt": {
+    "$date": "2026-04-07T06:00:29.537Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T06:01:05.760Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d4ba25f06fa725c964537b"
+  },
+  "orderId": "69d4ba23c1a3755db096f9ff",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "paymentMethod": "COD",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "229000"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-07T08:02:45.583Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T08:02:45.583Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d4c306f06fa725c964537c"
+  },
+  "orderId": "69d4c306c1a3755db096fa00",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "paymentMethod": "COD",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "12499000"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-07T08:40:38.758Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T08:40:38.758Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d4c49df06fa725c964537d"
+  },
+  "orderId": "69d4c49dc1a3755db096fa01",
+  "userId": "guest",
+  "paymentMethod": "COD",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "4299000"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-07T08:47:25.749Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T08:47:25.749Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d4d7a0f06fa725c964537e"
+  },
+  "orderId": "69d4d79faeb53e75be602d65",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "paymentMethod": "COD",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "6797999"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-07T10:08:32.692Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T10:08:32.692Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d4d7c7f06fa725c964537f"
+  },
+  "orderId": "69d4d7c7aeb53e75be602d66",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "paymentMethod": "COD",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "4299002"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-07T10:09:11.356Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T10:09:11.356Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d4d7ecf06fa725c9645380"
+  },
+  "orderId": "69d4d7ecaeb53e75be602d67",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "paymentMethod": "VNPAY",
+  "paymentStatus": "PAID",
+  "amount": {
+    "$numberLong": "12597000"
+  },
+  "currency": "VND",
+  "transactionId": "15486018",
+  "paymentUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=1259700000&vnp_Command=pay&vnp_CreateDate=20260407170948&vnp_CurrCode=VND&vnp_ExpireDate=20260407172448&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+69d4d7ecaeb53e75be602d67&vnp_OrderType=other&vnp_ReturnUrl=http%3A%2F%2Flocalhost%3A8085%2Fapi%2Fpayments%2Fvnpay%2Freturn&vnp_TmnCode=7HUUV8OZ&vnp_TxnRef=69d4d7ecaeb53e75be602d67&vnp_Version=2.1.0&vnp_SecureHash=8897490fb375b25b860fadda710ea75ed88fbc56711b24a39f92f1393b96dc4cafe23627d1b5e51c1f1b1a480ac687d0d03004b4d860624cc22bbad148e8b8c1",
+  "responseCode": "00",
+  "expiresAt": {
+    "$date": "2026-04-07T10:24:48.695Z"
+  },
+  "paymentGatewayResponse": "{vnp_Amount=1259700000, vnp_BankCode=NCB, vnp_BankTranNo=VNP15486018, vnp_CardType=ATM, vnp_OrderInfo=Thanh toan don hang 69d4d7ecaeb53e75be602d67, vnp_PayDate=20260407171016, vnp_ResponseCode=00, vnp_TmnCode=7HUUV8OZ, vnp_TransactionNo=15486018, vnp_TransactionStatus=00, vnp_TxnRef=69d4d7ecaeb53e75be602d67, vnp_SecureHash=ddc69dc0476932569d9be1f9ec89cdd98762a738b7ea01968071f928f0b20c5a1e2e5b7e5609e884fa0fa7bd3a3cf65c8ed65b9598c241ba634316d22b8b694f}",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "paidAt": {
+    "$date": "2026-04-07T10:10:21.443Z"
+  },
+  "createdAt": {
+    "$date": "2026-04-07T10:09:48.618Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T10:10:21.442Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d4d8dbf06fa725c9645381"
+  },
+  "orderId": "69d4d8dbaeb53e75be602d68",
+  "userId": "guest",
+  "paymentMethod": "COD",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "4299000"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-07T10:13:47.472Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T10:13:47.472Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d4d97ff06fa725c9645382"
+  },
+  "orderId": "69d4d97faeb53e75be602d69",
+  "userId": "guest",
+  "paymentMethod": "VNPAY",
+  "paymentStatus": "PAID",
+  "amount": {
+    "$numberLong": "4299000"
+  },
+  "currency": "VND",
+  "transactionId": "15486029",
+  "paymentUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=429900000&vnp_Command=pay&vnp_CreateDate=20260407171631&vnp_CurrCode=VND&vnp_ExpireDate=20260407173131&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+69d4d97faeb53e75be602d69&vnp_OrderType=other&vnp_ReturnUrl=http%3A%2F%2Flocalhost%3A8085%2Fapi%2Fpayments%2Fvnpay%2Freturn&vnp_TmnCode=7HUUV8OZ&vnp_TxnRef=69d4d97faeb53e75be602d69&vnp_Version=2.1.0&vnp_SecureHash=a2f41b671f6ec3521460767041f8acf8a967e3e47c3906972c8cd4a8b783acfcb6d4683cba3e70a250e3a30e6c04629a42634cfbb0073005a44b69e68de5f63a",
+  "responseCode": "00",
+  "expiresAt": {
+    "$date": "2026-04-07T10:31:31.517Z"
+  },
+  "paymentGatewayResponse": "{vnp_Amount=429900000, vnp_BankCode=NCB, vnp_BankTranNo=VNP15486029, vnp_CardType=ATM, vnp_OrderInfo=Thanh toan don hang 69d4d97faeb53e75be602d69, vnp_PayDate=20260407171659, vnp_ResponseCode=00, vnp_TmnCode=7HUUV8OZ, vnp_TransactionNo=15486029, vnp_TransactionStatus=00, vnp_TxnRef=69d4d97faeb53e75be602d69, vnp_SecureHash=f54250ddc010cedc49c67720ea6bbbe870b7253316b791f4cd2cb1af5d9a7f1727b38341daf2bd647ee5e00e39b520269372affa2e5226c2431f6d791a14eeb5}",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "paidAt": {
+    "$date": "2026-04-07T10:17:04.031Z"
+  },
+  "createdAt": {
+    "$date": "2026-04-07T10:16:31.516Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-07T10:17:04.030Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d5eae21e3dc903cb002b48"
+  },
+  "orderId": "69d5eadfe6d47a231ca0e233",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "paymentMethod": "VNPAY",
+  "paymentStatus": "PAID",
+  "amount": {
+    "$numberLong": "4299000"
+  },
+  "currency": "VND",
+  "transactionId": "15487229",
+  "paymentUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=429900000&vnp_Command=pay&vnp_CreateDate=20260408124258&vnp_CurrCode=VND&vnp_ExpireDate=20260408125758&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+69d5eadfe6d47a231ca0e233&vnp_OrderType=other&vnp_ReturnUrl=http%3A%2F%2Flocalhost%3A8085%2Fapi%2Fpayments%2Fvnpay%2Freturn&vnp_TmnCode=7HUUV8OZ&vnp_TxnRef=69d5eadfe6d47a231ca0e233&vnp_Version=2.1.0&vnp_SecureHash=4d6a6ae34b9ca790123dfcab82fc2af4a9f06d73df81496902d6d7c444c31996555c38932cdc9ed2d4058590f1a1ddf54e6e1dd025e6c007bac2b0e58c9c6c82",
+  "responseCode": "00",
+  "expiresAt": {
+    "$date": "2026-04-08T05:57:58.615Z"
+  },
+  "paymentGatewayResponse": "{vnp_Amount=429900000, vnp_BankCode=NCB, vnp_BankTranNo=VNP15487229, vnp_CardType=ATM, vnp_OrderInfo=Thanh toan don hang 69d5eadfe6d47a231ca0e233, vnp_PayDate=20260408124340, vnp_ResponseCode=00, vnp_TmnCode=7HUUV8OZ, vnp_TransactionNo=15487229, vnp_TransactionStatus=00, vnp_TxnRef=69d5eadfe6d47a231ca0e233, vnp_SecureHash=14f684bb33387fef1a14c2da7f2452359cd7a5a975ac081283e88f64a824990329252aa6781d2cf1db5a9d674107962c178509366e26a6d48d3870aef8147732}",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "paidAt": {
+    "$date": "2026-04-08T05:43:51.046Z"
+  },
+  "createdAt": {
+    "$date": "2026-04-08T05:42:58.599Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-08T05:43:51.045Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d5f9f51e3dc903cb002b49"
+  },
+  "orderId": "69d5f9f5e6d47a231ca0e234",
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "paymentMethod": "VNPAY",
+  "paymentStatus": "PAID",
+  "amount": {
+    "$numberLong": "8298000"
+  },
+  "currency": "VND",
+  "transactionId": "15487344",
+  "paymentUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=829800000&vnp_Command=pay&vnp_CreateDate=20260408134717&vnp_CurrCode=VND&vnp_ExpireDate=20260408140217&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+69d5f9f5e6d47a231ca0e234&vnp_OrderType=other&vnp_ReturnUrl=http%3A%2F%2Flocalhost%3A8085%2Fapi%2Fpayments%2Fvnpay%2Freturn&vnp_TmnCode=7HUUV8OZ&vnp_TxnRef=69d5f9f5e6d47a231ca0e234&vnp_Version=2.1.0&vnp_SecureHash=7f5d6854b011df703831120bd2941d9b89b576f8fcd23cdbdb7cf913fe136d2885761aef287f4c46e228b3d525ac3e3b221c6271da6bd5ebf1b6a5f74b7358f1",
+  "responseCode": "00",
+  "expiresAt": {
+    "$date": "2026-04-08T07:02:17.879Z"
+  },
+  "paymentGatewayResponse": "{vnp_Amount=829800000, vnp_BankCode=NCB, vnp_BankTranNo=VNP15487344, vnp_CardType=ATM, vnp_OrderInfo=Thanh toan don hang 69d5f9f5e6d47a231ca0e234, vnp_PayDate=20260408134752, vnp_ResponseCode=00, vnp_TmnCode=7HUUV8OZ, vnp_TransactionNo=15487344, vnp_TransactionStatus=00, vnp_TxnRef=69d5f9f5e6d47a231ca0e234, vnp_SecureHash=34d8452e0e518a129c03fb7766f7bef6d5d08df2f0589a8b8d2d780d367a0537ec734c41b7ea28d82ed3e91901c8b55b0906a4678a20fb34ecd330726c7f3f95}",
+  "voucherCode": "VOUCHER",
+  "voucherDiscount": {
+    "$numberLong": "300000"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "paidAt": {
+    "$date": "2026-04-08T06:48:05.217Z"
+  },
+  "createdAt": {
+    "$date": "2026-04-08T06:47:17.871Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-08T06:48:05.216Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d5fdf81e3dc903cb002b4a"
+  },
+  "orderId": "69d5fdf7e6d47a231ca0e235",
+  "userId": "guest",
+  "paymentMethod": "VNPAY",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "4299000"
+  },
+  "currency": "VND",
+  "paymentUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=429900000&vnp_Command=pay&vnp_CreateDate=20260408140424&vnp_CurrCode=VND&vnp_ExpireDate=20260408141924&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+69d5fdf7e6d47a231ca0e235&vnp_OrderType=other&vnp_ReturnUrl=http%3A%2F%2Flocalhost%3A8085%2Fapi%2Fpayments%2Fvnpay%2Freturn&vnp_TmnCode=7HUUV8OZ&vnp_TxnRef=69d5fdf7e6d47a231ca0e235&vnp_Version=2.1.0&vnp_SecureHash=8541681a2f3beeb2cb13629d21acc4f6121ea35250e32c2d2ed4a0aff4b9b7544ed2036110a296f79b370a7624d79cc99b570498947074cb4bc3908dfb925bce",
+  "expiresAt": {
+    "$date": "2026-04-08T07:19:24.170Z"
+  },
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-08T07:04:24.162Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-08T07:04:24.162Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d5fe531e3dc903cb002b4b"
+  },
+  "orderId": "69d5fe53e6d47a231ca0e236",
+  "userId": "guest",
+  "paymentMethod": "VNPAY",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "4299000"
+  },
+  "currency": "VND",
+  "paymentUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=429900000&vnp_Command=pay&vnp_CreateDate=20260408140555&vnp_CurrCode=VND&vnp_ExpireDate=20260408142055&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+69d5fe53e6d47a231ca0e236&vnp_OrderType=other&vnp_ReturnUrl=http%3A%2F%2Flocalhost%3A8085%2Fapi%2Fpayments%2Fvnpay%2Freturn&vnp_TmnCode=7HUUV8OZ&vnp_TxnRef=69d5fe53e6d47a231ca0e236&vnp_Version=2.1.0&vnp_SecureHash=1982de84e25cc3bffcb79231069d02cd697be0f48339e811fc21646d5a703f2aabd54504624ef30d824f2e814bd4ba48cb0030f7552d2519ab486edbafdbb2fc",
+  "expiresAt": {
+    "$date": "2026-04-08T07:20:55.149Z"
+  },
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-08T07:05:55.148Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-08T07:05:55.148Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d601601e3dc903cb002b4c"
+  },
+  "orderId": "69d60160e6d47a231ca0e237",
+  "userId": "guest",
+  "paymentMethod": "VNPAY",
+  "paymentStatus": "FAILED",
+  "amount": {
+    "$numberLong": "3999000"
+  },
+  "currency": "VND",
+  "transactionId": "15487454",
+  "paymentUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=399900000&vnp_Command=pay&vnp_CreateDate=20260408141856&vnp_CurrCode=VND&vnp_ExpireDate=20260408143356&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+69d60160e6d47a231ca0e237&vnp_OrderType=other&vnp_ReturnUrl=http%3A%2F%2Flocalhost%3A8085%2Fapi%2Fpayments%2Fvnpay%2Freturn&vnp_TmnCode=7HUUV8OZ&vnp_TxnRef=69d60160e6d47a231ca0e237&vnp_Version=2.1.0&vnp_SecureHash=99f1b469ee2aeec7d31cdf5c96382efbc4cc1102292115dfe5558beb36df48828169df2513b8b9cb5ed18711c1bd88a4c8ffe5d86394e80503082a0499465937",
+  "responseCode": "24",
+  "expiresAt": {
+    "$date": "2026-04-08T07:33:56.771Z"
+  },
+  "paymentGatewayResponse": "{vnp_Amount=399900000, vnp_BankCode=NCB, vnp_CardType=ATM, vnp_OrderInfo=Thanh toan don hang 69d60160e6d47a231ca0e237, vnp_PayDate=20260408141938, vnp_ResponseCode=24, vnp_TmnCode=7HUUV8OZ, vnp_TransactionNo=15487454, vnp_TransactionStatus=02, vnp_TxnRef=69d60160e6d47a231ca0e237, vnp_SecureHash=78a02391b87b12316dc37da888d4fd310047f992f2cfc6a11b893d0e2f469ebc7eacc04edd0a9a684488bc1e8f03bcd9e01d4c49f4ff51c0e6a1c7a4105dac95}",
+  "voucherCode": "VOUCHER",
+  "voucherDiscount": {
+    "$numberLong": "300000"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "failedReason": "Giao dịch không thành công: Khách hàng hủy giao dịch",
+  "createdAt": {
+    "$date": "2026-04-08T07:18:56.760Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-08T07:19:51.298Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d7cc67b5a5110dc933ebcc"
+  },
+  "orderId": "69d7cc648f7f0b4f7b283803",
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "paymentMethod": "COD",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "4299000"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-09T15:57:27.164Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T15:57:27.164Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d7cc6db5a5110dc933ebcd"
+  },
+  "orderId": "69d7cc6d8f7f0b4f7b283804",
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "paymentMethod": "VNPAY",
+  "paymentStatus": "PAID",
+  "amount": {
+    "$numberLong": "4299000"
+  },
+  "currency": "VND",
+  "transactionId": "15490254",
+  "paymentUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=429900000&vnp_Command=pay&vnp_CreateDate=20260409225733&vnp_CurrCode=VND&vnp_ExpireDate=20260409231233&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+69d7cc6d8f7f0b4f7b283804&vnp_OrderType=other&vnp_ReturnUrl=http%3A%2F%2Flocalhost%3A8085%2Fapi%2Fpayments%2Fvnpay%2Freturn&vnp_TmnCode=7HUUV8OZ&vnp_TxnRef=69d7cc6d8f7f0b4f7b283804&vnp_Version=2.1.0&vnp_SecureHash=93322ba1200eb9babf99ed8cb29d7a6219d671e9d7dbf178144ea4ab4a8be436c0c7d49fc23703b703c36b0d8c7bb1434541edab4af0a75b89ca6bf676982b0f",
+  "responseCode": "00",
+  "expiresAt": {
+    "$date": "2026-04-09T16:12:33.895Z"
+  },
+  "paymentGatewayResponse": "{vnp_Amount=429900000, vnp_BankCode=NCB, vnp_BankTranNo=VNP15490254, vnp_CardType=ATM, vnp_OrderInfo=Thanh toan don hang 69d7cc6d8f7f0b4f7b283804, vnp_PayDate=20260409225930, vnp_ResponseCode=00, vnp_TmnCode=7HUUV8OZ, vnp_TransactionNo=15490254, vnp_TransactionStatus=00, vnp_TxnRef=69d7cc6d8f7f0b4f7b283804, vnp_SecureHash=e5c437edad0d320355be304333b61627b91ddb74ddf2b7540989daa6c85f3e2d2bad445d800aff0de3480bb0a1657e508bd0701a9ff7c6f80fd4bb0a37862f06}",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "paidAt": {
+    "$date": "2026-04-09T15:58:59.916Z"
+  },
+  "createdAt": {
+    "$date": "2026-04-09T15:57:33.890Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T15:58:59.915Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d7d058b5a5110dc933ebce"
+  },
+  "orderId": "69d7d0578f7f0b4f7b283805",
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "paymentMethod": "COD",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "12897000"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-09T16:14:16.389Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T16:14:16.389Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d7d0a9b5a5110dc933ebcf"
+  },
+  "orderId": "69d7d0a98f7f0b4f7b283806",
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "paymentMethod": "COD",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "7699000"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-09T16:15:37.158Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T16:15:37.158Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d7d5a2b5a5110dc933ebd0"
+  },
+  "orderId": "69d7d5a28f7f0b4f7b283807",
+  "userId": "guest",
+  "paymentMethod": "VNPAY",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "2529000"
+  },
+  "currency": "VND",
+  "paymentUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=252900000&vnp_Command=pay&vnp_CreateDate=20260409233650&vnp_CurrCode=VND&vnp_ExpireDate=20260409235150&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+69d7d5a28f7f0b4f7b283807&vnp_OrderType=other&vnp_ReturnUrl=http%3A%2F%2Flocalhost%3A8085%2Fapi%2Fpayments%2Fvnpay%2Freturn&vnp_TmnCode=7HUUV8OZ&vnp_TxnRef=69d7d5a28f7f0b4f7b283807&vnp_Version=2.1.0&vnp_SecureHash=34ddbd72c4e5f8a64356795d2dcce31a71db1b077bbcb92f9ebf250b9fdd11840b7bd91aba5895d9239ca6479c5cbccdd50f65a2a9d807b35395d072e0632561",
+  "expiresAt": {
+    "$date": "2026-04-09T16:51:50.600Z"
+  },
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-09T16:36:50.585Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T16:36:50.585Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d7d61ab5a5110dc933ebd1"
+  },
+  "orderId": "69d7d61a8f7f0b4f7b283808",
+  "userId": "guest",
+  "paymentMethod": "VNPAY",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "2529000"
+  },
+  "currency": "VND",
+  "paymentUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=252900000&vnp_Command=pay&vnp_CreateDate=20260409233850&vnp_CurrCode=VND&vnp_ExpireDate=20260409235350&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+69d7d61a8f7f0b4f7b283808&vnp_OrderType=other&vnp_ReturnUrl=http%3A%2F%2Flocalhost%3A8085%2Fapi%2Fpayments%2Fvnpay%2Freturn&vnp_TmnCode=7HUUV8OZ&vnp_TxnRef=69d7d61a8f7f0b4f7b283808&vnp_Version=2.1.0&vnp_SecureHash=329534ed2b7c5c8ec4cbbb0bd7dee6efda4d756e0df4e10017a1e417fd9819f23081a04b26c3f8d8a8baaddb230ed6e61ba3fe6ce451f0e7f365302f4da3228a",
+  "expiresAt": {
+    "$date": "2026-04-09T16:53:50.458Z"
+  },
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-09T16:38:50.455Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T16:38:50.455Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d7d728b5a5110dc933ebd2"
+  },
+  "orderId": "69d7d7288f7f0b4f7b283809",
+  "userId": "guest",
+  "paymentMethod": "COD",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "910000"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-09T16:43:20.963Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T16:43:20.963Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d7def5b5a5110dc933ebd3"
+  },
+  "orderId": "69d7def48f7f0b4f7b28380a",
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "paymentMethod": "COD",
+  "paymentStatus": "PAID",
+  "amount": {
+    "$numberLong": "629000"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "paidAt": {
+    "$date": "2026-04-09T17:17:13.870Z"
+  },
+  "createdAt": {
+    "$date": "2026-04-09T17:16:37.274Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T17:17:13.870Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d7ea90b6a43710f4ffdf9c"
+  },
+  "orderId": "69d7ea8e06dda72bf9cc5e0b",
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "paymentMethod": "COD",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "729000"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-09T18:06:08.200Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T18:06:08.200Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d7ea97b6a43710f4ffdf9d"
+  },
+  "orderId": "69d7ea9706dda72bf9cc5e0c",
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "paymentMethod": "COD",
+  "paymentStatus": "PAID",
+  "amount": {
+    "$numberLong": "729000"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "paidAt": {
+    "$date": "2026-04-09T18:32:39.958Z"
+  },
+  "createdAt": {
+    "$date": "2026-04-09T18:06:15.105Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T18:32:39.958Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d7ef07b6a43710f4ffdf9e"
+  },
+  "orderId": "69d7ef0606dda72bf9cc5e0d",
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "paymentMethod": "COD",
+  "paymentStatus": "PAID",
+  "amount": {
+    "$numberLong": "559000"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "paidAt": {
+    "$date": "2026-04-09T18:32:32.256Z"
+  },
+  "createdAt": {
+    "$date": "2026-04-09T18:25:11.423Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T18:32:32.256Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d7ef39b6a43710f4ffdf9f"
+  },
+  "orderId": "69d7ef3806dda72bf9cc5e0e",
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "paymentMethod": "COD",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "499800"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-09T18:26:01.092Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T18:26:01.092Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d7ef68b6a43710f4ffdfa0"
+  },
+  "orderId": "69d7ef6806dda72bf9cc5e0f",
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "paymentMethod": "COD",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "629000"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-09T18:26:48.192Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T18:26:48.192Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d7efbab6a43710f4ffdfa1"
+  },
+  "orderId": "69d7efba06dda72bf9cc5e10",
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "paymentMethod": "COD",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "229000"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-09T18:28:10.268Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-09T18:28:10.268Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d9ecdb9a255d71f2e10921"
+  },
+  "orderId": "69d9ecdaa4b38b3435feda7c",
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "paymentMethod": "COD",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "3299000"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-11T06:40:27.868Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-11T06:40:27.868Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69d9ece09a255d71f2e10922"
+  },
+  "orderId": "69d9ece0a4b38b3435feda7d",
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "paymentMethod": "COD",
+  "paymentStatus": "PAID",
+  "amount": {
+    "$numberLong": "3299000"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "paidAt": {
+    "$date": "2026-04-11T07:07:35.169Z"
+  },
+  "createdAt": {
+    "$date": "2026-04-11T06:40:32.820Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-11T07:07:35.169Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69da13018416976dabc752c9"
+  },
+  "orderId": "69da130090e1de14d44b2262",
+  "userId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "paymentMethod": "VNPAY",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "4299002"
+  },
+  "currency": "VND",
+  "paymentUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=429900200&vnp_Command=pay&vnp_CreateDate=20260411162313&vnp_CurrCode=VND&vnp_ExpireDate=20260411163813&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+69da130090e1de14d44b2262&vnp_OrderType=other&vnp_ReturnUrl=http%3A%2F%2Flocalhost%3A8085%2Fapi%2Fpayments%2Fvnpay%2Freturn&vnp_TmnCode=7HUUV8OZ&vnp_TxnRef=69da130090e1de14d44b2262&vnp_Version=2.1.0&vnp_SecureHash=bff82826c65e0e4fcd35c8241455915d136c2b431c59a452f231fae6927ca42d483d91e97d847973006109b198bf5fd418f18d27f5d7860db148650d8e87a7e7",
+  "expiresAt": {
+    "$date": "2026-04-11T09:38:13.793Z"
+  },
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-11T09:23:13.788Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-11T09:23:13.788Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69da13088416976dabc752ca"
+  },
+  "orderId": "69da130890e1de14d44b2263",
+  "userId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "paymentMethod": "VNPAY",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "4299002"
+  },
+  "currency": "VND",
+  "paymentUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=429900200&vnp_Command=pay&vnp_CreateDate=20260411162320&vnp_CurrCode=VND&vnp_ExpireDate=20260411163820&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+69da130890e1de14d44b2263&vnp_OrderType=other&vnp_ReturnUrl=http%3A%2F%2Flocalhost%3A8085%2Fapi%2Fpayments%2Fvnpay%2Freturn&vnp_TmnCode=7HUUV8OZ&vnp_TxnRef=69da130890e1de14d44b2263&vnp_Version=2.1.0&vnp_SecureHash=fdb8312b08565749d8028fc70bd1d55978690025b713fb23a26ba644ed22d7b87cebb2e1f1b229ea90bfb0885e6402ac61b677b782b4f28e2cd8e012293b8fa8",
+  "expiresAt": {
+    "$date": "2026-04-11T09:38:20.438Z"
+  },
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-11T09:23:20.437Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-11T09:23:20.437Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69da132a8416976dabc752cb"
+  },
+  "orderId": "69da132990e1de14d44b2264",
+  "userId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "paymentMethod": "VNPAY",
+  "paymentStatus": "PAID",
+  "amount": {
+    "$numberLong": "18499000"
+  },
+  "currency": "VND",
+  "transactionId": "15492587",
+  "paymentUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=1849900000&vnp_Command=pay&vnp_CreateDate=20260411162354&vnp_CurrCode=VND&vnp_ExpireDate=20260411163854&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+69da132990e1de14d44b2264&vnp_OrderType=other&vnp_ReturnUrl=http%3A%2F%2Flocalhost%3A8085%2Fapi%2Fpayments%2Fvnpay%2Freturn&vnp_TmnCode=7HUUV8OZ&vnp_TxnRef=69da132990e1de14d44b2264&vnp_Version=2.1.0&vnp_SecureHash=eca7aced504c4e52cd68136a6a626f602256e718eba354672b933d26e4fd1d58d0007817202afe8581faa7a3d61b1d78d2fd051fbc726971f11186718c1899ae",
+  "responseCode": "00",
+  "expiresAt": {
+    "$date": "2026-04-11T09:38:54.099Z"
+  },
+  "paymentGatewayResponse": "{vnp_Amount=1849900000, vnp_BankCode=NCB, vnp_BankTranNo=VNP15492587, vnp_CardType=ATM, vnp_OrderInfo=Thanh toan don hang 69da132990e1de14d44b2264, vnp_PayDate=20260411162439, vnp_ResponseCode=00, vnp_TmnCode=7HUUV8OZ, vnp_TransactionNo=15492587, vnp_TransactionStatus=00, vnp_TxnRef=69da132990e1de14d44b2264, vnp_SecureHash=dfbe09492d9783007fd1d6ce3aa45b21b69d665a9c33136b5e167834cc30845f276c288ce1c5fe1dec8e17261cac7c1ef3f7a49ab4dde5f4aa1a5fbe02f7bfd8}",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "paidAt": {
+    "$date": "2026-04-11T09:24:50.234Z"
+  },
+  "createdAt": {
+    "$date": "2026-04-11T09:23:54.097Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-11T09:24:50.233Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69da92e4164ac9610891de26"
+  },
+  "orderId": "69da92e11ecb6f5f107ad5c2",
+  "userId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "paymentMethod": "COD",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "20999000"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-11T18:28:52.206Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-11T18:28:52.206Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69da92e5164ac9610891de27"
+  },
+  "orderId": "69da92e51ecb6f5f107ad5c3",
+  "userId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "paymentMethod": "COD",
+  "paymentStatus": "PAID",
+  "amount": {
+    "$numberLong": "20999000"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "paidAt": {
+    "$date": "2026-04-11T18:31:01.223Z"
+  },
+  "createdAt": {
+    "$date": "2026-04-11T18:28:53.537Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-11T18:31:01.223Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69da94e6164ac9610891de28"
+  },
+  "orderId": "69da94e61ecb6f5f107ad5c4",
+  "userId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "paymentMethod": "COD",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "920000"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-11T18:37:26.935Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-11T18:37:26.935Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69da9571164ac9610891de29"
+  },
+  "orderId": "69da95711ecb6f5f107ad5c5",
+  "userId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "paymentMethod": "COD",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "920000"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-11T18:39:45.352Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-11T18:39:45.352Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69da95ab164ac9610891de2a"
+  },
+  "orderId": "69da95ab1ecb6f5f107ad5c6",
+  "userId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "paymentMethod": "COD",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "920000"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-11T18:40:43.244Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-11T18:40:43.244Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69da9630164ac9610891de2b"
+  },
+  "orderId": "69da962f1ecb6f5f107ad5c7",
+  "userId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "paymentMethod": "COD",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "16004030"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-11T18:42:56.123Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-11T18:42:56.123Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69daa359aaab06531df94898"
+  },
+  "orderId": "69daa34fd3cd052cb392e742",
+  "userId": "guest",
+  "paymentMethod": "VNPAY",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "2529000"
+  },
+  "currency": "VND",
+  "paymentUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=252900000&vnp_Command=pay&vnp_CreateDate=20260412023904&vnp_CurrCode=VND&vnp_ExpireDate=20260412025404&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+69daa34fd3cd052cb392e742&vnp_OrderType=other&vnp_ReturnUrl=http%3A%2F%2Flocalhost%3A8085%2Fapi%2Fpayments%2Fvnpay%2Freturn&vnp_TmnCode=7HUUV8OZ&vnp_TxnRef=69daa34fd3cd052cb392e742&vnp_Version=2.1.0&vnp_SecureHash=667aadd535f84270e54f89641b7a58ec41c4eddc2afb2d4ebb785d74beeb2cd6ebb15956ae6266dcba1e02162ad33dca1dad369d8ea3fc3ac52e0b8e804294a3",
+  "expiresAt": {
+    "$date": "2026-04-11T19:54:04.859Z"
+  },
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-11T19:39:04.798Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-11T19:39:04.798Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69daa359aaab06531df94899"
+  },
+  "orderId": "69daa355d3cd052cb392e743",
+  "userId": "guest",
+  "paymentMethod": "VNPAY",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "2529000"
+  },
+  "currency": "VND",
+  "paymentUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=252900000&vnp_Command=pay&vnp_CreateDate=20260412023904&vnp_CurrCode=VND&vnp_ExpireDate=20260412025404&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+69daa355d3cd052cb392e743&vnp_OrderType=other&vnp_ReturnUrl=http%3A%2F%2Flocalhost%3A8085%2Fapi%2Fpayments%2Fvnpay%2Freturn&vnp_TmnCode=7HUUV8OZ&vnp_TxnRef=69daa355d3cd052cb392e743&vnp_Version=2.1.0&vnp_SecureHash=03fc197bc063929f6a394a78926b363f8902d6f3fbd5ab33b3d7dc9bf23cf7dceb58bb04bad13f25d3cd447eec61d20b1789b2c27ac33e3807fd225d5b757d02",
+  "expiresAt": {
+    "$date": "2026-04-11T19:54:04.857Z"
+  },
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-11T19:39:04.798Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-11T19:39:04.798Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69daa35eaaab06531df9489a"
+  },
+  "orderId": "69daa35ed3cd052cb392e744",
+  "userId": "guest",
+  "paymentMethod": "VNPAY",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "2529000"
+  },
+  "currency": "VND",
+  "paymentUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=252900000&vnp_Command=pay&vnp_CreateDate=20260412023910&vnp_CurrCode=VND&vnp_ExpireDate=20260412025410&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+69daa35ed3cd052cb392e744&vnp_OrderType=other&vnp_ReturnUrl=http%3A%2F%2Flocalhost%3A8085%2Fapi%2Fpayments%2Fvnpay%2Freturn&vnp_TmnCode=7HUUV8OZ&vnp_TxnRef=69daa35ed3cd052cb392e744&vnp_Version=2.1.0&vnp_SecureHash=fde87b909e36e6f04bd8821c9ac83d1b8e0d13e606d7b4ca64bf332410ae605632a8e825e43eb6a45d549b1dd96c681d80bdaf9b1354b48e9b9c41a0cf21c276",
+  "expiresAt": {
+    "$date": "2026-04-11T19:54:10.346Z"
+  },
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-11T19:39:10.340Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-11T19:39:10.340Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69daa389aaab06531df9489b"
+  },
+  "orderId": "69daa389d3cd052cb392e745",
+  "userId": "guest",
+  "paymentMethod": "COD",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "20999000"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-11T19:39:53.720Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-11T19:39:53.720Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69dca0f5dfe3e376df805d30"
+  },
+  "orderId": "69dca0f35dcae0213ba8c1b2",
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "paymentMethod": "COD",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "22794030"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-13T07:53:25.786Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-13T07:53:25.786Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69dca14ddfe3e376df805d31"
+  },
+  "orderId": "69dca14d5dcae0213ba8c1b3",
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "paymentMethod": "COD",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "7468030"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-13T07:54:53.759Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-13T07:54:53.759Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69dca1a6dfe3e376df805d32"
+  },
+  "orderId": "69dca1a65dcae0213ba8c1b4",
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "paymentMethod": "COD",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "7468030"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-13T07:56:22.571Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-13T07:56:22.571Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69dcb13edfe3e376df805d33"
+  },
+  "orderId": "69dcb13d5dcae0213ba8c1b5",
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "paymentMethod": "VNPAY",
+  "paymentStatus": "FAILED",
+  "amount": {
+    "$numberLong": "1192060"
+  },
+  "currency": "VND",
+  "transactionId": "15494400",
+  "paymentUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=119206000&vnp_Command=pay&vnp_CreateDate=20260413160254&vnp_CurrCode=VND&vnp_ExpireDate=20260413161754&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+69dcb13d5dcae0213ba8c1b5&vnp_OrderType=other&vnp_ReturnUrl=http%3A%2F%2Flocalhost%3A8085%2Fapi%2Fpayments%2Fvnpay%2Freturn&vnp_TmnCode=7HUUV8OZ&vnp_TxnRef=69dcb13d5dcae0213ba8c1b5&vnp_Version=2.1.0&vnp_SecureHash=ae67ab1584016a1580bbed4ac718ac4ff643aec910adb99deee23491ac072c6c4c6b1990803bc8c1a49d45f8de02d97be0a1e7f12597a4efacbe6ab93897ef80",
+  "responseCode": "24",
+  "expiresAt": {
+    "$date": "2026-04-13T09:17:54.362Z"
+  },
+  "paymentGatewayResponse": "{vnp_Amount=119206000, vnp_BankCode=NCB, vnp_CardType=ATM, vnp_OrderInfo=Thanh toan don hang 69dcb13d5dcae0213ba8c1b5, vnp_PayDate=20260413160350, vnp_ResponseCode=24, vnp_TmnCode=7HUUV8OZ, vnp_TransactionNo=15494400, vnp_TransactionStatus=02, vnp_TxnRef=69dcb13d5dcae0213ba8c1b5, vnp_SecureHash=b60c56afd09e3137a19b7293f7f1243d56038a65c24502b86febf53d7af65dfffa250f69bf75c2922f729e604ff05a87e6dd4b02e31c9f4d6b68831c41205518}",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "failedReason": "Giao dịch không thành công: Khách hàng hủy giao dịch",
+  "createdAt": {
+    "$date": "2026-04-13T09:02:54.313Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-13T09:03:59.265Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69dcb194dfe3e376df805d34"
+  },
+  "orderId": "69dcb1945dcae0213ba8c1b6",
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "paymentMethod": "VNPAY",
+  "paymentStatus": "FAILED",
+  "amount": {
+    "$numberLong": "4170030"
+  },
+  "currency": "VND",
+  "transactionId": "15494402",
+  "paymentUrl": "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=417003000&vnp_Command=pay&vnp_CreateDate=20260413160420&vnp_CurrCode=VND&vnp_ExpireDate=20260413161920&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+69dcb1945dcae0213ba8c1b6&vnp_OrderType=other&vnp_ReturnUrl=http%3A%2F%2Flocalhost%3A8085%2Fapi%2Fpayments%2Fvnpay%2Freturn&vnp_TmnCode=7HUUV8OZ&vnp_TxnRef=69dcb1945dcae0213ba8c1b6&vnp_Version=2.1.0&vnp_SecureHash=03759b8962dfcaedf4dcf5b1ffb995dcdfaa5ad419e702373353f6014f76dbbbecd8c9934e00dbb4a3aedecc776f0b6b490bd391e42fee0120c6a3587d424fd8",
+  "responseCode": "24",
+  "expiresAt": {
+    "$date": "2026-04-13T09:19:20.146Z"
+  },
+  "paymentGatewayResponse": "{vnp_Amount=417003000, vnp_BankCode=NCB, vnp_CardType=ATM, vnp_OrderInfo=Thanh toan don hang 69dcb1945dcae0213ba8c1b6, vnp_PayDate=20260413160450, vnp_ResponseCode=24, vnp_TmnCode=7HUUV8OZ, vnp_TransactionNo=15494402, vnp_TransactionStatus=02, vnp_TxnRef=69dcb1945dcae0213ba8c1b6, vnp_SecureHash=ebe4516db9601b608f83a3432f5941490e50fb5c0a39cd9af1b3242f4115ebc83d3d23beb2e9d87ea7ae63e8fded06a58c8ea77f8f96bd55c3b360a1796de12b}",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "failedReason": "Giao dịch không thành công: Khách hàng hủy giao dịch",
+  "createdAt": {
+    "$date": "2026-04-13T09:04:20.144Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-13T09:04:57.593Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69dcdccf48de1846e01dce3e"
+  },
+  "orderId": "69dcdccd277e8d0cf3d69799",
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "paymentMethod": "COD",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "17440600"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-13T12:08:47.017Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-13T12:08:47.017Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+},
+{
+  "_id": {
+    "$oid": "69dcf21d48de1846e01dce3f"
+  },
+  "orderId": "69dcf21d277e8d0cf3d6979a",
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "paymentMethod": "COD",
+  "paymentStatus": "PENDING",
+  "amount": {
+    "$numberLong": "3200030"
+  },
+  "currency": "VND",
+  "voucherDiscount": {
+    "$numberLong": "0"
+  },
+  "refundAmount": {
+    "$numberLong": "0"
+  },
+  "createdAt": {
+    "$date": "2026-04-13T13:39:41.430Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-13T13:39:41.430Z"
+  },
+  "_class": "com.b2204925.paymentservice.entity.Payment"
+}]

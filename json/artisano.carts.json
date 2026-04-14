@@ -1,0 +1,349 @@
+[{
+  "_id": {
+    "$oid": "69b0f86fceff353a5750d5ab"
+  },
+  "userId": "user_3AlP01PKKct7ddJEnnuo7eTkrrY",
+  "items": [
+    {
+      "productId": "abc123",
+      "variantId": "v1",
+      "productName": "Test Product",
+      "image": "https://test.com/image.jpg",
+      "quantity": 8,
+      "price": 999000,
+      "size": "160x200cm",
+      "thickness": "10cm"
+    }
+  ],
+  "_class": "com.b2204925.cartservice.entity.Cart"
+},
+{
+  "_id": {
+    "$oid": "69d228d39e87f73f2e9393aa"
+  },
+  "userId": "user_3Bu3ywNL7gmozzBUzNsKL1F1cZJ",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "variantId": "ff817899-6256-4d09-b012-e0f74730a428",
+      "name": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "image": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 2,
+      "price": 4299000,
+      "size": "160 x 200",
+      "thickness": "10cm",
+      "color": "",
+      "lineTotal": 8598000
+    },
+    {
+      "productId": "69cfef446ee12c22921926e1",
+      "variantId": "eda2b46a-9ebb-419a-895b-c1d7b1a9a316",
+      "name": "Nệm bông ép Goodnight Nova gấp 3 9cm",
+      "image": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241471/artisano/products/vkpclrtlbxh2wgknnbno.webp",
+      "quantity": 2,
+      "price": 2499000,
+      "size": "220 x 200",
+      "thickness": "9cm",
+      "color": "",
+      "lineTotal": 4998000
+    },
+    {
+      "productId": "69cfef446ee12c22921926df",
+      "variantId": "v5-160",
+      "name": "Nệm bông ép Wonjun Pure & Fresh dày 9cm gấp 3",
+      "image": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775240197/artisano/products/mytlzmgaynnylqj6zgrl.webp",
+      "quantity": 2,
+      "price": 2499000,
+      "size": "120 x 200",
+      "thickness": "9cm",
+      "color": "",
+      "lineTotal": 4998000
+    },
+    {
+      "productId": "69cfef446ee12c22921926df",
+      "variantId": "v5-180",
+      "name": "Nệm bông ép Wonjun Pure & Fresh dày 9cm gấp 3",
+      "image": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775240197/artisano/products/mytlzmgaynnylqj6zgrl.webp",
+      "quantity": 1,
+      "price": 2499000,
+      "size": "140 x 200",
+      "thickness": "9cm",
+      "color": "",
+      "lineTotal": 2499000
+    },
+    {
+      "productId": "69cfef446ee12c22921926e2",
+      "variantId": "v8-160",
+      "name": "Nệm bông ép cao cấp Wonjun Pure Premium nâng đỡ vững chắc dày 12cm gấp 2",
+      "image": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775242184/artisano/products/z1c2xqf9hukmcb6c414a.webp",
+      "quantity": 2,
+      "price": 7699000,
+      "size": "140 x 200",
+      "thickness": "12cm",
+      "color": "",
+      "lineTotal": 15398000
+    }
+  ],
+  "_class": "com.b2204925.cartservice.entity.Cart"
+},
+{
+  "_id": {
+    "$oid": "69d28c9a894fa54565968a2d"
+  },
+  "userId": "user_3AYdCwEXm2wC5xrs4jiGpXEmHa7",
+  "items": [],
+  "_class": "com.b2204925.cartservice.entity.Cart"
+},
+{
+  "_id": {
+    "$oid": "69d2bbc1894fa54565968a2f"
+  },
+  "userId": "user_3Bx6GDUkzYEzxJ8yOsO5KI2nTZ8",
+  "items": [
+    {
+      "productId": "69cfef446ee12c22921926e1",
+      "variantId": "eda2b46a-9ebb-419a-895b-c1d7b1a9a316",
+      "name": "Nệm bông ép Goodnight Nova gấp 3 9cm",
+      "image": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241471/artisano/products/vkpclrtlbxh2wgknnbno.webp",
+      "quantity": 3,
+      "price": 2499000,
+      "size": "220 x 200",
+      "thickness": "9cm",
+      "color": "",
+      "lineTotal": 7497000
+    },
+    {
+      "productId": "69d09e25be5d18bb2f488f2c",
+      "variantId": "cg4-200x220",
+      "name": "Vỏ chăn Cotton Satin AMD The Essentials đơn sắc",
+      "image": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775289445/artisano/products/deu4yj8p9xbupgpkuieb.webp",
+      "quantity": 1,
+      "price": 599000,
+      "size": "200 x 220",
+      "color": "",
+      "lineTotal": 599000
+    },
+    {
+      "productId": "69d09271be5d18bb2f488f24",
+      "variantId": "g4-50x70",
+      "name": "Gối Foam Dreamland Carbon hoạt tính",
+      "image": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775277708/artisano/products/ltkz6vp6uauinsrl9orf.webp",
+      "quantity": 1,
+      "price": 699000,
+      "size": "38 x 60",
+      "thickness": "11cm",
+      "color": "",
+      "lineTotal": 699000
+    },
+    {
+      "productId": "69d4ae1f602ecde91f5881bd",
+      "variantId": "aero-120",
+      "name": "Topper đa năng Aeroflow",
+      "image": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775546654/artisano/products/lkgya3n6lqry9v1dyljw.webp",
+      "quantity": 1,
+      "price": 4833000,
+      "size": "120 x 200",
+      "thickness": "5cm",
+      "color": "Trắng",
+      "lineTotal": 4833000
+    }
+  ],
+  "_class": "com.b2204925.cartservice.entity.Cart"
+},
+{
+  "_id": {
+    "$oid": "69d4c4dccc942d44d8a88d2f"
+  },
+  "userId": "user_3C1Shvylrf4uIACXsRVlX3mzJgB",
+  "items": [
+    {
+      "productId": "69d09271be5d18bb2f488f22",
+      "variantId": "b900a64b-f2c0-42d6-a8c2-56c65a61ab18",
+      "name": "Gối bông nhân tạo Doona Microfiber kháng khuẩn",
+      "image": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775277110/artisano/products/exidbeqncc7b6mua5g4c.webp",
+      "quantity": 3,
+      "price": 599000,
+      "size": "50 x 70",
+      "thickness": "",
+      "color": "",
+      "lineTotal": 1797000
+    },
+    {
+      "productId": "69d4ae1f602ecde91f5881bb",
+      "variantId": "noah-160",
+      "name": "Topper memory foam nâng đỡ êm ái Comfy Noah",
+      "image": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775546361/artisano/products/xrgi5xvljkzxfn7bwvh9.webp",
+      "quantity": 1,
+      "price": 2960000,
+      "size": "160 x 200",
+      "thickness": "5cm",
+      "color": "Trắng",
+      "lineTotal": 2960000
+    },
+    {
+      "productId": "69cfef446ee12c22921926e0",
+      "variantId": "ff817899-6256-4d09-b012-e0f74730a428",
+      "name": "Nệm bông ép Wonjun Pure Carbon kháng khuẩn ưu việt dày 10cm gấp 2",
+      "image": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775241782/artisano/products/eg9bwpu7j62pmgti8rha.webp",
+      "quantity": 1,
+      "price": 4299000,
+      "size": "160 x 200",
+      "thickness": "10cm",
+      "color": "",
+      "lineTotal": 4299000
+    }
+  ],
+  "_class": "com.b2204925.cartservice.entity.Cart"
+},
+{
+  "_id": {
+    "$oid": "69d4d949cc942d44d8a88d30"
+  },
+  "userId": "user_3C1dJ27DY1mXMJa6d3bngBHqHWS",
+  "items": [],
+  "_class": "com.b2204925.cartservice.entity.Cart"
+},
+{
+  "_id": {
+    "$oid": "69d4d9e5cc942d44d8a88d31"
+  },
+  "userId": "user_3C1dcnB8T6WFfZ80D1UK8RjmQno",
+  "items": [
+    {
+      "productId": "69cffd986ee12c22921926e7",
+      "variantId": "ncs1-160",
+      "name": "Nệm cao su thiên nhiên Gummi Premium detox giấc ngủ dày 10cm",
+      "image": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775242955/artisano/products/ljjigylz7m1uadgoc3kn.webp",
+      "quantity": 1,
+      "price": 12499000,
+      "size": "120 x 200",
+      "thickness": "10cm",
+      "color": "",
+      "lineTotal": 12499000
+    },
+    {
+      "productId": "69cfef446ee12c22921926e2",
+      "variantId": "v8-180",
+      "name": "Nệm bông ép cao cấp Wonjun Pure Premium nâng đỡ vững chắc dày 12cm gấp 2",
+      "image": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775242184/artisano/products/z1c2xqf9hukmcb6c414a.webp",
+      "quantity": 1,
+      "price": 7699000,
+      "size": "180 x 200",
+      "thickness": "12cm",
+      "color": "",
+      "lineTotal": 7699000
+    },
+    {
+      "productId": "69d09e25be5d18bb2f488f2a",
+      "variantId": "cg2-200x220",
+      "name": "Bộ ga chun tencel Amando Celia 4 chi tiết TP006",
+      "image": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775289044/artisano/products/xgpultp1qsfn6o39ocq3.webp",
+      "quantity": 1,
+      "price": 899000,
+      "size": "200 x 220",
+      "color": "",
+      "lineTotal": 899000
+    },
+    {
+      "productId": "69d09e25be5d18bb2f488f30",
+      "variantId": "cg8-160x200",
+      "name": "Bộ chăn ga lụa Tencel cao cấp Amando Soulmate 7 chi tiết màu xanh",
+      "image": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775290396/artisano/products/iulgdul8yfxqhnzaohcp.webp",
+      "quantity": 1,
+      "price": 4199000,
+      "size": "160 x 200",
+      "color": "",
+      "lineTotal": 4199000
+    },
+    {
+      "productId": "69d4ae1f602ecde91f5881bd",
+      "variantId": "aero-160",
+      "name": "Topper đa năng Aeroflow",
+      "image": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775546654/artisano/products/lkgya3n6lqry9v1dyljw.webp",
+      "quantity": 1,
+      "price": 6500000,
+      "size": "160 x 200",
+      "thickness": "5cm",
+      "color": "Trắng",
+      "lineTotal": 6500000
+    }
+  ],
+  "_class": "com.b2204925.cartservice.entity.Cart"
+},
+{
+  "_id": {
+    "$oid": "69d5fb73e85c973ae73df450"
+  },
+  "userId": "user_3AXcxCP6YqwTrnmSN9PDHUTCCch",
+  "items": [
+    {
+      "productId": "69cffe076ee12c22921926eb",
+      "variantId": "9e594342-c6b9-4c63-ada9-82936143685b",
+      "name": "Nệm foam Nhật Bản Aeroflow Fit Plus kháng khuẩn dày 20cm",
+      "image": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775245818/artisano/products/b8fcasnotntyq8r09lld.webp",
+      "quantity": 1,
+      "price": 26499000,
+      "size": "220 x 200",
+      "thickness": "20cm",
+      "color": "",
+      "lineTotal": 26499000
+    }
+  ],
+  "_class": "com.b2204925.cartservice.entity.Cart"
+},
+{
+  "_id": {
+    "$oid": "69d7d74c91f0574c78a26886"
+  },
+  "userId": "user_3C82qw64vntUK7yPs9eV3M5VP9X",
+  "items": [
+    {
+      "productId": "69d09e25be5d18bb2f488f29",
+      "variantId": "cg1-200x220",
+      "name": "Chăn Amando Azami công nghệ làm mát",
+      "image": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775288582/artisano/products/sa7dxsgf8t1alqx1bvur.webp",
+      "quantity": 5,
+      "price": 699000,
+      "size": "200 x 220",
+      "color": "",
+      "lineTotal": 3495000
+    }
+  ],
+  "_class": "com.b2204925.cartservice.entity.Cart"
+},
+{
+  "_id": {
+    "$oid": "69da02f386c2650ce539a7e0"
+  },
+  "userId": "user_3CCh61BR32unW25xb4wG0RApEXF",
+  "items": [],
+  "_class": "com.b2204925.cartservice.entity.Cart"
+},
+{
+  "_id": {
+    "$oid": "69daa230caced412e3d66a2d"
+  },
+  "userId": "user_3CE1j5Rvgvx28ZyoEB9FJGGSdiM",
+  "items": [],
+  "_class": "com.b2204925.cartservice.entity.Cart"
+},
+{
+  "_id": {
+    "$oid": "69daa3b6caced412e3d66a2e"
+  },
+  "userId": "user_3CE2VjCnSquib2B6iWZnWc9WFip",
+  "items": [
+    {
+      "productId": "69d09e25be5d18bb2f488f2c",
+      "variantId": "cg4-200x220",
+      "name": "Vỏ chăn Cotton Satin AMD The Essentials đơn sắc",
+      "image": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775289445/artisano/products/deu4yj8p9xbupgpkuieb.webp",
+      "quantity": 1,
+      "price": 599000,
+      "size": "200 x 220",
+      "color": "",
+      "lineTotal": 599000
+    }
+  ],
+  "_class": "com.b2204925.cartservice.entity.Cart"
+}]

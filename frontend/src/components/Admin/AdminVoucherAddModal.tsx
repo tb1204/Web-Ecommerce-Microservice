@@ -76,13 +76,15 @@ const AdminVoucherAddModal: React.FC<AdminVoucherAddModalProps> = ({
   //   setFormData(initialVoucher);
   // };
   const handleSubmit = (e: React.FormEvent) => {
-<<<<<<< HEAD
     e.preventDefault();
+
+    // 1. Kiểm tra cơ bản
     if (!formData.code || !formData.name) {
       toast.error("Vui lòng nhập đầy đủ thông tin!");
       return;
     }
 
+    // 2. Kiểm tra các ràng buộc số liệu (Security & Business Logic)
     if (formData.discountValue < 1) {
       toast.error("Giá trị giảm phải ít nhất là 1");
       return;
@@ -98,40 +100,36 @@ const AdminVoucherAddModal: React.FC<AdminVoucherAddModalProps> = ({
       return;
     }
 
+    // 3. Kiểm tra ngày tháng
     if (new Date(formData.validity.end) <= new Date(formData.validity.start)) {
       toast.error("Ngày kết thúc phải sau ngày bắt đầu");
       return;
     }
 
-    onAdd(formData);
-    setFormData(initialVoucher);
-=======
-      e.preventDefault();
-      
-      // Tạo object mới, ép kiểu số và đảm bảo format ngày chuẩn ISO
-      const payload = {
-          code: formData.code.toUpperCase().trim(),
-          name: formData.name,
-          voucherType: formData.voucherType,
-          discountType: formData.discountType,
-          discountValue: Number(formData.discountValue),
-          maxDiscountAmount: Number(formData.maxDiscountAmount),
-          minOrderAmount: Number(formData.minOrderAmount),
-          usageLimit: {
-              total: Number(formData.usageLimit.total),
-              perUser: Number(formData.usageLimit.perUser)
-          },
-          validity: {
-              // Đảm bảo gửi chuỗi ISO chuẩn (vd: 2026-04-13T10:00:00Z)
-              start: new Date(formData.validity.start).toISOString(),
-              end: new Date(formData.validity.end).toISOString()
-          },
-          isStackable: formData.isStackable
-      };
+    // 4. Tạo payload sạch và chuẩn hóa kiểu dữ liệu
+    const payload = {
+      code: formData.code.toUpperCase().trim(),
+      name: formData.name,
+      voucherType: formData.voucherType,
+      discountType: formData.discountType,
+      discountValue: Number(formData.discountValue),
+      maxDiscountAmount: Number(formData.maxDiscountAmount),
+      minOrderAmount: Number(formData.minOrderAmount),
+      usageLimit: {
+        total: Number(formData.usageLimit.total),
+        perUser: Number(formData.usageLimit.perUser),
+        used: 0,
+      },
+      validity: {
+        start: new Date(formData.validity.start).toISOString(),
+        end: new Date(formData.validity.end).toISOString(),
+      },
+      isStackable: formData.isStackable,
+    };
 
-      onAdd(payload as any);
-      onClose();
->>>>>>> 46418e8c4c8a5594e3b63aa000f2c14f9f52ff97
+    onAdd(payload as any);
+    setFormData(initialVoucher);
+    onClose();
   };
 
   return (

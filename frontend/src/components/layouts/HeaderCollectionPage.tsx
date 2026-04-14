@@ -357,19 +357,10 @@ const HeaderCollectionPage: React.FC = () => {
 
       <div className="bg-[#56a77e] rounded-xl md:rounded-2xl p-4 md:p-6 lg:p-8 mb-10 relative group/section overflow-hidden">
         <div className="flex justify-between items-center mb-6 md:mb-8 px-1">
-          <h2 className="text-white text-xl md:text-5xl font-serif font-medium italic leading-tight">
+          <h2 className="text-white text-xl md:text-5xl font-sans font-bold leading-tight tracking-tight">
             Sản Phẩm Bán Nhiều Nhất
           </h2>
-          <Link
-            to="/collections/all"
-            className="flex-shrink-0 flex items-center gap-1 text-white text-[10px] md:text-sm font-semibold hover:opacity-80 transition-all border-b border-white/30 pb-0.5"
-          >
-            Xem tất cả{" "}
-            <ChevronRight
-              size={14}
-              className="bg-white/20 rounded-full p-0.5 md:p-1"
-            />
-          </Link>
+
         </div>
 
         <button

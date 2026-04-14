@@ -340,8 +340,9 @@ services:
     environment:
       SERVER_PORT: "8086"
       SPRING_APPLICATION_NAME: chat-service
-      # SPRING_DATA_MONGODB_URI: mongodb://root:root123@mongodb:27017/artisano?authSource=admin
-      SPRING_DATA_MONGODB_URI: mongodb://host.docker.internal:27017/artisano
+      # Chat-service dùng DB riêng tên "message" (KHÔNG phải artisano)
+      SPRING_DATA_MONGODB_URI: mongodb://host.docker.internal:27017/message
+      SPRING_DATA_MONGODB_DATABASE: message
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
       EUREKA_CLIENT_REGISTER_WITH_EUREKA: "true"
       EUREKA_CLIENT_FETCH_REGISTRY: "true"
@@ -520,6 +521,8 @@ services:
       order-service:
         condition: service_started
       payment-service:
+        condition: service_started
+      chat-service:
         condition: service_started
       notification-service:
         condition: service_started

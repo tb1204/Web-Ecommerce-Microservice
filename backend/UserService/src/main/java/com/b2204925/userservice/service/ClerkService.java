@@ -142,11 +142,27 @@ public class ClerkService {
         String url = "https://api.clerk.com/v1/users/" + clerkUserId;
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth(clerkSecretKey); // 🔥 SECRET KEY, KHÔNG phải public key
+        headers.setBearerAuth(clerkSecretKey);
 
         HttpEntity<Void> request = new HttpEntity<>(headers);
 
-        vanillaRestTemplate.exchange(url, HttpMethod.DELETE, request, Void.class);
+        try {
+            // Dùng String.class thay Void.class vì Clerk trả body JSON {"deleted":true}
+            // Void.class khiến RestTemplate fail khi parse response body
+            vanillaRestTemplate.exchange(url, HttpMethod.DELETE, request, String.class);
+            logger.info("Clerk user deleted: {}", clerkUserId);
+        } catch (HttpStatusCodeException ex) {
+            // 404: user đã bị xóa trước đó trên Clerk → bỏ qua, vẫn xóa DB
+            if (ex.getStatusCode().value() == 404) {
+                logger.warn("Clerk user {} not found (may already be deleted), skipping Clerk delete", clerkUserId);
+            } else {
+                logger.error("Clerk delete user {} failed: {} - {}", clerkUserId, ex.getStatusCode(), ex.getResponseBodyAsString());
+                throw new AppException(ErrorCode.CLERK_SYNC_FAILED, "Clerk delete failed: " + ex.getResponseBodyAsString());
+            }
+        } catch (Exception e) {
+            logger.error("Clerk delete user {} unexpected error: {}", clerkUserId, e.getMessage());
+            throw new AppException(ErrorCode.CLERK_SYNC_FAILED, e.getMessage());
+        }
     }
 
     public void banUser(String clerkId) {
