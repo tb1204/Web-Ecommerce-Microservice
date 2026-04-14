@@ -3,8 +3,8 @@ spring:
     name: payment-service
   data:
     mongodb:
-      uri: mongodb://host.docker.internal:27017/artisano
-      database: artisano
+      uri: mongodb://host.docker.internal:27017/payment
+      database: payment
 #  rabbitmq:
 #    host: localhost
 #    port: 5672

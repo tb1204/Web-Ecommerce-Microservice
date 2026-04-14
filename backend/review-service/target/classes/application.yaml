@@ -4,8 +4,8 @@ spring:
 
   data:
     mongodb:
-      uri: mongodb://host.docker.internal:27017/artisano
-      database: artisano
+      uri: mongodb://host.docker.internal:27017/review
+      database: review
 
   security:
     oauth2:
@@ -31,11 +31,17 @@ spring:
   #     max-file-size: 10MB
   #     max-request-size: 10MB
 
+#  rabbitmq:
+#    host: localhost
+#    port: 5672
+#    username: guest
+#    password: guest
   rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
+    # Lấy giá trị từ SPRING_RABBITMQ_HOST, nếu không có thì mới dùng localhost
+    host: ${SPRING_RABBITMQ_HOST:localhost}
+    port: ${SPRING_RABBITMQ_PORT:5672}
+    username: ${SPRING_RABBITMQ_USERNAME:guest}
+    password: ${SPRING_RABBITMQ_PASSWORD:guest}
 
 server:
   port: 8088

@@ -959,6 +959,7 @@ const [userMembership, setUserMembership] = useState<string>("MEMBER");
           shippingAddress,
           note: formData.note,
           paymentMethod: formData.paymentMethod,
+          membershipTier: userMembership,
           items: checkoutItems.map((item) => ({
             productId: item.productId,
             variantId: item.variantId,

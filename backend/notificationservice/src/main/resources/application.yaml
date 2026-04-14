@@ -19,8 +19,8 @@ spring:
 
   data:
     mongodb:
-      uri: mongodb://host.docker.internal:27017/artisano
-      database: artisano
+      uri: mongodb://host.docker.internal:27017/notification
+      database: notification
 
   security:
     oauth2:

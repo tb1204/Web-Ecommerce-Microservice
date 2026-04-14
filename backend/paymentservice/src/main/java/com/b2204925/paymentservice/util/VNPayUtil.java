@@ -9,13 +9,22 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TimeZone;   // ← thêm
 import java.util.TreeMap;
-
+import com.google.gson.JsonObject;
+import java.net.URL;
+import java.net.HttpURLConnection;
+import java.io.DataOutputStream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.time.format.DateTimeFormatter;
+import java.time.ZoneId;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 public class VNPayUtil {
 
@@ -97,7 +106,7 @@ public class VNPayUtil {
     private String hmacSHA512(String key, String data) {
         try {
             Mac mac = Mac.getInstance("HmacSHA512");
-            mac.init(new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "HmacSHA512"));
+            mac.init(new SecretKeySpec(key.trim().getBytes(StandardCharsets.UTF_8), "HmacSHA512"));
             byte[] hash = mac.doFinal(data.getBytes(StandardCharsets.UTF_8));
             StringBuilder sb = new StringBuilder();
             for (byte b : hash) {
@@ -126,5 +135,108 @@ public class VNPayUtil {
         messages.put("79", "Giao dịch không thành công: Nhập sai mật khẩu thanh toán quá số lần");
         messages.put("99", "Lỗi không xác định");
         return messages.getOrDefault(responseCode, "Lỗi không xác định: " + responseCode);
+    }
+
+    //hoan tien
+    public boolean refundVnpay(String orderId, Long amount, String transactionNo,
+                               String transactionDate, String createBy) {
+        try {
+            String vnp_Api = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";
+
+            String vnp_RequestId = String.valueOf(System.currentTimeMillis());
+            String vnp_Version = "2.1.0";
+            String vnp_Command = "refund";
+            String vnp_TransactionType = "02";
+            String vnp_OrderInfo = "Hoan tien don hang " + orderId;
+
+            String vnp_CreateDate = DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
+                    .withZone(ZoneId.of("Asia/Ho_Chi_Minh"))
+                    .format(java.time.Instant.now());
+
+            // HashData đúng thứ tự
+            String hashData = String.join("|",
+                    vnp_RequestId, vnp_Version, vnp_Command, tmnCode,
+                    vnp_TransactionType, orderId,
+                    String.valueOf(amount * 100),
+                    transactionNo != null ? transactionNo : "",
+                    transactionDate != null ? transactionDate : "",
+                    createBy, vnp_CreateDate, "127.0.0.1", vnp_OrderInfo
+            );
+
+            log.info("=== VNPAY REFUND DEBUG ===");
+            log.info("OrderId: {}", orderId);
+            log.info("TransactionNo: {}", transactionNo);
+            log.info("TransactionDate: {}", transactionDate);
+            log.info("HashData: {}", hashData);
+
+            String vnp_SecureHash = hmacSHA512(hashSecret, hashData);
+            log.info("SecureHash: {}", vnp_SecureHash);
+
+            JsonObject params = new JsonObject();
+            params.addProperty("vnp_RequestId", vnp_RequestId);
+            params.addProperty("vnp_Version", vnp_Version);
+            params.addProperty("vnp_Command", vnp_Command);
+            params.addProperty("vnp_TmnCode", tmnCode);
+            params.addProperty("vnp_TransactionType", vnp_TransactionType);
+            params.addProperty("vnp_TxnRef", orderId);
+            params.addProperty("vnp_Amount", String.valueOf(amount * 100));
+            params.addProperty("vnp_OrderInfo", vnp_OrderInfo);
+            params.addProperty("vnp_TransactionNo", transactionNo);
+            params.addProperty("vnp_TransactionDate", transactionDate);
+            params.addProperty("vnp_CreateBy", createBy);
+            params.addProperty("vnp_CreateDate", vnp_CreateDate);
+            params.addProperty("vnp_IpAddr", "127.0.0.1");
+            params.addProperty("vnp_SecureHash", vnp_SecureHash);
+
+            log.info("Body JSON: {}", params.toString());
+
+            // Gửi request
+            URL url = new URL(vnp_Api);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("Content-Type", "application/json");
+            con.setDoOutput(true);
+
+            try (DataOutputStream wr = new DataOutputStream(con.getOutputStream())) {
+                wr.writeBytes(params.toString());
+                wr.flush();
+            }
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = in.readLine()) != null) {
+                response.append(line);
+            }
+            in.close();
+
+            log.info("VNPAY Refund Response: {}", response.toString());
+
+            boolean success = response.toString().contains("\"vnp_ResponseCode\":\"00\"");
+            log.info(success ? "✅ VNPAY hoàn tiền THÀNH CÔNG" : " VNPAY hoàn tiền THẤT BẠI");
+
+            return success;
+
+        } catch (Exception e) {
+            log.error("Lỗi gọi VNPAY Refund", e);
+            return false;
+        }
+    }
+
+    // Giữ nguyên hàm getVnpPayDateFromResponse (nếu chưa có thì thêm vào)
+    public String getVnpPayDateFromResponse(String gatewayResponse) {
+        if (gatewayResponse == null || gatewayResponse.isEmpty()) {
+            return null;
+        }
+        try {
+            String key = "vnp_PayDate=";
+            int start = gatewayResponse.indexOf(key);
+            if (start == -1) return null;
+            start += key.length();
+            return gatewayResponse.substring(start, start + 14);
+        } catch (Exception e) {
+            log.warn("Không parse được vnp_PayDate từ gatewayResponse", e);
+            return null;
+        }
     }
 }

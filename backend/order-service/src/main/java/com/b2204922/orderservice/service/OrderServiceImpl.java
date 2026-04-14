@@ -135,10 +135,46 @@ public class OrderServiceImpl implements IOrderService {
                 })
                 .collect(Collectors.toList());
 
-        double subTotal = entityItems.stream().mapToDouble(OrderItem::getLineTotal).sum();
-        int totalQty = entityItems.stream().mapToInt(OrderItem::getQuantity).sum();
-        double shippingFee = subTotal >= 3_000_000 ? 0.0 : 30_000.0; // khớp với frontend
-        Order.Summary summary = new Order.Summary(subTotal + shippingFee, shippingFee, totalQty);
+//        double subTotal = entityItems.stream().mapToDouble(OrderItem::getLineTotal).sum();
+//        int totalQty = entityItems.stream().mapToInt(OrderItem::getQuantity).sum();
+//        double shippingFee = subTotal >= 3_000_000 ? 0.0 : 30_000.0; // khớp với frontend
+//        Order.Summary summary = new Order.Summary(subTotal + shippingFee, shippingFee, totalQty);
+        // 1. Tính tiền hàng gốc (Tổng lineTotal của các sản phẩm)
+        double subTotal = entityItems.stream()
+                .mapToDouble(OrderItem::getLineTotal)
+                .sum();
+
+// 2. Tính tổng số lượng sản phẩm (Để fix lỗi "cannot find symbol totalQty")
+        int totalQty = entityItems.stream()
+                .mapToInt(OrderItem::getQuantity)
+                .sum();
+
+// 3. Lấy hạng thành viên từ Request gửi lên và tính chiết khấu
+        double discountRate = 0.0;
+        String tier = request.getMembershipTier(); // Đảm bảo OrderRequest đã có field này
+
+        if ("SILVER".equalsIgnoreCase(tier)) {
+            discountRate = 0.03;
+        } else if ("GOLD".equalsIgnoreCase(tier)) {
+            discountRate = 0.07;
+        } else if ("DIAMOND".equalsIgnoreCase(tier)) {
+            discountRate = 0.12;
+        }
+
+        double discountAmount = subTotal * discountRate;
+
+// 4. Tính phí vận chuyển (Free ship cho đơn trên 3tr)
+        double shippingFee = subTotal >= 3_000_000 ? 0.0 : 30_000.0;
+
+// 5. TỔNG THANH TOÁN THỰC TẾ (Con số này sẽ khớp với Payment và VNPAY)
+        double finalTotal = subTotal + shippingFee - discountAmount;
+
+// 6. Gán vào đối tượng Summary để lưu xuống Database
+        Order.Summary summary = new Order.Summary(
+                finalTotal,
+                shippingFee,
+                totalQty
+        );
 
         Order.CustomerInfo customerInfo = new Order.CustomerInfo(
                 request.getName(), request.getPhone(), request.getEmail(), request.getShippingAddress()

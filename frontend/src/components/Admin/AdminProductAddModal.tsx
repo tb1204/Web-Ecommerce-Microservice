@@ -121,7 +121,7 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({
       color: "",
       price: 0,
       originalPrice: 0,
-      stockQuantity: 0,
+      stockQuantity: 1,
       status: "ACTIVE",
     };
     setFormData((prev) => ({ ...prev, variants: [...prev.variants, newV] }));
@@ -174,6 +174,11 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({
     }
     if (formData.variants.length === 0) {
       toast.error("Vui lòng thêm ít nhất 1 kích thước!");
+      return;
+    }
+    const hasInvalidStock = formData.variants.some(v => Number(v.stockQuantity ?? 0) < 1);
+    if (hasInvalidStock) {
+      toast.error("Số lượng trong kho của mỗi kích thước phải lớn hơn hoặc bằng 1!");
       return;
     }
 
@@ -543,13 +548,18 @@ const ProductAddModal: React.FC<ProductAddModalProps> = ({
                     <div className="flex items-center gap-2">
                       <input
                         type="number"
+                        min="1"
                         value={v.stockQuantity}
-                        onChange={(e) =>
+                        onChange={(e) =>{
+                          const val = Number(e.target.value);
                           handleVariantChange(
                             index,
                             "stockQuantity",
-                            Number(e.target.value),
-                          )
+                            val < 1 ? 1 : val
+                            // Number(e.target.value),
+                          );
+                        }
+                          
                         }
                         className="w-16 px-2 py-2 rounded-xl border text-xs outline-none focus:border-emerald-500"
                         required

@@ -4,8 +4,8 @@ spring:
 
   data:
     mongodb:
-      uri: mongodb://host.docker.internal:27017/artisano
-      database: artisano
+      uri: mongodb://host.docker.internal:27017/review
+      database: review
 
   security:
     oauth2:

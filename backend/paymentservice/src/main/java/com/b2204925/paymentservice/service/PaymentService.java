@@ -235,6 +235,21 @@ public class PaymentService {
         return toResponse(paymentRepository.save(payment));
     }
 
+//    public PaymentResponse refund(String orderId, RefundRequest req) {
+//        Payment payment = paymentRepository.findByOrderId(orderId)
+//                .orElseThrow(() -> new AppException(ErrorCode.PAYMENT_NOT_FOUND));
+//
+//        if (payment.getPaymentStatus() != PaymentStatus.PAID) {
+//            throw new AppException(ErrorCode.INVALID_PAYMENT_STATUS, "Chỉ hoàn tiền được khi đã thanh toán");
+//        }
+//
+//        payment.setPaymentStatus(PaymentStatus.REFUNDED);
+//        payment.setRefundAmount(req.getRefundAmount());
+//        payment.setRefundReason(req.getRefundReason());
+//        payment.setRefundedAt(Instant.now());
+//        payment.setUpdatedAt(Instant.now());
+//        return toResponse(paymentRepository.save(payment));
+//    }
     public PaymentResponse refund(String orderId, RefundRequest req) {
         Payment payment = paymentRepository.findByOrderId(orderId)
                 .orElseThrow(() -> new AppException(ErrorCode.PAYMENT_NOT_FOUND));
@@ -243,12 +258,55 @@ public class PaymentService {
             throw new AppException(ErrorCode.INVALID_PAYMENT_STATUS, "Chỉ hoàn tiền được khi đã thanh toán");
         }
 
+        // ====================== PHẦN XỬ LÝ VNPAY ======================
+        if (payment.getPaymentMethod() == PaymentMethod.VNPAY) {
+            try {
+                String realPayDate = vnPayUtil.getVnpPayDateFromResponse(payment.getPaymentGatewayResponse());
+
+                log.info("Bắt đầu hoàn tiền VNPAY cho order: {} | TransactionNo: {} | PayDate: {}",
+                        orderId, payment.getTransactionId(), realPayDate);
+
+                // === GIẢ LẬP TRÊN SANDBOX (vì sandbox không hỗ trợ refund thật) ===
+                boolean isVnpaySuccess = true;   // ← Luôn thành công khi test/demo
+
+                // TODO: Khi lên Production, mở đoạn code dưới và comment dòng trên
+                /*
+                boolean isVnpaySuccess = vnPayUtil.refundVnpay(
+                        payment.getOrderId(),
+                        payment.getAmount(),
+                        payment.getTransactionId(),
+                        realPayDate,
+                        "Admin"
+                );
+                */
+
+                if (!isVnpaySuccess) {
+                    throw new AppException(ErrorCode.PAYMENT_ERROR, "VNPAY từ chối hoàn tiền");
+                }
+
+                log.info("✅ HOÀN TIỀN VNPAY THÀNH CÔNG (giả lập sandbox) cho order {}", orderId);
+
+            } catch (Exception e) {
+                log.error("Lỗi xử lý refund VNPAY cho order {}: {}", orderId, e.getMessage(), e);
+                throw new AppException(ErrorCode.PAYMENT_ERROR, "Giao dịch hoàn tiền thất bại");
+            }
+        }
+
+        // ====================== CẬP NHẬT DATABASE ======================
         payment.setPaymentStatus(PaymentStatus.REFUNDED);
-        payment.setRefundAmount(req.getRefundAmount());
-        payment.setRefundReason(req.getRefundReason());
+        payment.setRefundAmount(payment.getAmount());        // hoàn toàn phần
+        payment.setRefundReason(req.getRefundReason() != null ? req.getRefundReason() : "Hủy đơn hàng bởi Admin");
         payment.setRefundedAt(Instant.now());
         payment.setUpdatedAt(Instant.now());
-        return toResponse(paymentRepository.save(payment));
+
+        Payment saved = paymentRepository.save(payment);
+
+        // Gửi thông báo qua RabbitMQ cho OrderService cập nhật trạng thái
+        sendPaymentUpdate(orderId, "REFUNDED", payment.getTransactionId());
+
+        log.info("Đã hoàn tất refund cho order {} - Trạng thái: REFUNDED", orderId);
+
+        return toResponse(saved);
     }
 
     private PaymentResponse toResponse(Payment p) {
