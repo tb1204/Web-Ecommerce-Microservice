@@ -848,30 +848,8 @@ const AdminUsersPage = () => {
                   </div>
                 )}
 
-                {/* Giới tính, Vai trò, Hạng */}
+                {/* Vai trò, Hạng */}
                 <div className="space-y-5">
-                  <div className="space-y-1.5">
-                    <label className="flex items-center gap-2 text-xs font-bold text-slate-600 uppercase tracking-wider">
-                      Giới tính
-                    </label>
-                    <div className="relative group">
-                      <select
-                        name="gender"
-                        value={formData.gender || ""}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-sm font-medium"
-                      >
-                        <option value="">Chọn giới tính</option>
-                        <option value="male">Nam</option>
-                        <option value="female">Nữ</option>
-                        <option value="other">Khác</option>
-                      </select>
-                      <ChevronDown
-                        size={16}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-500 pointer-events-none transition-colors"
-                      />
-                    </div>
-                  </div>
 
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-1.5">

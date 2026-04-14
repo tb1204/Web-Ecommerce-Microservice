@@ -832,4 +832,25 @@ public class OrderServiceImpl implements IOrderService {
         return count;
 
     }
+
+    @Override
+    public List<String> getTopSellingProductIds(int limit) {
+        // Chỉ lấy từ đơn hàng thành công
+        List<Order> orders = orderRepository.findByOrderStatus("DELIVERED");
+
+        Map<String, Integer> productQtyMap = new HashMap<>();
+
+        for (Order order : orders) {
+            for (OrderItem item : order.getItems()) {
+                String pid = item.getProductId();
+                productQtyMap.put(pid, productQtyMap.getOrDefault(pid, 0) + item.getQuantity());
+            }
+        }
+
+        return productQtyMap.entrySet().stream()
+                .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
+                .limit(limit)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
+    }
 }

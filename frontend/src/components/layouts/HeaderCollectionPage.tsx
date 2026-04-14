@@ -278,20 +278,26 @@ const HeaderCollectionPage: React.FC = () => {
     const fetchComboProducts = async () => {
       try {
         setLoading(true);
-        // Lấy tất cả sản phẩm đang bán có hàng
-        const res = await axios.get<any[]>(`${BASE_URL}/api/products/all`);
-        const discounted = res.data.filter(
-          (p) =>
-            p.status === "AVAILABLE" &&
-            (p.totalStockQuantity ?? 0) > 0 &&
-            p.variants?.some(
-              (v: any) => v.originalPrice && v.originalPrice > v.price,
-            ),
-        );
-        const mapped = getRandomItems(discounted, 8).map(mapProduct);
-        setComboProducts(mapped);
+        // Lấy danh sách ID sản phẩm bán chạy từ order-service
+        const topIdsRes = await axios.get<string[]>(`${BASE_URL}/api/orders/statistics/top-selling-ids?limit=8`);
+        const topIds = topIdsRes.data;
+
+        if (topIds && topIds.length > 0) {
+          // Lấy chi tiết các sản phẩm từ product-service
+          const res = await axios.get<any[]>(`${BASE_URL}/api/products/by-ids?ids=${topIds.join(",")}`);
+          const products = res.data.filter((p) => p.status === "AVAILABLE" && (p.totalStockQuantity ?? 0) > 0);
+          
+          // Map dữ liệu và giữ nguyên thứ tự bán chạy
+          const mapped = products
+            .map(mapProduct)
+            .sort((a, b) => topIds.indexOf(a.id) - topIds.indexOf(b.id));
+
+          setComboProducts(mapped);
+        } else {
+          setComboProducts([]);
+        }
       } catch (err: any) {
-        console.error("Lỗi fetch combo products:", err.message);
+        console.error("Lỗi fetch top selling products:", err.message);
       } finally {
         setLoading(false);
       }
@@ -352,11 +358,10 @@ const HeaderCollectionPage: React.FC = () => {
       <div className="bg-[#56a77e] rounded-xl md:rounded-2xl p-4 md:p-6 lg:p-8 mb-10 relative group/section overflow-hidden">
         <div className="flex justify-between items-center mb-6 md:mb-8 px-1">
           <h2 className="text-white text-xl md:text-5xl font-serif font-medium italic leading-tight">
-            Giảm Giá Sốc
+            Sản Phẩm Bán Nhiều Nhất
           </h2>
           <Link
-            // to="/collections/all"
-            to="/flashsale/"
+            to="/collections/all"
             className="flex-shrink-0 flex items-center gap-1 text-white text-[10px] md:text-sm font-semibold hover:opacity-80 transition-all border-b border-white/30 pb-0.5"
           >
             Xem tất cả{" "}

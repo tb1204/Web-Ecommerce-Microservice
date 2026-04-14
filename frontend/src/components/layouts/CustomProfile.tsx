@@ -415,13 +415,13 @@ const CustomProfile = () => {
                           {addr.ward ? `, ${addr.ward}` : ""}
                           {addr.province ? `, ${addr.province}` : ""}
                         </p>
-                        {(addr.receiverName || addr.phone) && (
+                        {/* {(addr.receiverName || addr.phone) && (
                           <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
                             {addr.receiverName}
                             {addr.receiverName && addr.phone ? " — " : ""}
                             {addr.phone}
                           </p>
-                        )}
+                        )} */}
                         {(addr.isDefault || addr.defaultAddress) && (
                           <span className="inline-block mt-2.5 bg-blue-100/80 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300 text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full border border-blue-200/50 dark:border-blue-700/50">
                             Mặc định

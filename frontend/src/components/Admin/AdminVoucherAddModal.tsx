@@ -72,6 +72,27 @@ const AdminVoucherAddModal: React.FC<AdminVoucherAddModalProps> = ({
       toast.error("Vui lòng nhập đầy đủ thông tin!");
       return;
     }
+
+    if (formData.discountValue < 1) {
+      toast.error("Giá trị giảm phải ít nhất là 1");
+      return;
+    }
+
+    if (formData.minOrderAmount < 0 || formData.maxDiscountAmount < 0) {
+      toast.error("Số tiền không được âm");
+      return;
+    }
+
+    if (formData.usageLimit.total < 1 || formData.usageLimit.perUser < 1) {
+      toast.error("Giới hạn sử dụng phải ít nhất là 1");
+      return;
+    }
+
+    if (new Date(formData.validity.end) <= new Date(formData.validity.start)) {
+      toast.error("Ngày kết thúc phải sau ngày bắt đầu");
+      return;
+    }
+
     onAdd(formData);
     setFormData(initialVoucher);
   };
@@ -207,6 +228,7 @@ const AdminVoucherAddModal: React.FC<AdminVoucherAddModalProps> = ({
                       onChange={(e) =>
                         handleDiscountValueChange(Number(e.target.value))
                       }
+                      min={1}
                       className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl font-black text-gray-800 outline-none focus:border-emerald-500"
                     />
                   </div>
@@ -235,6 +257,7 @@ const AdminVoucherAddModal: React.FC<AdminVoucherAddModalProps> = ({
                             minOrderAmount: Number(e.target.value),
                           })
                         }
+                        min={0}
                         className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl font-bold text-gray-700 outline-none focus:border-emerald-500"
                       />
                     </div>
@@ -251,6 +274,7 @@ const AdminVoucherAddModal: React.FC<AdminVoucherAddModalProps> = ({
                             maxDiscountAmount: Number(e.target.value),
                           })
                         }
+                        min={0}
                         className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl font-bold text-gray-700 outline-none focus:border-emerald-500"
                       />
                     </div>
@@ -272,6 +296,7 @@ const AdminVoucherAddModal: React.FC<AdminVoucherAddModalProps> = ({
                             },
                           })
                         }
+                        min={1}
                         className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl font-bold text-gray-700 outline-none focus:border-emerald-500"
                       />
                     </div>
@@ -291,6 +316,7 @@ const AdminVoucherAddModal: React.FC<AdminVoucherAddModalProps> = ({
                             },
                           })
                         }
+                        min={1}
                         className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl font-black text-emerald-600 outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
                       />
                     </div>

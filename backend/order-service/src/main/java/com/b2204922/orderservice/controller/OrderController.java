@@ -127,6 +127,11 @@ public class OrderController {
 
     }
 
+    @GetMapping("/statistics/top-selling-ids")
+    public ResponseEntity<List<String>> getTopSellingProductIds(@RequestParam(defaultValue = "8") int limit) {
+        return ResponseEntity.ok(orderService.getTopSellingProductIds(limit));
+    }
+
     @GetMapping("/email/{email}")
     public ResponseEntity<List<OrderResponse>> getByEmail(@PathVariable String email) {
         return ResponseEntity.ok(orderService.getOrdersByEmail(email));

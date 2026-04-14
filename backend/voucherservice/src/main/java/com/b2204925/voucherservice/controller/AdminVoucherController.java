@@ -53,7 +53,7 @@ public class AdminVoucherController {
     @PutMapping("/{id}")
     public ResponseEntity<VoucherResponse> update(
             @PathVariable String id,
-            @RequestBody UpdateVoucherRequest req) {
+            @Valid @RequestBody UpdateVoucherRequest req) {
         return ResponseEntity.ok(voucherService.updateVoucher(id, req));
     }
 

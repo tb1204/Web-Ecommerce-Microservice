@@ -678,53 +678,6 @@ import { toast } from "sonner";
 // const BASE_URL = "http://localhost:8082";
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-// const mapProduct = (p: any): Product => {
-//   const discountVariant = p.variants?.find(
-//     (v: any) => v.originalPrice && v.originalPrice > v.price,
-//   );
-//   return {
-//     id: p._id?.$oid ?? p.id ?? p._id,
-//     name: p.name,
-//     brand: p.brand,
-//     origin: p.origin,
-//     productCode: p.productCode,
-//     price: p.price ?? 0, // ← tránh null
-//     originalPrice: discountVariant?.originalPrice ?? undefined,
-//     totalStockQuantity: p.totalStockQuantity ?? 0,
-//     stockQuantity: p.totalStockQuantity ?? 0,
-//     variants: p.variants ?? [],
-//     images: (p.images ?? []).map((img: any) => ({
-//       url: img.url,
-//       isPrimary: img.isPrimary,
-//     })),
-//     status:
-//       p.status === "AVAILABLE"
-//         ? "selling"
-//         : p.status === "OUT_OF_STOCK"
-//           ? "stopselling"
-//           : (p.status ?? "selling"),
-//     rating: p.rating ?? 0,
-//     reviewCount: p.reviewCount ?? 0,
-//     category: p.category
-//       ? {
-//           name: p.category.name,
-//           code: p.category.code,
-//           parentName: p.category.parentName ?? null,
-//           parentCode: p.category.parentCode ?? null,
-//         }
-//       : undefined,
-//     specifications: p.specifications ?? undefined,
-//     tags: p.tags ?? [],
-//     description: p.description ?? "",
-//     createdAt: p.createdAt?.$date ?? p.createdAt,
-//     updatedAt: p.updatedAt?.$date ?? p.updatedAt,
-//   };
-// };
-
-// fix thêm  sản phẩm cụ thể trong giỏ hàng
-
-// --- HÀM MAP DỮ LIỆU CỦA BẠN ÔNG (GIỮ NGUYÊN) ---
-
 const mapProduct = (p: any): Product => {
   // Tìm variant có giảm giá (nếu có)
   const discountVariant = p.variants?.find(

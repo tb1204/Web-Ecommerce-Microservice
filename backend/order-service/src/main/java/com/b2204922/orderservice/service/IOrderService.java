@@ -49,4 +49,5 @@ public interface IOrderService {
 
     List<Map<String, Object>> getTopSellingDashboard();
     public Integer countPurchasedProduct(String userId, String productId);
+    public List<String> getTopSellingProductIds(int limit);
 }
