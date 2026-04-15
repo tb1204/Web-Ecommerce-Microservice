@@ -174,27 +174,7 @@ import banner_phu_2 from "../../assets/banner/banner-phu-2.webp";
 // const BASE_URL = "http://localhost:8082";
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-// const mapProduct = (p: any): Product => ({
-//   id: p._id?.$oid ?? p.id ?? p._id,
-//   name: p.name,
-//   brand: p.brand,
-//   price: p.price,
-//   originalPrice:
-//     p.variants?.find((v: any) => v.originalPrice)?.originalPrice ?? undefined,
-//   images: (p.images ?? []).map((img: any) => ({
-//     url: img.url,
-//     isPrimary: img.isPrimary,
-//   })),
-//   status:
-//     p.status === "AVAILABLE"
-//       ? "selling"
-//       : p.status === "DISCONTINUED"
-//         ? "stopselling"
-//         : "selling",
-//   rating: p.rating ?? 0,
-//   reviewCount: p.reviewCount ?? 0,
-//   stockQuantity: p.totalStockQuantity ?? 0,
-// });
+
 const mapProduct = (p: any): Product => ({
   id: p._id?.$oid ?? p.id ?? p._id,
   name: p.name,

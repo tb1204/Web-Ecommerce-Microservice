@@ -31,41 +31,6 @@ volumes:
   rabbitmq_data:
 
 services:
-  # ────────────────────────────────────────────────────────────────
-  # INFRASTRUCTURE — MongoDB, RabbitMQ, Redis
-  # ────────────────────────────────────────────────────────────────
-
-  # mongodb:
-  #   image: mongo:7.0
-  #   container_name: mongodb
-  #   restart: unless-stopped
-  #   ports:
-  #     - "27017:27017"
-  #   environment:
-  #     MONGO_INITDB_ROOT_USERNAME: root
-  #     MONGO_INITDB_ROOT_PASSWORD: root123
-  #   volumes:
-  #     - mongo_data:/data/db
-  #   networks:
-  #     - artisano-net
-  #   healthcheck:
-  #     test:
-  #       [
-  #         "CMD",
-  #         "mongosh",
-  #         "-u",
-  #         "root",
-  #         "-p",
-  #         "root123",
-  #         "--authenticationDatabase",
-  #         "admin",
-  #         "--eval",
-  #         "db.adminCommand('ping')",
-  #       ]
-  #     interval: 15s
-  #     timeout: 10s
-  #     retries: 5
-  #     start_period: 30s
 
   rabbitmq:
     image: rabbitmq:3.13-management

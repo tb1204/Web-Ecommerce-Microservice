@@ -689,7 +689,7 @@ const AdminUsersPage = () => {
                 disabled={currentPage === 0}
                 className="px-3 py-1.5 text-sm border rounded-lg disabled:opacity-40"
               >
-                ← Trước
+                 Trước
               </button>
               {Array.from({ length: totalPages }, (_, i) => i).map((page) => (
                 <button
@@ -709,7 +709,7 @@ const AdminUsersPage = () => {
                 disabled={currentPage === totalPages - 1}
                 className="px-3 py-1.5 text-sm border rounded-lg disabled:opacity-40"
               >
-                Sau →
+                Sau 
               </button>
             </div>
           </div>

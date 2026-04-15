@@ -262,17 +262,20 @@ const CustomProfile = () => {
   return (
     <div className="min-h-screen bg-[#FBFBFB] dark:bg-[#0a0a0a] py-12 px-4 sm:px-6 relative overflow-hidden">
       {/* Decorative background blobs */}
-      <div className="absolute top-0 left-0 w-full h-96 bg-gradient-to-b from-[#14532d]/5 to-transparent dark:from-emerald-900/10 pointer-events-none" />
-      <div className="absolute top-20 -left-64 w-[500px] h-[500px] bg-[#14532d]/5 blur-[120px] rounded-full pointer-events-none" />
-      <div className="absolute top-40 -right-64 w-[500px] h-[500px] bg-emerald-500/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute top-0 left-0 w-full h-96 bg-gradient-to-b from-slate-900/5 to-transparent dark:from-blue-900/10 pointer-events-none" />
+      <div className="absolute top-20 -left-64 w-[500px] h-[500px] bg-blue-500/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute top-40 -right-64 w-[500px] h-[500px] bg-purple-500/5 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="max-w-[1200px] mx-auto space-y-8 relative z-10">
         {/* Header Cover + Avatar */}
         <div className="relative rounded-[32px] md:rounded-[40px] bg-white dark:bg-gray-800/90 shadow-xl shadow-gray-200/40 dark:shadow-black/40 border border-gray-100 dark:border-gray-700/50 backdrop-blur-xl overflow-hidden mb-10 transition-all">
-          <div className="h-48 md:h-56 bg-gradient-to-r from-emerald-800 via-[#14532d] to-green-950 overflow-hidden relative">
-            <div className="absolute inset-0 bg-black/10 mix-blend-multiply" />
-            <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-white/10 blur-3xl rounded-full" />
-            <div className="absolute top-10 right-10 w-64 h-64 bg-emerald-400/20 blur-3xl rounded-full" />
+          <div className="h-48 md:h-56 bg-slate-900 dark:bg-[#050505] overflow-hidden relative">
+            {/* Premium Mesh Gradient Blurs */}
+            <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-blue-500/40 dark:bg-blue-600/20 blur-[100px] rounded-full mix-blend-screen" />
+            <div className="absolute -top-32 -right-32 w-96 h-96 bg-purple-500/40 dark:bg-purple-900/30 blur-[100px] rounded-full mix-blend-screen" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[300px] bg-emerald-500/20 dark:bg-emerald-900/10 blur-[120px] rounded-full" />
+            {/* Futuristic Dot Pattern Overlay */}
+            <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.07] bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:20px_20px]" />
           </div>
 
           <div className="px-6 md:px-12 pb-10 pt-0 flex flex-col md:flex-row items-center md:items-end gap-6 md:gap-8 relative">

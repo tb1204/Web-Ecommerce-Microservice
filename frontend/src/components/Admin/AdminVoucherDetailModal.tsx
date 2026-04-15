@@ -157,7 +157,7 @@ const AdminVoucherDetailModal: React.FC<AdminVoucherDetailProps> = ({
               </div>
 
               {/* GRID THÔNG SỐ */}
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <div className={`grid ${voucher.discountType === "PERCENTAGE" ? "grid-cols-2 md:grid-cols-3" : "grid-cols-2"} gap-4`}>
                 <DetailItem
                   label="Mức giảm"
                   value={
@@ -167,11 +167,13 @@ const AdminVoucherDetailModal: React.FC<AdminVoucherDetailProps> = ({
                   }
                   icon={<DollarSign size={16} />}
                 />
-                <DetailItem
-                  label="Giảm tối đa"
-                  value={`${voucher.maxDiscountAmount.toLocaleString("vi-VN")} VNĐ`}
-                  icon={<ShieldCheck size={16} />}
-                />
+                {voucher.discountType === "PERCENTAGE" && (
+                  <DetailItem
+                    label="Giảm tối đa"
+                    value={`${voucher.maxDiscountAmount.toLocaleString("vi-VN")} VNĐ`}
+                    icon={<ShieldCheck size={16} />}
+                  />
+                )}
                 <DetailItem
                   label="Giá đơn tối thiểu"
                   value={`${voucher.minOrderAmount.toLocaleString("vi-VN")} VNĐ`}

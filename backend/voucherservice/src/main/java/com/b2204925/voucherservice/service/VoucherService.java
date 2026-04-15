@@ -175,8 +175,9 @@ public class VoucherService {
         return toResponse(voucherRepository.save(voucher));
     }
 
-    // ── USER: Áp dụng voucher khi checkout ──────────────────────
-    public ApplyVoucherResponse applyVoucher(String clerkId, ApplyVoucherRequest req) {
+    // ── USER: Preview voucher khi checkout (KHÔNG ghi DB, chỉ validate + tính tiền) ──
+    // Được gọi khi user chọn/nhập voucher trên trang checkout
+    public ApplyVoucherResponse previewVoucher(String clerkId, ApplyVoucherRequest req) {
         // 1. Tìm voucher
         Voucher voucher = voucherRepository.findByCode(req.getCode().toUpperCase().trim())
                 .orElseThrow(() -> new AppException(ErrorCode.VOUCHER_NOT_FOUND));
@@ -192,7 +193,7 @@ public class VoucherService {
             throw new AppException(ErrorCode.VOUCHER_EXPIRED);
         }
         if (now.isBefore(voucher.getValidity().getStart())) {
-            throw new AppException(ErrorCode.VOUCHER_NOT_STARTED);//chưa đến hạn sử dụng
+            throw new AppException(ErrorCode.VOUCHER_NOT_STARTED);
         }
 
         // 3. Kiểm tra giới hạn tổng
@@ -201,12 +202,14 @@ public class VoucherService {
             throw new AppException(ErrorCode.VOUCHER_EXCEEDED_TOTAL);
         }
 
-        // 4. Kiểm tra giới hạn mỗi user
-        long userUsedCount = voucher.getUserUsedList().stream()
-                .filter(uid -> uid.equals(clerkId))
-                .count();
-        if (userUsedCount >= limit.getPerUser()) {
-            throw new AppException(ErrorCode.VOUCHER_EXCEEDED_PER_USER);
+        // 4. Kiểm tra giới hạn mỗi user (chỉ check nếu đã đăng nhập)
+        if (clerkId != null && !clerkId.startsWith("GUEST_")) {
+            long userUsedCount = voucher.getUserUsedList().stream()
+                    .filter(uid -> uid.equals(clerkId))
+                    .count();
+            if (userUsedCount >= limit.getPerUser()) {
+                throw new AppException(ErrorCode.VOUCHER_EXCEEDED_PER_USER);
+            }
         }
 
         // 5. Kiểm tra đơn tối thiểu
@@ -220,32 +223,68 @@ public class VoucherService {
         if (voucher.getDiscountType() == DiscountType.FIXED_AMOUNT) {
             discount = Math.min(voucher.getDiscountValue(), req.getOrderAmount());
         } else {
-            // PERCENTAGE
             discount = req.getOrderAmount() * (voucher.getDiscountValue() / 100.0);
             discount = Math.min(discount, voucher.getMaxDiscountAmount());
         }
         double finalAmount = Math.max(0, req.getOrderAmount() - discount);
 
-        // 7. Ghi nhận user đã dùng + tăng used count
-        voucher.getUserUsedList().add(clerkId);
-        voucher.getUsageLimit().setUsed(limit.getUsed() + 1);
-        voucher.setUpdatedAt(Instant.now());
-
-        // 8. Tự động EXPIRED nếu đã hết lượt
-        if (voucher.getUsageLimit().getUsed() >= voucher.getUsageLimit().getTotal()) {
-            voucher.setStatus(VoucherStatus.EXPIRED);
-        }
-
-        voucherRepository.save(voucher);
-        log.info("User {} applied voucher {} | discount: {}", clerkId, voucher.getCode(), discount);
+        // ✅ KHÔNG ghi DB ở đây — chỉ validate và trả về kết quả tính toán
+        log.info("User {} previewed voucher {} | discount: {} (NOT recorded yet)", clerkId, voucher.getCode(), discount);
 
         return ApplyVoucherResponse.builder()
                 .voucher(toResponse(voucher))
                 .originalAmount(req.getOrderAmount())
                 .discountAmount(discount)
                 .finalAmount(finalAmount)
-                .message("Áp dụng voucher " + voucher.getCode() + " thành công!")
+                .message("Voucher " + voucher.getCode() + " hợp lệ!")
                 .build();
+    }
+
+    // ── USER: Xác nhận sử dụng voucher sau khi đặt hàng thành công (GHI DB) ──
+    // Chỉ được gọi sau khi order + payment đã tạo thành công
+    public void confirmVoucherUsage(String clerkId, String code, double orderAmount) {
+        Voucher voucher = voucherRepository.findByCode(code.toUpperCase().trim())
+                .orElseThrow(() -> new AppException(ErrorCode.VOUCHER_NOT_FOUND));
+
+        Instant now = Instant.now();
+
+        // Kiểm tra lại lần cuối trước khi ghi
+        if (voucher.getStatus() == VoucherStatus.DISABLED) {
+            throw new AppException(ErrorCode.VOUCHER_DISABLED);
+        }
+        if (voucher.getStatus() == VoucherStatus.EXPIRED || now.isAfter(voucher.getValidity().getEnd())) {
+            throw new AppException(ErrorCode.VOUCHER_EXPIRED);
+        }
+
+        UsageLimit limit = voucher.getUsageLimit();
+        if (limit.getUsed() >= limit.getTotal()) {
+            throw new AppException(ErrorCode.VOUCHER_EXCEEDED_TOTAL);
+        }
+
+        if (clerkId != null && !clerkId.startsWith("GUEST_")) {
+            long userUsedCount = voucher.getUserUsedList().stream()
+                    .filter(uid -> uid.equals(clerkId))
+                    .count();
+            if (userUsedCount >= limit.getPerUser()) {
+                throw new AppException(ErrorCode.VOUCHER_EXCEEDED_PER_USER);
+            }
+        }
+
+        // ✅ GHI NHẬN usage vào DB
+        if (clerkId != null) {
+            voucher.getUserUsedList().add(clerkId);
+        }
+        voucher.getUsageLimit().setUsed(limit.getUsed() + 1);
+        voucher.setUpdatedAt(Instant.now());
+
+        // Tự động EXPIRED nếu đã hết lượt
+        if (voucher.getUsageLimit().getUsed() >= voucher.getUsageLimit().getTotal()) {
+            voucher.setStatus(VoucherStatus.EXPIRED);
+        }
+
+        voucherRepository.save(voucher);
+        log.info("✅ Voucher usage confirmed: user={} code={} (total used: {})",
+                clerkId, voucher.getCode(), voucher.getUsageLimit().getUsed());
     }
 
     // ── USER: Kiểm tra voucher hợp lệ (không ghi nhận) ──────────

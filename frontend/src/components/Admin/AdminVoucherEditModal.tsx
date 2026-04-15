@@ -13,13 +13,7 @@ import {
 import { toast } from "sonner";
 import type { Voucher } from "../Products/InterfaceItem";
 
-// interface AdminVoucherEditModalProps {
-//   isOpen: boolean;
-//   onClose: () => void;
-//   voucher: Voucher | null;
-//   onSave: (updatedVoucher: Voucher) => void;
-// }
-// THAY BẰNG
+
 interface AdminVoucherEditModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -62,6 +56,8 @@ const AdminVoucherEditModal: React.FC<AdminVoucherEditModalProps> = ({
       // Chặn dưới 1 và chặn trên 100
       if (val > 100) finalValue = 100;
       if (val < 1 && val !== 0) finalValue = 1;
+    } else if (formData.voucherType === "SHIPPING_DISCOUNT") {
+      if (val > 30000) finalValue = 30000;
     }
 
     setFormData({ ...formData, discountValue: finalValue });
@@ -201,17 +197,22 @@ const AdminVoucherEditModal: React.FC<AdminVoucherEditModalProps> = ({
                     </button>
                     <button
                       type="button"
-                      onClick={() =>
+                      onClick={() => {
+                        let finalVal = formData.discountValue;
+                        if (finalVal > 30000) finalVal = 30000;
                         setFormData({
                           ...formData,
                           voucherType: "SHIPPING_DISCOUNT",
-                        })
-                      }
+                          discountType: "FIXED_AMOUNT",
+                          discountValue: finalVal,
+                        });
+                      }}
                       className={`flex-1 py-2 rounded-xl text-[10px] font-black uppercase transition-all ${formData.voucherType === "SHIPPING_DISCOUNT" ? "bg-white text-emerald-600 shadow-sm" : "text-gray-400"}`}
                     >
                       Phí ship
                     </button>
                   </div>
+                  {formData.voucherType === "PRODUCT_DISCOUNT" && (
                   <div>
                     <label className="text-[10px] font-black text-gray-400 uppercase mb-2 block italic">
                       Cách giảm
@@ -229,12 +230,14 @@ const AdminVoucherEditModal: React.FC<AdminVoucherEditModalProps> = ({
                       <option value="PERCENTAGE">Phần trăm (%)</option>
                     </select>
                   </div>
-                  <div>
-                    <label className="text-[10px] font-black text-gray-400 uppercase mb-2 block italic">
-                      Giá trị{" "}
+                  )}
+                  <div className={formData.voucherType === "SHIPPING_DISCOUNT" ? "col-span-2" : ""}>
+                    <label className="text-[10px] font-black text-gray-400 uppercase mb-2 block italic flex flex-wrap gap-1">
+                      {formData.discountType === "PERCENTAGE" ? "% giảm" : "Số tiền giảm"}
                       {formData.discountType === "PERCENTAGE"
                         ? "(1 - 100%)"
-                        : "(₫)"}
+                        : formData.voucherType === "SHIPPING_DISCOUNT" ? "" : "(₫)"}
+                      {formData.voucherType === "SHIPPING_DISCOUNT" && <span className="text-amber-500 normal-case font-normal">(Tối đa 30.000₫)</span>}
                     </label>
                     <input
                       type="number"
@@ -260,7 +263,7 @@ const AdminVoucherEditModal: React.FC<AdminVoucherEditModalProps> = ({
                   <Target size={16} /> Điều kiện & Giới hạn
                 </h4>
                 <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm space-y-4 font-sans">
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className={`grid ${formData.discountType === "PERCENTAGE" ? "grid-cols-2" : "grid-cols-1"} gap-4`}>
                     <div>
                       <label className="text-[10px] font-black text-gray-400 uppercase mb-2 block">
                         Gía đơn tối thiểu
@@ -278,9 +281,11 @@ const AdminVoucherEditModal: React.FC<AdminVoucherEditModalProps> = ({
                         className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl font-bold text-gray-700 outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
                       />
                     </div>
+                    {formData.discountType === "PERCENTAGE" && (
                     <div>
-                      <label className="text-[10px] font-black text-gray-400 uppercase mb-2 block">
+                      <label className="text-[10px] font-black text-gray-400 uppercase mb-2 block flex items-center gap-2">
                         Giảm tối đa
+                        <span className="text-amber-500 text-[9px] normal-case font-normal">(cấp trần)</span>
                       </label>
                       <input
                         type="number"
@@ -295,6 +300,7 @@ const AdminVoucherEditModal: React.FC<AdminVoucherEditModalProps> = ({
                         className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl font-bold text-gray-700 outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all"
                       />
                     </div>
+                    )}
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>

@@ -62,6 +62,9 @@ const AdminVoucherAddModal: React.FC<AdminVoucherAddModalProps> = ({
     if (formData.discountType === "PERCENTAGE") {
       if (val > 100) finalValue = 100;
       if (val < 0) finalValue = 0;
+    } else if (formData.voucherType === "SHIPPING_DISCOUNT") {
+      if (val > 30000) finalValue = 30000;
+      if (val < 0) finalValue = 0;
     }
     setFormData({ ...formData, discountValue: finalValue });
   };
@@ -201,72 +204,108 @@ const AdminVoucherAddModal: React.FC<AdminVoucherAddModalProps> = ({
                 </div>
               </section>
 
+              {/* CƠ CHẾ GIẢM GIÁ - ĐÃ SỬA */}
               <section className="space-y-4">
                 <h4 className="text-[11px] font-black text-gray-400 uppercase tracking-[2px] flex items-center gap-2">
                   <DollarSign size={16} /> Cơ chế giảm giá
                 </h4>
-                <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm grid grid-cols-2 gap-4">
-                  <div className="col-span-2 flex gap-2 p-1 bg-gray-50 rounded-2xl border border-gray-100">
+                
+                <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm space-y-6">
+                  
+                  {/* Loại Voucher */}
+                  <div className="flex gap-2 p-1 bg-gray-50 rounded-2xl border border-gray-100">
                     <button
                       type="button"
-                      onClick={() =>
-                        setFormData({
-                          ...formData,
-                          voucherType: "PRODUCT_DISCOUNT",
-                        })
-                      }
-                      className={`flex-1 py-2 rounded-xl text-[10px] font-black uppercase transition-all ${formData.voucherType === "PRODUCT_DISCOUNT" ? "bg-white text-amber-600 shadow-sm" : "text-gray-400"}`}
+                      onClick={() => setFormData({ ...formData, voucherType: "PRODUCT_DISCOUNT" })}
+                      className={`flex-1 py-3 rounded-xl text-sm font-bold transition-all ${
+                        formData.voucherType === "PRODUCT_DISCOUNT" 
+                          ? "bg-white text-amber-600 shadow-sm" 
+                          : "text-gray-400 hover:text-gray-600"
+                      }`}
                     >
-                      <p className="inline mr-2" />
-                      Sản phẩm
+                      Giảm cho Sản phẩm
                     </button>
                     <button
                       type="button"
-                      onClick={() =>
-                        setFormData({
-                          ...formData,
-                          voucherType: "SHIPPING_DISCOUNT",
-                        })
-                      }
-                      className={`flex-1 py-2 rounded-xl text-[10px] font-black uppercase transition-all ${formData.voucherType === "SHIPPING_DISCOUNT" ? "bg-white text-emerald-600 shadow-sm" : "text-gray-400"}`}
+                      onClick={() => {
+                        let finalVal = formData.discountValue;
+                        if (finalVal > 30000) finalVal = 30000;
+                        setFormData({ ...formData, voucherType: "SHIPPING_DISCOUNT", discountType: "FIXED_AMOUNT", discountValue: finalVal });
+                      }}
+                      className={`flex-1 py-3 rounded-xl text-sm font-bold transition-all ${
+                        formData.voucherType === "SHIPPING_DISCOUNT" 
+                          ? "bg-white text-emerald-600 shadow-sm" 
+                          : "text-gray-400 hover:text-gray-600"
+                      }`}
                     >
-                      <p className="inline mr-2" />
-                      Phí Ship
+                      Giảm Phí Ship
                     </button>
                   </div>
-                  <div>
-                    <label className="text-[10px] font-black text-gray-400 uppercase mb-2 block italic">
-                      Cách giảm{" "}
-                    </label>
-                    <select
-                      value={formData.discountType}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          discountType: e.target
-                            .value as Voucher["discountType"],
-                        })
-                      }
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl font-bold text-gray-700 outline-none focus:border-emerald-500"
-                    >
-                      <option value="FIXED_AMOUNT">Tiền mặt (₫)</option>
-                      <option value="PERCENTAGE">Phần trăm (%)</option>
-                    </select>
+
+                  {/* Cách giảm + Giá trị */}
+                  <div className={`grid ${formData.voucherType === "PRODUCT_DISCOUNT" ? "grid-cols-2" : "grid-cols-1"} gap-4`}>
+                    {formData.voucherType === "PRODUCT_DISCOUNT" && (
+                    <div>
+                      <label className="text-[10px] font-black text-gray-400 uppercase mb-2 block italic">
+                        Phương thức giảm
+                      </label>
+                      <select
+                        value={formData.discountType}
+                        onChange={(e) => 
+                          setFormData({
+                            ...formData,
+                            discountType: e.target.value as Voucher["discountType"],
+                          })
+                        }
+                        className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl font-bold text-gray-700 outline-none focus:border-emerald-500"
+                      >
+                        <option value="FIXED_AMOUNT">Tiền mặt (₫)</option>
+                        <option value="PERCENTAGE">Phần trăm (%)</option>
+                      </select>
+                    </div>
+                    )}
+
+                    <div>
+                      <label className="text-[10px] font-black text-gray-400 uppercase mb-2 block italic flex items-center gap-1">
+                        {formData.discountType === "PERCENTAGE" ? "% giảm" : "Số tiền giảm"}
+                        {formData.voucherType === "SHIPPING_DISCOUNT" && <span className="text-amber-500 text-[9px] normal-case font-normal">(Tối đa 30.000₫)</span>}
+                      </label>
+                      <input
+                        type="number"
+                        value={formData.discountValue}
+                        onChange={(e) => handleDiscountValueChange(Number(e.target.value))}
+                        min={1}
+                        className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl font-black text-gray-800 outline-none focus:border-emerald-500"
+                        placeholder={formData.discountType === "PERCENTAGE" ? "Ví dụ: 20" : formData.voucherType === "SHIPPING_DISCOUNT" ? "Ví dụ: 30000" : "Ví dụ: 50000"}
+                      />
+                    </div>
                   </div>
-                  <div>
-                    <label className="text-[10px] font-black text-gray-400 uppercase mb-2 block italic">
-                      Giá trị{" "}
-                    </label>
-                    <input
-                      type="number"
-                      value={formData.discountValue}
-                      onChange={(e) =>
-                        handleDiscountValueChange(Number(e.target.value))
-                      }
-                      min={1}
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl font-black text-gray-800 outline-none focus:border-emerald-500"
-                    />
-                  </div>
+
+                  {/* Giảm tối đa - Chỉ hiện khi chọn PERCENTAGE */}
+                  {formData.discountType === "PERCENTAGE" && (
+                    <div>
+                      <label className="text-[10px] font-black text-gray-400 uppercase mb-2 block italic flex items-center gap-2">
+                        Giảm tối đa 
+                        <span className="text-amber-500 text-[9px] normal-case font-normal">(khuyến khích)</span>
+                      </label>
+                      <input
+                        type="number"
+                        value={formData.maxDiscountAmount}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            maxDiscountAmount: Number(e.target.value),
+                          })
+                        }
+                        min={0}
+                        placeholder="Ví dụ: 100000 (không giới hạn nếu để 0)"
+                        className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl font-bold text-gray-700 outline-none focus:border-emerald-500"
+                      />
+                      <p className="text-[10px] text-gray-500 mt-1.5">
+                        Số tiền giảm tối đa dù khách mua đơn rất lớn. Ví dụ: Giảm 20% nhưng không vượt quá 100.000₫.
+                      </p>
+                    </div>
+                  )}
                 </div>
               </section>
             </div>
@@ -278,7 +317,7 @@ const AdminVoucherAddModal: React.FC<AdminVoucherAddModalProps> = ({
                   <Target size={16} /> Điều kiện & giới hạn
                 </h4>
                 <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 gap-4">
                     <div>
                       <label className="text-[10px] font-black text-gray-400 uppercase mb-2 block italic">
                         Gía đơn tối thiểu
@@ -290,23 +329,6 @@ const AdminVoucherAddModal: React.FC<AdminVoucherAddModalProps> = ({
                           setFormData({
                             ...formData,
                             minOrderAmount: Number(e.target.value),
-                          })
-                        }
-                        min={0}
-                        className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl font-bold text-gray-700 outline-none focus:border-emerald-500"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-[10px] font-black text-gray-400 uppercase mb-2 block italic">
-                        Giảm tối đa
-                      </label>
-                      <input
-                        type="number"
-                        value={formData.maxDiscountAmount}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            maxDiscountAmount: Number(e.target.value),
                           })
                         }
                         min={0}
