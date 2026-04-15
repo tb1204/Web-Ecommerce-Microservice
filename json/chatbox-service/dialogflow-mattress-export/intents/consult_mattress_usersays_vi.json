@@ -1,0 +1,110 @@
+[
+  {
+    "id": "817e7aa4-1468-4e27-a6bc-adbdf9e6e311",
+    "data": [
+      {
+        "text": "Tôi bị ",
+        "userDefined": false
+      },
+      {
+        "text": "Đau lưng",
+        "alias": "sleep_purpose",
+        "meta": "@sleep_purpose",
+        "userDefined": true
+      },
+      {
+        "text": " thì nằm nệm nào tốt?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "33cfaf6f-2fce-4ec6-a185-dfa48374a84a",
+    "data": [
+      {
+        "text": "Bà xã tôi đang ",
+        "userDefined": false
+      },
+      {
+        "text": "Bà bầu",
+        "alias": "sleep_purpose",
+        "meta": "@sleep_purpose",
+        "userDefined": true
+      },
+      {
+        "text": " nên mua nệm nào?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "41c2c34e-0132-44b6-9054-e3fef6a4abd2",
+    "data": [
+      {
+        "text": "Tư vấn ",
+        "userDefined": false
+      },
+      {
+        "text": "Mát mẻ",
+        "alias": "sleep_purpose",
+        "meta": "@sleep_purpose",
+        "userDefined": true
+      },
+      {
+        "text": " loại ",
+        "userDefined": false
+      },
+      {
+        "text": "Cao cấp",
+        "alias": "price_range",
+        "meta": "@price_range",
+        "userDefined": true
+      },
+      {
+        "text": " đi shop",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "09d46894-118d-49a7-93e8-9cfb3f53005b",
+    "data": [
+      {
+        "text": "Người già hay ",
+        "userDefined": false
+      },
+      {
+        "text": "Đau lưng",
+        "alias": "sleep_purpose",
+        "meta": "@sleep_purpose",
+        "userDefined": true
+      },
+      {
+        "text": " cần ",
+        "userDefined": false
+      },
+      {
+        "text": "Cứng",
+        "alias": "firmness",
+        "meta": "@firmness",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  }
+]

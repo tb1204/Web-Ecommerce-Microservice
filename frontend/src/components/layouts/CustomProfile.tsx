@@ -240,17 +240,7 @@ const CustomProfile = () => {
     }
   };
 
-  // const handleDeleteAccount = async () => {
-  //   if (!window.confirm("Xác nhận xóa tài khoản VĨNH VIỄN?")) return;
-  //   try {
-  //     await user?.delete();
-  //     await signOut();
-  //     window.location.href = "/";
-  //   } catch (err) {
-  //     toast.error("Lỗi khi xóa.");
-  //   }
-  // };
-  //fix xóa user an toàn cả backend và clerk
+
   const handleDeleteAccount = async () => {
     if (!window.confirm("Xác nhận xóa tài khoản VĨNH VIỄN?")) return;
 
@@ -378,6 +368,22 @@ const CustomProfile = () => {
                   </select>
                 </div>
               </div>
+
+              {/* Action Save Profile */}
+              <div className="mt-8 pt-8 border-t border-gray-100 dark:border-gray-700/50 flex flex-col sm:flex-row justify-between gap-4 relative z-10 w-full">
+                <button
+                  onClick={handleSaveAll}
+                  className="w-full sm:w-auto px-10 flex items-center justify-center gap-3 py-4 bg-gradient-to-r from-emerald-700 to-[#14532d] hover:from-emerald-800 hover:to-green-950 text-white rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl shadow-[#14532d]/20 transition-all active:scale-95"
+                >
+                  <FiSave size={18} /> Lưu tất cả thay đổi
+                </button>
+                <button
+                  onClick={handleDeleteAccount}
+                  className="w-full sm:w-auto px-8 flex items-center justify-center gap-3 py-4 bg-white dark:bg-gray-800 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-700 border-2 border-red-100 dark:border-red-900/50 rounded-2xl font-bold text-sm shadow-sm transition-all active:scale-95"
+                >
+                  <FiTrash2 size={18} /> Xóa tài khoản
+                </button>
+              </div>
             </div>
 
             {/* Address */}
@@ -475,7 +481,7 @@ const CustomProfile = () => {
                 <button
                   onClick={handleChangeEmail}
                   disabled={isChangingEmail}
-                  className="w-full py-4 bg-orange-500 hover:bg-orange-600 text-white rounded-2xl font-bold transition-all shadow-lg shadow-orange-500/20 active:scale-95 disabled:opacity-50 disabled:scale-100"
+                  className="w-full py-4 bg-gradient-to-r from-emerald-700 to-[#14532d] hover:from-emerald-800 hover:to-green-950 text-white rounded-2xl font-bold transition-all shadow-lg shadow-[#14532d]/20 active:scale-95 disabled:opacity-50 disabled:scale-100"
                 >
                   Gửi mã OTP xác thực
                 </button>
@@ -496,7 +502,7 @@ const CustomProfile = () => {
                       <button
                         onClick={handleVerifyCode}
                         disabled={isVerifying}
-                        className="bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:bg-black dark:hover:bg-gray-100 py-3 px-6 rounded-xl transition-all font-bold text-sm shadow-md active:scale-95 disabled:opacity-50 disabled:scale-100"
+                        className="bg-gradient-to-r from-emerald-700 to-[#14532d] hover:from-emerald-800 hover:to-green-950 text-white py-3 px-6 rounded-xl transition-all font-bold text-sm shadow-md active:scale-95 disabled:opacity-50 disabled:scale-100"
                       >
                         Xác nhận
                       </button>
@@ -552,7 +558,7 @@ const CustomProfile = () => {
                 )}
                 <button
                   onClick={handleChangePassword}
-                  className="w-full py-4 mt-2 bg-gradient-to-r from-gray-900 to-gray-800 dark:from-gray-100 dark:to-gray-300 text-white dark:text-gray-900 rounded-2xl font-bold transition-all shadow-xl shadow-gray-900/20 dark:shadow-white/10 hover:shadow-gray-900/30 active:scale-95"
+                  className="w-full py-4 mt-2 bg-gradient-to-r from-emerald-700 to-[#14532d] hover:from-emerald-800 hover:to-green-950 text-white rounded-2xl font-bold transition-all shadow-xl shadow-[#14532d]/20 active:scale-95"
                 >
                   Đổi mật khẩu
                 </button>
@@ -561,35 +567,7 @@ const CustomProfile = () => {
           </div>
         </div>
 
-        {/* Bottom Actions */}
-        {/* <div className="flex flex-col md:flex-row gap-5 pt-8 pb-12">
-          <button
-            onClick={handleSaveAll}
-            className="flex-1 flex items-center justify-center gap-3 py-5 bg-gradient-to-r from-emerald-700 to-[#14532d] hover:from-emerald-800 hover:to-green-950 text-white rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl shadow-[#14532d]/20 transition-all transform hover:-translate-y-1 active:translate-y-0 active:scale-95"
-          >
-            <FiSave size={18} /> Lưu tất cả thay đổi
-          </button>
-          <button
-            onClick={handleDeleteAccount}
-            className="md:w-auto px-8 flex items-center justify-center gap-3 py-5 bg-white dark:bg-gray-800 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-700 border-2 border-red-100 dark:border-red-900/50 rounded-2xl font-bold text-sm shadow-sm transition-all transform active:scale-95"
-          >
-            <FiTrash2 size={18} /> Xóa tài khoản vĩnh viễn
-          </button>
-        </div> */}
-        <div className="flex flex-col sm:flex-row gap-4 pt-8 pb-12">
-          <button
-            onClick={handleSaveAll}
-            className="flex-1 flex items-center justify-center gap-3 py-4 bg-gradient-to-r from-emerald-700 to-[#14532d] hover:from-emerald-800 hover:to-green-950 text-white rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl shadow-[#14532d]/20 transition-all active:scale-95"
-          >
-            <FiSave size={18} /> Lưu tất cả thay đổi
-          </button>
-          <button
-            onClick={handleDeleteAccount}
-            className="flex-1 sm:flex-none sm:w-64 flex items-center justify-center gap-3 py-4 bg-white dark:bg-gray-800 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-700 border-2 border-red-100 dark:border-red-900/50 rounded-2xl font-bold text-sm shadow-sm transition-all active:scale-95"
-          >
-            <FiTrash2 size={18} /> Xóa tài khoản vĩnh viễn
-          </button>
-        </div>
+        <div className="pb-12"></div>
       </div>
     </div>
   );

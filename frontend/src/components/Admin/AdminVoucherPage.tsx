@@ -51,24 +51,7 @@ const AdminVoucherPage: React.FC = () => {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isAddOpen, setIsAddOpen] = useState(false);
 
-  // State bộ lọc và chia trang
-  // const [searchTerm, setSearchTerm] = useState("");
-  // const [selectedType, setSelectedType] = useState("all");
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const itemsPerPage = 3;
 
-  // useEffect(() => {
-  //   const fetchVouchers = async () => {
-  //     setLoading(true);
-  //     setTimeout(() => {
-  //       setVouchers(mockVouchers);
-  //       setLoading(false);
-  //     }, 500);
-  //   };
-  //   fetchVouchers();
-  // }, []);
-
-  // THAY BẰNG
   const voucherStats = useAppSelector((s) => s.voucher.voucherStats);
   const dispatch = useAppDispatch();
   const { getToken } = useAuth();
@@ -98,35 +81,6 @@ const AdminVoucherPage: React.FC = () => {
     setIsEditOpen(true);
   };
 
-  // const handleSaveVoucher = (updatedVoucher: Voucher) => {
-  //   setVouchers((prev) =>
-  //     prev.map((v) => (v._id === updatedVoucher._id ? updatedVoucher : v)),
-  //   );
-  //   setIsEditOpen(false);
-  // };
-
-  // // --- LOGIC XỬ LÝ THÊM MỚI ---
-  // const handleAddVoucher = (newVoucher: Voucher) => {
-  //   setVouchers((prev) => [newVoucher, ...prev]); // Đẩy voucher mới lên đầu danh sách
-  //   setIsAddOpen(false);
-  // };
-
-  // const filteredVouchers = vouchers.filter((v) => {
-  //   const matchesSearch =
-  //     v.code.toLowerCase().includes(searchTerm.toLowerCase()) ||
-  //     v.name.toLowerCase().includes(searchTerm.toLowerCase());
-  //   const matchesType =
-  //     selectedType === "all" || v.voucherType === selectedType;
-  //   return matchesSearch && matchesType;
-  // });
-
-  // const totalPages = Math.ceil(filteredVouchers.length / itemsPerPage);
-  // const indexOfLastItem = currentPage * itemsPerPage;
-  // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  // const currentVouchers = filteredVouchers.slice(
-  //   indexOfFirstItem,
-  //   indexOfLastItem,
-  // );
 
   const indexOfFirstItem = (currentPage - 1) * itemsPerPage;
   const currentVouchers = filteredVouchers.slice(
@@ -134,12 +88,7 @@ const AdminVoucherPage: React.FC = () => {
     indexOfFirstItem + itemsPerPage,
   );
 
-  // const handleDelete = async (id: string) => {
-  //   if (!window.confirm("Xác nhận xóa mã khuyến mãi này?")) return;
-  //   setVouchers(vouchers.filter((v) => v._id !== id));
-  //   toast.success("Xóa voucher thành công!");
-  // };
-  // THAY BẰNG
+
   const handleSaveVoucher = async (updatedVoucher: Voucher) => {
     const token = await getToken({ template: "my-backend" });
     const result = await dispatch(
@@ -157,17 +106,6 @@ const AdminVoucherPage: React.FC = () => {
     }
   };
 
-  // const handleAddVoucher = async (newVoucher: Voucher) => {
-  //   const token = await getToken();
-  //   const result = await dispatch(
-  //     createVoucher({ token, voucherData: newVoucher }),
-  //   );
-  //   if (createVoucher.fulfilled.match(result)) {
-  //     toast.success("Thêm Voucher thành công!");
-  //     setIsAddOpen(false);
-  //   } else {
-  //     toast.error("Thêm voucher thất bại!");
-  //   }
   // };
   const handleAddVoucher = async (newVoucher: Voucher) => {
     const token = await getToken({ template: "my-backend" });
@@ -220,30 +158,7 @@ const AdminVoucherPage: React.FC = () => {
           <PlusCircle size={20} /> Thêm Voucher mới
         </button>
       </div>
-      {/* CHỈ SỐ TỔNG QUAN FAKE DATA */}
-      {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <StatCard
-          title="Đang hoạt động"
-          value="12 mã"
-          icon={<CheckCircle />}
-          color="emerald"
-        />
-        <StatCard
-          title="Tổng lượt đã dùng"
-          value="1.245"
-          icon={<ArrowUpRight />}
-          color="blue"
-        />
-        <StatCard title="Hết hạn" value="08 mã" icon={<Clock />} color="red" />
-        <StatCard
-          title="Đã vô hiệu hóa"
-          value="02 mã"
-          icon={<EyeOff />}
-          color="gray"
-        />
-      </div> */}
 
-      {/* THỐNG KÊ TỪ BACKEND */}
 
       {/* THỐNG KÊ ĐỘNG TỪ BACKEND */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
@@ -502,12 +417,7 @@ const AdminVoucherPage: React.FC = () => {
           setIsEditOpen(true);
         }}
       />
-      {/* <AdminVoucherEditModal
-        isOpen={isEditOpen}
-        onClose={() => setIsEditOpen(false)}
-        voucher={selectedVoucher}
-        onSave={handleSaveVoucher}
-      /> */}
+
       {/* // THAY BẰNG */}
       <AdminVoucherEditModal
         isOpen={isEditOpen}
@@ -547,77 +457,5 @@ const StatCard: React.FC<{
     </h3>
   </div>
 );
-
-// // --- DỮ LIỆU FAKE ---
-// const mockVouchers: Voucher[] = [
-//   {
-//     _id: "vch_001",
-//     code: "ARTISANOSHIP",
-//     name: "Miễn phí vận chuyển nội thành",
-//     voucherType: "SHIPPING_DISCOUNT",
-//     discountType: "FIXED_AMOUNT",
-//     discountValue: 30000,
-//     maxDiscountAmount: 30000,
-//     minOrderAmount: 1000000,
-//     usageLimit: { total: 1000, perUser: 1, used: 120 },
-//     validity: { start: "2026-02-27T10:00:00Z", end: "2026-03-31T23:59:59Z" },
-//     status: "ACTIVE",
-//     isStackable: false,
-//     userUsedList: ["user_001", "user_002"],
-//     createdAt: "2026-02-27T10:00:00Z",
-//     updatedAt: "2026-02-27T10:15:00Z",
-//   },
-//   {
-//     _id: "vch_002",
-//     code: "WOLFBED50",
-//     name: "Giảm trực tiếp 50k cho Nệm",
-//     voucherType: "PRODUCT_DISCOUNT",
-//     discountType: "FIXED_AMOUNT",
-//     discountValue: 50000,
-//     maxDiscountAmount: 50000,
-//     minOrderAmount: 2000000,
-//     usageLimit: { total: 500, perUser: 1, used: 450 },
-//     validity: { start: "2026-02-20T08:00:00Z", end: "2026-02-28T23:59:59Z" },
-//     status: "ACTIVE",
-//     isStackable: true,
-//     userUsedList: [],
-//     createdAt: "2026-02-20T08:00:00Z",
-//     updatedAt: "2026-02-22T09:30:00Z",
-//   },
-//   {
-//     _id: "vch_003",
-//     code: "SPRING10",
-//     name: "Ưu đãi Xuân 10%",
-//     voucherType: "PRODUCT_DISCOUNT",
-//     discountType: "PERCENTAGE",
-//     discountValue: 10,
-//     maxDiscountAmount: 200000,
-//     minOrderAmount: 500000,
-//     usageLimit: { total: 2000, perUser: 2, used: 2000 },
-//     validity: { start: "2026-01-01T00:00:00Z", end: "2026-02-15T23:59:59Z" },
-//     status: "EXPIRED",
-//     isStackable: false,
-//     userUsedList: [],
-//     createdAt: "2026-01-01T10:00:00Z",
-//     updatedAt: "2026-01-01T10:00:00Z",
-//   },
-//   {
-//     _id: "vch_004",
-//     code: "DISABLE20",
-//     name: "Mã tạm dừng bảo trì",
-//     voucherType: "PRODUCT_DISCOUNT",
-//     discountType: "PERCENTAGE",
-//     discountValue: 20,
-//     maxDiscountAmount: 500000,
-//     minOrderAmount: 3000000,
-//     usageLimit: { total: 100, perUser: 1, used: 5 },
-//     validity: { start: "2026-01-10T14:00:00Z", end: "2026-12-31T23:59:59Z" },
-//     status: "DISABLED",
-//     isStackable: false,
-//     userUsedList: [],
-//     createdAt: "2026-01-10T14:00:00Z",
-//     updatedAt: "2026-02-25T11:20:00Z",
-//   },
-// ];
 
 export default AdminVoucherPage;

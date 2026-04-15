@@ -1,0 +1,50 @@
+{
+  "id": "62be4c44-c307-4b40-b5c1-9a6f63832ddc",
+  "name": "check_order",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "check_order",
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "1cb23306-f18c-4898-abcc-0bf6f5d199c1",
+          "name": "order_id",
+          "required": false,
+          "dataType": "@order_id",
+          "value": "$order_id",
+          "defaultValue": "",
+          "isList": false,
+          "prompts": [],
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": []
+        }
+      ],
+      "messages": [
+        {
+          "type": "0",
+          "title": "",
+          "textToSpeech": "",
+          "lang": "vi",
+          "speech": [
+            "Đang tra cứu từ Cơ sở dữ liệu..."
+          ],
+          "condition": ""
+        }
+      ],
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
+}

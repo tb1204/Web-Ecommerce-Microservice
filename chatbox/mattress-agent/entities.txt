@@ -1,0 +1,568 @@
+[
+  {
+    "value": "Kymdan",
+    "synonyms": [
+      "Kymdan",
+      "Kim đan",
+      "kim đan",
+      "kym đan"
+    ]
+  },
+  {
+    "value": "Liên Á",
+    "synonyms": [
+      "Liên Á",
+      "liên á",
+      "liên a",
+      "lien a"
+    ]
+  },
+  {
+    "value": "Vạn Thành",
+    "synonyms": [
+      "Vạn Thành",
+      "vạn thành",
+      "van thanh"
+    ]
+  },
+  {
+    "value": "Kim Cương",
+    "synonyms": [
+      "Kim Cương",
+      "kim cương",
+      "kim cuong"
+    ]
+  },
+  {
+    "value": "Gummi",
+    "synonyms": [
+      "Gummi",
+      "gummi",
+      "gumi",
+      "gum mi"
+    ]
+  },
+  {
+    "value": "Wonjun",
+    "synonyms": [
+      "Wonjun",
+      "wonjun",
+      "won jun",
+      "quân chun"
+    ]
+  },
+  {
+    "value": "Goodnight",
+    "synonyms": [
+      "Goodnight",
+      "goodnight",
+      "good night"
+    ]
+  },
+  {
+    "value": "Aeroflow",
+    "synonyms": [
+      "Aeroflow",
+      "aeroflow",
+      "aero flow"
+    ]
+  }
+] {
+  "id": "84e25ffb-9fc0-43d2-ba65-f800ed4b2248",
+  "name": "brand",
+  "isOverridable": true,
+  "isEnum": false,
+  "isRegexp": false,
+  "automatedExpansion": true,
+  "allowFuzzyExtraction": true
+}  [
+  {
+    "value": "Trắng",
+    "synonyms": [
+      "Trắng",
+      "trắng",
+      "trắng tinh",
+      "trắng sữa"
+    ]
+  },
+  {
+    "value": "Xanh",
+    "synonyms": [
+      "Xanh",
+      "xanh",
+      "xanh dương",
+      "xanh lá"
+    ]
+  },
+  {
+    "value": "Xám",
+    "synonyms": [
+      "Xám",
+      "xám",
+      "màu ghi",
+      "màu xám"
+    ]
+  },
+  {
+    "value": "Hồng",
+    "synonyms": [
+      "Hồng",
+      "hồng",
+      "màu hồng"
+    ]
+  }
+] {
+  "id": "6801d644-8062-4ddf-9dcb-5e155a821ddf",
+  "name": "color",
+  "isOverridable": true,
+  "isEnum": false,
+  "isRegexp": false,
+  "automatedExpansion": true,
+  "allowFuzzyExtraction": true
+} [
+  {
+    "value": "Mềm",
+    "synonyms": [
+      "Mềm",
+      "mềm",
+      "êm",
+      "êm ái",
+      "nệm mềm"
+    ]
+  },
+  {
+    "value": "Trung bình",
+    "synonyms": [
+      "Trung bình",
+      "trung bình",
+      "vừa phải",
+      "không quá cứng"
+    ]
+  },
+  {
+    "value": "Cứng",
+    "synonyms": [
+      "Cứng",
+      "cứng",
+      "nệm cứng",
+      "chắc chắn",
+      "nâng đỡ tốt"
+    ]
+  }
+] {
+  "id": "31ea0a2b-f4a2-4616-be83-da46be344788",
+  "name": "firmness",
+  "isOverridable": true,
+  "isEnum": false,
+  "isRegexp": false,
+  "automatedExpansion": true,
+  "allowFuzzyExtraction": true
+} [
+  {
+    "value": "Cao su thiên nhiên",
+    "synonyms": [
+      "Cao su thiên nhiên",
+      "cao su tự nhiên",
+      "mủ cao su"
+    ]
+  },
+  {
+    "value": "Cao su nhân tạo",
+    "synonyms": [
+      "Cao su nhân tạo",
+      "cao su tổng hợp",
+      "cao su non"
+    ]
+  },
+  {
+    "value": "Lò xo túi độc lập",
+    "synonyms": [
+      "Lò xo túi độc lập",
+      "lò xo túi",
+      "lò xo độc lập"
+    ]
+  },
+  {
+    "value": "Bông ép",
+    "synonyms": [
+      "Bông ép",
+      "sợi bông",
+      "bông polyester"
+    ]
+  },
+  {
+    "value": "Foam",
+    "synonyms": [
+      "Foam",
+      "mút xốp",
+      "memory foam"
+    ]
+  }
+] {
+  "id": "b77ebf54-8bfa-4b40-a8c2-5ee9f6b7054c",
+  "name": "material",
+  "isOverridable": true,
+  "isEnum": false,
+  "isRegexp": false,
+  "automatedExpansion": true,
+  "allowFuzzyExtraction": true
+}  [
+  {
+    "value": "Nệm cao su",
+    "synonyms": [
+      "Nệm cao su",
+      "nệm mủ cao su",
+      "đệm cao su",
+      "nệm cao su thiên nhiên"
+    ]
+  },
+  {
+    "value": "Nệm lò xo",
+    "synonyms": [
+      "Nệm lò xo",
+      "đệm lò xo",
+      "lò xo túi"
+    ]
+  },
+  {
+    "value": "Nệm bông ép",
+    "synonyms": [
+      "Nệm bông ép",
+      "đệm bông ép",
+      "nệm gấp",
+      "nệm xếp"
+    ]
+  },
+  {
+    "value": "Nệm Foam",
+    "synonyms": [
+      "Nệm Foam",
+      "đệm foam",
+      "nệm mút",
+      "nệm memory foam"
+    ]
+  }
+] {
+  "id": "b48426bc-881f-4b0e-8dd7-c29325bc0cfb",
+  "name": "mattress_type",
+  "isOverridable": true,
+  "isEnum": false,
+  "isRegexp": false,
+  "automatedExpansion": true,
+  "allowFuzzyExtraction": true
+}  [
+  {
+    "value": "Mã đơn hàng",
+    "synonyms": [
+      "Mã đơn hàng",
+      "mã đơn",
+      "số đơn",
+      "số hoá đơn"
+    ]
+  }
+]  {
+  "id": "f8301700-7227-420d-be1a-bb3460876c27",
+  "name": "order_id",
+  "isOverridable": true,
+  "isEnum": false,
+  "isRegexp": false,
+  "automatedExpansion": true,
+  "allowFuzzyExtraction": true
+}  [
+  {
+    "value": "Dưới 5 triệu",
+    "synonyms": [
+      "Dưới 5 triệu",
+      "dưới 5tr",
+      "rẻ",
+      "mức giá rẻ",
+      "giá sinh viên"
+    ]
+  },
+  {
+    "value": "5 đến 10 triệu",
+    "synonyms": [
+      "5 đến 10 triệu",
+      "từ 5 đến 10tr",
+      "tầm trung",
+      "vừa tiền"
+    ]
+  },
+  {
+    "value": "Trên 10 triệu",
+    "synonyms": [
+      "Trên 10 triệu",
+      "trên 10tr",
+      "cao cấp",
+      "hàng xịn",
+      "đắt tiền"
+    ]
+  }
+]  {
+  "id": "1e8773d3-8257-412a-b65a-b47fc3edd5d5",
+  "name": "price_range",
+  "isOverridable": true,
+  "isEnum": false,
+  "isRegexp": false,
+  "automatedExpansion": true,
+  "allowFuzzyExtraction": true
+}  [
+  {
+    "value": "Nệm",
+    "synonyms": [
+      "Nệm",
+      "nệm",
+      "đệm",
+      "nem",
+      "dem"
+    ]
+  },
+  {
+    "value": "Chăn ga",
+    "synonyms": [
+      "Chăn ga",
+      "chăn ga",
+      "drap",
+      "ra giường",
+      "bộ drap"
+    ]
+  },
+  {
+    "value": "Gối",
+    "synonyms": [
+      "Gối",
+      "gối",
+      "goi",
+      "gối ngủ",
+      "gối ôm"
+    ]
+  },
+  {
+    "value": "Phụ kiện",
+    "synonyms": [
+      "Phụ kiện",
+      "phụ kiện",
+      "topper",
+      "tấm bảo vệ nệm"
+    ]
+  },
+  {
+    "value": "Topper",
+    "synonyms": [
+      "Topper",
+      "topper nệm",
+      "tấm lót",
+      "lót nệm"
+    ]
+  }
+] [
+  {
+    "value": "Nệm",
+    "synonyms": [
+      "Nệm",
+      "nệm",
+      "đệm",
+      "nem",
+      "dem"
+    ]
+  },
+  {
+    "value": "Chăn ga",
+    "synonyms": [
+      "Chăn ga",
+      "chăn ga",
+      "drap",
+      "ra giường",
+      "bộ drap"
+    ]
+  },
+  {
+    "value": "Gối",
+    "synonyms": [
+      "Gối",
+      "gối",
+      "goi",
+      "gối ngủ",
+      "gối ôm"
+    ]
+  },
+  {
+    "value": "Phụ kiện",
+    "synonyms": [
+      "Phụ kiện",
+      "phụ kiện",
+      "topper",
+      "tấm bảo vệ nệm"
+    ]
+  },
+  {
+    "value": "Topper",
+    "synonyms": [
+      "Topper",
+      "topper nệm",
+      "tấm lót",
+      "lót nệm"
+    ]
+  }
+]  {
+  "id": "ccf7ca4b-99a4-4402-b837-ce8cf2c7526b",
+  "name": "product_type",
+  "isOverridable": true,
+  "isEnum": false,
+  "isRegexp": false,
+  "automatedExpansion": true,
+  "allowFuzzyExtraction": true
+}  [
+  {
+    "value": "Khuyến mãi",
+    "synonyms": [
+      "Khuyến mãi",
+      "giảm giá",
+      "sale",
+      "voucher"
+    ]
+  },
+  {
+    "value": "Quà tặng",
+    "synonyms": [
+      "Quà tặng",
+      "tặng kèm",
+      "combo",
+      "quà tặng"
+    ]
+  }
+]  {
+  "id": "8d29ff25-e56e-464c-946a-80c667170041",
+  "name": "promotion_type",
+  "isOverridable": true,
+  "isEnum": false,
+  "isRegexp": false,
+  "automatedExpansion": true,
+  "allowFuzzyExtraction": true
+}  {
+  "id": "8d29ff25-e56e-464c-946a-80c667170041",
+  "name": "promotion_type",
+  "isOverridable": true,
+  "isEnum": false,
+  "isRegexp": false,
+  "automatedExpansion": true,
+  "allowFuzzyExtraction": true
+}  [
+  {
+    "value": "120x200",
+    "synonyms": [
+      "120x200",
+      "1m2",
+      "1 mét 2",
+      "120x200cm"
+    ]
+  },
+  {
+    "value": "140x200",
+    "synonyms": [
+      "140x200",
+      "1m4",
+      "1 mét 4",
+      "140x200cm"
+    ]
+  },
+  {
+    "value": "160x200",
+    "synonyms": [
+      "160x200",
+      "1m6",
+      "1 mét 6",
+      "160x200cm"
+    ]
+  },
+  {
+    "value": "180x200",
+    "synonyms": [
+      "180x200",
+      "1m8",
+      "1 mét 8",
+      "180x200cm"
+    ]
+  },
+  {
+    "value": "200x200",
+    "synonyms": [
+      "200x200",
+      "2m",
+      "2 mét",
+      "200x200cm",
+      "2x2"
+    ]
+  },
+  {
+    "value": "220x200",
+    "synonyms": [
+      "220x200",
+      "2m2",
+      "2 mét 2",
+      "220x200cm"
+    ]
+  }
+]  {
+  "id": "051e4846-688f-43bc-9330-5eca801df6d0",
+  "name": "size",
+  "isOverridable": true,
+  "isEnum": false,
+  "isRegexp": false,
+  "automatedExpansion": true,
+  "allowFuzzyExtraction": true
+}  [
+  {
+    "value": "Đau lưng",
+    "synonyms": [
+      "Đau lưng",
+      "đau cột sống",
+      "đau nhức xương khớp",
+      "nệm cho người đau lưng"
+    ]
+  },
+  {
+    "value": "Vai gáy",
+    "synonyms": [
+      "Vai gáy",
+      "bị đau vai",
+      "nhức mỏi cổ",
+      "gối cho vai gáy"
+    ]
+  },
+  {
+    "value": "Mát mẻ",
+    "synonyms": [
+      "Mát mẻ",
+      "nằm mát",
+      "nệm mát mẻ",
+      "nệm mùa hè",
+      "nệm thoáng khí"
+    ]
+  },
+  {
+    "value": "Trẻ em",
+    "synonyms": [
+      "Trẻ em",
+      "em bé",
+      "trẻ sơ sinh",
+      "nệm cho bé"
+    ]
+  },
+  {
+    "value": "Bà bầu",
+    "synonyms": [
+      "Bà bầu",
+      "mang thai",
+      "nệm cho bà bầu"
+    ]
+  }
+]  {
+  "id": "263a5b3c-df5a-4857-8c3a-7ea78ca5df51",
+  "name": "sleep_purpose",
+  "isOverridable": true,
+  "isEnum": false,
+  "isRegexp": false,
+  "automatedExpansion": true,
+  "allowFuzzyExtraction": true
+}

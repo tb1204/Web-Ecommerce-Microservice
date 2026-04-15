@@ -12,6 +12,7 @@ import {
   Zap,
   Crown,
   Diamond,
+  Gem,
 } from "lucide-react";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -20,11 +21,12 @@ const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const TIERS = [
   {
     key: "MEMBER",
-    label: "Member",
+    label: "Thành viên",
     minSpent: 0,
     minOrders: 0,
     discount: 0,
-    color: "from-slate-400 to-slate-500",
+    color: "from-slate-400 to-slate-600",
+    lightColor: "text-slate-500",
     bg: "bg-slate-50 dark:bg-slate-900/40",
     border: "border-slate-200 dark:border-slate-700",
     text: "text-slate-700 dark:text-slate-300",
@@ -34,11 +36,12 @@ const TIERS = [
   },
   {
     key: "SILVER",
-    label: "Silver",
+    label: "Hạng Bạc",
     minSpent: 3_000_000,
     minOrders: 3,
     discount: 3,
-    color: "from-gray-400 to-gray-500",
+    color: "from-gray-300 via-gray-400 to-gray-500",
+    lightColor: "text-gray-400",
     bg: "bg-gray-50 dark:bg-gray-900/40",
     border: "border-gray-300 dark:border-gray-600",
     text: "text-gray-700 dark:text-gray-200",
@@ -48,13 +51,14 @@ const TIERS = [
   },
   {
     key: "GOLD",
-    label: "Gold",
+    label: "Hạng Vàng",
     minSpent: 5_000_000,
     minOrders: 20,
     discount: 7,
-    color: "from-yellow-400 to-amber-500",
+    color: "from-amber-300 via-yellow-500 to-orange-500",
+    lightColor: "text-amber-500",
     bg: "bg-yellow-50 dark:bg-yellow-900/20",
-    border: "border-yellow-300 dark:border-yellow-700/50",
+    border: "border-yellow-400/50 dark:border-yellow-700/50",
     text: "text-yellow-800 dark:text-yellow-400",
     badge:
       "bg-gradient-to-r from-yellow-100 to-amber-100 text-yellow-800 border border-yellow-300 dark:from-yellow-900/40 dark:to-amber-900/40 dark:text-yellow-400 dark:border-yellow-700/50",
@@ -62,17 +66,18 @@ const TIERS = [
   },
   {
     key: "DIAMOND",
-    label: "Diamond",
+    label: "Kim Cương",
     minSpent: 15_000_000,
     minOrders: 75,
     discount: 12,
-    color: "from-cyan-400 to-blue-500",
+    color: "from-cyan-400 via-blue-500 to-indigo-600",
+    lightColor: "text-cyan-500",
     bg: "bg-cyan-50 dark:bg-cyan-900/20",
-    border: "border-blue-300 dark:border-cyan-700/50",
+    border: "border-cyan-300 dark:border-cyan-700/50",
     text: "text-blue-800 dark:text-cyan-300",
     badge:
       "bg-gradient-to-r from-cyan-100 to-blue-100 text-blue-800 border border-blue-300 dark:from-cyan-900/40 dark:to-blue-900/40 dark:text-cyan-300 dark:border-cyan-700/50",
-    Icon: Diamond,
+    Icon: Gem,
   },
 ];
 
@@ -268,39 +273,33 @@ export default function MyStatsPage() {
           </div>
 
           {/* Progress to next tier */}
-          <div className={`${tier.bg} px-8 py-6`}>
+          <div className="p-8 relative z-10">
             {nextTier ? (
-              <>
-                <div className="flex items-center justify-between mb-3">
-                  <p className={`text-sm font-bold ${tier.text}`}>
-                    Tiến trình lên <span className="font-black">{nextTier.label}</span>
-                  </p>
-                  <p className={`text-sm font-black ${tier.text}`}>
-                    {progressPct}%
-                  </p>
+              <div className="space-y-5">
+                <div className="flex items-end justify-between">
+                  <div>
+                    <p className="text-sm font-bold text-slate-900 dark:text-white mb-1">
+                      Hành trình tới <span className="font-black text-indigo-600 dark:text-indigo-400">{nextTier.label}</span>
+                    </p>
+                    <p className="text-xs text-slate-500 font-medium">Cần chi tiêu thêm {fmtVND(spentToNextTier)} để thăng hạng</p>
+                  </div>
+                  <div className={`text-2xl font-black ${(tier as any).lightColor}`}>{progressPct}%</div>
                 </div>
-                <div className="w-full h-3 bg-white/60 dark:bg-white/10 rounded-full overflow-hidden">
-                  <div
-                    className={`h-full bg-gradient-to-r ${tier.color} rounded-full transition-all duration-700`}
+                
+                <div className="relative w-full h-4 bg-slate-100 dark:bg-slate-800 rounded-full p-1 overflow-hidden">
+                  <div 
+                    className={`h-full bg-gradient-to-r ${tier.color} rounded-full transition-all duration-1000 ease-out shadow-lg`}
                     style={{ width: `${progressPct}%` }}
-                  />
+                  >
+                    <div className="w-full h-full bg-[linear-gradient(45deg,rgba(255,255,255,0.2)_25%,transparent_25%,transparent_50%,rgba(255,255,255,0.2)_50%,rgba(255,255,255,0.2)_75%,transparent_75%,transparent)] bg-[length:20px_20px] animate-[shimmer_2s_linear_infinite]" />
+                  </div>
                 </div>
-                <p className={`text-xs mt-2.5 ${tier.text} opacity-80`}>
-                  Còn cần{" "}
-                  <span className="font-black">{fmtVND(spentToNextTier)}</span>{" "}
-                  để lên hạng{" "}
-                  <span className="font-black">{nextTier.label}</span> (giảm{" "}
-                  {nextTier.discount}%)
-                </p>
-              </>
+              </div>
             ) : (
-              <div className="text-center py-2">
-                <p className={`font-black text-sm ${tier.text}`}>
-                  🎉 Bạn đã đạt hạng cao nhất — Diamond!
-                </p>
-                <p className={`text-xs mt-1 ${tier.text} opacity-70`}>
-                  Giảm 12% mỗi đơn hàng
-                </p>
+              <div className="flex flex-col items-center py-6 bg-indigo-50/50 dark:bg-indigo-950/20 rounded-2xl border border-indigo-100 dark:border-indigo-900/50">
+                <Gem size={40} className="text-indigo-600 dark:text-indigo-400 mb-3 animate-pulse" />
+                <h3 className="text-lg font-black text-indigo-900 dark:text-indigo-100 uppercase tracking-tighter">Đã đạt hạng tối đa</h3>
+                <p className="text-sm text-indigo-600/70 font-medium italic">Bạn đã đạt hạng cao nhất. Tận hưởng ưu đãi tối đa!</p>
               </div>
             )}
           </div>
@@ -478,6 +477,15 @@ export default function MyStatsPage() {
           )}
         </div>
       </div>
+      <style>{`
+        @keyframes shimmer {
+          0% { background-position: 0 0; }
+          100% { background-position: 40px 0; }
+        }
+        .animate-shimmer {
+          animation: shimmer 2s linear infinite;
+        }
+      `}</style>
     </div>
   );
 }

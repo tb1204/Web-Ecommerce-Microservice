@@ -1,0 +1,9 @@
+{
+  "id": "8d29ff25-e56e-464c-946a-80c667170041",
+  "name": "promotion_type",
+  "isOverridable": true,
+  "isEnum": false,
+  "isRegexp": false,
+  "automatedExpansion": true,
+  "allowFuzzyExtraction": true
+}

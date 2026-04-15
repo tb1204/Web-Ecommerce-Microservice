@@ -1,0 +1,37 @@
+[
+  {
+    "value": "Trắng",
+    "synonyms": [
+      "Trắng",
+      "trắng",
+      "trắng tinh",
+      "trắng sữa"
+    ]
+  },
+  {
+    "value": "Xanh",
+    "synonyms": [
+      "Xanh",
+      "xanh",
+      "xanh dương",
+      "xanh lá"
+    ]
+  },
+  {
+    "value": "Xám",
+    "synonyms": [
+      "Xám",
+      "xám",
+      "màu ghi",
+      "màu xám"
+    ]
+  },
+  {
+    "value": "Hồng",
+    "synonyms": [
+      "Hồng",
+      "hồng",
+      "màu hồng"
+    ]
+  }
+]

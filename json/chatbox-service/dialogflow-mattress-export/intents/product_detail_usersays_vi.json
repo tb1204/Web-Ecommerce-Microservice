@@ -1,0 +1,67 @@
+[
+  {
+    "id": "df51047d-0dcc-43f0-ad44-6c1ada3e0baa",
+    "data": [
+      {
+        "text": "Cho mình xem chi tiết ",
+        "userDefined": false
+      },
+      {
+        "text": "nệm lò xo",
+        "alias": "mattress_type",
+        "meta": "@mattress_type",
+        "userDefined": true
+      },
+      {
+        "text": " của ",
+        "userDefined": false
+      },
+      {
+        "text": "Kim Cương",
+        "alias": "brand",
+        "meta": "@brand",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "d51e2a00-c2a4-4781-91eb-9d1e8f99ceba",
+    "data": [
+      {
+        "text": "Nệm này có kích thước ",
+        "userDefined": false
+      },
+      {
+        "text": "180x200",
+        "alias": "size",
+        "meta": "@size",
+        "userDefined": true
+      },
+      {
+        "text": " không?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "e5ced0f3-cf9f-43ae-937b-fc9bf9d29e20",
+    "data": [
+      {
+        "text": "Sản phẩm này giá bao nhiêu?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  }
+]

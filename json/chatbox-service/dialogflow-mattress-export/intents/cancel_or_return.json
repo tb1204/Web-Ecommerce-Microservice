@@ -1,0 +1,35 @@
+{
+  "id": "5bbd5d3f-0ca2-49ca-a62e-bdfa05010b26",
+  "name": "cancel_or_return",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "",
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": "0",
+          "title": "",
+          "textToSpeech": "",
+          "lang": "vi",
+          "speech": [
+            "Chính sách đổi trả lên đến 100 ngày nếu lún xẹp. Lưu ý nệm không thể trả nếu bạn không muốn ngủ nữa."
+          ],
+          "condition": ""
+        }
+      ],
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
+}

@@ -1,0 +1,41 @@
+[
+  {
+    "id": "699161c4-57d5-4a93-838b-0429d66ecdaf",
+    "data": [
+      {
+        "text": "Phí ship nệm bao nhiêu?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "e4436d8a-1282-4865-af75-9672a11c86a4",
+    "data": [
+      {
+        "text": "Giao nệm tỉnh mất bao lâu?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "ab6a1cf3-ba9f-4528-b8ff-c46231635792",
+    "data": [
+      {
+        "text": "Nhà ở chung cư có khiêng nệm lên tận phòng không?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  }
+]

@@ -42,6 +42,11 @@ import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentFailed from "./pages/PaymentFailed";
 import MyStatsPage from "./pages/MyStatsPage";
 
+import WarrantyPolicy from "./pages/WarrantyPolicy";
+import ReturnPolicy from "./pages/ReturnPolicy";
+import ShippingPolicy from "./pages/ShippingPolicy";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+
 import store from "./store";
 import { Provider } from "react-redux";
 // import { useEffect } from "react";
@@ -96,6 +101,13 @@ function App() {
                 <Route path="profile" element={<CustomProfile />} />
                 <Route path="my-stats" element={<MyStatsPage />} />
                 <Route path="/auth-redirect" element={<AuthRedirect />} />
+
+                {/* Policy Pages */}
+                <Route path="warranty-policy" element={<WarrantyPolicy />} />
+                <Route path="return-policy" element={<ReturnPolicy />} />
+                <Route path="shipping-policy" element={<ShippingPolicy />} />
+                <Route path="privacy-policy" element={<PrivacyPolicy />} />
+
                 <Route path="*" element={<NotFound />} />
               </Route>
 

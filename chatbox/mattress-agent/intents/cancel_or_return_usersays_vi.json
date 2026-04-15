@@ -1,0 +1,41 @@
+[
+  {
+    "id": "226d3f18-53cc-4c8c-80a2-56353e6ec3f5",
+    "data": [
+      {
+        "text": "Mình muốn đổi trả nệm",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "fe684566-9fa6-4e75-af0f-357662355e67",
+    "data": [
+      {
+        "text": "Nệm bảo hành lún xẹp bao lâu?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "070dc905-7324-4107-b881-1ccbf9b5987f",
+    "data": [
+      {
+        "text": "Huỷ đơn hàng này giúp mình",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  }
+]

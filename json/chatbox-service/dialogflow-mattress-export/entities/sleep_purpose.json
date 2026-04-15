@@ -1,0 +1,9 @@
+{
+  "id": "263a5b3c-df5a-4857-8c3a-7ea78ca5df51",
+  "name": "sleep_purpose",
+  "isOverridable": true,
+  "isEnum": false,
+  "isRegexp": false,
+  "automatedExpansion": true,
+  "allowFuzzyExtraction": true
+}

@@ -1,0 +1,9 @@
+{
+  "id": "b48426bc-881f-4b0e-8dd7-c29325bc0cfb",
+  "name": "mattress_type",
+  "isOverridable": true,
+  "isEnum": false,
+  "isRegexp": false,
+  "automatedExpansion": true,
+  "allowFuzzyExtraction": true
+}

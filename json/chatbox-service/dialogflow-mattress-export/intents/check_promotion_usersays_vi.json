@@ -1,0 +1,58 @@
+[
+  {
+    "id": "28596238-d891-4218-992a-d644df0bc193",
+    "data": [
+      {
+        "text": "Có chương trình ",
+        "userDefined": false
+      },
+      {
+        "text": "Khuyến mãi",
+        "alias": "promotion_type",
+        "meta": "@promotion_type",
+        "userDefined": true
+      },
+      {
+        "text": " nào không?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "32a5b6a5-8560-4629-afdd-5f2d534bb907",
+    "data": [
+      {
+        "text": "Nệm ",
+        "userDefined": false
+      },
+      {
+        "text": "Vạn Thành",
+        "alias": "brand",
+        "meta": "@brand",
+        "userDefined": true
+      },
+      {
+        "text": " có đang ",
+        "userDefined": false
+      },
+      {
+        "text": "Giảm giá",
+        "alias": "promotion_type",
+        "meta": "@promotion_type",
+        "userDefined": true
+      },
+      {
+        "text": " không?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  }
+]

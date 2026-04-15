@@ -1,0 +1,1417 @@
+[
+  {
+    "id": "cdefb83e-b8fc-4452-91ff-294bf0f1709a",
+    "data": [
+      {
+        "text": "Mình muốn mua nệm này",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "b64da8de-a239-4fde-bf68-0101367efb3c",
+    "data": [
+      {
+        "text": "Thêm vào giỏ hàng giúp mình",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "ed228e7e-417d-4277-aa3f-3cc311f6c894",
+    "data": [
+      {
+        "text": "Đặt mua ",
+        "userDefined": false
+      },
+      {
+        "text": "Nệm bông ép",
+        "alias": "mattress_type",
+        "meta": "@mattress_type",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  }
+] {
+  "id": "d5956091-b2c3-47dd-8f4d-7fca319f8741",
+  "name": "add_to_cart",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "",
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "619aea1e-64cd-4427-829d-5e9272cc07ef",
+          "name": "mattress_type",
+          "required": false,
+          "dataType": "@mattress_type",
+          "value": "$mattress_type",
+          "defaultValue": "",
+          "isList": false,
+          "prompts": [],
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": []
+        }
+      ],
+      "messages": [
+        {
+          "type": "0",
+          "title": "",
+          "textToSpeech": "",
+          "lang": "vi",
+          "speech": [
+            "Vui lòng nhấn vô nút Thêm Vào Giỏ Hàng nghen bạn!"
+          ],
+          "condition": ""
+        }
+      ],
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
+} [
+  {
+    "id": "226d3f18-53cc-4c8c-80a2-56353e6ec3f5",
+    "data": [
+      {
+        "text": "Mình muốn đổi trả nệm",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "fe684566-9fa6-4e75-af0f-357662355e67",
+    "data": [
+      {
+        "text": "Nệm bảo hành lún xẹp bao lâu?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "070dc905-7324-4107-b881-1ccbf9b5987f",
+    "data": [
+      {
+        "text": "Huỷ đơn hàng này giúp mình",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  }
+] {
+  "id": "5bbd5d3f-0ca2-49ca-a62e-bdfa05010b26",
+  "name": "cancel_or_return",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "",
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": "0",
+          "title": "",
+          "textToSpeech": "",
+          "lang": "vi",
+          "speech": [
+            "Chính sách đổi trả lên đến 100 ngày nếu lún xẹp. Lưu ý nệm không thể trả nếu bạn không muốn ngủ nữa."
+          ],
+          "condition": ""
+        }
+      ],
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
+} [
+  {
+    "id": "9adb9ba5-d3b4-4ebd-82d5-91cec314e2e5",
+    "data": [
+      {
+        "text": "Kiểm tra mã đơn ",
+        "userDefined": false
+      },
+      {
+        "text": "Mã đơn hàng",
+        "alias": "order_id",
+        "meta": "@order_id",
+        "userDefined": true
+      },
+      {
+        "text": " đang ở đâu rồi",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "43066357-b7d0-4de2-9dd2-18e2227c4b4f",
+    "data": [
+      {
+        "text": "Đơn hàng của mình chừng nào giao?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "e133482b-f9d6-4843-a5ea-cf17d646b1d3",
+    "data": [
+      {
+        "text": "Tra cứu đơn",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  }
+] {
+  "id": "62be4c44-c307-4b40-b5c1-9a6f63832ddc",
+  "name": "check_order",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "check_order",
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "1cb23306-f18c-4898-abcc-0bf6f5d199c1",
+          "name": "order_id",
+          "required": false,
+          "dataType": "@order_id",
+          "value": "$order_id",
+          "defaultValue": "",
+          "isList": false,
+          "prompts": [],
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": []
+        }
+      ],
+      "messages": [
+        {
+          "type": "0",
+          "title": "",
+          "textToSpeech": "",
+          "lang": "vi",
+          "speech": [
+            "Đang tra cứu từ Cơ sở dữ liệu..."
+          ],
+          "condition": ""
+        }
+      ],
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
+} [
+  {
+    "id": "28596238-d891-4218-992a-d644df0bc193",
+    "data": [
+      {
+        "text": "Có chương trình ",
+        "userDefined": false
+      },
+      {
+        "text": "Khuyến mãi",
+        "alias": "promotion_type",
+        "meta": "@promotion_type",
+        "userDefined": true
+      },
+      {
+        "text": " nào không?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "32a5b6a5-8560-4629-afdd-5f2d534bb907",
+    "data": [
+      {
+        "text": "Nệm ",
+        "userDefined": false
+      },
+      {
+        "text": "Vạn Thành",
+        "alias": "brand",
+        "meta": "@brand",
+        "userDefined": true
+      },
+      {
+        "text": " có đang ",
+        "userDefined": false
+      },
+      {
+        "text": "Giảm giá",
+        "alias": "promotion_type",
+        "meta": "@promotion_type",
+        "userDefined": true
+      },
+      {
+        "text": " không?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  }
+] {
+  "id": "55993cb6-de37-4d85-a20f-fe2be5d3e502",
+  "name": "check_promotion",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "",
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "f12f3537-2f06-4d0d-8b3e-804c62c5439d",
+          "name": "promotion_type",
+          "required": false,
+          "dataType": "@promotion_type",
+          "value": "$promotion_type",
+          "defaultValue": "",
+          "isList": false,
+          "prompts": [],
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": []
+        },
+        {
+          "id": "eb5b51a1-952a-4cba-a08a-b592c9b527ae",
+          "name": "brand",
+          "required": false,
+          "dataType": "@brand",
+          "value": "$brand",
+          "defaultValue": "",
+          "isList": false,
+          "prompts": [],
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": []
+        }
+      ],
+      "messages": [
+        {
+          "type": "0",
+          "title": "",
+          "textToSpeech": "",
+          "lang": "vi",
+          "speech": [
+            "Hiện tại cửa hàng đang có các mã Voucher siêu hot. Bạn lên app xem nhé!"
+          ],
+          "condition": ""
+        }
+      ],
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
+} {
+  "id": "55993cb6-de37-4d85-a20f-fe2be5d3e502",
+  "name": "check_promotion",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "",
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "f12f3537-2f06-4d0d-8b3e-804c62c5439d",
+          "name": "promotion_type",
+          "required": false,
+          "dataType": "@promotion_type",
+          "value": "$promotion_type",
+          "defaultValue": "",
+          "isList": false,
+          "prompts": [],
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": []
+        },
+        {
+          "id": "eb5b51a1-952a-4cba-a08a-b592c9b527ae",
+          "name": "brand",
+          "required": false,
+          "dataType": "@brand",
+          "value": "$brand",
+          "defaultValue": "",
+          "isList": false,
+          "prompts": [],
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": []
+        }
+      ],
+      "messages": [
+        {
+          "type": "0",
+          "title": "",
+          "textToSpeech": "",
+          "lang": "vi",
+          "speech": [
+            "Hiện tại cửa hàng đang có các mã Voucher siêu hot. Bạn lên app xem nhé!"
+          ],
+          "condition": ""
+        }
+      ],
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
+} [
+  {
+    "id": "63ccce77-966b-47c9-a5c1-977026d675dd",
+    "data": [
+      {
+        "text": "So sánh ",
+        "userDefined": false
+      },
+      {
+        "text": "Nệm cao su",
+        "alias": "mattress_type",
+        "meta": "@mattress_type",
+        "userDefined": true
+      },
+      {
+        "text": " và ",
+        "userDefined": false
+      },
+      {
+        "text": "Nệm lò xo",
+        "alias": "mattress_type",
+        "meta": "@mattress_type",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "bab0bae9-e75c-4818-9247-9e58aadc4a70",
+    "data": [
+      {
+        "text": "Nệm hãng ",
+        "userDefined": false
+      },
+      {
+        "text": "Kymdan",
+        "alias": "brand",
+        "meta": "@brand",
+        "userDefined": true
+      },
+      {
+        "text": " khác gì ",
+        "userDefined": false
+      },
+      {
+        "text": "Liên Á",
+        "alias": "brand",
+        "meta": "@brand",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "ab706012-f6d0-4883-938c-693ef554beea",
+    "data": [
+      {
+        "text": "Nên mua nệm nào ",
+        "userDefined": false
+      },
+      {
+        "text": "Dưới 5 triệu",
+        "alias": "price_range",
+        "meta": "@price_range",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  }
+] {
+  "id": "4a4967b6-0911-4051-89f2-4479bd72f576",
+  "name": "compare_product",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "",
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "4ab16e69-dc1e-47ef-8c7e-b63b06f66ae7",
+          "name": "mattress_type",
+          "required": false,
+          "dataType": "@mattress_type",
+          "value": "$mattress_type",
+          "defaultValue": "",
+          "isList": false,
+          "prompts": [],
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": []
+        },
+        {
+          "id": "0327db13-5007-43f8-8ba3-0c0cdb6b88ec",
+          "name": "brand",
+          "required": false,
+          "dataType": "@brand",
+          "value": "$brand",
+          "defaultValue": "",
+          "isList": false,
+          "prompts": [],
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": []
+        },
+        {
+          "id": "49bb404a-01a2-4abd-841e-8cc5270fdd1d",
+          "name": "price_range",
+          "required": false,
+          "dataType": "@price_range",
+          "value": "$price_range",
+          "defaultValue": "",
+          "isList": false,
+          "prompts": [],
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": []
+        }
+      ],
+      "messages": [
+        {
+          "type": "0",
+          "title": "",
+          "textToSpeech": "",
+          "lang": "vi",
+          "speech": [
+            "Chào bạn, sự khác biệt chính giữa các dòng sản phẩm này là cấu tạo và giá cả. Bảng so sánh cụ thể:"
+          ],
+          "condition": ""
+        }
+      ],
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
+} [
+  {
+    "id": "817e7aa4-1468-4e27-a6bc-adbdf9e6e311",
+    "data": [
+      {
+        "text": "Tôi bị ",
+        "userDefined": false
+      },
+      {
+        "text": "Đau lưng",
+        "alias": "sleep_purpose",
+        "meta": "@sleep_purpose",
+        "userDefined": true
+      },
+      {
+        "text": " thì nằm nệm nào tốt?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "33cfaf6f-2fce-4ec6-a185-dfa48374a84a",
+    "data": [
+      {
+        "text": "Bà xã tôi đang ",
+        "userDefined": false
+      },
+      {
+        "text": "Bà bầu",
+        "alias": "sleep_purpose",
+        "meta": "@sleep_purpose",
+        "userDefined": true
+      },
+      {
+        "text": " nên mua nệm nào?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "41c2c34e-0132-44b6-9054-e3fef6a4abd2",
+    "data": [
+      {
+        "text": "Tư vấn ",
+        "userDefined": false
+      },
+      {
+        "text": "Mát mẻ",
+        "alias": "sleep_purpose",
+        "meta": "@sleep_purpose",
+        "userDefined": true
+      },
+      {
+        "text": " loại ",
+        "userDefined": false
+      },
+      {
+        "text": "Cao cấp",
+        "alias": "price_range",
+        "meta": "@price_range",
+        "userDefined": true
+      },
+      {
+        "text": " đi shop",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "09d46894-118d-49a7-93e8-9cfb3f53005b",
+    "data": [
+      {
+        "text": "Người già hay ",
+        "userDefined": false
+      },
+      {
+        "text": "Đau lưng",
+        "alias": "sleep_purpose",
+        "meta": "@sleep_purpose",
+        "userDefined": true
+      },
+      {
+        "text": " cần ",
+        "userDefined": false
+      },
+      {
+        "text": "Cứng",
+        "alias": "firmness",
+        "meta": "@firmness",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  }
+] {
+  "id": "1de9b726-e869-4c47-b848-19ff2657cbe8",
+  "name": "consult_mattress",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "",
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "bf275f71-af5f-4457-afdb-f772e95652b8",
+          "name": "sleep_purpose",
+          "required": false,
+          "dataType": "@sleep_purpose",
+          "value": "$sleep_purpose",
+          "defaultValue": "",
+          "isList": false,
+          "prompts": [],
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": []
+        },
+        {
+          "id": "4593222b-3c65-4c6a-a5a9-77730fb8ed9b",
+          "name": "price_range",
+          "required": false,
+          "dataType": "@price_range",
+          "value": "$price_range",
+          "defaultValue": "",
+          "isList": false,
+          "prompts": [],
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": []
+        },
+        {
+          "id": "116bcef4-9523-4fe2-8c1b-537c5f6c341c",
+          "name": "firmness",
+          "required": false,
+          "dataType": "@firmness",
+          "value": "$firmness",
+          "defaultValue": "",
+          "isList": false,
+          "prompts": [],
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": []
+        }
+      ],
+      "messages": [
+        {
+          "type": "0",
+          "title": "",
+          "textToSpeech": "",
+          "lang": "vi",
+          "speech": [
+            "Thế thì bạn nên dùng các loại nệm sau đây cho tốt sức khỏe:"
+          ],
+          "condition": ""
+        }
+      ],
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
+} [
+  {
+    "id": "699161c4-57d5-4a93-838b-0429d66ecdaf",
+    "data": [
+      {
+        "text": "Phí ship nệm bao nhiêu?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "e4436d8a-1282-4865-af75-9672a11c86a4",
+    "data": [
+      {
+        "text": "Giao nệm tỉnh mất bao lâu?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "ab6a1cf3-ba9f-4528-b8ff-c46231635792",
+    "data": [
+      {
+        "text": "Nhà ở chung cư có khiêng nệm lên tận phòng không?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  }
+] {
+  "id": "58969690-a3ab-4cee-820e-872e257418cb",
+  "name": "delivery_info",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "",
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": "0",
+          "title": "",
+          "textToSpeech": "",
+          "lang": "vi",
+          "speech": [
+            "Chúng tôi có chính sách giao nệm tận phòng phí thấp (thậm chí Freeship) tại nhiều khu vực."
+          ],
+          "condition": ""
+        }
+      ],
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
+} [
+  {
+    "id": "30efbb77-6f17-4f0b-b677-8f5100920142",
+    "data": [
+      {
+        "text": "hfiwhifwhfiwhfih",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  }
+] {
+  "id": "26336957-f36d-43e2-825c-4f6edee3519f",
+  "name": "fallback",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "",
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": "0",
+          "title": "",
+          "textToSpeech": "",
+          "lang": "vi",
+          "speech": [
+            "Xin lỗi, tôi chưa hiểu rõ ý của bạn. Bạn có thể nói rõ hơn về việc muốn tìm nệm, chăn ga, hay kiểm tra đơn hàng không ạ?"
+          ],
+          "condition": ""
+        }
+      ],
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
+} [
+  {
+    "id": "2f489bb0-5a1f-4d04-8c0e-47ee014627cf",
+    "data": [
+      {
+        "text": "Shop có những hình thức thanh toán nào?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "b75f67d8-3cae-40cb-8bcb-92c145e9e04b",
+    "data": [
+      {
+        "text": "Trả góp được không?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "9caa101b-81d0-4a69-98de-7333e17a40a7",
+    "data": [
+      {
+        "text": "Chấp nhận thẻ tín dụng không?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  }
+] {
+  "id": "03d82c46-e83f-4edb-9d33-3c58f654871a",
+  "name": "payment_info",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "",
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": "0",
+          "title": "",
+          "textToSpeech": "",
+          "lang": "vi",
+          "speech": [
+            "Chúng tôi hỗ trợ COD (Thanh toán khi nhận hàng) và Payment qua Ví điện tử/Thẻ tín dụng VNPAY cực kỳ an toàn nha!"
+          ],
+          "condition": ""
+        }
+      ],
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
+} [
+  {
+    "id": "df51047d-0dcc-43f0-ad44-6c1ada3e0baa",
+    "data": [
+      {
+        "text": "Cho mình xem chi tiết ",
+        "userDefined": false
+      },
+      {
+        "text": "nệm lò xo",
+        "alias": "mattress_type",
+        "meta": "@mattress_type",
+        "userDefined": true
+      },
+      {
+        "text": " của ",
+        "userDefined": false
+      },
+      {
+        "text": "Kim Cương",
+        "alias": "brand",
+        "meta": "@brand",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "d51e2a00-c2a4-4781-91eb-9d1e8f99ceba",
+    "data": [
+      {
+        "text": "Nệm này có kích thước ",
+        "userDefined": false
+      },
+      {
+        "text": "180x200",
+        "alias": "size",
+        "meta": "@size",
+        "userDefined": true
+      },
+      {
+        "text": " không?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "e5ced0f3-cf9f-43ae-937b-fc9bf9d29e20",
+    "data": [
+      {
+        "text": "Sản phẩm này giá bao nhiêu?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  }
+] {
+  "id": "8b76e0f4-1013-49c2-9824-a1df579f1bfe",
+  "name": "product_detail",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "product_detail",
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "0b8f0419-5090-4532-8b24-5e5a19354346",
+          "name": "mattress_type",
+          "required": false,
+          "dataType": "@mattress_type",
+          "value": "$mattress_type",
+          "defaultValue": "",
+          "isList": false,
+          "prompts": [],
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": []
+        },
+        {
+          "id": "41e48502-1f37-488b-aadf-271e8262d084",
+          "name": "brand",
+          "required": false,
+          "dataType": "@brand",
+          "value": "$brand",
+          "defaultValue": "",
+          "isList": false,
+          "prompts": [],
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": []
+        },
+        {
+          "id": "c70b9129-adbc-43f2-9043-b63ed4a8c73a",
+          "name": "size",
+          "required": false,
+          "dataType": "@size",
+          "value": "$size",
+          "defaultValue": "",
+          "isList": false,
+          "prompts": [],
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": []
+        }
+      ],
+      "messages": [
+        {
+          "type": "0",
+          "title": "",
+          "textToSpeech": "",
+          "lang": "vi",
+          "speech": [
+            "Dưới đây là thông tin chi tiết:"
+          ],
+          "condition": ""
+        }
+      ],
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
+} [
+  {
+    "id": "908daf9a-8d9a-41d7-87e3-dfc3ddf77295",
+    "data": [
+      {
+        "text": "Tìm cho tôi ",
+        "userDefined": false
+      },
+      {
+        "text": "nệm",
+        "alias": "product_type",
+        "meta": "@product_type",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "14d537f6-1974-4641-b841-f7cfe61ebb4b",
+    "data": [
+      {
+        "text": "Shop có bán ",
+        "userDefined": false
+      },
+      {
+        "text": "chăn ga",
+        "alias": "product_type",
+        "meta": "@product_type",
+        "userDefined": true
+      },
+      {
+        "text": " không",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "d74c2b02-f52d-48de-ad5f-a9791accc866",
+    "data": [
+      {
+        "text": "Xem danh sách ",
+        "userDefined": false
+      },
+      {
+        "text": "nệm",
+        "alias": "product_type",
+        "meta": "@product_type",
+        "userDefined": true
+      },
+      {
+        "text": " hãng ",
+        "userDefined": false
+      },
+      {
+        "text": "Liên Á",
+        "alias": "brand",
+        "meta": "@brand",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  }
+] {
+  "id": "d893c8c7-55bb-437d-ab12-36ca39d64116",
+  "name": "search_product",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "search_product",
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "eea39612-4e41-4d30-bc6a-fb04832f7c5c",
+          "name": "product_type",
+          "required": false,
+          "dataType": "@product_type",
+          "value": "$product_type",
+          "defaultValue": "",
+          "isList": false,
+          "prompts": [],
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": []
+        },
+        {
+          "id": "8dbfb578-7afe-4987-96f9-db0de8769a7b",
+          "name": "brand",
+          "required": false,
+          "dataType": "@brand",
+          "value": "$brand",
+          "defaultValue": "",
+          "isList": false,
+          "prompts": [],
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": []
+        }
+      ],
+      "messages": [
+        {
+          "type": "0",
+          "title": "",
+          "textToSpeech": "",
+          "lang": "vi",
+          "speech": [
+            "Đây là các sản phẩm bạn đang tìm kiếm:"
+          ],
+          "condition": ""
+        }
+      ],
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
+} {
+  "id": "d893c8c7-55bb-437d-ab12-36ca39d64116",
+  "name": "search_product",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "search_product",
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "eea39612-4e41-4d30-bc6a-fb04832f7c5c",
+          "name": "product_type",
+          "required": false,
+          "dataType": "@product_type",
+          "value": "$product_type",
+          "defaultValue": "",
+          "isList": false,
+          "prompts": [],
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": []
+        },
+        {
+          "id": "8dbfb578-7afe-4987-96f9-db0de8769a7b",
+          "name": "brand",
+          "required": false,
+          "dataType": "@brand",
+          "value": "$brand",
+          "defaultValue": "",
+          "isList": false,
+          "prompts": [],
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": []
+        }
+      ],
+      "messages": [
+        {
+          "type": "0",
+          "title": "",
+          "textToSpeech": "",
+          "lang": "vi",
+          "speech": [
+            "Đây là các sản phẩm bạn đang tìm kiếm:"
+          ],
+          "condition": ""
+        }
+      ],
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
+} [
+  {
+    "id": "d7b5ca5e-1b3c-4781-b7c4-f3a35ba187cc",
+    "data": [
+      {
+        "text": "Chào shop",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "a60b9e33-b4ca-450d-a802-d286f1fdec1a",
+    "data": [
+      {
+        "text": "Hello",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "57c4f0e3-e280-4075-9535-2b00b2e8626f",
+    "data": [
+      {
+        "text": "Xin chào",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "98cfbbe1-83da-4346-a187-31cb6c8125bd",
+    "data": [
+      {
+        "text": "Hi b",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  }
+]{
+  "id": "c4229c42-5c87-42f0-ab74-8c79ed56492b",
+  "name": "welcome",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "",
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": "0",
+          "title": "",
+          "textToSpeech": "",
+          "lang": "vi",
+          "speech": [
+            "Xin chào! Tôi là Trợ lý AI của Cửa hàng Nệm & Chăn Ga. Tôi có thể giúp bạn tìm hiểu chi tiết sản phẩm, tư vấn chọn nệm theo tình trạng sức khỏe, hoặc giải quyết vấn đề về đơn hàng nhé!"
+          ],
+          "condition": ""
+        }
+      ],
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
+}

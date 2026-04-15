@@ -1,0 +1,47 @@
+[
+  {
+    "id": "cdefb83e-b8fc-4452-91ff-294bf0f1709a",
+    "data": [
+      {
+        "text": "Mình muốn mua nệm này",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "b64da8de-a239-4fde-bf68-0101367efb3c",
+    "data": [
+      {
+        "text": "Thêm vào giỏ hàng giúp mình",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "ed228e7e-417d-4277-aa3f-3cc311f6c894",
+    "data": [
+      {
+        "text": "Đặt mua ",
+        "userDefined": false
+      },
+      {
+        "text": "Nệm bông ép",
+        "alias": "mattress_type",
+        "meta": "@mattress_type",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  }
+]

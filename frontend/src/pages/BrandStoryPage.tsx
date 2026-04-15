@@ -3,7 +3,7 @@ import design from "../assets/brand-story/design.webp";
 
 const BrandStoryPage = () => {
   return (
-    <div className="bg-white">
+    <div className="bg-white dark:bg-gray-900 transition-colors duration-300">
       {/* Header Section */}
       <section className="relative h-[60vh] flex items-center justify-center text-center text-white">
         <div className="absolute inset-0 bg-black/40 z-10" />
@@ -13,7 +13,7 @@ const BrandStoryPage = () => {
           alt="Brand Background"
         />
         <div className="relative z-20 max-w-3xl px-4">
-          <h1 className="text-5xl md:text-6xl font-serif font-bold mb-6 tracking-tight">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 tracking-tight">
             Artisano
             <br className="sm:hidden" /> Bản Giao Hưởng Của Giấc Ngủ
           </h1>
@@ -28,10 +28,10 @@ const BrandStoryPage = () => {
       <section className="container mx-auto py-20 px-4">
         <div className="grid md:grid-cols-2 gap-16 items-center">
           <div className="order-2 md:order-1">
-            <h2 className="text-3xl md:text-4xl font-serif text-[#0a422e] font-bold mb-8">
+            <h2 className="text-3xl md:text-4xl text-[#0a422e] dark:text-green-400 font-bold mb-8 transition-colors duration-300">
               Khởi Nguồn Từ Một Triết Lý
             </h2>
-            <div className="space-y-6 text-gray-700 leading-relaxed text-justify">
+            <div className="space-y-6 text-gray-700 dark:text-gray-300 leading-relaxed text-justify transition-colors duration-300">
               <p>
                 ARTISANO không chỉ chế tạo nệm — chúng tôi kiến tạo những không
                 gian chữa lành. Trong nhịp sống hối hả, khi mọi thứ dường như
@@ -58,31 +58,31 @@ const BrandStoryPage = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="bg-[#f4f7f5] py-20">
+      <section className="bg-[#f4f7f5] dark:bg-gray-800 py-20 transition-colors duration-300">
         <div className="container mx-auto grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-16 text-center">
           <div>
-            <div className="text-5xl font-bold text-[#0a422e] mb-3">10+</div>
-            <div className="text-sm md:text-base text-gray-600 uppercase tracking-widest font-medium">
+            <div className="text-5xl font-bold text-[#0a422e] dark:text-green-400 mb-3 transition-colors duration-300">10+</div>
+            <div className="text-sm md:text-base text-gray-600 dark:text-gray-400 uppercase tracking-widest font-medium transition-colors duration-300">
               Năm đồng hành
             </div>
           </div>
           <div>
-            <div className="text-5xl font-bold text-[#0a422e] mb-3">
+            <div className="text-5xl font-bold text-[#0a422e] dark:text-green-400 mb-3 transition-colors duration-300">
               50.000+
             </div>
-            <div className="text-sm md:text-base text-gray-600 uppercase tracking-widest font-medium">
+            <div className="text-sm md:text-base text-gray-600 dark:text-gray-400 uppercase tracking-widest font-medium transition-colors duration-300">
               Gia đình tin dùng
             </div>
           </div>
           <div>
-            <div className="text-5xl font-bold text-[#0a422e] mb-3">100%</div>
-            <div className="text-sm md:text-base text-gray-600 uppercase tracking-widest font-medium">
+            <div className="text-5xl font-bold text-[#0a422e] dark:text-green-400 mb-3 transition-colors duration-300">100%</div>
+            <div className="text-sm md:text-base text-gray-600 dark:text-gray-400 uppercase tracking-widest font-medium transition-colors duration-300">
               Nguyên liệu đạt chuẩn an toàn
             </div>
           </div>
           <div>
-            <div className="text-5xl font-bold text-[#0a422e] mb-3">24/7</div>
-            <div className="text-sm md:text-base text-gray-600 uppercase tracking-widest font-medium">
+            <div className="text-5xl font-bold text-[#0a422e] dark:text-green-400 mb-3 transition-colors duration-300">24/7</div>
+            <div className="text-sm md:text-base text-gray-600 dark:text-gray-400 uppercase tracking-widest font-medium transition-colors duration-300">
               Hỗ trợ tận tâm
             </div>
           </div>

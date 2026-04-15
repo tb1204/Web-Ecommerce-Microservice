@@ -1,0 +1,31 @@
+[
+  {
+    "value": "Dưới 5 triệu",
+    "synonyms": [
+      "Dưới 5 triệu",
+      "dưới 5tr",
+      "rẻ",
+      "mức giá rẻ",
+      "giá sinh viên"
+    ]
+  },
+  {
+    "value": "5 đến 10 triệu",
+    "synonyms": [
+      "5 đến 10 triệu",
+      "từ 5 đến 10tr",
+      "tầm trung",
+      "vừa tiền"
+    ]
+  },
+  {
+    "value": "Trên 10 triệu",
+    "synonyms": [
+      "Trên 10 triệu",
+      "trên 10tr",
+      "cao cấp",
+      "hàng xịn",
+      "đắt tiền"
+    ]
+  }
+]

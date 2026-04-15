@@ -1,0 +1,41 @@
+[
+  {
+    "id": "2f489bb0-5a1f-4d04-8c0e-47ee014627cf",
+    "data": [
+      {
+        "text": "Shop có những hình thức thanh toán nào?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "b75f67d8-3cae-40cb-8bcb-92c145e9e04b",
+    "data": [
+      {
+        "text": "Trả góp được không?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "9caa101b-81d0-4a69-98de-7333e17a40a7",
+    "data": [
+      {
+        "text": "Chấp nhận thẻ tín dụng không?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  }
+]

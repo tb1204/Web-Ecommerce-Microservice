@@ -165,25 +165,24 @@ const Footer = () => {
               </h4>
               <ul className="space-y-2 text-sm md:text-base">
                 <li>
-                  <a href="#" className="hover:text-[#c2e6ba] transition">
+                  <Link to="/warranty-policy" className="hover:text-[#c2e6ba] transition">
                     Chính sách bảo hành
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-[#c2e6ba] transition">
+                  <Link to="/return-policy" className="hover:text-[#c2e6ba] transition">
                     Chính sách đổi trả
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-[#c2e6ba] transition">
+                  <Link to="/shipping-policy" className="hover:text-[#c2e6ba] transition">
                     Chính sách giao hàng
-                  </a>
+                  </Link>
                 </li>
-
                 <li>
-                  <a href="#" className="hover:text-[#c2e6ba] transition">
+                  <Link to="/privacy-policy" className="hover:text-[#c2e6ba] transition">
                     Chính sách bảo mật
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>

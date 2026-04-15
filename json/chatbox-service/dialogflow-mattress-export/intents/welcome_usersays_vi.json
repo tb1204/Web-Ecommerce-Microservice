@@ -1,0 +1,54 @@
+[
+  {
+    "id": "d7b5ca5e-1b3c-4781-b7c4-f3a35ba187cc",
+    "data": [
+      {
+        "text": "Chào shop",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "a60b9e33-b4ca-450d-a802-d286f1fdec1a",
+    "data": [
+      {
+        "text": "Hello",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "57c4f0e3-e280-4075-9535-2b00b2e8626f",
+    "data": [
+      {
+        "text": "Xin chào",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  },
+  {
+    "id": "98cfbbe1-83da-4346-a187-31cb6c8125bd",
+    "data": [
+      {
+        "text": "Hi b",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "vi",
+    "updated": 0
+  }
+]
