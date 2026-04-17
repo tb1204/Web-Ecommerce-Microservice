@@ -50,7 +50,7 @@ public class DialogflowService {
                     .intent("fallback")
                     .confidence(1.0)
                     .isFallback(false)
-                    .quickReplies(List.of("Chat với Admin"))
+                    .quickReplies(List.of())
                     .build();
         }
 
@@ -87,7 +87,8 @@ public class DialogflowService {
             Map intent = (Map) queryResult.get("intent");
             String intentName = intent != null ? (String) intent.get("displayName") : null;
 
-            Double confidence = (Double) queryResult.get("intentDetectionConfidence");
+            Object confObj = queryResult.get("intentDetectionConfidence");
+            Double confidence = confObj instanceof Number ? ((Number) confObj).doubleValue() : 0.0;
             boolean isFallback = intentName != null && intentName.toLowerCase().contains("fallback");
 
             // ── Parse quickReplies
@@ -107,10 +108,6 @@ public class DialogflowService {
                 }
             }
             
-            if (!quickReplies.contains("Chat với Admin")) {
-                quickReplies.add("Chat với Admin");
-            }
-
             log.info("Dialogflow trả lời: intent = {} | confidence = {}", intentName, confidence);
 
             return DialogflowResponse.builder()
@@ -129,7 +126,7 @@ public class DialogflowService {
                     .intent("fallback")
                     .confidence(1.0)
                     .isFallback(false)
-                    .quickReplies(List.of("Chat với Admin"))
+                    .quickReplies(List.of())
                     .build();
         }
     }

@@ -1,5 +1,3 @@
-
-
 //test xóa sản phẩm khi thanh toán thành công
 import { useState, useMemo, useEffect } from "react";
 import { IoMdClose } from "react-icons/io";
@@ -31,17 +29,6 @@ function CartDrawer() {
   );
   const cartLoading = useAppSelector((state) => state.cart.loading);
 
-  // const cartProducts: CartItem[] = cartItemsRaw.map((item) => ({
-  //   productId: item.productId,
-  //   variantId: item.variantId,
-  //   name: item.name,
-  //   price: Number(item.price) || 0,
-  //   quantity: Number(item.quantity) || 0,
-  //   image: item.image,
-  //   size: item.size,
-  //   thickness: item.thickness,
-  //   color: item.color,
-  // }));
   const cartProducts: CartProduct[] = cartItemsRaw.map((item) => ({
     productId: item.productId,
     variantId: item.variantId,
@@ -53,7 +40,7 @@ function CartDrawer() {
     thickness: item.thickness,
     color: item.color,
   }));
-  // ✅ selectedItems dùng key "productId::variantId" giống CartContents
+  // selectedItems dùng key "productId::variantId" giống CartContents
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
   const totalAllAmount = useMemo(() => {

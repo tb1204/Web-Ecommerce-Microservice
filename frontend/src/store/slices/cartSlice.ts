@@ -24,7 +24,7 @@ interface CartState {
   cart: Cart;
   selectedItems: string[];
   checkoutItems: CartProduct[];
-  isBuyNow: boolean; // ← THÊM: phân biệt mua ngay vs từ giỏ
+  isBuyNow: boolean;
   loading: boolean;
   error: string | null;
 }
@@ -35,8 +35,8 @@ const initialState: CartState = {
     products: [],
     totalPrice: 0,
   },
-  checkoutItems: [], // fix lỗi mua ngay
-  isBuyNow: false, //fix lỗi mua ngay
+  checkoutItems: [],
+  isBuyNow: false,
   selectedItems: [],
   loading: false,
   error: null,
@@ -49,7 +49,7 @@ const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080";
 const calcTotal = (products: CartProduct[]) =>
   products.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-// ✅ THÊM: map response từ backend (items/summary) → Cart (products/totalPrice)
+// THÊM: map response từ backend (items/summary) → Cart (products/totalPrice)
 const mapCartResponse = (res: any): Cart => ({
   products: (res.items ?? []).map((item: any) => ({
     productId: item.productId,
@@ -275,7 +275,7 @@ const cartSlice = createSlice({
       })
       .addCase(fetchCart.fulfilled, (state, action) => {
         state.loading = false;
-        state.cart = mapCartResponse(action.payload); // ✅ SỬA
+        state.cart = mapCartResponse(action.payload); //  SỬA
       })
       .addCase(fetchCart.rejected, (state, action) => {
         state.loading = false;
@@ -289,7 +289,7 @@ const cartSlice = createSlice({
       })
       .addCase(addToCart.fulfilled, (state, action) => {
         state.loading = false;
-        state.cart = mapCartResponse(action.payload); // ✅ SỬA
+        state.cart = mapCartResponse(action.payload);
       })
       .addCase(addToCart.rejected, (state, action) => {
         state.loading = false;
@@ -299,7 +299,7 @@ const cartSlice = createSlice({
     // updateCartQuantity
     builder
       .addCase(updateCartQuantity.fulfilled, (state, action) => {
-        state.cart = mapCartResponse(action.payload); // ✅ SỬA
+        state.cart = mapCartResponse(action.payload); //  SỬA
       })
       .addCase(updateCartQuantity.rejected, (state, action) => {
         state.error = action.payload as string;

@@ -318,7 +318,7 @@ services:
       CLOUDINARY_CLOUD_NAME: dkmzqfc8j
       CLOUDINARY_API_KEY: "135129715757794"
       CLOUDINARY_API_SECRET: MA5qNJ0VC-TrlsB9YGQyOU4wgDo
-      DIALOGFLOW_PROJECT_ID: your-dialogflow-project-id
+      DIALOGFLOW_PROJECT_ID: chatbox-xkyg
       DIALOGFLOW_LANGUAGE_CODE: vi
     depends_on:
       eureka-server:

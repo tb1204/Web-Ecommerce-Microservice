@@ -21,7 +21,7 @@ export interface Cart {
 
 interface CartContentsProps {
   cart: Cart;
-  selectedItems: string[]; // ✅ ĐỔI: dùng "productId::variantId" thay vì chỉ productId
+  selectedItems: string[];
   onToggleSelect: (key: string) => void;
   onUpdateQuantity: (
     productId: string,

@@ -185,6 +185,28 @@ public class ConversationService {
         return toResponse(conv);
     }
 
+    // ── Chuyển lại cho Bot ────────────────────────────────────────
+    public ConversationResponse enableBot(String conversationId) {
+        Conversation conversation = findById(conversationId);
+        if (conversation.getStatus() == ConversationStatus.CLOSED) {
+            throw new AppException(ErrorCode.CONVERSATION_CLOSED);
+        }
+        conversation.setAdminId(null);
+        conversation.setStatus(ConversationStatus.WAITING);
+        conversation.setHandoffToAdmin(false);
+        conversation.setBotEnabled(true);
+        conversation.setUpdatedAt(Instant.now());
+        Conversation saved = conversationRepository.save(conversation);
+
+        // Gửi system message thông báo
+        messageService.sendSystemMessage(
+                conversationId, "Đã chuyển lại cho Bot AI. Hãy tiếp tục nhắn tin!"
+        );
+
+        log.info("Bot re-enabled for conversation {}", conversationId);
+        return toResponse(saved);
+    }
+
     private ConversationResponse toResponse(Conversation c) {
         return ConversationResponse.builder()
                 .id(c.getId())

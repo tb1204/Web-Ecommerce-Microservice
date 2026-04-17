@@ -164,4 +164,46 @@ public class ConversationController {
     public ResponseEntity<ConversationResponse> toggleMute(@PathVariable String conversationId) {
         return ResponseEntity.ok(conversationService.toggleMute(conversationId));
     }
+
+    // ── User yêu cầu chuyển sang Admin ─────────────────────────────────────────
+    // PATCH /api/chat/conversations/{conversationId}/handoff
+    @PatchMapping("/{conversationId}/handoff")
+    public ResponseEntity<ConversationResponse> handoffToAdmin(
+            @PathVariable String conversationId,
+            @AuthenticationPrincipal Jwt jwt) {
+
+        // Gửi system message thông báo cho admin
+        MessageResponse sysMsg = messageService.sendBotMessage(
+                conversationId,
+                "Đã ngắt kết nối với Bot. Admin sẽ hỗ trợ bạn ngay.",
+                "handoff", 1.0, false, null
+        );
+        messagingTemplate.convertAndSend("/topic/conversation." + conversationId, sysMsg);
+
+        // Cập nhật trạng thái → chuyển cho Admin
+        ConversationResponse response = conversationService.adminJoin(conversationId, null);
+
+        // Broadcast cập nhật conversation (để frontend user cập nhật state)
+        messagingTemplate.convertAndSend("/topic/conversation." + conversationId, response);
+
+        // Thông báo cho Admin panel
+        messagingTemplate.convertAndSend("/topic/admin.newConversation", response);
+
+        return ResponseEntity.ok(response);
+    }
+
+    // ── User bật lại Bot AI ─────────────────────────────────────────────────────
+    // PATCH /api/chat/conversations/{conversationId}/enable-bot
+    @PatchMapping("/{conversationId}/enable-bot")
+    public ResponseEntity<ConversationResponse> enableBot(
+            @PathVariable String conversationId,
+            @AuthenticationPrincipal Jwt jwt) {
+
+        ConversationResponse response = conversationService.enableBot(conversationId);
+
+        // Broadcast cập nhật conversation để frontend cập nhật trạng thái ngay
+        messagingTemplate.convertAndSend("/topic/conversation." + conversationId, response);
+
+        return ResponseEntity.ok(response);
+    }
 }

@@ -49,6 +49,11 @@ public class OrderController {
         return ResponseEntity.ok(order);
     }
 
+    @GetMapping("/number/{orderNumber}")
+    public ResponseEntity<OrderResponse> getOrderByOrderNumber(@PathVariable String orderNumber) {
+        return ResponseEntity.ok(orderService.getOrderByOrderNumber(orderNumber));
+    }
+
     @PatchMapping("/status/{id}")
     public ResponseEntity<OrderResponse> updateStatus(@PathVariable String id, @RequestParam String status) {
         return ResponseEntity.ok(orderService.updateOrderStatus(id, status));

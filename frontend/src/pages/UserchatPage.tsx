@@ -773,6 +773,42 @@ const UserChatPage: React.FC<UserChatPageProps> = ({
     }
   };
 
+  // ── Chuyển sang Admin ───────────────────────────────────────────────────────
+  const handleRequestAdmin = async () => {
+    if (!conversation || sending) return;
+    if (conversation.handoffToAdmin) return; // đã ở chế độ admin rồi
+    const token = tokenRef.current;
+    try {
+      const res = await axios.patch(
+        `${API_BASE}/conversations/${conversation.id}/handoff`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } },
+      );
+      setConversation((prev) => (prev ? { ...prev, ...res.data } : prev));
+      toast.success("Đã yêu cầu Admin hỗ trợ!");
+    } catch (err) {
+      toast.error("Không thể chuyển sang Admin lúc này.");
+    }
+  };
+
+  // ── Chuyển lại Bot ───────────────────────────────────────────────────────────
+  const handleSwitchToBot = async () => {
+    if (!conversation || sending) return;
+    if (conversation.botEnabled) return; // đã ở chế độ bot rồi
+    const token = tokenRef.current;
+    try {
+      const res = await axios.patch(
+        `${API_BASE}/conversations/${conversation.id}/enable-bot`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } },
+      );
+      setConversation((prev) => (prev ? { ...prev, ...res.data } : prev));
+      toast.success("Đã chuyển sang Bot AI!");
+    } catch (err) {
+      toast.error("Không thể chuyển sang Bot lúc này.");
+    }
+  };
+
   const messageGroups = groupByDate(messages);
 
   if (!isUserLoaded || loading) {
@@ -1051,7 +1087,51 @@ const UserChatPage: React.FC<UserChatPageProps> = ({
 
       {/* ✅ Input Bar — dark mode */}
       <div className="sticky bottom-0 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border-t border-gray-100 dark:border-gray-800 shadow-lg z-10 transition-colors duration-300">
-        <div className="max-w-3xl mx-auto px-4 py-3">
+        <div className="max-w-3xl mx-auto px-4 pt-2 pb-3">
+
+          {/* ── Thanh chế độ chat (bot / admin) ── */}
+          {conversation && conversation.status !== "CLOSED" && (
+            <div className="flex items-center justify-between mb-2 px-1">
+              {/* Trạng thái hiện tại */}
+              <div className="flex items-center gap-1.5">
+                {conversation.botEnabled ? (
+                  <>
+                    <span className="inline-flex items-center gap-1 text-[11px] font-medium text-violet-600 dark:text-violet-400 bg-violet-50 dark:bg-violet-900/30 border border-violet-200 dark:border-violet-700 px-2.5 py-1 rounded-full">
+                      <Bot size={11} />
+                      Đang chat với Bot AI
+                    </span>
+                  </>
+                ) : (
+                  <span className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-200 dark:border-emerald-700 px-2.5 py-1 rounded-full">
+                    <ShieldCheck size={11} />
+                    Đang chờ Admin
+                  </span>
+                )}
+              </div>
+
+              {/* Nút chuyển đổi */}
+              {conversation.botEnabled ? (
+                <button
+                  id="btn-request-admin"
+                  onClick={handleRequestAdmin}
+                  className="flex items-center gap-1.5 text-[11px] font-semibold text-white bg-gradient-to-r from-emerald-500 to-teal-600 hover:brightness-105 active:scale-95 px-3 py-1.5 rounded-full shadow-sm transition-all"
+                >
+                  <ShieldCheck size={11} />
+                  Chat với Admin
+                </button>
+              ) : (
+                <button
+                  id="btn-switch-to-bot"
+                  onClick={handleSwitchToBot}
+                  className="flex items-center gap-1.5 text-[11px] font-semibold text-white bg-gradient-to-r from-violet-500 to-purple-600 hover:brightness-105 active:scale-95 px-3 py-1.5 rounded-full shadow-sm transition-all"
+                >
+                  <Bot size={11} />
+                  Chat với Bot
+                </button>
+              )}
+            </div>
+          )}
+
           {/* Preview ảnh/video */}
           {imagePreview && (
             <div className="mb-3 pl-14 pr-4">
