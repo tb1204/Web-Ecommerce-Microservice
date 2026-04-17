@@ -175,37 +175,6 @@ public class CartServiceImpl implements CartService {
         return toCartResponse(cartRepository.save(cart));
     }
 
-// //fake dữ liệu, chưa gọi tới http service
-//     @Override
-//     public CartResponse addItem(String userId, AddToCartRequest req) {
-//         Cart cart = getOrCreateCart(userId);
-//         List<CartItem> items = cart.getItems();
-//         CartItem existing = items.stream()
-//                 .filter(i -> i.getProductId().equals(req.getProductId())
-//                 && i.getVariantId().equals(req.getVariantId()))
-//                 .findFirst()
-//                 .orElse(null);
-//         if (existing != null) {
-//             existing.setQuantity(existing.getQuantity() + req.getQuantity());
-//             existing.setLineTotal(existing.getPrice() * existing.getQuantity());
-//         } else {
-//             // TODO: thay bằng gọi product-service sau khi Eureka chạy
-//             double lineTotal = 999000 * req.getQuantity();
-//             items.add(CartItem.builder()
-//                     .productId(req.getProductId())
-//                     .variantId(req.getVariantId())
-//                     .name("Test Product")
-//                     .image("https://test.com/image.jpg")
-//                     .quantity(req.getQuantity())
-//                     .price(999000)
-//                     .lineTotal(lineTotal)
-//                     .size("160x200cm")
-//                     .thickness("10cm")
-//                     .color(null)
-//                     .build());
-//         }
-//         return toCartResponse(cartRepository.save(cart));
-//     }
     // ── UPDATE quantity ──────────────────────────────────────────────
     @Override
     public CartResponse updateQuantity(String userId, UpdateQuantityRequest req) {

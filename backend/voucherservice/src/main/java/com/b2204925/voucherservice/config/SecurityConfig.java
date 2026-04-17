@@ -58,12 +58,10 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                // Cho phép GET danh sách ACTIVE và validate không cần đăng nhập
                 .requestMatchers(HttpMethod.GET, "/api/vouchers").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/vouchers/validate").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/vouchers/apply").permitAll() // validate voucher (không ghi DB)
                 .requestMatchers(HttpMethod.POST, "/api/vouchers/confirm-usage").permitAll() // ghi nhận usage sau đặt hàng
-                // Tất cả còn lại phải authenticated
                 .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2

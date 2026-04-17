@@ -1,11 +1,3 @@
-//package com.b2204925.cartservice.entity;
-//
-//public class Cart {
-//}
-// ═══════════════════════════════════════════════════════
-// ENTITY
-// ═══════════════════════════════════════════════════════
-// entity/Cart.java
 package com.b2204925.cartservice.entity;
 
 import lombok.*;

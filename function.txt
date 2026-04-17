@@ -1,0 +1,58 @@
+1. Chào hỏi & Giới thiệu (Welcome)
+
+Tự động chào khi khách hàng bắt đầu trò chuyện.
+Giới thiệu ngắn gọn về chatbot và các dịch vụ hỗ trợ (tư vấn sản phẩm, tra cứu đơn hàng, chính sách…).
+
+2. Tìm kiếm & Xem sản phẩm (Search Product)
+
+Tìm sản phẩm theo loại: Nệm, Chăn ga gối đệm, Gối, Topper, Phụ kiện.
+Tìm theo thương hiệu (Kymdan, Liên Á, Vạn Thành, Kim Cương…).
+Kết hợp nhiều điều kiện (ví dụ: nệm Liên Á, nệm dưới 10 triệu…).
+Hiển thị danh sách sản phẩm phù hợp.
+
+3. Xem chi tiết sản phẩm (Product Detail)
+
+Xem thông tin chi tiết một sản phẩm cụ thể.
+Hỗ trợ hỏi theo thương hiệu + loại nệm (ví dụ: nệm lò xo Kim Cương).
+Hỏi kích thước, màu sắc, giá tiền, chất liệu.
+
+4. Tư vấn chọn nệm phù hợp 
+Tư vấn theo độ cứng mong muốn (Mềm, Trung bình, Cứng).
+Tư vấn theo ngân sách (Dưới 5 triệu, 5-10 triệu, Trên 10 triệu).
+
+5. So sánh sản phẩm (Compare Product)
+
+So sánh giữa các loại nệm (cao su vs lò xo vs foam…).
+So sánh giữa các thương hiệu (Kymdan vs Liên Á vs Vạn Thành…).
+So sánh theo mức giá.
+
+7. Tra cứu đơn hàng (Check Order)
+
+Kiểm tra tình trạng đơn hàng theo mã đơn.
+Xem đơn hàng đang ở đâu, thời gian giao dự kiến.
+
+8. Thông tin khuyến mãi(flashsale) & voucher 
+
+Hỏi về chương trình khuyến mãi, giảm giá, voucher hiện có.
+
+
+9. Chính sách đổi trả & bảo hành (Return & Warranty)
+
+Tư vấn chính sách đổi trả (100 ngày nếu lún xẹp…).
+Thời gian bảo hành nệm.
+Điều kiện huỷ đơn hàng.
+
+10. Thông tin vận chuyển & giao hàng (Delivery Info)
+
+Phí ship theo khu vực.
+Thời gian giao hàng (nội thành, tỉnh lẻ).
+Dịch vụ khiêng nệm lên tận phòng (chung cư…).
+
+11. Phương thức thanh toán (Payment Info)
+
+Các hình thức thanh toán: COD, chuyển khoản, thẻ tín dụng, ví điện tử (VNPAY…).
+Hỗ trợ trả góp (nếu có).
+
+12. Xử lý trường hợp không hiểu (Fallback)
+
+Khi không nhận diện được ý khách hàng, chatbot sẽ hỏi lại lịch sự và gợi ý các chức năng chính.

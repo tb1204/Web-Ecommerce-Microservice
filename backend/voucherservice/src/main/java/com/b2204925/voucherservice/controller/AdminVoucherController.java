@@ -26,21 +26,18 @@ public class AdminVoucherController {
     private final VoucherService voucherService;
 
     // GET /api/admin/vouchers — Lấy tất cả
-    // @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping
     public ResponseEntity<List<VoucherResponse>> getAll() {
         return ResponseEntity.ok(voucherService.getAllVouchers());
     }
 
     // GET /api/admin/vouchers/{id} — Lấy chi tiết 1 voucher
-    // @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<VoucherResponse> getById(@PathVariable String id) {
         return ResponseEntity.ok(voucherService.getById(id));
     }
 
     // POST /api/admin/vouchers — Tạo mới
-    // @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PostMapping
     public ResponseEntity<VoucherResponse> create(
             @Valid @RequestBody CreateVoucherRequest req) {
@@ -49,7 +46,6 @@ public class AdminVoucherController {
     }
 
     // PUT /api/admin/vouchers/{id} — Cập nhật
-    // @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<VoucherResponse> update(
             @PathVariable String id,
@@ -58,7 +54,6 @@ public class AdminVoucherController {
     }
 
     // DELETE /api/admin/vouchers/{id} — Xóa
-    // @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable String id) {
         voucherService.deleteVoucher(id);
@@ -66,13 +61,11 @@ public class AdminVoucherController {
     }
 
     // PATCH /api/admin/vouchers/{id}/toggle-status — Vô hiệu / Khôi phục
-    // @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PatchMapping("/{id}/toggle-status")
     public ResponseEntity<VoucherResponse> toggleStatus(@PathVariable String id) {
         return ResponseEntity.ok(voucherService.toggleStatus(id));
     }
 
-    // @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("/stats")
     public ResponseEntity<VoucherStats> getStats() {
         return ResponseEntity.ok(voucherService.getVoucherStats());

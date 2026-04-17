@@ -76,6 +76,13 @@
             <optional>true</optional>
         </dependency>
 
+        <!-- Google Auth Library để tạo Token REST API -->
+        <dependency>
+            <groupId>com.google.auth</groupId>
+            <artifactId>google-auth-library-oauth2-http</artifactId>
+            <version>1.23.0</version>
+        </dependency>
+
         <!-- Test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

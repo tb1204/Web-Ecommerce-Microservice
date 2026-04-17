@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useAuth, useUser } from "@clerk/clerk-react";
 import axios from "axios";
@@ -104,6 +102,8 @@ const UserChatPage: React.FC<UserChatPageProps> = ({
   const { getToken } = useAuth();
   const { user: clerkUser, isLoaded: isUserLoaded } = useUser();
 
+  const currentSubRef = useRef<{ unsubscribe: () => void } | null>(null);
+
   const [conversation, setConversation] = useState<Conversation | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [text, setText] = useState("");
@@ -194,13 +194,15 @@ const UserChatPage: React.FC<UserChatPageProps> = ({
                     m.senderRole === incoming.senderRole
                   ) {
                     const isMediaMatch =
-                      (incoming.type === "IMAGE" || incoming.type === "VIDEO") &&
+                      (incoming.type === "IMAGE" ||
+                        incoming.type === "VIDEO") &&
                       m.mediaUrl &&
                       incoming.mediaUrl &&
                       m.mediaUrl === incoming.mediaUrl;
 
                     const isTextMatch =
-                      incoming.type === "TEXT" && m.content === incoming.content;
+                      incoming.type === "TEXT" &&
+                      m.content === incoming.content;
 
                     if (isMediaMatch || isTextMatch) {
                       wasReplaced = true;
@@ -249,52 +251,230 @@ const UserChatPage: React.FC<UserChatPageProps> = ({
   );
 
   // ✅ FIX: Tạo conversation lazily — chỉ tạo khi cần (khi user send tin đầu tiên)
-  const ensureConversation = useCallback(async (firstText?: string): Promise<Conversation | null> => {
-    const token = tokenRef.current;
-    if (!token) return null;
+  // const ensureConversation = useCallback(async (firstText?: string): Promise<Conversation | null> => {
+  //   const token = tokenRef.current;
+  //   if (!token) return null;
 
-    // Nếu đã có conversation rồi thì dùng luôn
-    if (conversation) return conversation;
+  //   // Nếu đã có conversation rồi thì dùng luôn
+  //   if (conversation) return conversation;
 
-    const displayName =
-      clerkUser?.fullName ||
-      [clerkUser?.firstName, clerkUser?.lastName]
-        .filter(Boolean)
-        .join(" ") ||
-      clerkUser?.username ||
-      "Khách hàng";
+  //   const displayName =
+  //     clerkUser?.fullName ||
+  //     [clerkUser?.firstName, clerkUser?.lastName]
+  //       .filter(Boolean)
+  //       .join(" ") ||
+  //     clerkUser?.username ||
+  //     "Khách hàng";
 
-    try {
-      const res = await axios.post(
-        `${API_BASE}/conversations`,
-        {
-          firstMessage: firstText || null, // Gửi trực tiếp tin nhắn đầu qua Backend POST
-          userDisplayName: displayName,
-          userAvatarUrl: clerkUser?.imageUrl || null,
+  //   try {
+  //     const res = await axios.post(
+  //       `${API_BASE}/conversations`,
+  //       {
+  //         firstMessage: firstText || null, // Gửi trực tiếp tin nhắn đầu qua Backend POST
+  //         userDisplayName: displayName,
+  //         userAvatarUrl: clerkUser?.imageUrl || null,
+  //       },
+  //       { headers: { Authorization: `Bearer ${token}` } },
+  //     );
+  //     const newConv: Conversation = res.data;
+  //     setConversation(newConv);
+  //     convIdRef.current = newConv.id;
+
+  //     // ✅ Fetch ngay danh sách tin nhắn để lấy tin đầu tiên vừa tạo (nếu có) từ DB
+  //     const msgRes = await axios.get(
+  //       `${API_BASE}/messages/${newConv.id}`,
+  //       { headers: { Authorization: `Bearer ${token}` } }
+  //     );
+  //     setMessages(Array.isArray(msgRes.data) ? msgRes.data : []);
+  //     setTimeout(() => scrollToBottom(false), 100);
+
+  //     // Kết nối WebSocket cho conversation mới
+  //     connectWebSocket(newConv.id, token);
+  //     return newConv;
+  //   } catch (err) {
+  //     console.error("Tạo conversation thất bại:", err);
+  //     return null;
+  //   }
+  // }, [conversation, clerkUser, connectWebSocket, scrollToBottom]);
+  // Tách riêng logic subscribe để reuse
+  const subscribeConv = useCallback(
+    (convId: string) => {
+      // Unsubscribe kênh cũ nếu có
+      if (currentSubRef.current) {
+        currentSubRef.current.unsubscribe();
+        currentSubRef.current = null;
+      }
+
+      const sub = stompClientRef.current?.subscribe(
+        `/topic/conversation.${convId}`,
+        (frame) => {
+          try {
+            const incoming = JSON.parse(frame.body);
+
+            // Nếu là ConversationResponse (có status + userId) → cập nhật conversation
+            if (
+              incoming.status !== undefined &&
+              incoming.userId !== undefined
+            ) {
+              setConversation((prev) =>
+                prev ? { ...prev, ...incoming } : prev,
+              );
+              return;
+            }
+
+            // Là tin nhắn → xử lý dedup + thêm vào danh sách
+            setMessages((prev) => {
+              // 1. Nếu đã có tin nhắn thật với ID này, bỏ qua
+              const isDup = prev.some(
+                (m) => m.id === incoming.id && !m.id.startsWith("temp_"),
+              );
+              if (isDup) return prev;
+
+              // 2. Thay thế đúng 1 tin nhắn temp (optimistic) khớp nhất
+              let wasReplaced = false;
+              const replaced = prev.map((m) => {
+                if (
+                  !wasReplaced &&
+                  m.id.startsWith("temp_") &&
+                  m.senderRole === incoming.senderRole
+                ) {
+                  const isMediaMatch =
+                    (incoming.type === "IMAGE" || incoming.type === "VIDEO") &&
+                    m.mediaUrl &&
+                    incoming.mediaUrl &&
+                    m.mediaUrl === incoming.mediaUrl;
+
+                  const isTextMatch =
+                    incoming.type === "TEXT" && m.content === incoming.content;
+
+                  if (isMediaMatch || isTextMatch) {
+                    wasReplaced = true;
+                    return incoming;
+                  }
+                }
+                return m;
+              });
+
+              return wasReplaced ? replaced : [...prev, incoming];
+            });
+
+            // Nếu là tin nhắn từ admin/bot → gọi callback badge
+            if (incoming.senderRole !== "USER") {
+              onNewAdminMessage?.();
+            }
+
+            // Nếu admin/bot gửi và user đang scroll lên → hiện notification
+            if (
+              incoming.senderRole !== "USER" &&
+              incoming.type === "TEXT" &&
+              !isAtBottom()
+            ) {
+              const prefix = incoming.senderRole === "BOT" ? "🤖" : "💬";
+              const preview = `${prefix} ${incoming.content.slice(0, 50)}${
+                incoming.content.length > 50 ? "..." : ""
+              }`;
+              showNewMessageNotif(preview);
+            } else {
+              setTimeout(() => scrollToBottom(), 50);
+            }
+          } catch (e) {
+            console.error("Parse WS message error:", e);
+          }
         },
-        { headers: { Authorization: `Bearer ${token}` } },
       );
-      const newConv: Conversation = res.data;
-      setConversation(newConv);
-      convIdRef.current = newConv.id;
-      
-      // ✅ Fetch ngay danh sách tin nhắn để lấy tin đầu tiên vừa tạo (nếu có) từ DB
-      const msgRes = await axios.get(
-        `${API_BASE}/messages/${newConv.id}`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      setMessages(Array.isArray(msgRes.data) ? msgRes.data : []);
-      setTimeout(() => scrollToBottom(false), 100);
 
-      // Kết nối WebSocket cho conversation mới
-      connectWebSocket(newConv.id, token);
-      return newConv;
-    } catch (err) {
-      console.error("Tạo conversation thất bại:", err);
-      return null;
-    }
-  }, [conversation, clerkUser, connectWebSocket, scrollToBottom]);
+      currentSubRef.current = sub ?? null;
+    },
+    [isAtBottom, onNewAdminMessage, scrollToBottom, showNewMessageNotif],
+  );
 
+  // Connect WS và chờ đến khi đã subscribe xong mới resolve
+  const connectWebSocketAndWait = useCallback(
+    (convId: string, token: string): Promise<void> => {
+      return new Promise((resolve) => {
+        // Nếu đã connected rồi → subscribe ngay và resolve
+        if (stompClientRef.current?.connected) {
+          subscribeConv(convId);
+          resolve();
+          return;
+        }
+
+        // Nếu client đang tồn tại nhưng chưa connected → deactivate trước
+        if (stompClientRef.current) {
+          stompClientRef.current.deactivate();
+          stompClientRef.current = null;
+        }
+
+        const client = new Client({
+          webSocketFactory: () => new SockJS(WS_URL),
+          connectHeaders: { Authorization: `Bearer ${token}` },
+          reconnectDelay: 5000,
+
+          onConnect: () => {
+            console.log("✅ STOMP Connected (connectWebSocketAndWait)");
+            subscribeConv(convId);
+            resolve(); // ✅ Chỉ resolve sau khi đã subscribe xong
+          },
+
+          onDisconnect: () => {
+            console.log("🔌 STOMP Disconnected");
+          },
+
+          onStompError: (frame) => {
+            console.error("STOMP error:", frame.headers["message"]);
+            resolve(); // resolve anyway để không block UI
+          },
+        });
+
+        client.activate();
+        stompClientRef.current = client;
+      });
+    },
+    [subscribeConv],
+  );
+  //fix AI
+  const ensureConversation = useCallback(
+    async (firstText?: string): Promise<Conversation | null> => {
+      const token = tokenRef.current;
+      if (!token) return null;
+      if (conversation) return conversation;
+
+      const displayName =
+        clerkUser?.fullName || clerkUser?.username || "Khách hàng";
+
+      try {
+        const res = await axios.post(
+          `${API_BASE}/conversations`,
+          {
+            firstMessage: firstText || null,
+            userDisplayName: displayName,
+            userAvatarUrl: clerkUser?.imageUrl || null,
+          },
+          { headers: { Authorization: `Bearer ${token}` } },
+        );
+
+        const newConv: Conversation = res.data;
+        setConversation(newConv);
+        convIdRef.current = newConv.id;
+
+        // ✅ Connect WS TRƯỚC, subscribe TRƯỚC, rồi mới fetch messages
+        await connectWebSocketAndWait(newConv.id, token);
+
+        // Sau khi đã subscribe xong mới fetch — lúc này bot message đã được cache bởi sub
+        const msgRes = await axios.get(`${API_BASE}/messages/${newConv.id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setMessages(Array.isArray(msgRes.data) ? msgRes.data : []);
+        setTimeout(() => scrollToBottom(false), 100);
+
+        return newConv;
+      } catch (err) {
+        console.error("Tạo conversation thất bại:", err);
+        return null;
+      }
+    },
+    [conversation, clerkUser, scrollToBottom],
+  );
   useEffect(() => {
     if (!isUserLoaded) return;
     if (initCalledRef.current) return;
@@ -311,7 +491,9 @@ const UserChatPage: React.FC<UserChatPageProps> = ({
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        const convList: Conversation[] = Array.isArray(convRes.data) ? convRes.data : [];
+        const convList: Conversation[] = Array.isArray(convRes.data)
+          ? convRes.data
+          : [];
         const openConv = convList.find(
           (c) => c.status === "WAITING" || c.status === "ACTIVE",
         );
@@ -422,7 +604,7 @@ const UserChatPage: React.FC<UserChatPageProps> = ({
         return;
       }
       isFirstTextMessage = !!msgText; // Đã đẩy nội dung qua HTTP POST
-      
+
       // Xóa text trên giao diện luôn
       if (isFirstTextMessage) {
         setText("");
@@ -456,7 +638,7 @@ const UserChatPage: React.FC<UserChatPageProps> = ({
         );
         const { url, thumbnailUrl, mimeType, mediaSize, duration } =
           uploadRes.data;
-          
+
         stompClientRef.current?.publish({
           destination: "/app/chat.send",
           body: JSON.stringify({
@@ -470,7 +652,7 @@ const UserChatPage: React.FC<UserChatPageProps> = ({
             duration: isVideo ? duration : undefined,
           }),
         });
-        
+
         setMessages((prev) => [
           ...prev,
           {
@@ -490,12 +672,12 @@ const UserChatPage: React.FC<UserChatPageProps> = ({
         ]);
         removeImage();
       }
-      
+
       // 2. Xử lý phần text, CHỈ PUBLISH nến nó KHÔNG phải tin nhắn khởi tạo
       if (msgText && !isFirstTextMessage) {
         setText("");
         if (textareaRef.current) textareaRef.current.style.height = "auto";
-        
+
         setMessages((prev) => [
           ...prev,
           {
@@ -509,7 +691,7 @@ const UserChatPage: React.FC<UserChatPageProps> = ({
             createdAt: new Date().toISOString(),
           },
         ]);
-        
+
         stompClientRef.current?.publish({
           destination: "/app/chat.send",
           body: JSON.stringify({
@@ -519,7 +701,7 @@ const UserChatPage: React.FC<UserChatPageProps> = ({
           }),
         });
       }
-      
+
       scrollToBottom();
     } catch (err) {
       console.error("Send error:", err);
@@ -555,9 +737,9 @@ const UserChatPage: React.FC<UserChatPageProps> = ({
       setSending(false);
       return;
     }
-    
+
     const convId = activeConv.id;
-    
+
     try {
       // ✅ Chỉ publish STOMP nếu đây KO phải tin nhắn đầu (đã gửi bằng HTTP)
       if (!isFirstMessage) {

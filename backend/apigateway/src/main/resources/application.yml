@@ -143,7 +143,7 @@ spring:
                 fallbackUri: forward:/fallback/voucherservice
 
         # Ví dụ cho chatservice (limit chặt vì nhạy cảm)
-        #chuẩn code ban đầu 
+        #chuẩn code ban đầu
         # - id: chatservice
         #   uri: lb://chat-service
         #   predicates:
@@ -159,10 +159,9 @@ spring:
         #         name: defaultCB
         #         fallbackUri: forward:/fallback/chatservice
 
-
-#
-#
-# 1. Route cho HTTP API (REST + SockJS info)
+        #
+        #
+        # 1. Route cho HTTP API (REST + SockJS info)
         - id: chatservice-http
           uri: lb://chat-service
           predicates:
@@ -185,8 +184,12 @@ spring:
             - Path=/ws/**
           # Không dùng CircuitBreaker hay RateLimiter cho WebSocket
 
-#
-#                
+        # 1. Route cho HTTP API (REST + SockJS info)
+        - id: dialogflow-webhook
+          uri: lb://chat-service
+          predicates:
+            - Path=/api/chat/dialogflow/webhook
+        #
         # Ví dụ cho reviewservice (limit chặt vì nhạy cảm)
         - id: reviewservice
           uri: lb://review-service

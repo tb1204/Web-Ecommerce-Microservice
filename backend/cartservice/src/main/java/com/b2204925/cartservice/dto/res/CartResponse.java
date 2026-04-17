@@ -20,10 +20,7 @@ public class CartResponse {
     private String userId;
     private List<CartItemResponse> items;
     private CartSummary summary;
-    private String note;
+    private String note; //bỏ
     private String status;
-    // private int totalQty;      
-    //  //tổng số lượng — tính động
-    // private double totalPrice;   
-    // //tổng tiền — tính động
+
 }

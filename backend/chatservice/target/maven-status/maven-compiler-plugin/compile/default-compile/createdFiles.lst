@@ -6,11 +6,13 @@ com\b2204925\chatservice\dto\res\MessageResponse$MessageResponseBuilder.class
 com\b2204925\chatservice\entity\Message.class
 com\b2204925\chatservice\dto\res\DialogflowResponse.class
 com\b2204925\chatservice\entity\MessageMetadata.class
+com\b2204925\chatservice\config\RestTemplateConfig.class
 com\b2204925\chatservice\dto\req\CreateConversationRequest.class
 com\b2204925\chatservice\dto\res\MessageResponse.class
 com\b2204925\chatservice\entity\Conversation$ConversationBuilder.class
 com\b2204925\chatservice\exception\ErrorCode.class
 com\b2204925\chatservice\service\ConversationService.class
+com\b2204925\chatservice\controller\DialogflowWebhookController.class
 com\b2204925\chatservice\repository\ConversationRepository.class
 com\b2204925\chatservice\config\SecurityConfig.class
 com\b2204925\chatservice\config\CustomJwtConverter.class

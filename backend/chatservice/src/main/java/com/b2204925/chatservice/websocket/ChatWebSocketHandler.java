@@ -105,7 +105,27 @@ public class ChatWebSocketHandler {
                     && Boolean.FALSE.equals(conv.getHandoffToAdmin())
                     && req.getType() == MessageType.TEXT) {
 
-                handleBotResponse(conv, req.getContent());
+                if ("Chat với Admin".equalsIgnoreCase(req.getContent().trim())) {
+                    log.info("User requested handoff to admin for conversation {}", conv.getId());
+                    
+                    // Gửi tin nhắn thông báo cho user trước khi chuyển
+                    MessageResponse botConfirmMsg = messageService.sendBotMessage(
+                            conv.getId(),
+                            "Đã ngắt kết nối với Bot, Admin sẽ hỗ trợ bạn ngay.",
+                            "handoff",
+                            1.0,
+                            false,
+                            null
+                    );
+                    messagingTemplate.convertAndSend("/topic/conversation." + conv.getId(), botConfirmMsg);
+                    
+                    // Chuyển sang admin
+                    conversationService.adminJoin(conv.getId(), null);
+                    messagingTemplate.convertAndSend("/topic/admin.newConversation",
+                            conversationService.getById(conv.getId()));
+                } else {
+                    handleBotResponse(conv, req.getContent());
+                }
             }
 
             log.info("Message sent successfully to conversation {}", req.getConversationId());

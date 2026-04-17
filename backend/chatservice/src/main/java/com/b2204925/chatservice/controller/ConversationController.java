@@ -2,11 +2,18 @@ package com.b2204925.chatservice.controller;
 
 import com.b2204925.chatservice.dto.req.CreateConversationRequest;
 import com.b2204925.chatservice.dto.res.ConversationResponse;
+import com.b2204925.chatservice.dto.res.DialogflowResponse;
+import com.b2204925.chatservice.dto.res.MessageResponse;
 import com.b2204925.chatservice.entity.ConversationStatus;
+import com.b2204925.chatservice.entity.SenderRole;
 import com.b2204925.chatservice.service.ConversationService;
+import com.b2204925.chatservice.service.DialogflowService;
+import com.b2204925.chatservice.service.MessageService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -17,9 +24,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/chat/conversations")
 @RequiredArgsConstructor
+@Slf4j
 public class ConversationController {
 
     private final ConversationService conversationService;
+    private final DialogflowService dialogflowService;
+    private final MessageService messageService;
+    private final SimpMessagingTemplate messagingTemplate;
 
     // User tạo phòng chat mới
     // POST /api/chat/conversations
@@ -29,7 +40,71 @@ public class ConversationController {
             @RequestBody CreateConversationRequest req) {
 
         String userId = jwt.getSubject();
+
+        // 1. Tạo phòng chat (mặc định ConversationService sẽ lưu lại tin nhắn User)
         ConversationResponse response = conversationService.createConversation(userId, req);
+
+        // 2. NGAY LẬP TỨC phản hồi tin nhắn đầu tiên bằng Bot (vốn bị bỏ lọt)
+        if (req.getFirstMessage() != null && !req.getFirstMessage().isBlank()) {
+            String firstMsg = req.getFirstMessage().trim();
+
+            try {
+                if ("Chat với Admin".equalsIgnoreCase(firstMsg)) {
+                    MessageResponse botConfirmMsg = messageService.sendBotMessage(
+                            response.getId(),
+                            "Đã ngắt kết nối với Bot, Admin sẽ hỗ trợ bạn ngay.",
+                            "handoff",
+                            1.0,
+                            false,
+                            null
+                    );
+                    messagingTemplate.convertAndSend("/topic/conversation." + response.getId(), botConfirmMsg);
+                    conversationService.adminJoin(response.getId(), null);
+                    messagingTemplate.convertAndSend("/topic/admin.newConversation",
+                            conversationService.getById(response.getId()));
+                } else {
+                    // Lấy sessionId thực thụ của phòng chat
+                    String botSessionId = conversationService.findById(response.getId()).getBotSessionId();
+                    // Lưu ý: Ta dùng luôn ID của conversation làm SessionId để đồng nhất!
+
+                    DialogflowResponse botResp = dialogflowService.detectIntent(botSessionId, firstMsg);
+
+                    MessageResponse botMsg = messageService.sendBotMessage(
+                            response.getId(),
+                            botResp.getResponseText(),
+                            botResp.getIntent(),
+                            botResp.getConfidence(),
+                            botResp.getIsFallback(),
+                            botResp.getQuickReplies()
+                    );
+
+                    conversationService.updateLastMessage(
+                            response.getId(),
+                            "[Bot]: " + botResp.getResponseText(),
+                            SenderRole.BOT
+                    );
+
+                    // Đẩy ngược lại WebSocket, frontend sẽ bắt được (hoặc Rest API GET Messages bắt được)
+                    messagingTemplate.convertAndSend("/topic/conversation." + response.getId(), botMsg);
+
+                    if (Boolean.TRUE.equals(botResp.getIsFallback())) {
+                        conversationService.adminJoin(response.getId(), null);
+                        messagingTemplate.convertAndSend("/topic/admin.newConversation",
+                                conversationService.getById(response.getId()));
+                    }
+                }
+            } catch (Exception e) {
+                log.error("Xử lý lỗi cho tín hiệu Bot đầu tiên: ", e);
+                try {
+                    conversationService.adminJoin(response.getId(), null);
+                    messagingTemplate.convertAndSend("/topic/admin.newConversation",
+                            conversationService.getById(response.getId()));
+                } catch (Exception ex) {
+                    log.error("Failed to fallback first message: ", ex);
+                }
+            }
+        }
+
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
@@ -38,7 +113,6 @@ public class ConversationController {
     @GetMapping("/my")
     public ResponseEntity<List<ConversationResponse>> getMyConversations(
             @AuthenticationPrincipal Jwt jwt) {
-
         String userId = jwt.getSubject();
         return ResponseEntity.ok(conversationService.getUserConversations(userId));
     }
@@ -48,7 +122,6 @@ public class ConversationController {
     @GetMapping("/{conversationId}")
     public ResponseEntity<ConversationResponse> getById(
             @PathVariable String conversationId) {
-
         return ResponseEntity.ok(conversationService.getById(conversationId));
     }
 
@@ -58,7 +131,6 @@ public class ConversationController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<ConversationResponse>> getByStatus(
             @RequestParam(defaultValue = "WAITING") ConversationStatus status) {
-
         return ResponseEntity.ok(conversationService.getConversationsByStatus(status));
     }
 
@@ -66,10 +138,8 @@ public class ConversationController {
     @PatchMapping("/{conversationId}/close")
     public ResponseEntity<ConversationResponse> close(
             @PathVariable String conversationId) {
-
         return ResponseEntity.ok(conversationService.closeConversation(conversationId));
     }
-    // PATCH /api/chat/conversations/{id}/read
 
     @PatchMapping("/{conversationId}/read")
     public ResponseEntity<Void> markRead(
@@ -77,7 +147,6 @@ public class ConversationController {
             @AuthenticationPrincipal Jwt jwt) {
 
         String role = jwt.getClaimAsString("role");
-
         if ("admin".equalsIgnoreCase(role)) {
             conversationService.markReadByAdmin(conversationId);
         } else {

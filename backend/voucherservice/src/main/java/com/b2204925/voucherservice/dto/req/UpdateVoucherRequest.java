@@ -25,10 +25,10 @@ public class UpdateVoucherRequest {
     private Double minOrderAmount;
 
     @Valid
-    private UsageLimitDto usageLimit;   // ← nested, khớp frontend
+    private UsageLimitDto usageLimit;
 
     @Valid
-    private ValidityDto validity;        // ← nested, khớp frontend
+    private ValidityDto validity;
 
     private VoucherStatus status;
     private Boolean isStackable;

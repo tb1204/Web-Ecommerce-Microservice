@@ -54,36 +54,7 @@ export interface Product {
   createdAt?: string;
   updatedAt?: string;
 }
-// export interface Product {
-//   id: string;
-//   name: string;
-//   sku?: string;
-//   productCode?: string;
-//   brand?: string;
-//   origin?: string;
-//   price: number;
-//   stockQuantity: number;
-//   originalPrice?: number;
-//   images: ProductImage[];
-//   status: "selling" | "stopselling";
-//   rating?: number;
-//   reviewCount?: number;
-//   category?: { name: string; code: string };
-//   specifications?: {
-//     material: string;
-//     weight: string;
-//     firmness: string;
-//     size: string;
-//     thickness: string;
-//     design: string;
-//     certificationNumber: string;
-//   };
-//   tags?: string[];
-//   description?: string;
-//   createdAt?: string;
-//   updatedAt?: string;
-// }
-// interface cho admin order
+
 export interface OrderItem {
   orderDetailId: string;
   productId: string;
@@ -111,8 +82,8 @@ export interface Order {
     totalQty: number;
   };
   payment: {
-    method: "VNPAY" | "COD" ;
-    status: "PAID" | "PENDING" | "REFUNDED" | "CANCELLED" | "FAILED"; 
+    method: "VNPAY" | "COD";
+    status: "PAID" | "PENDING" | "REFUNDED" | "CANCELLED" | "FAILED";
     transactionId?: string;
   };
   orderStatus:

@@ -56,6 +56,7 @@ public class SecurityConfig {
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/ws/**").permitAll() // WebSocket không cần auth ở đây
+                .requestMatchers("/api/chat/dialogflow/webhook").permitAll()
                 .requestMatchers("/api/chat/**").authenticated()
                 .anyRequest().authenticated()
                 )

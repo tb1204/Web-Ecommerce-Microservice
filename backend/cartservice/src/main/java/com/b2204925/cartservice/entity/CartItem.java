@@ -23,5 +23,5 @@ public class CartItem {
     private String thickness;
     private String color;
     private double lineTotal;
-    // private String variantId;     // ← Bắt buộc khi thêm vào giỏ
+
 }

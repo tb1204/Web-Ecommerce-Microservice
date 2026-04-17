@@ -51,7 +51,6 @@ const AdminVoucherPage: React.FC = () => {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isAddOpen, setIsAddOpen] = useState(false);
 
-
   const voucherStats = useAppSelector((s) => s.voucher.voucherStats);
   const dispatch = useAppDispatch();
   const { getToken } = useAuth();
@@ -81,13 +80,11 @@ const AdminVoucherPage: React.FC = () => {
     setIsEditOpen(true);
   };
 
-
   const indexOfFirstItem = (currentPage - 1) * itemsPerPage;
   const currentVouchers = filteredVouchers.slice(
     indexOfFirstItem,
     indexOfFirstItem + itemsPerPage,
   );
-
 
   const handleSaveVoucher = async (updatedVoucher: Voucher) => {
     const token = await getToken({ template: "my-backend" });
@@ -158,7 +155,6 @@ const AdminVoucherPage: React.FC = () => {
           <PlusCircle size={20} /> Thêm Voucher mới
         </button>
       </div>
-
 
       {/* THỐNG KÊ ĐỘNG TỪ BACKEND */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
@@ -418,7 +414,6 @@ const AdminVoucherPage: React.FC = () => {
         }}
       />
 
-      {/* // THAY BẰNG */}
       <AdminVoucherEditModal
         isOpen={isEditOpen}
         onClose={() => setIsEditOpen(false)}
@@ -426,7 +421,7 @@ const AdminVoucherPage: React.FC = () => {
         onSave={handleSaveVoucher}
         onToggle={handleToggleStatus}
       />
-      {/* MODAL THÊM VOUCHER MỚI */}
+
       <AdminVoucherAddModal
         isOpen={isAddOpen}
         onClose={() => setIsAddOpen(false)}
