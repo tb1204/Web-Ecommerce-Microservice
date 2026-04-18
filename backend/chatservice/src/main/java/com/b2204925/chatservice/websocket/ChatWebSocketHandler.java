@@ -148,7 +148,8 @@ public class ChatWebSocketHandler {
                     botResp.getIntent(),
                     botResp.getConfidence(),
                     botResp.getIsFallback(),
-                    botResp.getQuickReplies()
+                    botResp.getQuickReplies(),
+                    botResp.getProductLinks()   // ← truyền productLinks vào db
             );
 
             conversationService.updateLastMessage(
@@ -161,7 +162,7 @@ public class ChatWebSocketHandler {
 
             // Nếu bot không hiểu (fallback) → chuyển sang admin
             if (Boolean.TRUE.equals(botResp.getIsFallback())) {
-                conversationService.adminJoin(conv.getId(), null); // null = system join
+                conversationService.adminJoin(conv.getId(), null);
                 messagingTemplate.convertAndSend("/topic/admin.newConversation",
                         conversationService.getById(conv.getId()));
 
@@ -170,7 +171,6 @@ public class ChatWebSocketHandler {
 
         } catch (Exception e) {
             log.error("Dialogflow failed for conversation {}", conv.getId(), e);
-            // Nếu Dialogflow lỗi → chuyển sang admin
             try {
                 conversationService.adminJoin(conv.getId(), null);
                 messagingTemplate.convertAndSend("/topic/admin.newConversation",

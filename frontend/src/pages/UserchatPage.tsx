@@ -36,6 +36,11 @@ interface Message {
     isBotResponse?: boolean;
     botFallback?: boolean;
     quickReplies?: string[];
+    productLinks?: Array<{
+      name: string;
+      slug: string;
+      price: number;
+    }>;
   };
   createdAt: string;
 }
@@ -1025,6 +1030,30 @@ const UserChatPage: React.FC<UserChatPageProps> = ({
                               >
                                 {qr}
                               </button>
+                            ))}
+                          </div>
+                        )}
+
+                      {/* Product links — nút Xem ngay */}
+                      {msg.metadata?.productLinks &&
+                        msg.metadata.productLinks.length > 0 && (
+                          <div className="flex flex-col gap-1.5 mt-2 ml-1 w-full max-w-[280px]">
+                            {msg.metadata.productLinks.map((pl) => (
+                              <a
+                                key={pl.slug}
+                                href={pl.slug ? `/products/${pl.slug}` : "/products"}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center justify-between gap-2 px-3 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-xs font-semibold rounded-xl hover:brightness-105 active:scale-[0.98] transition-all shadow-sm"
+                              >
+                                <span className="truncate flex-1">{pl.name}</span>
+                                <span className="shrink-0 flex items-center gap-1">
+                                  <span className="opacity-80">{pl.price.toLocaleString("vi-VN")}đ</span>
+                                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+                                  </svg>
+                                </span>
+                              </a>
                             ))}
                           </div>
                         )}

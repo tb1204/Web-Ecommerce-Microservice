@@ -36,6 +36,20 @@
           "noMatchPromptMessages": [],
           "noInputPromptMessages": [],
           "outputDialogContexts": []
+        },
+        {
+          "id": "cc11dd22-ee33-ff44-aa55-bb66cc77dd88",
+          "name": "mattress_type",
+          "required": false,
+          "dataType": "@mattress_type",
+          "value": "$mattress_type",
+          "defaultValue": "",
+          "isList": false,
+          "prompts": [],
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": []
         }
       ],
       "messages": [

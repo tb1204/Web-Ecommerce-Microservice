@@ -90,6 +90,19 @@ public class MessageService {
             Boolean isFallback,
             List<String> quickReplies) {
 
+        return sendBotMessage(conversationId, responseText, intent, confidence, isFallback, quickReplies, null);
+    }
+
+    // ── Gửi BOT message với productLinks ─────────────────────────
+    public MessageResponse sendBotMessage(
+            String conversationId,
+            String responseText,
+            String intent,
+            Double confidence,
+            Boolean isFallback,
+            List<String> quickReplies,
+            List<MessageMetadata.ProductLink> productLinks) {
+
         Message message = Message.builder()
                 .conversationId(conversationId)
                 .senderId("BOT")
@@ -102,6 +115,7 @@ public class MessageService {
                         .confidence(confidence)
                         .botFallback(isFallback)
                         .quickReplies(quickReplies)
+                        .productLinks(productLinks)
                         .build())
                 .build();
 

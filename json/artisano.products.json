@@ -150,7 +150,7 @@
       "color": "",
       "price": 2499000,
       "originalPrice": 4200000,
-      "stockQuantity": 9,
+      "stockQuantity": 5,
       "status": "ACTIVE"
     },
     {
@@ -176,7 +176,7 @@
       "status": "ACTIVE"
     }
   ],
-  "totalStockQuantity": 45,
+  "totalStockQuantity": 41,
   "tags": [
     "van-thanh",
     "gia-re",
@@ -245,7 +245,7 @@
       "color": "",
       "price": 7699000,
       "originalPrice": 9000000,
-      "stockQuantity": 19,
+      "stockQuantity": 18,
       "status": "ACTIVE"
     },
     {
@@ -267,11 +267,11 @@
       "color": "",
       "price": 7699000,
       "originalPrice": 9400000,
-      "stockQuantity": 18,
+      "stockQuantity": 17,
       "status": "ACTIVE"
     }
   ],
-  "totalStockQuantity": 37,
+  "totalStockQuantity": 35,
   "tags": [
     "edena",
     "premium",
@@ -1088,7 +1088,7 @@
     },
     {
       "variantId": "9c858ccb-0843-4095-8036-c117edb36b2c",
-      "sku": "Tự tạo...",
+      "sku": "NF004-220X200",
       "size": "220 x 200",
       "thickness": "22cm",
       "color": "",
@@ -1107,7 +1107,7 @@
   ],
   "images": [
     {
-      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1775249211/artisano/products/e4qu9oq25my6ac44n1qy.webp",
+      "url": "http://res.cloudinary.com/dkmzqfc8j/image/upload/v1776147234/artisano/products/qx6q2hcfaf7g8t0zbjcz.jpg",
       "isPrimary": true
     },
     {
@@ -1141,7 +1141,7 @@
     "$date": "2026-04-03T03:00:00.000Z"
   },
   "updatedAt": {
-    "$date": "2026-04-04T09:42:28.205Z"
+    "$date": "2026-04-14T06:13:54.182Z"
   },
   "_class": "com.b2204922.productservice.entity.Product"
 },
@@ -1505,7 +1505,7 @@
   "variants": [
     {
       "variantId": "g2-50x70",
-      "sku": "G002-50x70",
+      "sku": "G002-45X65",
       "size": "45 x 65",
       "thickness": "",
       "color": "",
@@ -1516,17 +1516,17 @@
     },
     {
       "variantId": "b900a64b-f2c0-42d6-a8c2-56c65a61ab18",
-      "sku": "Tự tạo...",
+      "sku": "G002-50X70",
       "size": "50 x 70",
       "thickness": "",
       "color": "",
       "price": 599000,
       "originalPrice": 699000,
-      "stockQuantity": 18,
+      "stockQuantity": 15,
       "status": "ACTIVE"
     }
   ],
-  "totalStockQuantity": 38,
+  "totalStockQuantity": 35,
   "tags": [
     "goi-bong",
     "thoang-khi"
@@ -1557,10 +1557,10 @@
       "isPrimary": false
     }
   ],
-  "status": "AVAILABLE",
+  "status": "stopselling",
   "description": "Gối bông ép giữ form tốt, không xẹp lún.",
   "updatedAt": {
-    "$date": "2026-04-04T09:43:05.657Z"
+    "$date": "2026-04-14T06:16:31.502Z"
   },
   "_class": "com.b2204922.productservice.entity.Product"
 },
@@ -2299,11 +2299,11 @@
       "color": "",
       "price": 3499000,
       "originalPrice": 4999000,
-      "stockQuantity": 20,
+      "stockQuantity": 19,
       "status": "ACTIVE"
     }
   ],
-  "totalStockQuantity": 20,
+  "totalStockQuantity": 19,
   "tags": [
     "bo-ga-phu",
     "tencel"
@@ -3259,16 +3259,16 @@
   "variants": [
     {
       "variantId": "doona-3d-120",
-      "sku": "DOONA-3D-120X200",
+      "sku": "BAO-VE-NEM-DOONA-3D-120X200",
       "size": "120 x 200",
       "color": "Trắng",
       "price": 880000,
       "originalPrice": 1100000,
-      "stockQuantity": 19,
+      "stockQuantity": 18,
       "status": "ACTIVE"
     }
   ],
-  "totalStockQuantity": 19,
+  "totalStockQuantity": 18,
   "tags": [
     "bao-ve-nem",
     "3d",
@@ -3304,7 +3304,7 @@
   "status": "AVAILABLE",
   "description": "Bảo vệ nệm Doona 3D Safe Sleep giúp tăng độ thoáng khí, hạn chế ẩm mốc và bảo vệ sức khỏe người dùng.",
   "updatedAt": {
-    "$date": "2026-04-07T11:29:32.215Z"
+    "$date": "2026-04-14T06:16:23.520Z"
   },
   "_class": "com.b2204922.productservice.entity.Product"
 }]

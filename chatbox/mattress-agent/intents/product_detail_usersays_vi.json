@@ -2,66 +2,114 @@
   {
     "id": "df51047d-0dcc-43f0-ad44-6c1ada3e0baa",
     "data": [
-      {
-        "text": "Cho mình xem chi tiết ",
-        "userDefined": false
-      },
-      {
-        "text": "nệm lò xo",
-        "alias": "mattress_type",
-        "meta": "@mattress_type",
-        "userDefined": true
-      },
-      {
-        "text": " của ",
-        "userDefined": false
-      },
-      {
-        "text": "Kim Cương",
-        "alias": "brand",
-        "meta": "@brand",
-        "userDefined": true
-      }
+      { "text": "Cho mình xem chi tiết ", "userDefined": false },
+      { "text": "nệm lò xo", "alias": "mattress_type", "meta": "@mattress_type", "userDefined": true },
+      { "text": " của ", "userDefined": false },
+      { "text": "Kim Cương", "alias": "brand", "meta": "@brand", "userDefined": true }
     ],
-    "isTemplate": false,
-    "count": 0,
-    "lang": "vi",
-    "updated": 0
+    "isTemplate": false, "count": 0, "lang": "vi", "updated": 0
   },
   {
     "id": "d51e2a00-c2a4-4781-91eb-9d1e8f99ceba",
     "data": [
-      {
-        "text": "Nệm này có kích thước ",
-        "userDefined": false
-      },
-      {
-        "text": "180x200",
-        "alias": "size",
-        "meta": "@size",
-        "userDefined": true
-      },
-      {
-        "text": " không?",
-        "userDefined": false
-      }
+      { "text": "Nệm này có kích thước ", "userDefined": false },
+      { "text": "180x200", "alias": "size", "meta": "@size", "userDefined": true },
+      { "text": " không?", "userDefined": false }
     ],
-    "isTemplate": false,
-    "count": 0,
-    "lang": "vi",
-    "updated": 0
+    "isTemplate": false, "count": 0, "lang": "vi", "updated": 0
   },
   {
     "id": "e5ced0f3-cf9f-43ae-937b-fc9bf9d29e20",
     "data": [
-      {
-        "text": "Sản phẩm này giá bao nhiêu?",
-        "userDefined": false
-      }
+      { "text": "Sản phẩm này giá bao nhiêu?", "userDefined": false }
     ],
-    "isTemplate": false,
-    "count": 0,
-    "lang": "vi",
-    "updated": 0
+    "isTemplate": false, "count": 0, "lang": "vi", "updated": 0
+  },
+  {
+    "id": "1a1a1a1a-b2b2-c3c3-d4d4-180x200size",
+    "data": [
+      { "text": "Đệm này có kích thước ", "userDefined": false },
+      { "text": "1m8", "alias": "size", "meta": "@size", "userDefined": true },
+      { "text": " x 2m không", "userDefined": false }
+    ],
+    "isTemplate": false, "count": 0, "lang": "vi", "updated": 0
+  },
+  {
+    "id": "2b2b2b2b-c3c3-d4d4-e5e5-1m8size",
+    "data": [
+      { "text": "Có size ", "userDefined": false },
+      { "text": "1m8", "alias": "size", "meta": "@size", "userDefined": true },
+      { "text": " không?", "userDefined": false }
+    ],
+    "isTemplate": false, "count": 0, "lang": "vi", "updated": 0
+  },
+  {
+    "id": "3c3c3c3c-d4d4-e5e5-f6f6-1m6size",
+    "data": [
+      { "text": "Kích thước ", "userDefined": false },
+      { "text": "160x200", "alias": "size", "meta": "@size", "userDefined": true },
+      { "text": " có không?", "userDefined": false }
+    ],
+    "isTemplate": false, "count": 0, "lang": "vi", "updated": 0
+  },
+  {
+    "id": "4d4d4d4d-e5e5-f6f6-a7a7-1m6x2m",
+    "data": [
+      { "text": "Shop có nệm ", "userDefined": false },
+      { "text": "1m6", "alias": "size", "meta": "@size", "userDefined": true },
+      { "text": " x 2m không", "userDefined": false }
+    ],
+    "isTemplate": false, "count": 0, "lang": "vi", "updated": 0
+  },
+  {
+    "id": "5e5e5e5e-f6f6-a7a7-b8b8-1m4size",
+    "data": [
+      { "text": "Có ", "userDefined": false },
+      { "text": "1m4", "alias": "size", "meta": "@size", "userDefined": true },
+      { "text": " không?", "userDefined": false }
+    ],
+    "isTemplate": false, "count": 0, "lang": "vi", "updated": 0
+  },
+  {
+    "id": "6f6f6f6f-a7a7-b8b8-c9c9-1m2size",
+    "data": [
+      { "text": "Tìm nệm size ", "userDefined": false },
+      { "text": "1m2", "alias": "size", "meta": "@size", "userDefined": true }
+    ],
+    "isTemplate": false, "count": 0, "lang": "vi", "updated": 0
+  },
+  {
+    "id": "7a7a7a7a-b8b8-c9c9-d0d0-2m2size",
+    "data": [
+      { "text": "Có nệm kích thước ", "userDefined": false },
+      { "text": "2m2", "alias": "size", "meta": "@size", "userDefined": true },
+      { "text": " không?", "userDefined": false }
+    ],
+    "isTemplate": false, "count": 0, "lang": "vi", "updated": 0
+  },
+  {
+    "id": "8b8b8b8b-c9c9-d0d0-e1e1-sizenone",
+    "data": [
+      { "text": "Nệm có size nào?", "userDefined": false }
+    ],
+    "isTemplate": false, "count": 0, "lang": "vi", "updated": 0
+  },
+  {
+    "id": "9c9c9c9c-d0d0-e1e1-f2f2-120x200",
+    "data": [
+      { "text": "Nệm kích cỡ ", "userDefined": false },
+      { "text": "1m2 x 2m", "alias": "size", "meta": "@size", "userDefined": true },
+      { "text": " giá bao nhiêu?", "userDefined": false }
+    ],
+    "isTemplate": false, "count": 0, "lang": "vi", "updated": 0
+  },
+  {
+    "id": "adadadad-e1e1-f2f2-a3a3-220x200",
+    "data": [
+      { "text": "Tìm nệm size ", "userDefined": false },
+      { "text": "2m2", "alias": "size", "meta": "@size", "userDefined": true },
+      { "text": " x 2m", "userDefined": false }
+    ],
+    "isTemplate": false, "count": 0, "lang": "vi", "updated": 0
   }
 ]

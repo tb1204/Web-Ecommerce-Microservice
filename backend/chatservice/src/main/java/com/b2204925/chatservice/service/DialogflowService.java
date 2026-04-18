@@ -91,23 +91,42 @@ public class DialogflowService {
             Double confidence = confObj instanceof Number ? ((Number) confObj).doubleValue() : 0.0;
             boolean isFallback = intentName != null && intentName.toLowerCase().contains("fallback");
 
-            // ── Parse quickReplies
+            // ── Parse quickReplies và productLinks từ fulfillmentMessages
             List<String> quickReplies = new ArrayList<>();
+            List<com.b2204925.chatservice.entity.MessageMetadata.ProductLink> productLinks = new ArrayList<>();
             var fulfillmentMessages = (List) queryResult.get("fulfillmentMessages");
 
             if (fulfillmentMessages != null) {
                 for (Object msgObj : fulfillmentMessages) {
                     Map msgMap = (Map) msgObj;
+
+                    // Parse quick replies
                     Map quickRepliesMap = (Map) msgMap.get("quickReplies");
                     if (quickRepliesMap != null) {
                         List<String> rawReplies = (List<String>) quickRepliesMap.get("quickReplies");
-                        if (rawReplies != null) {
-                            quickReplies.addAll(rawReplies);
+                        if (rawReplies != null) quickReplies.addAll(rawReplies);
+                    }
+
+                    // Parse productLinks từ custom payload
+                    Map payloadMap = (Map) msgMap.get("payload");
+                    if (payloadMap != null) {
+                        List<Map<String, Object>> rawLinks = (List<Map<String, Object>>) payloadMap.get("productLinks");
+                        if (rawLinks != null) {
+                            for (Map<String, Object> lk : rawLinks) {
+                                String name = lk.get("name") != null ? lk.get("name").toString() : "";
+                                String slug = lk.get("slug") != null ? lk.get("slug").toString() : "";
+                                Number price = lk.get("price") instanceof Number ? (Number) lk.get("price") : null;
+                                productLinks.add(com.b2204925.chatservice.entity.MessageMetadata.ProductLink.builder()
+                                        .name(name)
+                                        .slug(slug)
+                                        .price(price != null ? price.longValue() : 0L)
+                                        .build());
+                            }
                         }
                     }
                 }
             }
-            
+
             log.info("Dialogflow trả lời: intent = {} | confidence = {}", intentName, confidence);
 
             return DialogflowResponse.builder()
@@ -116,6 +135,7 @@ public class DialogflowService {
                     .confidence(confidence)
                     .isFallback(isFallback)
                     .quickReplies(quickReplies)
+                    .productLinks(productLinks.isEmpty() ? null : productLinks)
                     .build();
 
         } catch (Exception e) {
