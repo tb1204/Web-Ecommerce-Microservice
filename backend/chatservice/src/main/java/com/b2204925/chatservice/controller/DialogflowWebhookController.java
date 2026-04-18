@@ -151,15 +151,20 @@ public class DialogflowWebhookController {
     // ── Helper: trích keyword từ queryText, bỏ stop-words phổ biến ───────────
     private String extractKeyword(String queryText) {
         if (queryText == null || queryText.isBlank()) return "";
-        // Các cụm stop-word phổ biến ở đầu câu hỏi tìm kiếm
+        // Bước 1: bỏ các cụm mở đầu câu hỏi phổ biến
         String cleaned = queryText
                 .replaceAll("(?i)tìm (cho)?\\s*(tôi|mình)?\\s*", "")
-                .replaceAll("(?i)shop có bán\\s*", "")
+                .replaceAll("(?i)shop (ơi\\s*)?(có bán)?\\s*", "")
                 .replaceAll("(?i)cho (tôi|mình) xem\\s*", "")
-                .replaceAll("(?i)có bán\\s*", "")
+                .replaceAll("(?i)(có bán|bán)\\s*", "")
                 .replaceAll("(?i)hỏi\\s*", "")
                 .replaceAll("(?i)\\s+không[?]?$", "")
                 .trim();
+        // Bước 2: bỏ từ loại sản phẩm chung ở đầu (nệm, đệm, gối, chăn, ga, topper...)
+        // để search theo brand/type thực sự. VD: "nệm Wonjun" → "Wonjun"
+        cleaned = cleaned.replaceAll(
+            "(?i)^(nệm|đệm|gối|chăn|ga|topper|bộ|bảo vệ|neem)\\s+", ""
+        ).trim();
         return cleaned;
     }
 
@@ -221,6 +226,28 @@ public class DialogflowWebhookController {
             return new SearchResult("Bạn muốn tìm sản phẩm gì? Bạn hãy cho mình biết tên hoặc thương hiệu nhé.", null);
         }
         try {
+            // Thử search với query đầy đủ trước
+            SearchResult result = doSearch(query);
+            // Nếu không tìm thấy → thử lại với query bỏ từ loại sp ở đầu
+            if (result.links == null || result.links.isEmpty()) {
+                String stripped = query.replaceAll(
+                    "(?i)^(nệm|đệm|gối|chăn|ga|topper|bộ|bảo vệ|neem|cao su|bông ép|lò xo|foam|latex)\\s+", ""
+                ).trim();
+                if (!stripped.equals(query) && !stripped.isBlank()) {
+                    log.info("Retry search with stripped query: '{}'", stripped);
+                    result = doSearch(stripped);
+                }
+            }
+            return result;
+        } catch (Exception e) {
+            log.warn("Lỗi tìm sản phẩm: {}", e.getMessage());
+        }
+        return new SearchResult("Xin lỗi, hệ thống tìm kiếm đang bận. Bạn vui lòng tìm kiếm thủ công trên trang chủ nhé!", null);
+    }
+
+    // ── Helper thực hiện gọi search API ──────────────────────────────────────
+    private SearchResult doSearch(String query) {
+        try {
             String encodedQuery = java.net.URLEncoder.encode(query, java.nio.charset.StandardCharsets.UTF_8);
             String url = "http://product-service/api/products/search?q=" + encodedQuery;
             ResponseEntity<java.util.List> response = restTemplate.getForEntity(url, java.util.List.class);
@@ -253,14 +280,14 @@ public class DialogflowWebhookController {
                     links.add(link);
                 }
                 if (products.size() > limit) {
-                    sb.append("... và nhiều sản phẩm khác trên website!");
+                    sb.append("... và ").append(products.size() - limit).append(" sản phẩm khác trên website!");
                 }
                 return new SearchResult(sb.toString(), links);
             }
         } catch (Exception e) {
-            log.warn("Lỗi tìm sản phẩm: {}", e.getMessage());
+            log.warn("Lỗi doSearch: {}", e.getMessage());
         }
-        return new SearchResult("Xin lỗi, hệ thống tìm kiếm đang bận. Bạn vui lòng tìm kiếm thủ công trên trang chủ nhé!", null);
+        return new SearchResult("Rất tiếc, mình không tìm thấy sản phẩm nào khớp với \"" + query + "\". Bạn thử xem qua các gợi ý trên trang web nhé.", null);
     }
 
     // ── Tìm sản phẩm theo kích thước ──────────────────────────────────────────

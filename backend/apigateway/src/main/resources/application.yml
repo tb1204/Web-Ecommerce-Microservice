@@ -142,26 +142,16 @@ spring:
                 name: defaultCB
                 fallbackUri: forward:/fallback/voucherservice
 
-        # Ví dụ cho chatservice (limit chặt vì nhạy cảm)
-        #chuẩn code ban đầu
-        # - id: chatservice
-        #   uri: lb://chat-service
-        #   predicates:
-        #     - Path=/api/chat/**, /ws/**
-        #   filters:
-        #     - name: RequestRateLimiter
-        #       args:
-        #         redis-rate-limiter.replenishRate: 15
-        #         redis-rate-limiter.burstCapacity: 30
-        #         key-resolver: "#{@ipKeyResolver}"
-        #     - name: CircuitBreaker
-        #       args:
-        #         name: defaultCB
-        #         fallbackUri: forward:/fallback/chatservice
+        # ── DIALOGFLOW WEBHOOK ── Phải đứng TRƯỚC chatservice-http ──────────────
+        # Route này không có RateLimiter/CircuitBreaker để Dialogflow không bị 401
+        - id: dialogflow-webhook
+          uri: lb://chat-service
+          predicates:
+            - Path=/api/chat/dialogflow/webhook
+          filters:
+            - RemoveRequestHeader=Authorization
 
-        #
-        #
-        # 1. Route cho HTTP API (REST + SockJS info)
+        # ── CHATSERVICE HTTP (REST) ─────────────────────────────────────────────
         - id: chatservice-http
           uri: lb://chat-service
           predicates:
@@ -177,18 +167,11 @@ spring:
                 name: defaultCB
                 fallbackUri: forward:/fallback/chatservice
 
-        # 2. Route riêng cho WebSocket (SockJS handshake + upgrade)
+        # ── CHATSERVICE WebSocket ───────────────────────────────────────────────
         - id: chatservice-ws
           uri: lb:ws://chat-service
           predicates:
             - Path=/ws/**
-          # Không dùng CircuitBreaker hay RateLimiter cho WebSocket
-
-        # 1. Route cho HTTP API (REST + SockJS info)
-        - id: dialogflow-webhook
-          uri: lb://chat-service
-          predicates:
-            - Path=/api/chat/dialogflow/webhook
         #
         # Ví dụ cho reviewservice (limit chặt vì nhạy cảm)
         - id: reviewservice

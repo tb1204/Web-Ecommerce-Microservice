@@ -28,10 +28,10 @@
   },
   "defaultTimezone": "Asia/Ho_Chi_Minh",
   "webhook": {
-    "url": "",
+    "url": "https://deedee-unimmunised-dorthey.ngrok-free.dev/api/chat/dialogflow/webhook",
     "username": "",
     "headers": {},
-    "available": false,
+    "available": true,
     "useForDomains": false,
     "cloudFunctionsEnabled": false,
     "cloudFunctionsInitialized": false
