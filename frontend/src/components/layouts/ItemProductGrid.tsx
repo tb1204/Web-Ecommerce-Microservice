@@ -168,12 +168,11 @@ import ProductGrid from "../Products/ProductGrid";
 import axios from "axios";
 
 // Import hình ảnh banner (vẫn dùng local)
-import banner_phu_1 from "../../assets/banner/Banner-phu-1.webp";
+import banner_phu_1 from "../../assets/banner/banner-phu-1.webp";
 import banner_phu_2 from "../../assets/banner/banner-phu-2.webp";
 
 // const BASE_URL = "http://localhost:8082";
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
 
 const mapProduct = (p: any): Product => ({
   id: p._id?.$oid ?? p.id ?? p._id,

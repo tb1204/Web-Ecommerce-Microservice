@@ -41,23 +41,37 @@ function CartDrawer() {
     thickness: item.thickness,
     color: item.color,
   }));
+  // 1. Thêm state lưu lỗi kho
+  const [stockErrors, setStockErrors] = useState<any[]>([]);
+
   // selectedItems dùng key "productId::variantId" giống CartContents
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
+  const validCartProducts = useMemo(() => {
+    return cartProducts.filter((item) => {
+      const error = stockErrors.find(
+        (e) => e.productId === item.productId && e.variantId === item.variantId
+      );
+      const isDisabled =
+        error?.status === "OUT_OF_STOCK" || error?.status === "stopselling";
+      return !isDisabled;
+    });
+  }, [cartProducts, stockErrors]);
+
   const totalAllAmount = useMemo(() => {
-    return cartProducts.reduce(
+    return validCartProducts.reduce(
       (sum, item) => sum + item.price * item.quantity,
       0,
     );
-  }, [cartProducts]);
+  }, [validCartProducts]);
 
   const totalSelectedAmount = useMemo(() => {
-    return cartProducts
+    return validCartProducts
       .filter((item) =>
         selectedItems.includes(getItemKey(item.productId, item.variantId)),
       )
       .reduce((sum, item) => sum + item.price * item.quantity, 0);
-  }, [cartProducts, selectedItems]);
+  }, [validCartProducts, selectedItems]);
 
   // useEffect(() => {
   //   if (drawerOpen) {
@@ -108,9 +122,6 @@ function CartDrawer() {
     checkStockImmediately();
   }, [drawerOpen, cartItemsRaw.length]); // Chạy lại khi mở drawer hoặc số lượng sp thay đổi
 
-  // 1. Thêm state lưu lỗi kho
-  const [stockErrors, setStockErrors] = useState<any[]>([]);
-
   // Reset selection khi cart thay đổi (xóa item)
   useEffect(() => {
     const validKeys = cartProducts.map((item) =>
@@ -129,17 +140,28 @@ function CartDrawer() {
   };
 
   const toggleSelectAll = () => {
-    const allKeys = cartProducts.map((item) =>
+    const validKeys = validCartProducts.map((item) =>
       getItemKey(item.productId, item.variantId),
     );
-    if (selectedItems.length === cartProducts.length) {
-      setSelectedItems([]);
+    // Tính số lượng sp hợp lệ đang được chọn
+    const selectedValidCount = selectedItems.filter(key => validKeys.includes(key)).length;
+
+    if (selectedValidCount === validKeys.length && validKeys.length > 0) {
+      // Bỏ chọn tất cả sp hợp lệ
+      setSelectedItems((prev) => prev.filter(key => !validKeys.includes(key)));
     } else {
-      setSelectedItems(allKeys);
+      // Chọn tất cả sp hợp lệ
+      setSelectedItems((prev) => {
+        const newSet = new Set([...prev, ...validKeys]);
+        return Array.from(newSet);
+      });
     }
   };
 
-  const selectedCount = selectedItems.length;
+  // Chỉ đếm những sản phẩm hợp lệ đang được chọn
+  const selectedCount = selectedItems.filter(key => 
+    validCartProducts.some(item => getItemKey(item.productId, item.variantId) === key)
+  ).length;
 
   const handleUpdateQuantity = async (
     productId: string,
@@ -250,7 +272,7 @@ function CartDrawer() {
           <div>
             <h2 className="text-xl font-bold">Giỏ hàng</h2>
             <p className="text-xs text-gray-500 font-medium">
-              ({cartProducts.length} sản phẩm)
+              ({validCartProducts.length} sản phẩm có thể mua)
             </p>
           </div>
           <button
@@ -282,8 +304,8 @@ function CartDrawer() {
                   type="checkbox"
                   id="select-all"
                   checked={
-                    selectedItems.length === cartProducts.length &&
-                    cartProducts.length > 0
+                    selectedCount === validCartProducts.length &&
+                    validCartProducts.length > 0
                   }
                   onChange={toggleSelectAll}
                   className="w-5 h-5 accent-[#05472a] cursor-pointer"
@@ -292,7 +314,7 @@ function CartDrawer() {
                   htmlFor="select-all"
                   className="text-sm font-medium cursor-pointer select-none"
                 >
-                  Chọn tất cả ({selectedCount}/{cartProducts.length} sản phẩm)
+                  Chọn tất cả ({selectedCount}/{validCartProducts.length} sản phẩm)
                 </label>
               </div>
 
@@ -326,7 +348,7 @@ function CartDrawer() {
           <div className="p-5 bg-gray-50 dark:bg-gray-800 border-t">
             <div className="flex justify-between items-center mb-1">
               <span className="text-sm text-gray-500 dark:text-gray-400">
-                Tổng tất cả ({cartProducts.length} sp):
+                Tổng tất cả ({validCartProducts.length} sp hợp lệ):
               </span>
               <span className="font-bold text-gray-700 dark:text-gray-300">
                 {totalAllAmount.toLocaleString("vi-VN")}đ
