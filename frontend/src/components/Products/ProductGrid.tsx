@@ -788,14 +788,14 @@ const ProductGrid: React.FC<ProductCardProps> = ({
       {displayProducts.map((product) => {
         const productId = product.id || (product as any)._id;
 
-        const availableStock =
-          product.stockQuantity ??
-          product.totalStockQuantity ??
-          product.variants?.reduce(
-            (sum: number, v: any) => sum + (Number(v?.stockQuantity) || 0),
-            0,
-          ) ??
-          0;
+        // const availableStock =
+        //   product.stockQuantity ??
+        //   product.totalStockQuantity ??
+        //   product.variants?.reduce(
+        //     (sum: number, v: any) => sum + (Number(v?.stockQuantity) || 0),
+        //     0,
+        //   ) ??
+        //   0;
 
         const hasDiscount =
           product.originalPrice && product.originalPrice > product.price;
@@ -807,8 +807,26 @@ const ProductGrid: React.FC<ProductCardProps> = ({
             )
           : 0;
 
-        const isStopSelling = product.status === "stopselling";
-        const isOutOfStock = !isStopSelling && availableStock <= 0;
+        // const isStopSelling = product.status === "stopselling";
+        // const isOutOfStock = !isStopSelling && availableStock <= 0;
+        // const canBuy = !isStopSelling && availableStock > 0;
+        const productStatus = (product.status || "").toString().trim().toLowerCase();
+
+        const isStopSelling = productStatus === "stopselling";
+
+        const availableStock =
+          product.stockQuantity ??
+          product.totalStockQuantity ??
+          product.variants?.reduce(
+            (sum: number, v: any) => sum + (Number(v?.stockQuantity) || 0),
+            0,
+          ) ??
+          0;
+
+        // Sản phẩm hết hàng thực sự (dù status là gì)
+        const isOutOfStock = availableStock <= 0;
+
+        // Can buy chỉ khi: KHÔNG ngừng bán VÀ còn hàng
         const canBuy = !isStopSelling && availableStock > 0;
 
         const isSelected = selectedProductId === productId;
