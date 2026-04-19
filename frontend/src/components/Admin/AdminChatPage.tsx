@@ -1,9 +1,10 @@
-import { MessageCircleMore, MessagesSquare, Paperclip } from "lucide-react";
+import { MessageCircleMore, MessagesSquare, Paperclip, ChevronRight } from "lucide-react";
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useAuth } from "@clerk/clerk-react";
 
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
+import { Link } from "react-router-dom";
 import api from "../../api/client";
 
 // client.activate();    // bật kết nối
@@ -28,6 +29,11 @@ interface Message {
     isBotResponse?: boolean;
     botFallback?: boolean;
     quickReplies?: string[];
+    productLinks?: Array<{
+      name: string;
+      slug: string;
+      price: number;
+    }>;
   };
   createdAt: string;
 }
@@ -833,18 +839,42 @@ const AdminChatPage: React.FC = () => {
                             )}
 
                             {msg.type === "TEXT" ? (
-                              <div
-                                className={`px-4 py-3 rounded-2xl shadow-sm ${
-                                  msg.senderRole === "ADMIN"
-                                    ? "bg-blue-600 text-white rounded-br-none"
-                                    : msg.senderRole === "BOT"
-                                      ? "bg-purple-50 text-gray-800 border border-purple-100 rounded-bl-none"
-                                      : "bg-white text-gray-900 border border-gray-200 rounded-bl-none"
-                                }`}
-                              >
-                                <p className="text-sm break-words whitespace-pre-wrap">
-                                  {msg.content}
-                                </p>
+                              <div className="flex flex-col gap-1.5">
+                                <div
+                                  className={`px-4 py-3 rounded-2xl shadow-sm ${
+                                    msg.senderRole === "ADMIN"
+                                      ? "bg-blue-600 text-white rounded-br-none"
+                                      : msg.senderRole === "BOT"
+                                        ? "bg-purple-50 text-gray-800 border border-purple-100 rounded-bl-none"
+                                        : "bg-white text-gray-900 border border-gray-200 rounded-bl-none"
+                                  }`}
+                                >
+                                  <p className="text-sm break-words whitespace-pre-wrap">
+                                    {msg.content}
+                                  </p>
+                                </div>
+                                
+                                {/* Nút xem sản phẩm hiển thị trên màn hình Admin */}
+                                {msg.metadata?.productLinks && msg.metadata.productLinks.length > 0 && (
+                                  <div className="flex flex-col gap-1.5 mt-1 max-w-[280px]">
+                                    {msg.metadata.productLinks.map((pl, index) => (
+                                      <div key={index} className="flex flex-col gap-1.5 px-3 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl shadow-sm">
+                                        <span className="text-[12px] font-medium leading-snug line-clamp-2">{pl.name}</span>
+                                        <div className="flex items-center justify-between mt-0.5">
+                                          <span className="text-xs opacity-100 font-bold">{pl.price.toLocaleString("vi-VN")}đ</span>
+                                          <Link
+                                            to={pl.slug ? `/product/${pl.slug}` : "/products"}
+                                            onClick={(e) => e.stopPropagation()}
+                                            className="px-3 py-1 bg-white text-emerald-700 text-[10px] font-bold uppercase rounded-full hover:bg-emerald-50 active:scale-95 transition-all shadow-sm flex items-center gap-1"
+                                          >
+                                            Xem ngay
+                                            <ChevronRight className="w-3 h-3" strokeWidth={2.5} />
+                                          </Link>
+                                        </div>
+                                      </div>
+                                    ))}
+                                  </div>
+                                )}
                               </div>
                             ) : msg.type === "IMAGE" && msg.mediaUrl ? (
                               <div className="rounded-2xl overflow-hidden shadow-sm">

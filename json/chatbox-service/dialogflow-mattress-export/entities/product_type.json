@@ -1,9 +1,0 @@
-{
-  "id": "ccf7ca4b-99a4-4402-b837-ce8cf2c7526b",
-  "name": "product_type",
-  "isOverridable": true,
-  "isEnum": false,
-  "isRegexp": false,
-  "automatedExpansion": true,
-  "allowFuzzyExtraction": true
-}

@@ -28,43 +28,7 @@ public class CloudinaryService {
     private static final long MAX_IMAGE_SIZE = 5 * 1024 * 1024;   // 5MB
     private static final long MAX_VIDEO_SIZE = 50 * 1024 * 1024;  // 50MB
 
-    //code chạy được
-    // public MediaUploadResponse uploadImage(MultipartFile file) {
-    //     log.info("=== UPLOAD IMAGE START - Filename: '{}', Size: {} bytes, Content-Type: {} ===",
-    //             file.getOriginalFilename(), file.getSize(), file.getContentType());
-    //     // Kiểm tra file
-    //     String contentType = file.getContentType();
-    //     if (contentType == null || !contentType.startsWith("image/")) {
-    //         log.error("Invalid content type: {}", contentType);
-    //         throw new AppException(ErrorCode.MESSAGE_TYPE_NOT_SUPPORTED,
-    //                 "Chỉ hỗ trợ file ảnh. Nhận được: " + contentType);
-    //     }
-    //     if (file.getSize() > MAX_IMAGE_SIZE) {
-    //         throw new AppException(ErrorCode.MESSAGE_TOO_LARGE, "Ảnh không được vượt quá 5MB");
-    //     }
-    //     try {
-    //         // Phiên bản tối giản nhất - ít gây lỗi nhất
-    //         Map<String, Object> options = ObjectUtils.asMap(
-    //                 "folder", "chat/images",
-    //                 "resource_type", "image",
-    //                 "invalidate", true
-    //         );
-    //         Map<?, ?> result = cloudinary.uploader().upload(file.getBytes(), options);
-    //         String url = (String) result.get("secure_url");
-    //         log.info("✅ UPLOAD IMAGE SUCCESS: {}", url);
-    //         return MediaUploadResponse.builder()
-    //                 .url(url)
-    //                 .thumbnailUrl(url)
-    //                 .mimeType(contentType)
-    //                 .mediaSize(file.getSize())
-    //                 .build();
-    //     } catch (Exception e) {
-    //         log.error("❌ Cloudinary upload FAILED - Full error:", e);
-    //         throw new AppException(ErrorCode.UPLOAD_FAILED,
-    //                 "Upload ảnh thất bại: " + e.getMessage());
-    //     }
-    // }
-    //code resize 
+  
     public MediaUploadResponse uploadImage(MultipartFile file) {
         log.info("=== UPLOAD IMAGE START - Filename: '{}', Size: {} bytes, Content-Type: {} ===",
                 file.getOriginalFilename(), file.getSize(), file.getContentType());
@@ -122,46 +86,7 @@ public class CloudinaryService {
         }
     }
 
-    // public MediaUploadResponse uploadVideo(MultipartFile file) {
-    //     String contentType = file.getContentType();
-    //     if (contentType == null || !contentType.startsWith("video/")) {
-    //         throw new AppException(ErrorCode.MESSAGE_TYPE_NOT_SUPPORTED,
-    //                 "Chỉ hỗ trợ file video (mp4, mov...)");
-    //     }
-    //     if (file.getSize() > MAX_VIDEO_SIZE) {
-    //         throw new AppException(ErrorCode.MESSAGE_TOO_LARGE,
-    //                 "Video không được vượt quá 50MB");
-    //     }
-    //     try {
-    //         Map<String, Object> options = new HashMap<>();
-    //         options.put("folder", "chat/videos");
-    //         options.put("resource_type", "video");
-    //         options.put("eager", "so_0/c_thumb,w_200,h_200");
-    //         Map<String, Object> result
-    //                 = cloudinary.uploader().upload(
-    //                         file.getInputStream(), options
-    //                 );
-    //         String url = (String) result.get("secure_url");
-    //         Integer duration = ((Number) result.getOrDefault("duration", 0)).intValue();
-    //         String thumbnailUrl = null;
-    //         List<Map<String, Object>> eager = (List<Map<String, Object>>) result.get("eager");
-    //         if (eager != null && !eager.isEmpty()) {
-    //             thumbnailUrl = (String) eager.get(0).get("secure_url");
-    //         }
-    //         log.info("Uploaded video: {}", url);
-    //         return MediaUploadResponse.builder()
-    //                 .url(url)
-    //                 .thumbnailUrl(thumbnailUrl)
-    //                 .mimeType(file.getContentType())
-    //                 .mediaSize(file.getSize())
-    //                 .duration(duration)
-    //                 .build();
-    //     } catch (Exception e) {
-    //         log.error("Upload video failed: ", e);
-    //         throw new AppException(ErrorCode.UPLOAD_FAILED, "Upload video thất bại");
-    //     }
-    // }
-    //code test
+ 
     public MediaUploadResponse uploadVideo(MultipartFile file) {
         log.info("=== UPLOAD VIDEO START - Filename: '{}', Size: {} bytes ===",
                 file.getOriginalFilename(), file.getSize());

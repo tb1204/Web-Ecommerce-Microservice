@@ -47,12 +47,5 @@ public class MessageController {
         return ResponseEntity.ok(messageService.deleteMessage(messageId, requesterId));
     }
 
-    //     @GetMapping("/{conversationId}")
-// public ResponseEntity<List<MessageResponse>> getMessages(
-//         @PathVariable String conversationId,
-//         @AuthenticationPrincipal Jwt jwt) {
-//     String requesterId = jwt.getSubject();
-//     // Service chỉ trả tin nhắn nếu requesterId là member của conversation
-//     return ResponseEntity.ok(messageService.getMessages(conversationId, requesterId));
-// }
+
 }

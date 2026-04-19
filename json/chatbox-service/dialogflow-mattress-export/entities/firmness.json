@@ -1,9 +1,0 @@
-{
-  "id": "31ea0a2b-f4a2-4616-be83-da46be344788",
-  "name": "firmness",
-  "isOverridable": true,
-  "isEnum": false,
-  "isRegexp": false,
-  "automatedExpansion": true,
-  "allowFuzzyExtraction": true
-}

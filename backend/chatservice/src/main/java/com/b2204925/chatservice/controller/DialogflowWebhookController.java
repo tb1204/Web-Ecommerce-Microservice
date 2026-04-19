@@ -62,12 +62,12 @@ public class DialogflowWebhookController {
             } else if ("search_product".equals(intentName)) {
                 // Tách keyword siêu chính xác từ queryText thay vì dựa hoàn toàn vào Entity
                 String finalQuery = extractKeyword(queryText);
+                String brand = safeStr(parameters, "brand");
+                String mattressType = safeStr(parameters, "mattress_type");
+                String productType = safeStr(parameters, "product_type");
                 
                 // Nếu somehow query rỗng (user chỉ nhắn "shop ơi"), thử dùng entity
                 if (finalQuery.isBlank()) {
-                    String brand = safeStr(parameters, "brand");
-                    String mattressType = safeStr(parameters, "mattress_type");
-                    String productType = safeStr(parameters, "product_type");
                     finalQuery = (brand + " " + (mattressType.isBlank() ? productType : mattressType)).trim();
                 }
 
@@ -75,6 +75,18 @@ public class DialogflowWebhookController {
                     responseText = "Bạn muốn tìm sản phẩm gì? Bạn hãy cho mình biết tên hoặc thương hiệu nhé.";
                 } else {
                     SearchResult result = searchProducts(finalQuery);
+                    
+                    // FALLBACK: Nếu tìm bằng text cắt thủ công bị rỗng, thử tìm bằng chính Entity của Dialogflow đã nhận diện (VD: "Nệm bông ép")
+                    if ((result.links == null || result.links.isEmpty())) {
+                        String entityQuery = (brand + " " + (mattressType.isBlank() ? productType : mattressType)).trim();
+                        if (!entityQuery.isBlank() && !entityQuery.equalsIgnoreCase(finalQuery)) {
+                            SearchResult fallbackResult = searchProducts(entityQuery);
+                            if (fallbackResult.links != null && !fallbackResult.links.isEmpty()) {
+                                result = fallbackResult;
+                            }
+                        }
+                    }
+
                     responseText = result.text;
                     productLinks = result.links;
                 }
@@ -160,11 +172,9 @@ public class DialogflowWebhookController {
                 .replaceAll("(?i)hỏi\\s*", "")
                 .replaceAll("(?i)\\s+không[?]?$", "")
                 .trim();
-        // Bước 2: bỏ từ loại sản phẩm chung ở đầu (nệm, đệm, gối, chăn, ga, topper...)
-        // để search theo brand/type thực sự. VD: "nệm Wonjun" → "Wonjun"
-        cleaned = cleaned.replaceAll(
-            "(?i)^(nệm|đệm|gối|chăn|ga|topper|bộ|bảo vệ|neem)\\s+", ""
-        ).trim();
+        // Bước 2: BỎ QUA việc tự động xóa chữ (nệm|đệm... ) để hệ thống không bị hiểu nhầm
+        // Nếu user search 'nệm goodnight', ta phải giữ nguyên chữ 'nệm' để phân biệt với 'gối goodnight'
+        // cleaned = cleaned.replaceAll("(?i)^(nệm|đệm|gối|chăn|ga|topper|bộ|bảo vệ|neem)\\s+", "").trim();
         return cleaned;
     }
 
@@ -248,9 +258,9 @@ public class DialogflowWebhookController {
     // ── Helper thực hiện gọi search API ──────────────────────────────────────
     private SearchResult doSearch(String query) {
         try {
-            String encodedQuery = java.net.URLEncoder.encode(query, java.nio.charset.StandardCharsets.UTF_8);
-            String url = "http://product-service/api/products/search?q=" + encodedQuery;
-            ResponseEntity<java.util.List> response = restTemplate.getForEntity(url, java.util.List.class);
+            // FIX LỖI DOUBLE-ENCODING (Tiếng Việt): Dùng Uri Variables của Spring thay vì tự encode bằng URLEncoder
+            String url = "http://product-service/api/products/search?q={query}";
+            ResponseEntity<java.util.List> response = restTemplate.getForEntity(url, java.util.List.class, query);
             if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
                 java.util.List<Map<String, Object>> products = response.getBody();
                 if (products.isEmpty()) {
@@ -267,7 +277,8 @@ public class DialogflowWebhookController {
                     Map<String, Object> p = products.get(i);
                     String name = (String) p.get("name");
                     Number price = (Number) p.get("price");
-                    String slug = (String) p.get("slug");
+                    // Product entity không có slug → dùng id để tạo link /product/:id
+                    String productId = p.get("id") != null ? p.get("id").toString() : "";
                     long priceVal = price != null ? price.longValue() : 0;
 
                     sb.append("- ").append(name)
@@ -275,7 +286,7 @@ public class DialogflowWebhookController {
 
                     Map<String, Object> link = new HashMap<>();
                     link.put("name", name);
-                    link.put("slug", slug != null ? slug : "");
+                    link.put("slug", productId);
                     link.put("price", priceVal);
                     links.add(link);
                 }
@@ -347,7 +358,8 @@ public class DialogflowWebhookController {
                     Map<String, Object> p = matched.get(i);
                     String name = (String) p.get("name");
                     Number price = (Number) p.get("price");
-                    String slug = (String) p.get("slug");
+                    // Product entity không có slug → dùng id để tạo link /product/:id
+                    String productId = p.get("id") != null ? p.get("id").toString() : "";
                     long priceVal = price != null ? price.longValue() : 0;
 
                     sb.append("- ").append(name)
@@ -355,7 +367,7 @@ public class DialogflowWebhookController {
 
                     Map<String, Object> link = new HashMap<>();
                     link.put("name", name);
-                    link.put("slug", slug != null ? slug : "");
+                    link.put("slug", productId);
                     link.put("price", priceVal);
                     links.add(link);
                 }

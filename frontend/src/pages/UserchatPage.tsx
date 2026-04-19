@@ -4,6 +4,7 @@ import axios from "axios";
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
 import { toast } from "sonner";
+import { Link } from "react-router-dom";
 import {
   Send,
   X,
@@ -16,6 +17,7 @@ import {
   CheckCheck,
   Paperclip,
   ArrowDown,
+  ChevronRight,
 } from "lucide-react";
 
 interface Message {
@@ -255,53 +257,7 @@ const UserChatPage: React.FC<UserChatPageProps> = ({
     [scrollToBottom, isAtBottom, showNewMessageNotif],
   );
 
-  // ✅ FIX: Tạo conversation lazily — chỉ tạo khi cần (khi user send tin đầu tiên)
-  // const ensureConversation = useCallback(async (firstText?: string): Promise<Conversation | null> => {
-  //   const token = tokenRef.current;
-  //   if (!token) return null;
-
-  //   // Nếu đã có conversation rồi thì dùng luôn
-  //   if (conversation) return conversation;
-
-  //   const displayName =
-  //     clerkUser?.fullName ||
-  //     [clerkUser?.firstName, clerkUser?.lastName]
-  //       .filter(Boolean)
-  //       .join(" ") ||
-  //     clerkUser?.username ||
-  //     "Khách hàng";
-
-  //   try {
-  //     const res = await axios.post(
-  //       `${API_BASE}/conversations`,
-  //       {
-  //         firstMessage: firstText || null, // Gửi trực tiếp tin nhắn đầu qua Backend POST
-  //         userDisplayName: displayName,
-  //         userAvatarUrl: clerkUser?.imageUrl || null,
-  //       },
-  //       { headers: { Authorization: `Bearer ${token}` } },
-  //     );
-  //     const newConv: Conversation = res.data;
-  //     setConversation(newConv);
-  //     convIdRef.current = newConv.id;
-
-  //     // ✅ Fetch ngay danh sách tin nhắn để lấy tin đầu tiên vừa tạo (nếu có) từ DB
-  //     const msgRes = await axios.get(
-  //       `${API_BASE}/messages/${newConv.id}`,
-  //       { headers: { Authorization: `Bearer ${token}` } }
-  //     );
-  //     setMessages(Array.isArray(msgRes.data) ? msgRes.data : []);
-  //     setTimeout(() => scrollToBottom(false), 100);
-
-  //     // Kết nối WebSocket cho conversation mới
-  //     connectWebSocket(newConv.id, token);
-  //     return newConv;
-  //   } catch (err) {
-  //     console.error("Tạo conversation thất bại:", err);
-  //     return null;
-  //   }
-  // }, [conversation, clerkUser, connectWebSocket, scrollToBottom]);
-  // Tách riêng logic subscribe để reuse
+  
   const subscribeConv = useCallback(
     (convId: string) => {
       // Unsubscribe kênh cũ nếu có
@@ -1038,22 +994,21 @@ const UserChatPage: React.FC<UserChatPageProps> = ({
                       {msg.metadata?.productLinks &&
                         msg.metadata.productLinks.length > 0 && (
                           <div className="flex flex-col gap-1.5 mt-2 ml-1 w-full max-w-[280px]">
-                            {msg.metadata.productLinks.map((pl) => (
-                              <a
-                                key={pl.slug}
-                                href={pl.slug ? `/products/${pl.slug}` : "/products"}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="flex items-center justify-between gap-2 px-3 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-xs font-semibold rounded-xl hover:brightness-105 active:scale-[0.98] transition-all shadow-sm"
-                              >
-                                <span className="truncate flex-1">{pl.name}</span>
-                                <span className="shrink-0 flex items-center gap-1">
-                                  <span className="opacity-80">{pl.price.toLocaleString("vi-VN")}đ</span>
-                                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
-                                  </svg>
-                                </span>
-                              </a>
+                            {msg.metadata.productLinks.map((pl, index) => (
+                              <div key={index} className="flex flex-col gap-1.5 px-3 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl shadow-sm">
+                                <span className="text-[12px] font-medium leading-snug line-clamp-2">{pl.name}</span>
+                                <div className="flex items-center justify-between mt-0.5">
+                                  <span className="text-xs opacity-100 font-bold">{pl.price.toLocaleString("vi-VN")}đ</span>
+                                  <Link
+                                    to={pl.slug ? `/product/${pl.slug}` : "/products"}
+                                    onClick={(e) => e.stopPropagation()}
+                                    className="px-3 py-1 bg-white text-emerald-700 text-[10px] font-bold uppercase rounded-full hover:bg-emerald-50 active:scale-95 transition-all shadow-sm flex items-center gap-1"
+                                  >
+                                    Xem ngay
+                                    <ChevronRight className="w-3 h-3" strokeWidth={2.5} />
+                                  </Link>
+                                </div>
+                              </div>
                             ))}
                           </div>
                         )}

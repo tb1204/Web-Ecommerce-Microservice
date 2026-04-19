@@ -113,6 +113,23 @@ const CustomProfile = () => {
   };
 
   const handleSaveAll = async () => {
+    // --- Bắt đầu kiểm tra tính hợp lệ (Validation) ---
+    if (username.length < 3 || username.length > 20) {
+      return toast.error("Username phải từ 3 đến 20 ký tự.");
+    }
+    if (firstName.length < 3 || firstName.length > 20) {
+      return toast.error("Họ phải từ 3 đến 20 ký tự.");
+    }
+    if (lastName.length < 3 || lastName.length > 20) {
+      return toast.error("Tên phải từ 3 đến 20 ký tự.");
+    }
+    
+    const phoneRegex = /^[0-9]{10,11}$/;
+    if (!phoneRegex.test(phone)) {
+      return toast.error("Số điện thoại không hợp lệ (cần đúng 10 hoặc 11 chữ số).");
+    }
+    // --- Kết thúc kiểm tra ---
+
     try {
       const token = await getToken({ template: "my-backend" });
       console.log("USERNAME TRƯỚC KHI SAVE:", username);
@@ -350,7 +367,13 @@ const CustomProfile = () => {
                     </label>
                     <input
                       value={value}
-                      onChange={(e) => set(e.target.value)}
+                      onChange={(e) => {
+                        let val = e.target.value;
+                        if (label === "Số điện thoại") {
+                          val = val.replace(/[^0-9]/g, ""); // Ngăn nhập chữ, chỉ lấy số
+                        }
+                        set(val);
+                      }}
                       className="w-full px-5 py-4 bg-gray-50/50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 rounded-2xl focus:bg-white dark:focus:bg-gray-800 focus:border-[#14532d] dark:focus:border-emerald-500 focus:ring-4 focus:ring-[#14532d]/10 dark:focus:ring-emerald-500/10 outline-none transition-all text-sm font-semibold text-gray-800 dark:text-gray-200 shadow-sm shadow-gray-100/50 dark:shadow-none"
                     />
                   </div>

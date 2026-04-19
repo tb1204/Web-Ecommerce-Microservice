@@ -1,9 +1,0 @@
-{
-  "id": "1e8773d3-8257-412a-b65a-b47fc3edd5d5",
-  "name": "price_range",
-  "isOverridable": true,
-  "isEnum": false,
-  "isRegexp": false,
-  "automatedExpansion": true,
-  "allowFuzzyExtraction": true
-}

@@ -1,9 +1,0 @@
-{
-  "id": "b77ebf54-8bfa-4b40-a8c2-5ee9f6b7054c",
-  "name": "material",
-  "isOverridable": true,
-  "isEnum": false,
-  "isRegexp": false,
-  "automatedExpansion": true,
-  "allowFuzzyExtraction": true
-}
