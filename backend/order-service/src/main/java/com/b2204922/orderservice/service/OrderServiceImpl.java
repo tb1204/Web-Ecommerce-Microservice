@@ -2,6 +2,7 @@ package com.b2204922.orderservice.service;
 
 import com.b2204922.orderservice.config.RabbitMQConfig;
 import com.b2204922.orderservice.dto.NotificationDTO;
+import com.b2204922.orderservice.dto.request.TopSellingProductDto;
 import com.b2204922.orderservice.entity.Order;
 import com.b2204922.orderservice.entity.OrderItem;
 import com.b2204922.orderservice.exception.ResourceNotFoundException;
@@ -737,9 +738,28 @@ public class OrderServiceImpl implements IOrderService {
 
     }
 
+//    @Override
+//    public List<String> getTopSellingProductIds(int limit) {
+//        // Chỉ lấy từ đơn hàng thành công
+//        List<Order> orders = orderRepository.findByOrderStatus("DELIVERED");
+//
+//        Map<String, Integer> productQtyMap = new HashMap<>();
+//
+//        for (Order order : orders) {
+//            for (OrderItem item : order.getItems()) {
+//                String pid = item.getProductId();
+//                productQtyMap.put(pid, productQtyMap.getOrDefault(pid, 0) + item.getQuantity());
+//            }
+//        }
+//
+//        return productQtyMap.entrySet().stream()
+//                .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
+//                .limit(limit)
+//                .map(Map.Entry::getKey)
+//                .collect(Collectors.toList());
+//    }
     @Override
-    public List<String> getTopSellingProductIds(int limit) {
-        // Chỉ lấy từ đơn hàng thành công
+    public List<TopSellingProductDto> getTopSellingProductIds(int limit) {
         List<Order> orders = orderRepository.findByOrderStatus("DELIVERED");
 
         Map<String, Integer> productQtyMap = new HashMap<>();
@@ -754,7 +774,7 @@ public class OrderServiceImpl implements IOrderService {
         return productQtyMap.entrySet().stream()
                 .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
                 .limit(limit)
-                .map(Map.Entry::getKey)
+                .map(entry -> new TopSellingProductDto(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList());
     }
 }

@@ -1,6 +1,7 @@
 package com.b2204922.orderservice.service;
 
 import com.b2204922.orderservice.dto.request.OrderRequest;
+import com.b2204922.orderservice.dto.request.TopSellingProductDto;
 import com.b2204922.orderservice.dto.response.OrderResponse;
 
 import java.time.LocalDate;
@@ -49,5 +50,6 @@ public interface IOrderService {
 
     List<Map<String, Object>> getTopSellingDashboard();
     public Integer countPurchasedProduct(String userId, String productId);
-    public List<String> getTopSellingProductIds(int limit);
+//    public List<String> getTopSellingProductIds(int limit);
+    public List<TopSellingProductDto> getTopSellingProductIds(int limit);
 }

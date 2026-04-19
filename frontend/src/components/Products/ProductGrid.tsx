@@ -622,6 +622,8 @@ interface ProductCardProps {
   selectedProductId?: string;
   isBundleMode?: boolean;
   isSliderMode?: boolean;
+
+  showSalesCount?: boolean;
 }
 
 const ProductGrid: React.FC<ProductCardProps> = ({
@@ -631,6 +633,7 @@ const ProductGrid: React.FC<ProductCardProps> = ({
   selectedProductId,
   isBundleMode = false,
   isSliderMode = false,
+  showSalesCount = false,
 }) => {
   const { addToCompare, compareItems } = useCompare();
   const { addToWishlist, isInWishlist } = useWishlist();
@@ -870,6 +873,13 @@ const ProductGrid: React.FC<ProductCardProps> = ({
                 </div>
               )}
 
+              {/* {showSalesCount && 
+                (product as any).salesCount > 0 && (
+                <div className="absolute top-2 right-2 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-sm">
+                  Đã bán {(product as any).salesCount}
+                </div>
+              )} */}
+
               {(isStopSelling || isOutOfStock) && (
                 <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px] flex items-center justify-center text-white font-bold text-[10px] uppercase">
                   {isStopSelling ? "Ngừng kinh doanh" : "Hết hàng"}
@@ -956,11 +966,34 @@ const ProductGrid: React.FC<ProductCardProps> = ({
                   </div>
                 )}
 
-                <p
+                {/* <p
                   className={`font-black text-base mt-1 ${canBuy ? "text-red-600 dark:text-red-400" : "text-gray-400 dark:text-gray-500"}`}
                 >
                   {(product.price ?? 0).toLocaleString("vi-VN")}₫
                 </p>
+
+                {showSalesCount && 
+                  (product as any).salesCount > 0 && (
+                  <div className="flex justify-end mt-1">
+                    <div className="bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-sm">
+                       Đã bán {(product as any).salesCount}
+                    </div>
+                  </div>
+                )} */}
+                <div className="flex items-center justify-between mt-1">
+                  <p
+                    className={`font-black text-base ${canBuy ? "text-red-600 dark:text-red-400" : "text-gray-400 dark:text-gray-500"}`}
+                  >
+                    {(product.price ?? 0).toLocaleString("vi-VN")}₫
+                  </p>
+
+                  {showSalesCount && 
+                    (product as any).salesCount > 0 && (
+                    <div className="bg-red-600 text-white text-[10px] font-bold px-2.5 py-0.5 rounded shadow-sm">
+                      Đã bán {(product as any).salesCount}
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* BUTTON */}
