@@ -543,4 +543,79 @@ public class ProductService {
                 .replaceAll("y", "[yỳýỷỹỵ]")
                 .replaceAll("d", "[dđ]");
     }
+
+    /**
+     * Kiểm tra danh sách sản phẩm khách chọn có đủ hàng không (chỉ validate, không trừ kho)
+     * @param itemsToCheck: List các Map chứa {productId, variantId, quantity}
+     */
+    public List<Map<String, Object>> validateStock(List<Map<String, Object>> itemsToCheck) {
+        List<Map<String, Object>> errors = new ArrayList<>();
+
+        Set<String> productIds = itemsToCheck.stream()
+                .map(item -> (String) item.get("productId"))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
+
+        List<Product> products = productRepository.findAllById(productIds);
+        Map<String, Product> productMap = products.stream()
+                .collect(Collectors.toMap(Product::getId, p -> p));
+
+        for (Map<String, Object> item : itemsToCheck) {
+            String productId = (String) item.get("productId");
+            String variantId = (String) item.get("variantId");
+            Integer requestedQuantity = (item.get("quantity") != null) ? (Integer) item.get("quantity") : 0;
+
+            Map<String, Object> errorItem = new HashMap<>();
+            Product product = productMap.get(productId);
+
+            if (product == null) {
+                errorItem.put("productId", productId);
+                errorItem.put("message", "Sản phẩm không tồn tại");
+                errors.add(errorItem);
+                continue;
+            }
+
+            // --- CHECK DỪNG BÁN ---
+            if (!"AVAILABLE".equalsIgnoreCase(product.getStatus())) {
+                errorItem.put("productId", productId);
+                errorItem.put("variantId", variantId);
+                errorItem.put("status", "stopselling"); // Trả về đúng mã này
+                errorItem.put("message", "Sản phẩm đã dừng bán");
+                errors.add(errorItem);
+                continue;
+            }
+
+            Product.ProductVariant variant = (product.getVariants() == null) ? null :
+                    product.getVariants().stream()
+                            .filter(v -> v.getVariantId().equals(variantId))
+                            .findFirst()
+                            .orElse(null);
+
+            if (variant == null) {
+                errorItem.put("productId", productId);
+                errorItem.put("message", "Biến thể không tồn tại");
+                errors.add(errorItem);
+            } else {
+                int currentStock = (variant.getStockQuantity() != null) ? variant.getStockQuantity() : 0;
+
+                // --- CHECK HẾT HÀNG ---
+                if (currentStock <= 0) {
+                    errorItem.put("productId", productId);
+                    errorItem.put("variantId", variantId);
+                    errorItem.put("status", "OUT_OF_STOCK");
+                    errorItem.put("message", "Sản phẩm đã hết hàng");
+                    errors.add(errorItem);
+                }
+                // --- CHECK KHÔNG ĐỦ SỐ LƯỢNG ---
+                else if (currentStock < requestedQuantity) {
+                    errorItem.put("productId", productId);
+                    errorItem.put("variantId", variantId);
+                    errorItem.put("status", "INSUFFICIENT_STOCK");
+                    errorItem.put("message", "Chỉ còn " + currentStock + " sản phẩm");
+                    errors.add(errorItem);
+                }
+            }
+        }
+        return errors;
+    }
 }

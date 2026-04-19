@@ -13,6 +13,7 @@ import {
 } from "../../store/slices/cartSlice";
 import { closeCartDrawer } from "../../store/slices/uiSlice";
 import { selectIsCartDrawerOpen } from "../../store/selectors";
+import axios from "axios";
 
 // ✅ Helper tạo key giống CartContents
 const getItemKey = (productId: string, variantId?: string) =>
@@ -58,13 +59,57 @@ function CartDrawer() {
       .reduce((sum, item) => sum + item.price * item.quantity, 0);
   }, [cartProducts, selectedItems]);
 
+  // useEffect(() => {
+  //   if (drawerOpen) {
+  //     getToken({ template: "my-backend" }).then((token) => {
+  //       dispatch(fetchCart(token));
+  //     });
+  //   }
+  // }, [drawerOpen]);
   useEffect(() => {
-    if (drawerOpen) {
-      getToken({ template: "my-backend" }).then((token) => {
-        dispatch(fetchCart(token));
-      });
-    }
-  }, [drawerOpen]);
+    const checkStockImmediately = async () => {
+      if (drawerOpen && cartItemsRaw.length > 0) {
+        try {
+          const token = await getToken({ template: "my-backend" });
+          
+          // 1. Fetch giỏ hàng mới nhất để đảm bảo dữ liệu đồng bộ
+          await dispatch(fetchCart(token)).unwrap();
+
+          // 2. Chuẩn bị danh sách để check kho
+          // Lưu ý: cartItemsRaw là dữ liệu từ Redux store
+          const payload = {
+            items: cartItemsRaw.map((item) => ({
+              productId: item.productId,
+              variantId: item.variantId,
+              quantity: item.quantity,
+            })),
+          };
+
+          // 3. Gọi API validate
+          const response = await axios.post(
+            "http://localhost:8080/api/products/validate-stock", 
+            payload,
+            { headers: { Authorization: `Bearer ${token}` } }
+          );
+
+          // Nếu thành công (200 OK) nghĩa là không có lỗi
+          setStockErrors([]);
+        } catch (error: any) {
+          if (error.response && error.response.status === 400) {
+            // Cập nhật các lỗi "Hết hàng", "Ngừng bán" vào state
+            setStockErrors(error.response.data);
+          } else {
+            console.error("Lỗi kiểm tra kho:", error);
+          }
+        }
+      }
+    };
+
+    checkStockImmediately();
+  }, [drawerOpen, cartItemsRaw.length]); // Chạy lại khi mở drawer hoặc số lượng sp thay đổi
+
+  // 1. Thêm state lưu lỗi kho
+  const [stockErrors, setStockErrors] = useState<any[]>([]);
 
   // Reset selection khi cart thay đổi (xóa item)
   useEffect(() => {
@@ -120,20 +165,63 @@ function CartDrawer() {
   };
 
   // ✅ Fix lỗi 1 + 3: map key composite → CartProduct để dispatch
-  const handleCheckout = () => {
+  // const handleCheckout = () => {
+  //   if (selectedCount === 0) {
+  //     alert("Vui lòng chọn ít nhất 1 sản phẩm để thanh toán!");
+  //     return;
+  //   }
+
+  //   // ✅ Lọc đúng sản phẩm dựa vào key composite
+  //   const selectedProducts = cartProducts.filter((item) =>
+  //     selectedItems.includes(getItemKey(item.productId, item.variantId)),
+  //   );
+
+  //   dispatch(setCheckoutItems({ items: selectedProducts, isBuyNow: false }));
+  //   handleCloseDrawer();
+  //   navigate("/checkout");
+  // };
+  // 2. Cập nhật hàm handleCheckout
+  const handleCheckout = async () => {
     if (selectedCount === 0) {
       alert("Vui lòng chọn ít nhất 1 sản phẩm để thanh toán!");
       return;
     }
 
-    // ✅ Lọc đúng sản phẩm dựa vào key composite
     const selectedProducts = cartProducts.filter((item) =>
       selectedItems.includes(getItemKey(item.productId, item.variantId)),
     );
 
-    dispatch(setCheckoutItems({ items: selectedProducts, isBuyNow: false }));
-    handleCloseDrawer();
-    navigate("/checkout");
+    // Chuẩn bị payload cho Backend
+    const payload = {
+      items: selectedProducts.map(item => ({
+        productId: item.productId,
+        variantId: item.variantId,
+        quantity: item.quantity
+      }))
+    };
+
+    try {
+      const token = await getToken({ template: "my-backend" });
+      // Gọi API validate stock (thay URL cho đúng với gateway của ông)
+      const response = await axios.post("http://localhost:8080/api/products/validate-stock", payload, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      // Nếu thành công (không có lỗi kho)
+      setStockErrors([]); // Xóa lỗi cũ nếu có
+      dispatch(setCheckoutItems({ items: selectedProducts, isBuyNow: false }));
+      handleCloseDrawer();
+      navigate("/checkout");
+
+    } catch (error: any) {
+      if (error.response && error.response.status === 400) {
+        // Lưu danh sách lỗi từ backend (OUT_OF_STOCK, INSUFFICIENT_STOCK)
+        setStockErrors(error.response.data);
+        alert("Giỏ hàng có thay đổi về số lượng của các sản phẩm, vui lòng kiểm tra lại!");
+      } else {
+        alert("Có lỗi xảy ra khi kiểm tra kho hàng!");
+      }
+    }
   };
 
   const handleDetailCart = () => {
@@ -214,6 +302,7 @@ function CartDrawer() {
                   totalPrice: totalSelectedAmount,
                 }}
                 selectedItems={selectedItems}
+                stockErrors={stockErrors}
                 onToggleSelect={toggleSelectItem}
                 onUpdateQuantity={handleUpdateQuantity}
                 onRemoveItem={handleRemoveItem}

@@ -705,8 +705,8 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
                   className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-emerald-500 outline-none text-sm font-medium bg-white h-[42px]"
                 >
                   <option value="AVAILABLE">Sẵn sàng bán</option>
-                  <option value="stopselling">Ngừng bán</option>
-                  <option value="OUT_OF_STOCK">Hết hàng</option>
+                  {/* <option value="stopselling">Ngừng bán</option> */}
+                  <option value="OUT_OF_STOCK">Ngừng bán</option>
                 </select>
               </div>
             </div>

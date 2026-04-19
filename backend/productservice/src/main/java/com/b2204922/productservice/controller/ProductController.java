@@ -1,8 +1,10 @@
 package com.b2204922.productservice.controller;
 
+import com.b2204922.productservice.dto.StockValidateRequest;
 import com.b2204922.productservice.entity.Product;
 import com.b2204922.productservice.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,11 +15,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/products")
 @RequiredArgsConstructor
-
+@Slf4j
 public class ProductController {
 
     private final ProductService productService; // Kết nối với Service
@@ -118,5 +121,28 @@ public class ProductController {
     @GetMapping("/search")
     public ResponseEntity<List<Product>> searchProducts(@RequestParam("q") String query) {
         return ResponseEntity.ok(productService.searchByName(query));
+    }
+
+    @PostMapping("/validate-stock")
+    public ResponseEntity<?> validateStock(@RequestBody StockValidateRequest request) {
+        log.info("🛒 Nhận yêu cầu kiểm tra kho cho {} items", request.getItems().size());
+
+        // Chuyển đổi DTO sang List<Map> để khớp với hàm trong Service tui viết lúc nãy
+        // Hoặc ông có thể sửa hàm Service để nhận trực tiếp DTO cho chuyên nghiệp
+        List<Map<String, Object>> itemsToCheck = request.getItems().stream().map(item -> {
+            Map<String, Object> map = new HashMap<>();
+            map.put("productId", item.getProductId());
+            map.put("variantId", item.getVariantId());
+            map.put("quantity", item.getQuantity());
+            return map;
+        }).collect(Collectors.toList());
+
+        List<Map<String, Object>> errors = productService.validateStock(itemsToCheck);
+
+        if (errors.isEmpty()) {
+            return ResponseEntity.ok(Map.of("success", true, "message", "Tất cả sản phẩm đều đủ hàng"));
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
 }

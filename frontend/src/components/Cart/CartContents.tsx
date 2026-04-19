@@ -22,6 +22,7 @@ export interface Cart {
 interface CartContentsProps {
   cart: Cart;
   selectedItems: string[];
+  stockErrors?: any[];
   onToggleSelect: (key: string) => void;
   onUpdateQuantity: (
     productId: string,
@@ -38,6 +39,7 @@ const getItemKey = (productId: string, variantId?: string) =>
 const CartContents = ({
   cart,
   selectedItems,
+  stockErrors = [],
   onToggleSelect,
   onUpdateQuantity,
   onRemoveItem,
@@ -62,26 +64,53 @@ const CartContents = ({
           // ✅ SỬA: dùng composite key
           const itemKey = getItemKey(product.productId, product.variantId);
           const isSelected = selectedItems.includes(itemKey);
+          // Tìm lỗi dựa trên productId và variantId
+          const error = stockErrors.find(e => 
+              e.productId === product.productId && e.variantId === product.variantId
+          );
+          // Phân loại trạng thái để khóa UI
+          const isOutOfStock = error?.status === "OUT_OF_STOCK";
+          const isStopSelling = error?.status === "stopselling";
+          const isDisabled = isOutOfStock || isStopSelling; // Khóa nếu rơi vào 2 case này
 
           return (
             <div
               key={itemKey}
-              className="bg-white dark:bg-transparent flex items-start gap-4 py-5 border-b dark:border-gray-800 last:border-0"
+              // className="bg-white dark:bg-transparent flex items-start gap-4 py-5 border-b dark:border-gray-800 last:border-0"
+              className={`flex items-start gap-4 py-5 border-b dark:border-gray-800 last:border-0 transition-all ${
+                isDisabled ? "opacity-50 grayscale" : "opacity-100"
+              }`}
             >
               <div className="pt-2">
                 <input
                   type="checkbox"
-                  checked={isSelected}
+                  checked={isSelected && !isDisabled}
+                  disabled={isDisabled}
                   onChange={() => onToggleSelect(itemKey)} // ✅ SỬA
-                  className="w-5 h-5 accent-[#05472a] cursor-pointer rounded"
+                  // className="w-5 h-5 accent-[#05472a] cursor-pointer rounded"
+                  className="w-5 h-5 accent-[#05472a] cursor-pointer rounded disabled:cursor-not-allowed"
                 />
               </div>
 
-              <img
+              {/* <img
                 src={product.image}
                 alt={product.name}
                 className="w-24 h-24 object-cover rounded-xl shadow-sm border dark:border-gray-700"
-              />
+              /> */}
+              <div className="relative">
+                <img src={product.image} className="w-24 h-24 object-cover rounded-xl border" />
+                {/* Hiển thị Badge đè lên ảnh cho chuyên nghiệp */}
+                {isOutOfStock && (
+                  <span className="absolute inset-0 flex items-center justify-center bg-black/60 text-white text-[10px] font-bold uppercase rounded-xl">
+                    Hết hàng
+                  </span>
+                )}
+                {isStopSelling && (
+                  <span className="absolute inset-0 flex items-center justify-center bg-red-600/60 text-white text-[10px] font-bold uppercase rounded-xl text-center p-1">
+                    Ngừng bán
+                  </span>
+                )}
+              </div>
 
               <div className="flex-1 flex flex-col justify-between self-stretch">
                 <div>
@@ -105,8 +134,17 @@ const CartContents = ({
                   <p className="font-bold text-red-600 dark:text-red-400 text-lg mt-2">
                     {product.price.toLocaleString("vi-VN")} đ
                   </p>
+
+                  {/* moi them- */}
+                  {error && (
+                    <p className="text-red-500 text-[11px] font-semibold mt-1 animate-pulse">
+                      {isStopSelling ? "Thông báo: " : "Lưu ý: "}
+                      {error.message}
+                    </p>
+                  )}
                 </div>
 
+                {!isDisabled && (
                 <div className="flex items-center justify-between mt-3">
                   <div className="flex items-center border border-gray-300 dark:border-gray-700 rounded-lg overflow-hidden h-8">
                     <button
@@ -151,6 +189,7 @@ const CartContents = ({
                     </span>
                   </div>
                 </div>
+                )}
               </div>
             </div>
           );
