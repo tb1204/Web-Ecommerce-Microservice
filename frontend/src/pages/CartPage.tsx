@@ -42,17 +42,26 @@ const CartPage = () => {
         };
 
         await axios.post(
-          `${import.meta.env.VITE_API_BASE_URL || "http://localhost:8080"}/api/products/validate-stock`,
+          `${import.meta.env.VITE_API_BASE_URL}/api/products/validate-stock`,
           payload,
-          { headers: { Authorization: `Bearer ${token}` } }
+          { 
+            headers: { Authorization: `Bearer ${token}` } 
+          }
         );
 
         setStockErrors([]);
       } catch (error: any) {
-        if (error.response?.status === 400) {
-          const errorsData = error.response.data;
-          const errorsArray = Array.isArray(errorsData) ? errorsData : [errorsData];
-          setStockErrors(errorsArray);
+        console.log("=== Stock Error Response ===", error.response?.data);
+
+        if (error.response?.data) {
+          let errors = error.response.data;
+
+          // Chuẩn hóa về array
+          if (!Array.isArray(errors)) {
+            errors = [errors];
+          }
+
+          setStockErrors(errors);
         } else {
           setStockErrors([]);
         }
@@ -185,7 +194,6 @@ const CartPage = () => {
 
                 const status = error ? String(error.status || "").trim().toUpperCase() : "";
                 const isInsufficient = status === "INSUFFICIENT_STOCK";
-                const remainingStock = error?.remainingStock || error?.currentStock || "ít";
 
                 return (
                   <div
@@ -225,11 +233,10 @@ const CartPage = () => {
                         </button>
                       </div>
 
-                      {/* Cảnh báo thiếu hàng */}
-                      {isInsufficient && (
+                      {/* Cảnh báo thiếu hàng - Dùng message từ backend */}
+                      {error && (
                         <div className="mt-3 p-3 bg-red-100 dark:bg-red-900/30 border border-red-300 dark:border-red-700 rounded-lg text-red-700 dark:text-red-400 text-sm">
-                           Chỉ còn <strong>{remainingStock}</strong> sản phẩm. 
-                          Vui lòng giảm số lượng trước khi thanh toán.
+                          {error.message}
                         </div>
                       )}
 
