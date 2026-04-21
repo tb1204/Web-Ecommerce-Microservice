@@ -603,14 +603,28 @@ public class OrderServiceImpl implements IOrderService {
         }
 
         // Sắp xếp và lấy top 5
-        return productRevenue.entrySet().stream()
-                .sorted(Map.Entry.<String, Double>comparingByValue().reversed())
+//        return productRevenue.entrySet().stream()
+//                .sorted(Map.Entry.<String, Double>comparingByValue().reversed())
+//                .limit(5)
+//                .map(e -> {
+//                    Map<String, Object> m = new HashMap<>();
+//                    m.put("name", productNameMap.get(e.getKey()));
+//                    m.put("sub", productQuantity.get(e.getKey()) + " sản phẩm đã bán");
+//                    m.put("value", String.format("%.1fM VNĐ", e.getValue() / 1000000));
+//                    return m;
+//                }).collect(Collectors.toList());
+        return productQuantity.entrySet().stream()
+                // Sắp xếp theo Số lượng (Integer) giảm dần
+                .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
                 .limit(5)
                 .map(e -> {
+                    String pid = e.getKey();
                     Map<String, Object> m = new HashMap<>();
-                    m.put("name", productNameMap.get(e.getKey()));
-                    m.put("sub", productQuantity.get(e.getKey()) + " sản phẩm đã bán");
-                    m.put("value", String.format("%.1fM VNĐ", e.getValue() / 1000000));
+                    m.put("name", productNameMap.get(pid));
+                    // value: Giờ mình đưa số lượng lên làm giá trị chính hiển thị ở badge xanh
+                    m.put("value", e.getValue() + " sp");
+                    // sub: Đưa doanh thu xuống phần ghi chú nhỏ phía dưới
+                    m.put("sub", String.format("Doanh thu: %.1fM VNĐ", productRevenue.get(pid) / 1000000));
                     return m;
                 }).collect(Collectors.toList());
     }

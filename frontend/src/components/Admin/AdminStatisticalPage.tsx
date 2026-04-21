@@ -65,13 +65,23 @@ interface RevenueGrowthStat {
 //   doanhThu: number | null;
 //   rawDate: Date;
 // }
+type FilterType = "7days" | "thisMonth" | "lastMonth" | "custom";
 
 const AdminStatisticalPage: React.FC = () => {
+  const formatDate = (date: Date) => date.toISOString().split("T")[0];
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const [loading, setLoading] = useState<boolean>(true);
   // const [timeFilter, setTimeFilter] = useState<"day" | "week" | "month">("day");
-  const [startDate, setStartDate] = useState<string>("");
-  const [endDate, setEndDate] = useState<string>("");
+  // const [startDate, setStartDate] = useState<string>("");
+   // 1. Khởi tạo mặc định là 'thisMonth'
+  const [activeFilter, setActiveFilter] = useState<FilterType>("thisMonth");
+  // Khởi tạo mặc định là "Tháng này"
+  const [startDate, setStartDate] = useState<string>(() => {
+    const now = new Date();
+    return formatDate(new Date(now.getFullYear(), now.getMonth(), 1));
+  });
+  // const [endDate, setEndDate] = useState<string>("");
+  const [endDate, setEndDate] = useState<string>(() => formatDate(new Date()));
   const reportRef = useRef<HTMLDivElement>(null);
   const [totalRevenue, setTotalRevenue] = useState<number>(0);
   const [orderStats, setOrderStats] = useState({
@@ -90,7 +100,8 @@ const AdminStatisticalPage: React.FC = () => {
   const [lowStock, setLowStock] = useState<InventoryStat[]>([]);
   const [revenueGrowth, setRevenueGrowth] = useState<RevenueGrowthStat[]>([]);
 
-  const formatDate = (date: Date) => date.toISOString().split("T")[0];
+  // const formatDate = (date: Date) => date.toISOString().split("T")[0];
+  
 
   const getStartOfThisMonth = () => {
     const now = new Date();
@@ -106,6 +117,8 @@ const AdminStatisticalPage: React.FC = () => {
     const now = new Date();
     return new Date(now.getFullYear(), now.getMonth(), 0);
   };
+
+ 
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 800);
@@ -294,26 +307,50 @@ const AdminStatisticalPage: React.FC = () => {
   //   setStartDate(formatDate(start));
   //   setEndDate(formatDate(end));
   // };
+  // const handleQuickSelect = (type: "7days" | "thisMonth" | "lastMonth") => {
+  //   const end = new Date();
+  //   let start = new Date();
+
+  //   switch (type) {
+  //     case "7days": {
+  //       start.setDate(end.getDate() - 7);
+  //       break;
+  //     }
+  //     case "thisMonth": {
+  //       start = getStartOfThisMonth();
+  //       break;
+  //     }
+  //     case "lastMonth": {
+  //       start = getStartOfLastMonth();
+  //       const lastMonthEnd = getEndOfLastMonth();
+  //       setStartDate(formatDate(start));
+  //       setEndDate(formatDate(lastMonthEnd));
+  //       return;
+  //     }
+  //   }
+  //   setStartDate(formatDate(start));
+  //   setEndDate(formatDate(end));
+  // };
   const handleQuickSelect = (type: "7days" | "thisMonth" | "lastMonth") => {
     const end = new Date();
     let start = new Date();
 
+    // Cập nhật trạng thái nút đang chọn
+    setActiveFilter(type); 
+
     switch (type) {
-      case "7days": {
+      case "7days":
         start.setDate(end.getDate() - 7);
         break;
-      }
-      case "thisMonth": {
+      case "thisMonth":
         start = getStartOfThisMonth();
         break;
-      }
-      case "lastMonth": {
+      case "lastMonth":
         start = getStartOfLastMonth();
         const lastMonthEnd = getEndOfLastMonth();
         setStartDate(formatDate(start));
         setEndDate(formatDate(lastMonthEnd));
         return;
-      }
     }
     setStartDate(formatDate(start));
     setEndDate(formatDate(end));
@@ -403,7 +440,12 @@ const AdminStatisticalPage: React.FC = () => {
                 <input
                   type="date"
                   value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
+                  onChange={(e) => {
+                    setStartDate(e.target.value);
+                    setActiveFilter("custom");
+                  }
+                  // setStartDate(e.target.value)
+                }
                   className="bg-transparent text-[12px] font-bold text-gray-600 outline-none cursor-pointer"
                 />
                 <span className="text-gray-300">→</span>
@@ -426,7 +468,7 @@ const AdminStatisticalPage: React.FC = () => {
                   </button>
                 ))}
               </div> */}
-              <div className="flex bg-gray-50 p-1 rounded-xl border border-gray-100">
+              {/* <div className="flex bg-gray-50 p-1 rounded-xl border border-gray-100">
                 <button
                   onClick={() => handleQuickSelect("7days")}
                   className="px-3 py-1.5 text-[10px] font-black uppercase rounded-lg hover:bg-white hover:text-emerald-600 transition-all"
@@ -442,6 +484,40 @@ const AdminStatisticalPage: React.FC = () => {
                 <button
                   onClick={() => handleQuickSelect("lastMonth")}
                   className="px-3 py-1.5 text-[10px] font-black uppercase rounded-lg hover:bg-white hover:text-emerald-600 transition-all"
+                >
+                  Tháng trước
+                </button>
+              </div> */}
+              <div className="flex bg-gray-50 p-1 rounded-xl border border-gray-100">
+                <button
+                  onClick={() => handleQuickSelect("7days")}
+                  className={`px-3 py-1.5 text-[10px] font-black uppercase rounded-lg transition-all ${
+                    activeFilter === "7days" 
+                    ? "bg-white text-emerald-600 shadow-sm border border-emerald-100" 
+                    : "text-gray-400 hover:text-emerald-600"
+                  }`}
+                >
+                  7 Ngày qua
+                </button>
+
+                <button
+                  onClick={() => handleQuickSelect("thisMonth")}
+                  className={`px-3 py-1.5 text-[10px] font-black uppercase rounded-lg transition-all ${
+                    activeFilter === "thisMonth" 
+                    ? "bg-white text-emerald-600 shadow-sm border border-emerald-100" 
+                    : "text-gray-400 hover:text-emerald-600"
+                  }`}
+                >
+                  Tháng này
+                </button>
+
+                <button
+                  onClick={() => handleQuickSelect("lastMonth")}
+                  className={`px-3 py-1.5 text-[10px] font-black uppercase rounded-lg transition-all ${
+                    activeFilter === "lastMonth" 
+                    ? "bg-white text-emerald-600 shadow-sm border border-emerald-100" 
+                    : "text-gray-400 hover:text-emerald-600"
+                  }`}
                 >
                   Tháng trước
                 </button>
