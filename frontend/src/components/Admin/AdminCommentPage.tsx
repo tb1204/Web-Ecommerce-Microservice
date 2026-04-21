@@ -515,7 +515,7 @@ const AdminCommentPage = () => {
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-1">
                       <span className="font-bold text-gray-800">
-                        {comment.username}
+                        {comment.username && comment.username.trim() ? comment.username.trim() : "Khách hàng"}
                       </span>
                       <div className="flex text-yellow-400">
                         {[...Array(5)].map((_, i) => (
@@ -604,7 +604,7 @@ const AdminCommentPage = () => {
                       <p>
                         Người dùng:{" "}
                         <span className="font-medium text-gray-600">
-                          {comment.username || "Khách hàng Artisano"}
+                          {comment.username && comment.username.trim() ? comment.username.trim() : "Khách hàng"}
                         </span>
                       </p>
                       <p>

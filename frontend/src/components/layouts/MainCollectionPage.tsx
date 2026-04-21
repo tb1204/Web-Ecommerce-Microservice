@@ -56,12 +56,7 @@ const mapProduct = (p: any): Product => {
       isPrimary: Boolean(img.isPrimary),
     })),
 
-    status:
-      p.status === "AVAILABLE"
-        ? "selling"
-        : p.status === "OUT_OF_STOCK" || p.status === "DISCONTINUED"
-          ? "stopselling"
-          : "selling",
+    status: p.status || "AVAILABLE",
 
     rating: Number(p.rating) || 0,
     reviewCount: Number(p.reviewCount) || 0,

@@ -578,6 +578,8 @@ const ProductDetails = () => {
   // ✅ TÁCH LOGIC THÊM VÀO GIỎ THÀNH HÀM RIÊNG
   const addProductToCart = async () => {
     if (!product || !selectedVariant) return;
+    if (product.status === "stopselling")
+      throw new Error("Sản phẩm này đã ngừng bán!");
     if ((selectedVariant.stockQuantity ?? 0) <= 0)
       throw new Error("Biến thể này đã hết hàng!");
 
@@ -640,6 +642,10 @@ const ProductDetails = () => {
 
   //fix lỗi mua ngay
   const handleBuyNow = () => {
+    if (product?.status === "stopselling") {
+      toast.error("Sản phẩm này đã ngừng bán!");
+      return;
+    }
     if (!selectedVariant) {
       toast.error("Vui lòng chọn biến thể sản phẩm!");
       return;
@@ -1225,12 +1231,13 @@ const ProductDetails = () => {
                 disabled={
                   addingToCart ||
                   !selectedVariant ||
-                  (selectedVariant.stockQuantity ?? 0) <= 0
+                  (selectedVariant.stockQuantity ?? 0) <= 0 ||
+                  product?.status === "stopselling"
                 }
                 className="flex-[2.5] bg-[#004d31] dark:bg-green-700 hover:bg-[#003d27] dark:hover:bg-green-600 text-white py-2 sm:py-2.5 rounded-xl flex flex-col items-center justify-center transition-all active:scale-[0.98] shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <span className="font-bold text-sm sm:text-base uppercase tracking-wider">
-                  Mua ngay
+                  {product?.status === "stopselling" ? "Ngừng bán" : "Mua ngay"}
                 </span>
                 <span className="text-[10px] sm:text-xs opacity-80 font-light italic">
                   (Giao tận nơi hoặc nhận tại cửa hàng)
@@ -1242,7 +1249,8 @@ const ProductDetails = () => {
                 disabled={
                   addingToCart ||
                   !selectedVariant ||
-                  (selectedVariant.stockQuantity ?? 0) <= 0
+                  (selectedVariant.stockQuantity ?? 0) <= 0 ||
+                  product?.status === "stopselling"
                 }
                 className="flex-1 border-2 border-[#004d31] dark:border-green-600 text-[#004d31] dark:text-green-500 py-2 sm:py-2.5 rounded-xl flex items-center justify-center gap-2 font-bold text-xs uppercase hover:bg-[#004d31] dark:hover:bg-green-600 hover:text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >

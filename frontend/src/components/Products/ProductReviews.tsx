@@ -273,11 +273,11 @@ function ProductReviews({ productId }: ProductReviewsProps) {
               <div className="flex justify-between items-start mb-4">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-800 font-black text-sm">
-                    {rev.username?.charAt(0).toUpperCase() || "U"}
+                    {(rev.username && rev.username.trim() ? rev.username.trim() : "Khách hàng").charAt(0).toUpperCase()}
                   </div>
                   <div>
                     <h4 className="font-black text-xs uppercase flex items-center gap-2">
-                      {rev.username}{" "}
+                      {rev.username && rev.username.trim() ? rev.username.trim() : "Khách hàng"}{" "}
                       <CheckCircle
                         size={12}
                         className="text-blue-500"
