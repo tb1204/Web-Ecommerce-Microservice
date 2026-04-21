@@ -123,21 +123,7 @@ public class ClerkService {
         }
     }
 
-    // public void deleteUser(String clerkId) {
-    //     HttpHeaders headers = authHeaders();
-    //     try {
-    //         vanillaRestTemplate.exchange(
-    //                 clerkApiUrl + "/users/" + clerkId,
-    //                 HttpMethod.DELETE,
-    //                 new HttpEntity<>(headers),
-    //                 Void.class
-    //         );
-    //         logger.info("Clerk user deleted: {}", clerkId);
-    //     } catch (Exception e) {
-    //         logger.warn("Clerk delete user {} failed (may already be deleted): {}", clerkId, e.getMessage());
-    //         // không throw — vẫn cho phép xóa DB nếu Clerk 404
-    //     }
-    // }
+
     public void deleteUser(String clerkUserId) {
         String url = "https://api.clerk.com/v1/users/" + clerkUserId;
 

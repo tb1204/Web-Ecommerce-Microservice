@@ -79,76 +79,12 @@ public class PaymentService {
                 .stream().map(this::toResponse).collect(Collectors.toList());
     }
 
-    // public PaymentResponse handleVNPayReturn(Map<String, String> params) {
-    //     String orderId = params.get("vnp_TxnRef");
-    //     String responseCode = params.get("vnp_ResponseCode");
-    //     String transactionStatus = params.get("vnp_TransactionStatus");
-    //     String transactionId = params.get("vnp_TransactionNo");
-    //     Payment payment = paymentRepository.findByOrderId(orderId)
-    //             .orElseThrow(() -> new AppException(ErrorCode.PAYMENT_NOT_FOUND));
-    //     payment.setResponseCode(responseCode);
-    //     payment.setTransactionId(transactionId);
-    //     payment.setPaymentGatewayResponse(params.toString());
-    //     payment.setUpdatedAt(Instant.now());
-    //     boolean isValidSignature = vnPayUtil.verifyReturn(params);
-    //     boolean isResponseSuccess = "00".equals(responseCode);
-    //     boolean isTransactionSuccess = "00".equals(transactionStatus);
-    //     if (isValidSignature && isResponseSuccess && isTransactionSuccess) {
-    //         payment.setPaymentStatus(PaymentStatus.PAID);
-    //         payment.setPaidAt(Instant.now());
-    //         log.info("VNPay SUCCESS for order {}", orderId);
-    //     } else {
-    //         payment.setPaymentStatus(PaymentStatus.FAILED);
-    //         // ← THÊM: lưu message tiếng Việt thay vì mã số
-    //         String failMessage = vnPayUtil.getResponseMessage(responseCode);
-    //         payment.setFailedReason(failMessage);
-    //         log.warn("VNPay FAILED for order {} | reason: {}", orderId, failMessage);
-    //     }
-    //     return toResponse(paymentRepository.save(payment));
-    // }
-//    public PaymentResponse handleVNPayReturn(Map<String, String> params) {
-//        String orderId = params.get("vnp_TxnRef");
-//        String responseCode = params.get("vnp_ResponseCode");
-//        String transactionStatus = params.get("vnp_TransactionStatus");
-//        String transactionId = params.get("vnp_TransactionNo");
-//
-//        Payment payment = paymentRepository.findByOrderId(orderId)
-//                .orElseThrow(() -> new AppException(ErrorCode.PAYMENT_NOT_FOUND));
-//
-//        payment.setResponseCode(responseCode);
-//        payment.setTransactionId(transactionId);
-//        payment.setPaymentGatewayResponse(params.toString());
-//        payment.setUpdatedAt(Instant.now());
-//
-//        boolean isValidSignature = vnPayUtil.verifyReturn(params);
-//        boolean isResponseSuccess = "00".equals(responseCode);
-//        boolean isTransactionSuccess = "00".equals(transactionStatus);
-//
-//        if (isValidSignature && isResponseSuccess && isTransactionSuccess) {
-//            payment.setPaymentStatus(PaymentStatus.PAID);
-//            payment.setPaidAt(Instant.now());
-//            log.info("VNPay SUCCESS for order {}", orderId);
-//
-//            Payment saved = paymentRepository.save(payment);
-//            orderClientService.updatePaymentStatus(orderId, "PAID", transactionId); // ← THÊM
-//            return toResponse(saved);
-//
-//        } else {
-//            payment.setPaymentStatus(PaymentStatus.FAILED);
-//            String failMessage = vnPayUtil.getResponseMessage(responseCode);
-//            payment.setFailedReason(failMessage);
-//            log.warn("VNPay FAILED for order {} | reason: {}", orderId, failMessage);
-//
-//            Payment saved = paymentRepository.save(payment);
-//            orderClientService.updatePaymentStatus(orderId, "FAILED", transactionId); // ← THÊM
-//            return toResponse(saved);
-//        }
-//    }
+
     public PaymentResponse handleVNPayReturn(Map<String, String> params) {
-        String orderId = params.get("vnp_TxnRef");
-        String responseCode = params.get("vnp_ResponseCode");
-        String transactionStatus = params.get("vnp_TransactionStatus");
-        String transactionId = params.get("vnp_TransactionNo");
+        String orderId = params.get("vnp_TxnRef"); //mã đơn hàng
+        String responseCode = params.get("vnp_ResponseCode"); //kết quả
+        String transactionStatus = params.get("vnp_TransactionStatus"); //trạng thái giao dịch
+        String transactionId = params.get("vnp_TransactionNo"); //mã giao dịch
 
         Payment payment = paymentRepository.findByOrderId(orderId)
                 .orElseThrow(() -> new AppException(ErrorCode.PAYMENT_NOT_FOUND));
@@ -235,21 +171,7 @@ public class PaymentService {
         return toResponse(paymentRepository.save(payment));
     }
 
-//    public PaymentResponse refund(String orderId, RefundRequest req) {
-//        Payment payment = paymentRepository.findByOrderId(orderId)
-//                .orElseThrow(() -> new AppException(ErrorCode.PAYMENT_NOT_FOUND));
-//
-//        if (payment.getPaymentStatus() != PaymentStatus.PAID) {
-//            throw new AppException(ErrorCode.INVALID_PAYMENT_STATUS, "Chỉ hoàn tiền được khi đã thanh toán");
-//        }
-//
-//        payment.setPaymentStatus(PaymentStatus.REFUNDED);
-//        payment.setRefundAmount(req.getRefundAmount());
-//        payment.setRefundReason(req.getRefundReason());
-//        payment.setRefundedAt(Instant.now());
-//        payment.setUpdatedAt(Instant.now());
-//        return toResponse(paymentRepository.save(payment));
-//    }
+
     public PaymentResponse refund(String orderId, RefundRequest req) {
         Payment payment = paymentRepository.findByOrderId(orderId)
                 .orElseThrow(() -> new AppException(ErrorCode.PAYMENT_NOT_FOUND));
@@ -269,16 +191,7 @@ public class PaymentService {
                 // === GIẢ LẬP TRÊN SANDBOX (vì sandbox không hỗ trợ refund thật) ===
                 boolean isVnpaySuccess = true;   // ← Luôn thành công khi test/demo
 
-                // TODO: Khi lên Production, mở đoạn code dưới và comment dòng trên
-                /*
-                boolean isVnpaySuccess = vnPayUtil.refundVnpay(
-                        payment.getOrderId(),
-                        payment.getAmount(),
-                        payment.getTransactionId(),
-                        realPayDate,
-                        "Admin"
-                );
-                */
+
 
                 if (!isVnpaySuccess) {
                     throw new AppException(ErrorCode.PAYMENT_ERROR, "VNPAY từ chối hoàn tiền");

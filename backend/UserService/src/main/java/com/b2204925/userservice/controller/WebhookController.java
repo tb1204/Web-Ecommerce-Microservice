@@ -230,25 +230,3 @@ public class WebhookController {
         }
     }
 }
-
-// private User mapClerkDataToUser(JsonNode data) {
-//     User user = new User();
-//     JsonNode emails = data.path("email_addresses");
-//     if (emails.isArray() && !emails.isEmpty()) {
-//         user.setEmail(emails.get(0).path("email_address").asText());
-//     }
-//     user.setFirstName(data.path("first_name").asText(null));
-//     user.setLastName(data.path("last_name").asText(null));
-//     user.setUsername(data.path("username").asText(null));
-//     user.setAvatarUrl(data.path("image_url").asText(null));
-//     user.setGender(data.path("gender").asText(null));
-//     JsonNode phones = data.path("phone_numbers");
-//     if (phones.isArray() && !phones.isEmpty()) {
-//         user.setPhone(phones.get(0).path("phone_number").asText());
-//     }
-//     user.setRoles(new ArrayList<>(List.of("USER")));
-//     user.setProvider("clerk");
-//     user.setIsActive(true);
-//     user.setIsBlocked(false);
-//     return user;
-    // }

@@ -163,28 +163,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    // ================== WISHLIST - GỌI PRODUCT-SERVICE LẤY FULL PRODUCT ==================
-    // public List<Map<String, Object>> getWishlist(String clerkId) {
-    //     User user = getUserOrThrow(clerkId);
-    //     List<String> productIds = user.getWishlist() != null ? user.getWishlist() : new ArrayList<>();
-    //     if (productIds.isEmpty()) {
-    //         return new ArrayList<>();
-    //     }
-    //     try {
-    //         String idsParam = String.join(",", productIds);
-    //         String url = "http://localhost:9001/api/products/by-ids?ids=" + idsParam;
-    //         ResponseEntity<List<Map<String, Object>>> response = restTemplate.exchange(
-    //                 url,
-    //                 HttpMethod.GET,
-    //                 null,
-    //                 new ParameterizedTypeReference<List<Map<String, Object>>>() {}
-    //         );
-    //         return response.getBody() != null ? response.getBody() : new ArrayList<>();
-    //     } catch (Exception e) {
-    //         log.error("Lỗi khi gọi Product Service lấy wishlist cho user {}: {}", clerkId, e.getMessage());
-    //         return new ArrayList<>();
-    //     }
-    // }
+
     public List<Map<String, Object>> getWishlist(String clerkId) {
         User user = getUserOrThrow(clerkId);
         List<String> productIds = user.getWishlist() != null ? user.getWishlist() : new ArrayList<>();

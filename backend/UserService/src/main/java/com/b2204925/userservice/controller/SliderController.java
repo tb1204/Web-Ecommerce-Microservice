@@ -31,10 +31,7 @@ public class SliderController {
 
     private final RestTemplate restTemplate;
 
-    // ⚠️ PHẢI dùng explicit constructor — @RequiredArgsConstructor của Lombok
-    // KHÔNG propagate @Qualifier vào constructor parameter, dẫn đến Spring
-    // inject nhầm @LoadBalanced RestTemplate (tên "restTemplate") thay vì "simpleRestTemplate".
-    // Bean @LoadBalanced cố resolve "api.cloudinary.com" qua Eureka → 500 error!
+
     public SliderController(@Qualifier("simpleRestTemplate") RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }

@@ -54,9 +54,6 @@ public class SecurityConfig {
 
     @Bean("simpleRestTemplate")
     public RestTemplate simpleRestTemplate() {
-        // Dùng HttpComponentsClientHttpRequestFactory (Apache HttpClient5) thay vì
-        // SimpleClientHttpRequestFactory vì SimpleClientHttpRequestFactory không xử lý
-        // tốt HTTPS + redirects trong Docker Alpine JRE environment
         org.apache.hc.client5.http.impl.classic.CloseableHttpClient httpClient =
             org.apache.hc.client5.http.impl.classic.HttpClients.custom()
                 .setConnectionManager(
@@ -98,16 +95,12 @@ public class SecurityConfig {
                 .accessDeniedHandler(new CustomAccessDeniedHandler())
                 )
                 .authorizeHttpRequests(auth -> auth
-                // ⚠️ Thứ tự CỰC KỲ QUAN TRỌNG: permitAll phải đứng TRƯỚC hasRole
                 .requestMatchers("/api/webhook/**").permitAll()
                 .requestMatchers("/api/banners/flashsale").permitAll()
-                // Cho phép public truy cập slider/banner list (dùng cho Banner, FlashSale)
                 .requestMatchers("/api/admin/sliders/list").permitAll()
                 .requestMatchers("/api/admin/sliders/banners/**").permitAll()
                 .requestMatchers("/api/users/statistics/**").permitAll()
-                // ✅ Internal call từ order-service (không có JWT) — phải permitAll
                 .requestMatchers("/api/users/*/add-spending").permitAll()
-                // Các route /api/admin/** còn lại yêu cầu ADMIN role
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
 
                 .anyRequest().authenticated()

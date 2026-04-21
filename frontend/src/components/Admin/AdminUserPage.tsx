@@ -219,25 +219,12 @@ const AdminUsersPage = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // const handleRolesChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-  //   const selected = Array.from(
-  //     e.target.selectedOptions,
-  //     (option) => option.value,
-  //   );
-  //   setFormData((prev) => ({ ...prev, roles: selected }));
-  // };
+
   const handleRolesChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
     setFormData((prev) => ({ ...prev, roles: [value] }));
   };
 
-  // const handleMembershipChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-  //   const value = e.target.value;
-  //   setFormData((prev) => ({
-  //     ...prev,
-  //     membership: value ? { tierName: value } : undefined,
-  //   }));
-  // };
   const handleMembershipChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value; // ví dụ: "silver"
 
@@ -393,12 +380,7 @@ const AdminUsersPage = () => {
     } catch (err) {
       toast.error("Cập nhật trạng thái khóa thất bại");
 
-      // rollback
-      // setUsers((prev) =>
-      //   prev.map((u) =>
-      //     u.clerkId === user.clerkId ? { ...u, isLocked: !shouldLock } : u,
-      //   ),
-      // );
+   
       setUsers((prev) =>
         prev.map((u) =>
           u.clerkId === user.clerkId ? { ...u, isBlocked: !shouldLock } : u,
@@ -534,20 +516,7 @@ const AdminUsersPage = () => {
                     </div>
                   </td>
 
-                  {/* <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 flex items-center gap-3">
-                    <img
-                      src={
-                        user.avatarUrl ||
-                        `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                          user.firstName + " " + user.lastName,
-                        )}`
-                      }
-                      alt="Avatar"
-                      className="w-10 h-10 rounded-full border-2 border-gray-300 object-cover"
-                    />
-                    {user.email}
-                  </td> */}
-
+                 
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span
                       className={`px-2.5 py-1 text-xs font-bold rounded-full border ${getTierBadgeClass(normalizeTierName(user.membership))}`}
@@ -874,27 +843,7 @@ const AdminUsersPage = () => {
                       </div>
                     </div>
 
-                    {/* <div className="space-y-1.5">
-                      <label className="flex items-center gap-2 text-xs font-bold text-slate-600 uppercase tracking-wider">
-                        <Award size={14} className="text-slate-400" /> Hạng
-                      </label>
-                      <div className="relative">
-                        <select
-                          value={normalizeTierName(formData.membership)}
-                          onChange={handleMembershipChange}
-                          className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-sm font-bold text-indigo-600"
-                        >
-                          <option value="member">Thành viên</option>
-                          <option value="silver">Bạc</option>
-                          <option value="gold">Vàng</option>
-                          <option value="diamond">Kim cương</option>
-                        </select>
-                        <ChevronDown
-                          size={16}
-                          className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
-                        />
-                      </div>
-                    </div> */}
+                 
                     {/* Hạng thành viên */}
                     <div className="space-y-1.5">
                       <label className="flex items-center gap-2 text-xs font-bold text-slate-600 uppercase tracking-wider">
