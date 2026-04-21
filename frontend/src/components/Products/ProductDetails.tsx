@@ -589,7 +589,7 @@ const ProductDetails = () => {
         token,
         product: {
           productId: product.id,
-          variantId: selectedVariant.variantId,
+          variantId: selectedVariant.variantId ?? (selectedVariant._id as any)?.$oid ?? selectedVariant._id ?? selectedVariant.id,
           name: product.name,
           price: selectedVariant.price ?? product.price,
           quantity,

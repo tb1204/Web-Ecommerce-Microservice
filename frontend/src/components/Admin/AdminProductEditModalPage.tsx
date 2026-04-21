@@ -716,8 +716,14 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
                   onChange={handleChange}
                   className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-emerald-500 outline-none text-sm font-medium bg-white h-[42px]"
                 >
+<<<<<<< HEAD
                   <option value="AVAILABLE">Đang bán</option>
                   <option value="stopselling">Ngừng kinh doanh</option>
+=======
+                  <option value="AVAILABLE">Sẵn sàng bán</option>
+                  {/* <option value="stopselling">Ngừng bán</option> */}
+                  <option value="stopselling">Ngừng bán</option>
+>>>>>>> 93ce60bc6cfc6cfc53e37bdff9829b78488f52b0
                 </select>
               </div>
             </div>

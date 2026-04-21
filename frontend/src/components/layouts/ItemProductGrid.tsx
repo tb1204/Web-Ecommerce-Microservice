@@ -190,7 +190,7 @@ const mapProduct = (p: any): Product => ({
   status:
     p.status === "AVAILABLE"
       ? "selling"
-      : p.status === "DISCONTINUED"
+      : p.status === "DISCONTINUED" || p.status === "OUT_OF_STOCK" || p.status === "stopselling"
         ? "stopselling"
         : "selling",
 

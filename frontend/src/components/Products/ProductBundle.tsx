@@ -89,7 +89,7 @@ const ProductBundle: React.FC = () => {
       for (const product of bundleItems as any[]) {
         const itemToStore = {
           productId: product.id,
-          variantId: product.selectedVariant?.variantId,
+          variantId: product.selectedVariant?.variantId ?? (product.selectedVariant?._id as any)?.$oid ?? product.selectedVariant?._id ?? product.selectedVariant?.id,
           name: product.name,
           price: product.price,
           image: product.images.find((img: any) => img.isPrimary)?.url || "",
