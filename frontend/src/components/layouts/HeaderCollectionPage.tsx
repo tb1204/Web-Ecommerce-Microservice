@@ -59,37 +59,86 @@ const HeaderCollectionPage: React.FC = () => {
   const [dragDistance, setDragDistance] = useState(0);
 
   // State sản phẩm thật
-  const [comboProducts, setComboProducts] = useState<Product[]>([]);
+  // const [comboProducts, setComboProducts] = useState<Product[]>([]);
+  // const [loading, setLoading] = useState(true);
+  const [comboProducts, setComboProducts] = useState<Array<Product & { salesCount: number }>>([]);
   const [loading, setLoading] = useState(true);
 
+  // useEffect(() => {
+  //   const fetchComboProducts = async () => {
+  //     try {
+  //       setLoading(true);
+  //       // Lấy danh sách ID sản phẩm bán chạy từ order-service
+  //       const topIdsRes = await axios.get<string[]>(`${BASE_URL}/api/orders/statistics/top-selling-ids?limit=8`);
+  //       const topIds = topIdsRes.data;
+
+  //       if (topIds && topIds.length > 0) {
+  //         // Lấy chi tiết các sản phẩm từ product-service
+  //         const res = await axios.get<any[]>(`${BASE_URL}/api/products/by-ids?ids=${topIds.join(",")}`);
+  //         const products = res.data.filter((p) => p.status === "AVAILABLE" && (p.totalStockQuantity ?? 0) > 0);
+          
+  //         // Map dữ liệu và giữ nguyên thứ tự bán chạy
+  //         const mapped = products
+  //           .map(mapProduct)
+  //           .sort((a, b) => topIds.indexOf(a.id) - topIds.indexOf(b.id));
+
+  //         setComboProducts(mapped);
+  //       } else {
+  //         setComboProducts([]);
+  //       }
+  //     } catch (err: any) {
+  //       console.error("Lỗi fetch top selling products:", err.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchComboProducts();
+  // }, []);
   useEffect(() => {
     const fetchComboProducts = async () => {
       try {
         setLoading(true);
-        // Lấy danh sách ID sản phẩm bán chạy từ order-service
-        const topIdsRes = await axios.get<string[]>(`${BASE_URL}/api/orders/statistics/top-selling-ids?limit=8`);
-        const topIds = topIdsRes.data;
 
-        if (topIds && topIds.length > 0) {
-          // Lấy chi tiết các sản phẩm từ product-service
+        // Lấy danh sách top selling kèm salesCount
+        const topSellingRes = await axios.get<any[]>(`${BASE_URL}/api/orders/statistics/top-selling-ids?limit=8`);
+        const topSellingData = topSellingRes.data; // [{productId, salesCount}, ...]
+
+        if (topSellingData && topSellingData.length > 0) {
+          const topIds = topSellingData.map((item: any) => item.productId);
+
+          // Lấy chi tiết sản phẩm
           const res = await axios.get<any[]>(`${BASE_URL}/api/products/by-ids?ids=${topIds.join(",")}`);
-          const products = res.data.filter((p) => p.status === "AVAILABLE" && (p.totalStockQuantity ?? 0) > 0);
           
-          // Map dữ liệu và giữ nguyên thứ tự bán chạy
-          const mapped = products
+          const availableProducts = res.data.filter((p: any) => 
+            p.status === "AVAILABLE" && (p.totalStockQuantity ?? 0) > 0
+          );
+
+          // Map sang Product interface
+          const mapped = availableProducts
             .map(mapProduct)
             .sort((a, b) => topIds.indexOf(a.id) - topIds.indexOf(b.id));
 
-          setComboProducts(mapped);
+          // Gắn thêm salesCount vào từng sản phẩm
+          const finalProducts = mapped.map((product) => {
+            const salesInfo = topSellingData.find((item: any) => item.productId === product.id);
+            return {
+              ...product,
+              salesCount: salesInfo ? salesInfo.salesCount : 0,
+            };
+          });
+
+          setComboProducts(finalProducts);
         } else {
           setComboProducts([]);
         }
       } catch (err: any) {
         console.error("Lỗi fetch top selling products:", err.message);
+        setComboProducts([]);
       } finally {
         setLoading(false);
       }
     };
+
     fetchComboProducts();
   }, []);
 
@@ -195,7 +244,7 @@ const HeaderCollectionPage: React.FC = () => {
             {comboProducts.map((product) => (
               <div
                 key={product.id}
-                className="flex-none w-[calc(50%-6px)] md:w-[calc(33.333%-14px)] lg:w-[calc(25%-15px)] snap-start"
+                className="flex-none w-[calc(50%-6px)] md:w-[calc(33.333%-14px)] lg:w-[calc(25%-15px)] snap-start relative"
                 onClickCapture={(e) => {
                   if (dragDistance > 5) {
                     e.preventDefault();
@@ -203,10 +252,16 @@ const HeaderCollectionPage: React.FC = () => {
                   }
                 }}
               >
+                {/* {product.salesCount > 0 && (
+                  <div className="absolute -top-3 -right-3 z-30 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg flex items-center gap-1">
+                    <span>Đã bán {product.salesCount}</span>
+                  </div>
+                )} */}
                 <ProductGrid
                   products={[product]}
                   isBundleMode={false}
                   isSliderMode={true}
+                  showSalesCount={true}
                 />
               </div>
             ))}

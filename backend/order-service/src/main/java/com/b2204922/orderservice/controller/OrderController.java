@@ -1,6 +1,7 @@
 package com.b2204922.orderservice.controller;
 
 import com.b2204922.orderservice.dto.request.OrderRequest;
+import com.b2204922.orderservice.dto.request.TopSellingProductDto;
 import com.b2204922.orderservice.dto.response.OrderResponse;
 import com.b2204922.orderservice.exception.ResourceNotFoundException;
 import com.b2204922.orderservice.service.IOrderService;
@@ -132,8 +133,14 @@ public class OrderController {
 
     }
 
+//    @GetMapping("/statistics/top-selling-ids")
+//    public ResponseEntity<List<String>> getTopSellingProductIds(@RequestParam(defaultValue = "8") int limit) {
+//        return ResponseEntity.ok(orderService.getTopSellingProductIds(limit));
+//    }
     @GetMapping("/statistics/top-selling-ids")
-    public ResponseEntity<List<String>> getTopSellingProductIds(@RequestParam(defaultValue = "8") int limit) {
+    public ResponseEntity<List<TopSellingProductDto>> getTopSellingProductIds(
+            @RequestParam(defaultValue = "8") int limit) {
+
         return ResponseEntity.ok(orderService.getTopSellingProductIds(limit));
     }
 
