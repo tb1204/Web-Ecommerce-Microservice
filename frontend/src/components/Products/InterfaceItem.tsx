@@ -4,6 +4,8 @@ export interface ProductImage {
 }
 export interface ProductVariant {
   variantId: string;
+  _id?: string | { $oid: string };
+  id?: string;
   sku: string;
   size: string;
   thickness: string;

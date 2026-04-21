@@ -701,7 +701,9 @@ const ProductGrid: React.FC<ProductCardProps> = ({
       product.variants?.find((v) => (v.stockQuantity ?? 0) > 0) ??
       product.variants?.[0];
 
-    if (!availableVariant?.variantId) {
+    const vId = availableVariant?.variantId ?? (availableVariant?._id as any)?.$oid ?? availableVariant?._id ?? availableVariant?.id;
+
+    if (!vId) {
       // toast.error("Sản phẩm chưa có biến thể, vui lòng xem chi tiết!");
       toast.info("📌 Vui lòng chọn kích thước trước khi thêm vào giỏ!");
       navigate(`/product/${product.id}`);
@@ -715,7 +717,7 @@ const ProductGrid: React.FC<ProductCardProps> = ({
           token,
           product: {
             productId: product.id,
-            variantId: availableVariant.variantId,
+            variantId: vId,
             name: product.name,
             price: availableVariant.price ?? product.price,
             quantity: 1,

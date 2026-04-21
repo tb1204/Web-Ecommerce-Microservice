@@ -59,7 +59,7 @@ const mapProduct = (p: any): Product => {
     status:
       p.status === "AVAILABLE"
         ? "selling"
-        : p.status === "OUT_OF_STOCK" || p.status === "DISCONTINUED"
+        : p.status === "OUT_OF_STOCK" || p.status === "DISCONTINUED" || p.status === "stopselling"
           ? "stopselling"
           : "selling",
 

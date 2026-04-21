@@ -718,7 +718,7 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
                 >
                   <option value="AVAILABLE">Sẵn sàng bán</option>
                   {/* <option value="stopselling">Ngừng bán</option> */}
-                  <option value="OUT_OF_STOCK">Ngừng bán</option>
+                  <option value="stopselling">Ngừng bán</option>
                 </select>
               </div>
             </div>
