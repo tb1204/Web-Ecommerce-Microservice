@@ -587,13 +587,17 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
                     </label>
                     <input
                       type="number"
+                      min="0"
                       value={v.price}
-                      onChange={(e) =>
-                        handleVariantChange(
-                          index,
-                          "price",
-                          Number(e.target.value),
-                        )
+                      onChange={(e) => {
+                        const val = Number(e.target.value);
+                        if (val >= 0) handleVariantChange(index, "price", val);
+                      }
+                        // handleVariantChange(
+                        //   index,
+                        //   "price",
+                        //   Number(e.target.value),
+                        // )
                       }
                       className="w-full px-3 py-2 rounded-xl border text-xs outline-none focus:border-emerald-500"
                     />
@@ -604,13 +608,17 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
                     </label>
                     <input
                       type="number"
+                      min="0"
                       value={v.originalPrice}
-                      onChange={(e) =>
-                        handleVariantChange(
-                          index,
-                          "originalPrice",
-                          Number(e.target.value),
-                        )
+                      onChange={(e) => {
+                        const val = Number(e.target.value);
+                        if (val >= 0) handleVariantChange(index, "originalPrice", val);
+                      }
+                        // handleVariantChange(
+                        //   index,
+                        //   "originalPrice",
+                        //   Number(e.target.value),
+                        // )
                       }
                       className="w-full px-3 py-2 rounded-xl border text-xs outline-none focus:border-emerald-500"
                     />
@@ -634,13 +642,17 @@ const ProductEditModal: React.FC<ProductEditModalProps> = ({
                       </label>
                       <input
                         type="number"
+                        min="0"
                         value={v.stockQuantity}
-                        onChange={(e) =>
-                          handleVariantChange(
-                            index,
-                            "stockQuantity",
-                            Number(e.target.value),
-                          )
+                        onChange={(e) => {
+                          const val = Number(e.target.value);
+                          if (val >= 0) handleVariantChange(index, "stockQuantity", val);
+                        }
+                          // handleVariantChange(
+                          //   index,
+                          //   "stockQuantity",
+                          //   Number(e.target.value),
+                          // )
                         }
                         className="w-full px-3 py-2 rounded-xl border text-xs outline-none focus:border-emerald-500"
                       />
