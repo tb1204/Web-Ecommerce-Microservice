@@ -246,7 +246,7 @@ const UserChatPage: React.FC<UserChatPageProps> = ({
             }
           });
         },
-        onDisconnect: () => {},
+        onDisconnect: () => { },
         onStompError: (frame) =>
           console.error("STOMP error:", frame.headers["message"]),
       });
@@ -257,7 +257,7 @@ const UserChatPage: React.FC<UserChatPageProps> = ({
     [scrollToBottom, isAtBottom, showNewMessageNotif],
   );
 
-  
+
   const subscribeConv = useCallback(
     (convId: string) => {
       // Unsubscribe kênh cũ nếu có
@@ -331,9 +331,8 @@ const UserChatPage: React.FC<UserChatPageProps> = ({
               !isAtBottom()
             ) {
               const prefix = incoming.senderRole === "BOT" ? "🤖" : "💬";
-              const preview = `${prefix} ${incoming.content.slice(0, 50)}${
-                incoming.content.length > 50 ? "..." : ""
-              }`;
+              const preview = `${prefix} ${incoming.content.slice(0, 50)}${incoming.content.length > 50 ? "..." : ""
+                }`;
               showNewMessageNotif(preview);
             } else {
               setTimeout(() => scrollToBottom(), 50);
@@ -1181,11 +1180,10 @@ const UserChatPage: React.FC<UserChatPageProps> = ({
               <button
                 onClick={handleSend}
                 disabled={(!text.trim() && !imageFile) || sending}
-                className={`shrink-0 w-11 h-11 flex items-center justify-center rounded-2xl transition-all self-end mb-1 ${
-                  (text.trim() || imageFile) && !sending
+                className={`shrink-0 w-11 h-11 flex items-center justify-center rounded-2xl transition-all self-end mb-1 ${(text.trim() || imageFile) && !sending
                     ? "bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-md hover:brightness-105 active:scale-95"
                     : "bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed"
-                }`}
+                  }`}
               >
                 {sending ? (
                   <Loader2 size={20} className="animate-spin" />
