@@ -102,29 +102,64 @@ public class ChatWebSocketHandler {
             // Nếu là USER gửi TEXT và bot đang bật → xử lý Dialogflow
             if (senderRole == SenderRole.USER
                     && Boolean.TRUE.equals(conv.getBotEnabled())
-                    && Boolean.FALSE.equals(conv.getHandoffToAdmin())
                     && req.getType() == MessageType.TEXT) {
 
+                boolean isLocked = Boolean.TRUE.equals(conv.getHandoffToAdmin());
+
                 if ("Chat với Admin".equalsIgnoreCase(req.getContent().trim())) {
-                    log.info("User requested handoff to admin for conversation {}", conv.getId());
-                    
-                    // Gửi tin nhắn thông báo cho user trước khi chuyển
-                    MessageResponse botConfirmMsg = messageService.sendBotMessage(
-                            conv.getId(),
-                            "Đã ngắt kết nối với Bot, Admin sẽ hỗ trợ bạn ngay.",
-                            "handoff",
-                            1.0,
-                            false,
-                            null
-                    );
-                    messagingTemplate.convertAndSend("/topic/conversation." + conv.getId(), botConfirmMsg);
-                    
-                    // Chuyển sang admin
-                    conversationService.adminJoin(conv.getId(), null);
-                    messagingTemplate.convertAndSend("/topic/admin.newConversation",
-                            conversationService.getById(conv.getId()));
+                    if (!isLocked) {
+                        log.info("User requested handoff to admin for conversation {}", conv.getId());
+                        
+                        // Gửi tin nhắn thông báo cho user trước khi chuyển
+                        MessageResponse botConfirmMsg = messageService.sendBotMessage(
+                                conv.getId(),
+                                "Đã ngắt kết nối với Bot, Admin sẽ hỗ trợ bạn ngay.",
+                                "handoff",
+                                1.0,
+                                false,
+                                null
+                        );
+                        messagingTemplate.convertAndSend("/topic/conversation." + conv.getId(), botConfirmMsg);
+                        
+                        // Chuyển sang admin
+                        conversationService.adminJoin(conv.getId(), null);
+                        messagingTemplate.convertAndSend("/topic/admin.newConversation",
+                                conversationService.getById(conv.getId()));
+                    }
                 } else {
-                    handleBotResponse(conv, req.getContent());
+                    if (isLocked) {
+                        // Bị lock nhưng người dùng nhắn tin, thử xem Bot có hiểu không
+                        try {
+                            DialogflowResponse testResp = dialogflowService.detectIntent(conv.getBotSessionId(), req.getContent());
+                            if (Boolean.FALSE.equals(testResp.getIsFallback())) {
+                                // Câu hợp lệ! Tự động unlock (Chuyển lại cho Bot)
+                                conversationService.enableBot(conv.getId());
+                                conv = conversationService.findById(conv.getId()); // refresh
+                                
+                                // Bot trả lời câu hợp lệ
+                                MessageResponse botMsg = messageService.sendBotMessage(
+                                        conv.getId(),
+                                        testResp.getResponseText(),
+                                        testResp.getIntent(),
+                                        testResp.getConfidence(),
+                                        testResp.getIsFallback(),
+                                        testResp.getQuickReplies(),
+                                        testResp.getProductLinks()
+                                );
+                                conversationService.updateLastMessage(conv.getId(), "[Bot]: " + testResp.getResponseText(), SenderRole.BOT);
+                                messagingTemplate.convertAndSend("/topic/conversation." + conv.getId(), botMsg);
+                                
+                                // Báo Admin biết phòng đã về lại tay Bot
+                                messagingTemplate.convertAndSend("/topic/admin.newConversation", conversationService.getById(conv.getId()));
+                            }
+                            // Nếu vẫn là câu ngoài lề (fallback), bot im lặng để Admin giải quyết
+                        } catch (Exception e) {
+                            log.error("Test intent for locked conversation failed", e);
+                        }
+                    } else {
+                        // Đang mở, xử lý bình thường
+                        handleBotResponse(conv, req.getContent());
+                    }
                 }
             }
 
@@ -142,9 +177,14 @@ public class ChatWebSocketHandler {
         try {
             DialogflowResponse botResp = dialogflowService.detectIntent(conv.getBotSessionId(), userText);
 
+            String botText = botResp.getResponseText();
+            if (Boolean.TRUE.equals(botResp.getIsFallback())) {
+                botText = "Xin lỗi, tôi chưa hiểu rõ ý của bạn. Bạn có thể nói rõ hơn về việc muốn tìm nệm, chăn ga, hay kiểm tra đơn hàng không ạ?";
+            }
+
             MessageResponse botMsg = messageService.sendBotMessage(
                     conv.getId(),
-                    botResp.getResponseText(),
+                    botText,
                     botResp.getIntent(),
                     botResp.getConfidence(),
                     botResp.getIsFallback(),
@@ -154,7 +194,7 @@ public class ChatWebSocketHandler {
 
             conversationService.updateLastMessage(
                     conv.getId(),
-                    "[Bot]: " + botResp.getResponseText(),
+                    "[Bot]: " + botText,
                     SenderRole.BOT
             );
 
@@ -163,6 +203,22 @@ public class ChatWebSocketHandler {
             // Nếu bot không hiểu (fallback) → chuyển sang admin
             if (Boolean.TRUE.equals(botResp.getIsFallback())) {
                 conversationService.adminJoin(conv.getId(), null);
+                
+                // Tạo một message ảo để push lên WebSocket ngay lập tức cho User thấy (DB đã lưu qua adminJoin)
+                MessageResponse sysMsg = MessageResponse.builder()
+                        .id("sys_" + System.currentTimeMillis())
+                        .conversationId(conv.getId())
+                        .senderId("SYSTEM")
+                        .senderRole(SenderRole.BOT)
+                        .type(MessageType.SYSTEM)
+                        .content("Đã chuyển qua trò chuyện với admin")
+                        .createdAt(java.time.Instant.now())
+                        .build();
+                messagingTemplate.convertAndSend("/topic/conversation." + conv.getId(), sysMsg);
+                
+                // Broadcast lại trạng thái conversation để nút trên UI cập nhật
+                messagingTemplate.convertAndSend("/topic/conversation." + conv.getId(), conversationService.getById(conv.getId()));
+
                 messagingTemplate.convertAndSend("/topic/admin.newConversation",
                         conversationService.getById(conv.getId()));
 

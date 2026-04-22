@@ -607,7 +607,7 @@ const AdminOrderPage = () => {
                         <button
                           disabled={order.orderStatus !== "PROCESSING"}
                           onClick={() => handlePrintInvoice(order)}
-                          className={`p-2 rounded-xl shadow-sm transition-all active:scale-90 border ${order.orderStatus === "PROCESSING" || order.orderStatus === "PENDING" ? "text-blue-600 bg-blue-50 border-blue-100 hover:bg-blue-600 hover:text-white" : "text-gray-300 bg-gray-50 border-gray-100 cursor-not-allowed"}`}
+                          className={`p-2 rounded-xl shadow-sm transition-all active:scale-90 border ${order.orderStatus === "PROCESSING" ? "text-blue-600 bg-blue-50 border-blue-100 hover:bg-blue-600 hover:text-white" : "text-gray-300 bg-gray-50 border-gray-100 cursor-not-allowed"}`}
                           title="In hóa đơn"
                         >
                           <Printer size={18} />

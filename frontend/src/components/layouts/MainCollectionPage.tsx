@@ -472,16 +472,16 @@ const MainCollectionPage: React.FC = () => {
   // --- SIDEBAR CONTENT ---
   const renderSidebarContent = () => (
     <div className="flex flex-col gap-6 h-full">
-      <div className="flex items-center justify-between pb-5 border-b bg-white sticky top-0 z-20">
+      <div className="flex items-center justify-between pb-5 border-b border-gray-200 dark:border-gray-700 bg-transparent lg:bg-white lg:dark:bg-transparent sticky top-0 z-20">
         <div className="flex items-center gap-2.5">
-          <Filter size={20} className="text-green-800" />
-          <h2 className="font-extrabold text-gray-900 uppercase text-sm tracking-widest">
+          <Filter size={20} className="text-green-800 dark:text-green-500" />
+          <h2 className="font-extrabold text-gray-900 dark:text-white uppercase text-sm tracking-widest">
             Bộ lọc
           </h2>
         </div>
         <button
           onClick={resetFilters}
-          className="text-[11px] font-bold text-gray-400 hover:text-red-500 flex items-center gap-1"
+          className="text-[11px] font-bold text-gray-400 dark:text-gray-500 hover:text-red-500 dark:hover:text-red-400 flex items-center gap-1"
         >
           <RotateCcw size={12} /> Làm mới
         </button>
@@ -526,7 +526,7 @@ const MainCollectionPage: React.FC = () => {
             stateKey: "color",
           },
         ].map((group) => (
-          <div key={group.key} className="border-b border-gray-100 pb-6">
+          <div key={group.key} className="border-b border-gray-100 dark:border-gray-700 pb-6">
             <button
               onClick={() =>
                 setOpenFilters({
@@ -535,7 +535,7 @@ const MainCollectionPage: React.FC = () => {
                     !openFilters[group.stateKey as keyof typeof openFilters],
                 })
               }
-              className="flex justify-between items-center w-full mb-4 font-black text-xs uppercase tracking-tighter text-gray-800 hover:text-green-700 transition-colors"
+              className="flex justify-between items-center w-full mb-4 font-black text-xs uppercase tracking-tighter text-gray-800 dark:text-gray-200 hover:text-green-700 dark:hover:text-green-400 transition-colors"
             >
               {group.title}{" "}
               {openFilters[group.stateKey as keyof typeof openFilters] ? (
@@ -557,17 +557,17 @@ const MainCollectionPage: React.FC = () => {
                         group.key as keyof typeof selectedFilters
                       ].includes(opt)}
                       onChange={() => handleFilterToggle(group.key as any, opt)}
-                      className="w-5 h-5 rounded border-gray-300 text-green-700 focus:ring-green-500 transition-all cursor-pointer"
+                      className="w-5 h-5 rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 text-green-700 focus:ring-green-500 transition-all cursor-pointer"
                     />
                     <span
-                      className={`text-[13px] font-medium transition-colors ${selectedFilters[group.key as keyof typeof selectedFilters].includes(opt) ? "text-green-800 font-bold" : "text-gray-500 group-hover:text-gray-900"}`}
+                      className={`text-[13px] font-medium transition-colors ${selectedFilters[group.key as keyof typeof selectedFilters].includes(opt) ? "text-green-800 dark:text-green-400 font-bold" : "text-gray-500 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-gray-200"}`}
                     >
                       {opt}
                     </span>
                   </label>
                 ))}
                 {group.options.length === 0 && (
-                  <p className="text-[11px] text-gray-300 italic">
+                  <p className="text-[11px] text-gray-300 dark:text-gray-600 italic">
                     Đang cập nhật...
                   </p>
                 )}
@@ -595,10 +595,10 @@ const MainCollectionPage: React.FC = () => {
             onClick={() => setIsMobileFilterOpen(false)}
           />
           <div
-            className={`absolute left-0 top-0 h-full w-[85%] max-w-[320px] bg-white p-6 shadow-2xl transition-transform duration-500 ease-out ${isMobileFilterOpen ? "translate-x-0" : "-translate-x-full"}`}
+            className={`absolute left-0 top-0 h-full w-[85%] max-w-[320px] bg-white dark:bg-gray-800 p-6 shadow-2xl transition-transform duration-500 ease-out ${isMobileFilterOpen ? "translate-x-0" : "-translate-x-full"}`}
           >
             <button
-              className="absolute top-4 right-4 p-2 text-gray-400"
+              className="absolute top-4 right-4 p-2 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300"
               onClick={() => setIsMobileFilterOpen(false)}
             >
               <X size={24} />
@@ -610,34 +610,34 @@ const MainCollectionPage: React.FC = () => {
         <main ref={mainContentRef} className="flex-1">
           {/* HEADER DANH MỤC */}
           <div className="mb-6 lg:mb-8">
-            <h1 className="text-2xl lg:text-3xl font-black text-[#004225] uppercase tracking-tight mb-2">
+            <h1 className="text-2xl lg:text-3xl font-black text-[#004225] dark:text-green-400 uppercase tracking-tight mb-2">
               {categoryNameMap[currentCatKey] || "Tất cả sản phẩm"}
             </h1>
-            <div className="w-16 lg:w-20 h-1.5 bg-[#004225] rounded-full"></div>
+            <div className="w-16 lg:w-20 h-1.5 bg-[#004225] dark:bg-green-500 rounded-full"></div>
           </div>
 
           {/* TOOLBAR */}
-          <div className="flex flex-wrap justify-between items-center gap-4 bg-white border border-gray-100 p-4 rounded-2xl mb-8 shadow-sm">
+          <div className="flex flex-wrap justify-between items-center gap-4 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 p-4 rounded-2xl mb-8 shadow-sm">
             <button
               onClick={() => setIsMobileFilterOpen(true)}
-              className="lg:hidden flex items-center gap-2 px-4 py-2 bg-green-50 text-green-800 rounded-xl text-sm font-bold"
+              className="lg:hidden flex items-center gap-2 px-4 py-2 bg-green-50 dark:bg-green-900/30 text-green-800 dark:text-green-400 rounded-xl text-sm font-bold"
             >
               <Filter size={18} /> Bộ lọc
             </button>
 
-            <p className="hidden md:block text-sm font-medium text-gray-500">
+            <p className="hidden md:block text-sm font-medium text-gray-500 dark:text-gray-400">
               Đang hiển thị{" "}
-              <span className="text-black font-bold">
+              <span className="text-black dark:text-white font-bold">
                 {currentProducts.length}
               </span>{" "}
               /{" "}
-              <span className="text-black font-bold">
+              <span className="text-black dark:text-white font-bold">
                 {filteredProducts.length}
               </span>{" "}
               sản phẩm
             </p>
 
-            <div className="flex items-center gap-6 text-[10px] md:text-[11px] font-black uppercase tracking-widest text-gray-400">
+            <div className="flex items-center gap-6 text-[10px] md:text-[11px] font-black uppercase tracking-widest text-gray-400 dark:text-gray-500">
               {(["newest", "price_asc", "price_desc"] as SortType[]).map(
                 (type) => {
                   const label =
@@ -650,7 +650,7 @@ const MainCollectionPage: React.FC = () => {
                     <span
                       key={type}
                       onClick={() => setSortType(type)}
-                      className={`cursor-pointer whitespace-nowrap transition-colors ${sortType === type ? "text-green-700 border-b-2 border-green-700 pb-1" : "hover:text-green-700"}`}
+                      className={`cursor-pointer whitespace-nowrap transition-colors ${sortType === type ? "text-green-700 dark:text-green-400 border-b-2 border-green-700 dark:border-green-400 pb-1" : "hover:text-green-700 dark:hover:text-green-400"}`}
                     >
                       {label}
                     </span>
@@ -669,7 +669,7 @@ const MainCollectionPage: React.FC = () => {
                   .map((_, i) => (
                     <div
                       key={i}
-                      className="rounded-xl bg-gray-100 animate-pulse h-72"
+                      className="rounded-xl bg-gray-100 dark:bg-gray-800 animate-pulse h-72"
                     />
                   ))}
               </div>
@@ -686,13 +686,13 @@ const MainCollectionPage: React.FC = () => {
             ) : currentProducts.length > 0 ? (
               <ProductGrid products={currentProducts} isSliderMode={false} />
             ) : (
-              <div className="flex flex-col items-center justify-center py-32 bg-gray-50 rounded-3xl border-2 border-dashed border-gray-200">
-                <p className="text-gray-500 font-bold text-lg mb-2">
+              <div className="flex flex-col items-center justify-center py-32 bg-gray-50 dark:bg-gray-800/50 rounded-3xl border-2 border-dashed border-gray-200 dark:border-gray-700">
+                <p className="text-gray-500 dark:text-gray-400 font-bold text-lg mb-2">
                   Rất tiếc, không tìm thấy sản phẩm!
                 </p>
                 <button
                   onClick={resetFilters}
-                  className="px-6 py-2.5 bg-green-800 text-white rounded-xl text-sm font-bold"
+                  className="px-6 py-2.5 bg-green-800 dark:bg-green-700 text-white rounded-xl text-sm font-bold hover:bg-green-900 dark:hover:bg-green-600 transition-colors"
                 >
                   Làm mới bộ lọc
                 </button>
@@ -706,7 +706,7 @@ const MainCollectionPage: React.FC = () => {
               <button
                 onClick={() => goToPage(currentPage - 1)}
                 disabled={currentPage === 1}
-                className="w-10 h-10 flex items-center justify-center rounded-xl border border-gray-100 text-gray-400 disabled:opacity-30"
+                className="w-10 h-10 flex items-center justify-center rounded-xl border border-gray-100 dark:border-gray-700 text-gray-400 disabled:opacity-30 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
               >
                 <ChevronLeft size={20} />
               </button>
@@ -716,7 +716,7 @@ const MainCollectionPage: React.FC = () => {
                     <button
                       key={page}
                       onClick={() => goToPage(page)}
-                      className={`w-10 h-10 flex items-center justify-center rounded-xl text-[13px] font-black transition-all ${currentPage === page ? "bg-green-800 text-white shadow-lg" : "bg-white text-gray-400 hover:bg-gray-50"}`}
+                      className={`w-10 h-10 flex items-center justify-center rounded-xl text-[13px] font-black transition-all ${currentPage === page ? "bg-green-800 dark:bg-green-700 text-white shadow-lg" : "bg-white dark:bg-gray-800 text-gray-400 dark:text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700"}`}
                     >
                       {page}
                     </button>
@@ -726,7 +726,7 @@ const MainCollectionPage: React.FC = () => {
               <button
                 onClick={() => goToPage(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                className="w-10 h-10 flex items-center justify-center rounded-xl border border-gray-100 text-gray-400 disabled:opacity-30"
+                className="w-10 h-10 flex items-center justify-center rounded-xl border border-gray-100 dark:border-gray-700 text-gray-400 disabled:opacity-30 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
               >
                 <ChevronRight size={20} />
               </button>

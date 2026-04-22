@@ -5,6 +5,7 @@ import com.b2204925.chatservice.dto.res.ConversationResponse;
 import com.b2204925.chatservice.dto.res.DialogflowResponse;
 import com.b2204925.chatservice.dto.res.MessageResponse;
 import com.b2204925.chatservice.entity.ConversationStatus;
+import com.b2204925.chatservice.entity.MessageType;
 import com.b2204925.chatservice.entity.SenderRole;
 import com.b2204925.chatservice.service.ConversationService;
 import com.b2204925.chatservice.service.DialogflowService;
@@ -69,9 +70,14 @@ public class ConversationController {
 
                     DialogflowResponse botResp = dialogflowService.detectIntent(botSessionId, firstMsg);
 
+                    String botText = botResp.getResponseText();
+                    if (Boolean.TRUE.equals(botResp.getIsFallback())) {
+                        botText = "Xin lỗi, tôi chưa hiểu rõ ý của bạn. Bạn có thể nói rõ hơn về việc muốn tìm nệm, chăn ga, hay kiểm tra đơn hàng không ạ?";
+                    }
+
                     MessageResponse botMsg = messageService.sendBotMessage(
                             response.getId(),
-                            botResp.getResponseText(),
+                            botText,
                             botResp.getIntent(),
                             botResp.getConfidence(),
                             botResp.getIsFallback(),
@@ -80,7 +86,7 @@ public class ConversationController {
 
                     conversationService.updateLastMessage(
                             response.getId(),
-                            "[Bot]: " + botResp.getResponseText(),
+                            "[Bot]: " + botText,
                             SenderRole.BOT
                     );
 
@@ -89,6 +95,22 @@ public class ConversationController {
 
                     if (Boolean.TRUE.equals(botResp.getIsFallback())) {
                         conversationService.adminJoin(response.getId(), null);
+                        
+                        // Broadcast system message cho frontend
+                        MessageResponse sysMsg = MessageResponse.builder()
+                                .id("sys_" + System.currentTimeMillis())
+                                .conversationId(response.getId())
+                                .senderId("SYSTEM")
+                                .senderRole(SenderRole.BOT)
+                                .type(MessageType.SYSTEM)
+                                .content("Đã chuyển qua trò chuyện với admin")
+                                .createdAt(java.time.Instant.now())
+                                .build();
+                        messagingTemplate.convertAndSend("/topic/conversation." + response.getId(), sysMsg);
+                        
+                        // Broadcast cập nhật conversation để nút UI thay đổi
+                        messagingTemplate.convertAndSend("/topic/conversation." + response.getId(), conversationService.getById(response.getId()));
+                        
                         messagingTemplate.convertAndSend("/topic/admin.newConversation",
                                 conversationService.getById(response.getId()));
                     }

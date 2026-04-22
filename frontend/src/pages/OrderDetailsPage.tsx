@@ -63,6 +63,8 @@ const getStatusStyle = (status: string) => {
       return "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400";
     case "PENDING":
       return "bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300";
+    case "REFUNDED":
+      return "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400";
     default:
       return "bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300";
   }
@@ -80,6 +82,8 @@ const getStatusLabel = (status: string) => {
       return "Đã giao hàng";
     case "CANCELLED":
       return "Đã hủy";
+    case "REFUNDED":
+      return "Đã hoàn tiền";
     default:
       return status;
   }
@@ -262,11 +266,15 @@ const OrderDetailsPage: React.FC = () => {
             className={`px-4 py-1 rounded-full text-xs font-bold uppercase ${
               order.payment?.status === "PAID"
                 ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
+                : order.payment?.status === "REFUNDED"
+                ? "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400"
                 : "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400"
             }`}
           >
             {order.payment?.status === "PAID"
               ? "Đã thanh toán"
+              : order.payment?.status === "REFUNDED"
+              ? "Đã hoàn tiền"
               : "Chờ thanh toán"}
           </span>
           {order.orderStatus === "CANCELLED" && order.cancelReason && (
@@ -311,11 +319,15 @@ const OrderDetailsPage: React.FC = () => {
                 className={`text-sm mt-1 font-medium ${
                   order.payment?.status === "PAID"
                     ? "text-green-600 dark:text-green-400"
+                    : order.payment?.status === "REFUNDED"
+                    ? "text-purple-600 dark:text-purple-400"
                     : "text-amber-600 dark:text-amber-400"
                 }`}
               >
                 {order.payment?.status === "PAID"
                   ? "✓ Đã thanh toán"
+                  : order.payment?.status === "REFUNDED"
+                  ? "↺ Đã hoàn tiền"
                   : "⏳ Chờ thanh toán"}
               </p>
               {order.payment?.transactionId && (

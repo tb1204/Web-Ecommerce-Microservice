@@ -92,7 +92,7 @@ public class ConversationService {
 
         // Gửi system message thông báo admin vào
         messageService.sendSystemMessage(
-                conversationId, "Admin đã tham gia cuộc trò chuyện"
+                conversationId, adminId == null ? "Đã chuyển qua trò chuyện với admin" : "Admin đã tham gia cuộc trò chuyện"
         );
 
         log.info("Admin {} joined conversation {}", adminId, conversationId);

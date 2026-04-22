@@ -35,7 +35,7 @@ public class ProductService {
     }
 
     public Product getProductById(String id) {
-        log.info("🔍 Đang tìm sản phẩm có ID: {}", id);
+        log.info(" Đang tìm sản phẩm có ID: {}", id);
         return productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm với ID: " + id));
     }
