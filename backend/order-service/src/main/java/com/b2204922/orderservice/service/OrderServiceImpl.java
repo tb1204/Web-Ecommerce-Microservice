@@ -779,6 +779,7 @@ public class OrderServiceImpl implements IOrderService {
         Map<String, Integer> productQtyMap = new HashMap<>();
 
         for (Order order : orders) {
+
             for (OrderItem item : order.getItems()) {
                 String pid = item.getProductId();
                 productQtyMap.put(pid, productQtyMap.getOrDefault(pid, 0) + item.getQuantity());
