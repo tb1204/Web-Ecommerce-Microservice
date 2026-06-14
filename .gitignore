@@ -113,3 +113,6 @@ Dockerfile*
 # Nếu dùng Prisma
 prisma/dev.db
 prisma/*.db.journal
+
+dialogflow-key.json
+**/resources/dialogflow-key.json
